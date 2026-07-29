@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens
+ * -----------------------------------------------------------------------
+ * Source of truth: Claude_Code_Design_Brief_v2.md (Must Have: 8-point
+ * spacing scale, 12-column grid, WCAG AA contrast in every mode) and
+ * Portfolio_Creative_Direction_Premium.md (warm-tinted neutral scale,
+ * single accent, section-level light/dark alternation).
+ *
+ * Every text/background pair below has been checked against the WCAG 2.1
+ * contrast formula (see Milestone 1 verification notes). Re-verify with a
+ * contrast tool during the Milestone 8 accessibility pass before treating
+ * these as final, since real photography/screenshots placed behind text
+ * can change effective contrast.
+ */
+@theme {
+  /* Fonts: placeholder pairing pending final type selection (see
+     Portfolio_Creative_Direction_Premium.md, "Typography philosophy").
+     Fraunces = expressive editorial display face, reserved for hero and
+     section-break moments. Inter = quiet, highly legible body face. Both
+     are self-hosted variable fonts via @fontsource-variable (imported in
+     layout.tsx), not fetched from Google Fonts at build or runtime. */
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* 8-point spacing scale. Tailwind's default --spacing unit (0.25rem/4px)
+     already divides evenly into 8px steps; these named tokens exist so
+     hero/section-break moments and dense evidence sections can reference
+     the scale explicitly and stay honest about the rhythm the creative
+     direction calls for (generous at the extremes, tight in evidence
+     blocks), rather than reaching for arbitrary values. */
+  --spacing-2xs: 0.25rem; /* 4px  */
+  --spacing-xs: 0.5rem; /* 8px  */
+  --spacing-sm: 0.75rem; /* 12px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+  --spacing-3xl: 4rem; /* 64px */
+  --spacing-4xl: 6rem; /* 96px */
+  --spacing-5xl: 8rem; /* 128px */
+
+  /* Reading column width for case-study body copy (Design Brief must-have:
+     "case study body copy in a narrower reading column than full page
+     width"). ~68 characters at body size. */
+  --measure: 42rem;
+  --measure-wide: 56rem;
+
+  /* Radius scale: considered and consistent, never rounded-everything by
+     default (Creative Direction: "Borders" section). */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.875rem;
+  --radius-full: 999px;
+
+  /* Motion durations and easings, tuned per Creative Direction's Motion
+     Philosophy (150-250ms, real easing curves, never default browser
+     timing). Exposed as tokens here so both CSS transitions and the
+     Motion (Framer Motion) layer in src/lib/motion.ts read from the same
+     source. */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 250ms;
+
+  /* Color tokens: light mode (default). A warm-tinted neutral scale
+     rather than pure gray, per Creative Direction's color philosophy,
+     paired with a single accent used only on interactive/emphasis
+     elements, never as decorative fill. */
+  --color-bg: #fbfaf8;
+  --color-bg-subtle: #f3f1ec;
+  --color-surface: #ffffff;
+  --color-border: #e4e0d8;
+  --color-border-strong: #8f8878;
+  --color-text: #1a1815;
+  --color-text-muted: #5b564c;
+  --color-accent: #3652e3;
+  --color-accent-contrast: #ffffff;
+  --color-focus-ring: #3652e3;
+
+  /* Evidence-status tag colors (Design Brief non-negotiable: an
+     evidence-status tag attached to every metric, never using color as
+     the sole differentiator -- see EvidenceStatusTag.tsx for the paired
+     icon + text label). */
+  --color-status-verified-bg: #e6f4ea;
+  --color-status-verified-text: #1e5a34;
+  --color-status-internal-bg: #eef0fb;
+  --color-status-internal-text: #2c3477;
+  --color-status-directional-bg: #fbf1e2;
+  --color-status-directional-text: #7a4c0c;
+}
+
+/* Dark tone, applied as a section-level pacing device (Creative
+   Direction: "Section-level light/dark alternation"), not a whole-site
+   user-facing toggle. Any subtree wrapped in [data-tone="dark"] gets this
+   palette; AA contrast is checked independently for this set, not
+   inherited from the light-mode numbers above. */
+[data-tone="dark"] {
+  --color-bg: #14130f;
+  --color-bg-subtle: #1c1b16;
+  --color-surface: #201f1a;
+  --color-border: #34322b;
+  --color-border-strong: #66614f;
+  --color-text: #f5f3ee;
+  --color-text-muted: #aba69b;
+  --color-accent: #8fa3ff;
+  --color-accent-contrast: #0b0b0b;
+  --color-focus-ring: #8fa3ff;
+
+  --color-status-verified-bg: #163524;
+  --color-status-verified-text: #8fe0ac;
+  --color-status-internal-bg: #202556;
+  --color-status-internal-text: #b7c0ff;
+  --color-status-directional-bg: #3a2c10;
+  --color-status-directional-text: #f0c887;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+  }
+
+  /* Design Brief must-have: visible keyboard focus states on every
+     interactive element, no exceptions. Using :focus-visible so mouse
+     users aren't shown a ring for click-based focus, while keyboard users
+     always get one. */
+  :focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Design Brief must-have: prefers-reduced-motion respected everywhere,
+     no exceptions for "signature" moments. This is a global backstop;
+     individual motion components also check the same preference via
+     src/lib/motion.ts so JS-driven animation (not just CSS transitions)
+     is covered too. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-contrast);
+  }
+}
