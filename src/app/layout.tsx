@@ -48,6 +48,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        {/* Functional grain, not decorative -- see globals.css .grain-overlay
+            for the full rationale (prevents banding on flat color fields). */}
+        <div className="grain-overlay" aria-hidden="true" />
         <SkipLink />
         <NavBar />
         <main id="main-content">{children}</main>
