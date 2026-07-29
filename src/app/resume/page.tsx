@@ -28,7 +28,14 @@ export default function ResumePage() {
       </Text>
 
       <div className="mt-8">
-        <Button href="#" aria-disabled="true">
+        {/* A real disabled <button>, not a Link with aria-disabled: an
+            anchor's default navigation still fires on click or Enter
+            regardless of aria-disabled, so the previous version silently
+            sent visitors to "#" instead of actually doing nothing. The
+            single resume link is still unresolved between two conflicting
+            live URLs (see Master_Portfolio_Knowledge_Base.md 2.7); this
+            stays genuinely inert until that's settled. */}
+        <Button type="button" disabled title="Resume link pending confirmation">
           Download PDF (link pending)
         </Button>
       </div>
