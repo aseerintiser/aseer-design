@@ -14,6 +14,8 @@ export const metadata: Metadata = {
 
 export default function ResearchIndexPage() {
   const projects = getProjectsByTrack("research");
+  const flagship = projects.filter((project) => project.isFlagship);
+  const rest = projects.filter((project) => !project.isFlagship);
 
   return (
     <Section density="open">
@@ -22,8 +24,16 @@ export default function ResearchIndexPage() {
         Research on trust, AI, and public-service technology, feeding
         directly into how I design.
       </Text>
+      {/* Same reasoning as the Work index: the single flagship (Lumi)
+          gets a full-width feature row instead of competing at equal
+          size with the other two research entries. */}
       <Grid className="mt-12" gap="lg">
-        {projects.map((project) => (
+        {flagship.map((project) => (
+          <div key={project.slug} className="col-span-4 md:col-span-8 lg:col-span-12">
+            <ProjectCard project={project} />
+          </div>
+        ))}
+        {rest.map((project) => (
           <div key={project.slug} className="col-span-4 md:col-span-4">
             <ProjectCard project={project} />
           </div>
