@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
 import type { ProjectSummary } from "@/content/types";
 import { ProjectVisual } from "./ProjectVisual";
+import { ArrowIcon } from "./ArrowIcon";
 import { cn } from "@/lib/utils";
 
 const scaleLabel: Record<ProjectSummary["scale"], string> = {
@@ -107,16 +108,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
           </p>
           <p className="flex items-center gap-1.5 text-sm text-[var(--color-text)]">
             <span>{project.oneLineScope}</span>
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 16 16"
-              className="h-3.5 w-3.5 shrink-0 -translate-x-1 text-[var(--color-accent)] opacity-0 transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-0 group-hover:opacity-100"
-            >
-              <path
-                fill="currentColor"
-                d="M9.3 3.3a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-1.4-1.4L11.6 9H2a1 1 0 1 1 0-2h9.6L9.3 4.7a1 1 0 0 1 0-1.4Z"
-              />
-            </svg>
+            <ArrowIcon className="h-3.5 w-3.5 shrink-0 -translate-x-1 text-[var(--color-accent)] opacity-0 transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-0 group-hover:opacity-100" />
           </p>
         </div>
       </div>

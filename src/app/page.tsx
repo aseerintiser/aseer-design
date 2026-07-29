@@ -4,6 +4,7 @@ import { Grid } from "@/components/layout/Grid";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { Button } from "@/components/ui/Button";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { ProjectVisual } from "@/components/ui/ProjectVisual";
 import { KineticHeadline } from "@/components/ui/KineticHeadline";
@@ -37,9 +38,7 @@ export default function HomePage() {
       <Section density="open" as="section" className="overflow-visible">
         <Grid gap="lg" className="items-center">
           <div className="col-span-4 md:col-span-8 lg:col-span-7">
-            <p className="text-sm font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
-              {site.title}
-            </p>
+            <Eyebrow>{site.title}</Eyebrow>
             <Heading level={1} size="display" className="mt-3 max-w-4xl">
               <KineticHeadline text={site.name} />
             </Heading>

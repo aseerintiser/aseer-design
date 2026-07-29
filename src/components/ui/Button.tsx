@@ -1,6 +1,7 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { ArrowIcon } from "./ArrowIcon";
 
 type Variant = "primary" | "secondary" | "ghost";
 type Size = "md" | "sm";
@@ -46,21 +47,6 @@ type ButtonAsLink = CommonProps &
 
 type ButtonProps = ButtonAsButton | ButtonAsLink;
 
-function Arrow() {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 16 16"
-      className="h-3.5 w-3.5 shrink-0 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-0.5"
-    >
-      <path
-        fill="currentColor"
-        d="M9.3 3.3a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-1.4-1.4L11.6 9H2a1 1 0 1 1 0-2h9.6L9.3 4.7a1 1 0 0 1 0-1.4Z"
-      />
-    </svg>
-  );
-}
-
 /**
  * A single Button component that renders as a real <button> or, when
  * given an `href`, a Next.js <Link> styled identically. Keeping one
@@ -84,7 +70,9 @@ export function Button({
     return (
       <Link href={href} className={classes} {...rest}>
         {children}
-        {showArrow && <Arrow />}
+        {showArrow && (
+          <ArrowIcon className="h-3.5 w-3.5 shrink-0 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-0.5" />
+        )}
       </Link>
     );
   }
@@ -92,7 +80,9 @@ export function Button({
   return (
     <button className={classes} {...(props as ButtonAsButton)}>
       {children}
-      {showArrow && <Arrow />}
+      {showArrow && (
+        <ArrowIcon className="h-3.5 w-3.5 shrink-0 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-0.5" />
+      )}
     </button>
   );
 }

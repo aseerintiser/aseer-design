@@ -6,6 +6,7 @@ import { MetaRow } from "@/components/ui/MetaRow";
 import { EvidenceStatusTag } from "@/components/ui/EvidenceStatusTag";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { StaggerContainer, StaggerItem } from "@/components/ui/Stagger";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 
 function MetricList({ metrics }: { metrics: SourcedMetric[] }) {
   return (
@@ -68,9 +69,7 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
 
       {/* 1. Header */}
       <Section as="header" density="open">
-        <p className="text-sm font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
-          {caseStudy.track === "work" ? "Work" : "Research"}
-        </p>
+        <Eyebrow>{caseStudy.track === "work" ? "Work" : "Research"}</Eyebrow>
         <Heading level={1} size="display" className="mt-2 max-w-4xl">
           {caseStudy.title}
         </Heading>
