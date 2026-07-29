@@ -5,26 +5,45 @@ import { Text } from "@/components/ui/Text";
 import { MetaRow } from "@/components/ui/MetaRow";
 import { EvidenceStatusTag } from "@/components/ui/EvidenceStatusTag";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
-import { Reveal } from "@/components/ui/Reveal";
+import { StaggerContainer, StaggerItem } from "@/components/ui/Stagger";
 
 function MetricList({ metrics }: { metrics: SourcedMetric[] }) {
   return (
-    <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <StaggerContainer className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       {metrics.map((metric) => (
-        <div
+        <StaggerItem
           key={metric.label}
           className="rounded-[var(--radius-md)] border border-[var(--color-border)] p-4"
         >
-          <div className="flex items-start justify-between gap-2">
-            <dt className="text-sm text-[var(--color-text-muted)]">
-              {metric.label}
-            </dt>
-            <EvidenceStatusTag status={metric.status} />
-          </div>
-          <dd className="mt-1 text-xl font-medium">{metric.value}</dd>
-        </div>
+          <dl>
+            <div className="flex items-start justify-between gap-2">
+              <dt className="text-sm text-[var(--color-text-muted)]">
+                {metric.label}
+              </dt>
+              <EvidenceStatusTag status={metric.status} />
+            </div>
+            <dd className="mt-1 font-mono text-xl font-medium tabular-nums">
+              {metric.value}
+            </dd>
+          </dl>
+        </StaggerItem>
       ))}
-    </dl>
+    </StaggerContainer>
+  );
+}
+
+/** Large ghost numeral marking each section, an editorial "chapter
+ * marker" device (Design Brief Nice-to-Have) that also reinforces the
+ * fixed seven-part structure itself -- a reviewer can see at a glance
+ * how far through the framework they are. */
+function SectionNumber({ n }: { n: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="mb-2 block font-[family-name:var(--font-display)] text-sm text-[var(--color-text-muted)]/70 select-none"
+    >
+      {n}
+    </span>
   );
 }
 
@@ -32,15 +51,15 @@ function MetricList({ metrics }: { metrics: SourcedMetric[] }) {
  * The reusable seven-section case-study template, implementing
  * Portfolio_Content_Architecture_Blueprint.md Part 5 exactly in this
  * order: Header, Context, Role & Collaboration, Decisions & Trade-offs,
- * Evidence & Testing, Outcome, Reflection. Every project case study
- * (Milestones 4-7 of the wider roadmap) renders through this one
- * component so the framework only needs to be built once, per the
- * Blueprint's own writing-order rationale.
+ * Evidence & Testing, Outcome, Reflection.
  *
- * Density alternates deliberately (open hero, dense evidence, open
- * reflection) per the Creative Direction's pacing rule; this is
- * structure only for this milestone; body copy throughout is
- * placeholder pending the per-project writing milestones.
+ * Motion is deliberately uneven across sections rather than one Reveal
+ * wrapped around everything: Context and Role & Collaboration are plain
+ * paragraphs and render directly (per the Creative Direction's "plain
+ * text generally doesn't need one at all"); Decisions and the metric
+ * blocks are the sections that actually benefit from a reveal (data,
+ * discrete items) and use a coordinated stagger instead of N identical
+ * fade-ups.
  */
 export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
   return (
@@ -52,13 +71,13 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
         <p className="text-sm font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
           {caseStudy.track === "work" ? "Work" : "Research"}
         </p>
-        <Heading level={1} size="display" className="mt-2">
+        <Heading level={1} size="display" className="mt-2 max-w-4xl">
           {caseStudy.title}
         </Heading>
         <Text size="lead" muted className="mt-4 max-w-[var(--measure)]">
           {caseStudy.oneLineScope}
         </Text>
-        <div className="mt-8">
+        <div className="mt-10 border-t border-[var(--color-border)] pt-8">
           <MetaRow
             items={[
               { label: "Role", value: caseStudy.meta.role },
@@ -72,41 +91,39 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
 
       {/* 2. Context */}
       <Section density="default">
-        <Reveal>
-          <Heading level={2}>Context</Heading>
-          <Text className="mt-4 max-w-[var(--measure)]">
-            {caseStudy.context}
-          </Text>
-        </Reveal>
+        <SectionNumber n="01" />
+        <Heading level={2}>Context</Heading>
+        <Text className="mt-4 max-w-[var(--measure)]">{caseStudy.context}</Text>
       </Section>
 
       {/* 3. Role & Collaboration */}
       <Section density="default" tone="dark">
-        <Reveal>
-          <Heading level={2}>Role &amp; Collaboration</Heading>
-          <Text className="mt-4 max-w-[var(--measure)]">
-            {caseStudy.roleAndCollaboration}
-          </Text>
-        </Reveal>
+        <SectionNumber n="02" />
+        <Heading level={2}>Role &amp; Collaboration</Heading>
+        <Text className="mt-4 max-w-[var(--measure)]">
+          {caseStudy.roleAndCollaboration}
+        </Text>
       </Section>
 
       {/* 4. Decisions & Trade-offs */}
       <Section density="default">
+        <SectionNumber n="03" />
         <Heading level={2}>Decisions &amp; Trade-offs</Heading>
-        <div className="mt-6 space-y-8">
+        <StaggerContainer className="mt-6 space-y-8">
           {caseStudy.decisions.map((decision) => (
-            <Reveal key={decision.title}>
+            <StaggerItem key={decision.title}>
               <Heading level={3} display={false}>
                 {decision.title}
               </Heading>
               <Text className="mt-2 max-w-[var(--measure)]">{decision.body}</Text>
-            </Reveal>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </Section>
 
       {/* 5. Evidence & Testing */}
       <Section density="dense" tone="dark">
+        <SectionNumber n="04" />
         <Heading level={2}>Evidence &amp; Testing</Heading>
         <Text className="mt-4 max-w-[var(--measure)]">
           {caseStudy.evidence.body}
@@ -120,10 +137,9 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
 
       {/* 6. Outcome */}
       <Section density="default">
+        <SectionNumber n="05" />
         <Heading level={2}>Outcome</Heading>
-        <Text className="mt-4 max-w-[var(--measure)]">
-          {caseStudy.outcome.body}
-        </Text>
+        <Text className="mt-4 max-w-[var(--measure)]">{caseStudy.outcome.body}</Text>
         {caseStudy.outcome.metrics && caseStudy.outcome.metrics.length > 0 && (
           <div className="mt-6">
             <MetricList metrics={caseStudy.outcome.metrics} />
@@ -131,7 +147,10 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
         )}
       </Section>
 
-      {/* 7. Reflection */}
+      {/* 7. Reflection. Extra-open density and no numeral -- a
+          deliberate quiet beat at the close, per the Creative
+          Direction's "deliberately large, empty beat... mirrors a pause
+          before a closing scene." */}
       <Section density="open">
         <Heading level={2}>Reflection</Heading>
         <Text size="lead" className="mt-4 max-w-[var(--measure)]">

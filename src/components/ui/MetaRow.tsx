@@ -21,7 +21,7 @@ export function MetaRow({ items }: MetaRowProps) {
           <dt className="text-xs uppercase tracking-wide text-[var(--color-text-muted)]">
             {item.label}
           </dt>
-          <dd className="mt-1 text-sm font-medium text-[var(--color-text)]">
+          <dd className="mt-1 font-mono text-sm font-medium tabular-nums text-[var(--color-text)]">
             {item.value}
           </dd>
         </div>
