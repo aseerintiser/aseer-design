@@ -26,10 +26,14 @@ interface SectionProps {
   fullBleed?: boolean;
 }
 
+// Wired directly to the 8-point spacing tokens defined in globals.css,
+// so the "generous at the extremes, tight in evidence sections" contrast
+// the Creative Direction calls for is a real, traceable relationship
+// between these three values, not three independently-guessed numbers.
 const densityClass = {
-  default: "py-12 md:py-16",
-  open: "py-20 md:py-32",
-  dense: "py-8 md:py-10",
+  default: "py-[var(--spacing-3xl)] md:py-[var(--spacing-4xl)]",
+  open: "py-[var(--spacing-4xl)] md:py-[var(--spacing-5xl)]",
+  dense: "py-[var(--spacing-xl)] md:py-[var(--spacing-2xl)]",
 } as const;
 
 export function Section({

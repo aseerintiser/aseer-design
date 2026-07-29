@@ -22,12 +22,18 @@ interface HeadingProps {
   id?: string;
 }
 
+// Fluid, clamp-based sizes (tokens defined in globals.css) instead of
+// fixed breakpoint jumps -- type scales continuously with the viewport
+// rather than visibly snapping at md:, which is one of the more
+// reliable "hand-tuned vs. default-Tailwind" tells. Tracking tightens at
+// larger sizes, a standard optical adjustment for display type that the
+// previous flat `tracking-tight` on every size ignored.
 const sizeClass: Record<HeadingLevel | "display", string> = {
-  display: "text-5xl md:text-7xl leading-[1.05] tracking-tight",
-  1: "text-4xl md:text-6xl leading-[1.1] tracking-tight",
-  2: "text-3xl md:text-4xl leading-[1.15] tracking-tight",
-  3: "text-2xl md:text-3xl leading-snug",
-  4: "text-lg md:text-xl leading-snug",
+  display: "text-[length:var(--text-display)] leading-[1.03] tracking-[-0.03em]",
+  1: "text-[length:var(--text-h1)] leading-[1.08] tracking-[-0.025em]",
+  2: "text-[length:var(--text-h2)] leading-[1.15] tracking-[-0.015em]",
+  3: "text-[length:var(--text-h3)] leading-snug tracking-[-0.01em]",
+  4: "text-[length:var(--text-h4)] leading-snug",
 };
 
 const tagForLevel: Record<HeadingLevel, ElementType> = {

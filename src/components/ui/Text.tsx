@@ -12,7 +12,7 @@ interface TextProps {
 }
 
 const sizeClass = {
-  lead: "text-lg md:text-xl leading-relaxed",
+  lead: "text-[length:var(--text-lead)] leading-relaxed",
   body: "text-base leading-relaxed",
   small: "text-sm leading-normal",
 } as const;
