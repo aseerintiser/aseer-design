@@ -28,11 +28,20 @@ interface HeadingProps {
 // reliable "hand-tuned vs. default-Tailwind" tells. Tracking tightens at
 // larger sizes, a standard optical adjustment for display type that the
 // previous flat `tracking-tight` on every size ignored.
+//
+// Explicit font-weight per size: Fraunces is a variable font, so with no
+// weight declared it renders at the browser default (400) everywhere,
+// including the homepage hero at up to 5.5rem. The Design Brief calls
+// for "an immediately confident type moment" in the first five seconds;
+// a regular-weight serif at that scale reads as tentative, not
+// confident, however good the typeface choice is. Weight steps down as
+// size steps down, so the effect is "considered," not "everything bold."
 const sizeClass: Record<HeadingLevel | "display", string> = {
-  display: "text-[length:var(--text-display)] leading-[1.03] tracking-[-0.03em]",
-  1: "text-[length:var(--text-h1)] leading-[1.08] tracking-[-0.025em]",
-  2: "text-[length:var(--text-h2)] leading-[1.15] tracking-[-0.015em]",
-  3: "text-[length:var(--text-h3)] leading-snug tracking-[-0.01em]",
+  display:
+    "text-[length:var(--text-display)] font-[560] leading-[1.03] tracking-[-0.03em]",
+  1: "text-[length:var(--text-h1)] font-[560] leading-[1.08] tracking-[-0.025em]",
+  2: "text-[length:var(--text-h2)] font-[540] leading-[1.15] tracking-[-0.015em]",
+  3: "text-[length:var(--text-h3)] font-[520] leading-snug tracking-[-0.01em]",
   4: "text-[length:var(--text-h4)] leading-snug",
 };
 
