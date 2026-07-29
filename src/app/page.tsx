@@ -42,20 +42,41 @@ export default function HomePage() {
             <Heading level={1} size="display" className="mt-3 max-w-4xl">
               <KineticHeadline text={site.name} />
             </Heading>
-            <Text size="lead" muted className="mt-6 max-w-[var(--measure)]">
-              {site.heroProofPoint}
-            </Text>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Button href="/work">View Work</Button>
-              <Button href="/research" variant="secondary">
-                View Research
-              </Button>
-            </div>
+            {/* The headline's word-stagger runs roughly 0.05-0.55s after
+                mount (see wordContainer/wordItem in lib/motion). Without a
+                delay here, the proof point and CTAs would render instantly
+                and sit still for half a second next to a headline still
+                animating -- two disconnected timings in one hero. A single
+                Reveal at 0.35s brings them in while the last word or two is
+                still settling, so the whole hero reads as one coordinated
+                entrance instead of "headline animation, then everything
+                else." */}
+            <Reveal delay={0.35}>
+              <Text size="lead" muted className="mt-6 max-w-[var(--measure)]">
+                {site.heroProofPoint}
+              </Text>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Button href="/work">View Work</Button>
+                <Button href="/research" variant="secondary">
+                  View Research
+                </Button>
+              </div>
+            </Reveal>
           </div>
 
           <div className="col-span-4 md:col-span-8 lg:col-span-5">
             <Reveal delay={0.15}>
-              <div className="relative -mb-24 aspect-[4/5] w-full max-w-sm justify-self-end overflow-hidden rounded-[var(--radius-lg)] shadow-[0_30px_60px_-24px_rgba(0,0,0,0.35)] md:-mb-32">
+              {/* justify-self-end was a no-op here: this div's parent is
+                  Reveal's motion.div, not the Grid directly, so
+                  justify-self never had a grid container to act against
+                  and the panel was silently rendering flush-left (default
+                  block position) at every breakpoint, not just mobile.
+                  Margin-based alignment works regardless of parent display
+                  type: mx-auto centers it under the stacked mobile/md
+                  layout, and lg:mr-0 (overriding the mx-auto margin-right
+                  at that breakpoint) pushes it flush right once the 7/5
+                  split is actually in effect. */}
+              <div className="relative -mb-24 aspect-[4/5] w-full max-w-sm mx-auto overflow-hidden rounded-[var(--radius-lg)] shadow-[0_30px_60px_-24px_rgba(0,0,0,0.35)] md:-mb-32 lg:mr-0">
                 <ProjectVisual
                   seed={site.name}
                   monogram={site.shortName.charAt(0)}
