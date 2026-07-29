@@ -1,15 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion, useReducedMotion } from "motion/react";
 import { nav, site } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 /**
- * Persistent top navigation. Blur-behind is the one approved use of
- * glassmorphism in the Creative Direction doc ("appropriate in exactly
- * one place: a persistent nav bar that overlays scrolling content").
+ * Persistent top navigation.
+ *
+ * Two refinements over a flat sticky bar: the background is transparent
+ * at the very top of the page and only picks up the blur-behind treatment
+ * once the visitor has actually scrolled past the hero (so the hero's
+ * generated visual reads as full-bleed for that first screen, rather
+ * than being capped by a bar immediately), and the active link is
+ * indicated with a small animated underline that slides between items
+ * (a `layoutId`-driven shared element) instead of a flat color swap.
  *
  * Five items, per Portfolio_Content_Architecture_Blueprint.md Part 2:
  * Home, Work, Research, About, Resume, with Contact kept out of the nav
@@ -17,10 +24,28 @@ import { cn } from "@/lib/utils";
  */
 export function NavBar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 24);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur">
+    <header
+      className={cn(
+        "sticky top-0 z-40 border-b transition-colors duration-[var(--duration-slow)] ease-[var(--ease-standard)]",
+        scrolled
+          ? "border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur"
+          : "border-transparent bg-transparent",
+      )}
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link
           href="/"
@@ -30,25 +55,36 @@ export function NavBar() {
         </Link>
 
         <nav aria-label="Primary" className="hidden md:block">
-          <ul className="flex items-center gap-8">
+          <ul className="flex items-center gap-2">
             {nav.map((item) => {
               const isActive =
                 item.href === "/"
                   ? pathname === "/"
                   : pathname.startsWith(item.href);
               return (
-                <li key={item.href}>
+                <li key={item.href} className="relative">
                   <Link
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
                     className={cn(
-                      "text-sm font-medium transition-colors duration-[var(--duration-fast)]",
+                      "relative block px-3 py-2 text-sm font-medium transition-colors duration-[var(--duration-fast)]",
                       isActive
                         ? "text-[var(--color-text)]"
                         : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]",
                     )}
                   >
                     {item.label}
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-underline"
+                        className="absolute inset-x-3 -bottom-[1px] h-[2px] rounded-full bg-[var(--color-accent)]"
+                        transition={
+                          shouldReduceMotion
+                            ? { duration: 0 }
+                            : { type: "spring", stiffness: 500, damping: 40 }
+                        }
+                      />
+                    )}
                   </Link>
                 </li>
               );
@@ -83,7 +119,7 @@ export function NavBar() {
         <nav
           id="mobile-nav"
           aria-label="Primary"
-          className="border-t border-[var(--color-border)] px-4 py-4 md:hidden"
+          className="border-t border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-4 md:hidden"
         >
           <ul className="flex flex-col gap-1">
             {nav.map((item) => (

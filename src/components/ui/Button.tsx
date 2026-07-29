@@ -5,16 +5,20 @@ import { cn } from "@/lib/utils";
 type Variant = "primary" | "secondary" | "ghost";
 type Size = "md" | "sm";
 
+// Real press/hover physics instead of an opacity fade: primary scales
+// down slightly on press (a tactile cue borrowed from native controls)
+// and its background shifts a shade rather than just dimming, which
+// reads as considered rather than a default browser-ish hover.
 const base =
   "inline-flex items-center justify-center gap-2 rounded-[var(--radius-md)] font-medium " +
-  "transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] " +
-  "disabled:opacity-50 disabled:pointer-events-none";
+  "transition-[transform,background-color,box-shadow] duration-[var(--duration-fast)] ease-[var(--ease-standard)] " +
+  "active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none";
 
 const variantClass: Record<Variant, string> = {
   primary:
-    "bg-[var(--color-accent)] text-[var(--color-accent-contrast)] hover:opacity-90",
+    "bg-[var(--color-accent)] text-[var(--color-accent-contrast)] shadow-[0_1px_2px_rgba(0,0,0,0.06)] hover:shadow-[0_10px_24px_-10px_color-mix(in_srgb,var(--color-accent)_60%,transparent)] hover:brightness-110",
   secondary:
-    "bg-transparent text-[var(--color-text)] border border-[var(--color-border-strong)] hover:bg-[var(--color-bg-subtle)]",
+    "bg-transparent text-[var(--color-text)] border border-[var(--color-border-strong)] hover:border-[var(--color-text)] hover:bg-[var(--color-bg-subtle)]",
   ghost: "bg-transparent text-[var(--color-text)] hover:bg-[var(--color-bg-subtle)]",
 };
 
@@ -28,6 +32,10 @@ interface CommonProps {
   variant?: Variant;
   size?: Size;
   className?: string;
+  /** Show the trailing arrow that shifts on hover. Defaults to on for
+   * the primary variant, off otherwise, since it's meant to read as a
+   * "go" affordance rather than decoration on every button. */
+  withArrow?: boolean;
 }
 
 type ButtonAsButton = CommonProps &
@@ -37,6 +45,21 @@ type ButtonAsLink = CommonProps &
   AnchorHTMLAttributes<HTMLAnchorElement> & { href: string };
 
 type ButtonProps = ButtonAsButton | ButtonAsLink;
+
+function Arrow() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      className="h-3.5 w-3.5 shrink-0 transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-0.5"
+    >
+      <path
+        fill="currentColor"
+        d="M9.3 3.3a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-1.4-1.4L11.6 9H2a1 1 0 1 1 0-2h9.6L9.3 4.7a1 1 0 0 1 0-1.4Z"
+      />
+    </svg>
+  );
+}
 
 /**
  * A single Button component that renders as a real <button> or, when
@@ -50,15 +73,18 @@ export function Button({
   variant = "primary",
   size = "md",
   className,
+  withArrow,
   ...props
 }: ButtonProps) {
-  const classes = cn(base, variantClass[variant], sizeClass[size], className);
+  const showArrow = withArrow ?? variant === "primary";
+  const classes = cn("group", base, variantClass[variant], sizeClass[size], className);
 
   if ("href" in props && props.href) {
     const { href, ...rest } = props as ButtonAsLink;
     return (
       <Link href={href} className={classes} {...rest}>
         {children}
+        {showArrow && <Arrow />}
       </Link>
     );
   }
@@ -66,6 +92,7 @@ export function Button({
   return (
     <button className={classes} {...(props as ButtonAsButton)}>
       {children}
+      {showArrow && <Arrow />}
     </button>
   );
 }
