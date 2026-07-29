@@ -95,8 +95,14 @@ export default function HomePage() {
           nowhere else on this page so it stays a considered accent
           rather than a repeated tic. */}
       <Section density="default" tone="dark" className="pt-32 md:pt-40">
-        <div className="grid gap-12 md:grid-cols-2 md:gap-8">
-          <div className="relative">
+        {/* Standardized on the shared Grid component (was a raw ad hoc
+            `grid md:grid-cols-2`) so every section on the page places
+            content with the same 4/8/12-column system instead of two
+            slightly different grid implementations living side by side.
+            gap="md" is overridden to a flat gap-8, reproducing the
+            original's asymmetric gap-12→gap-8 stepdown at md and up. */}
+        <Grid gap="md" className="gap-12 md:gap-8">
+          <div className="relative col-span-4 md:col-span-4 lg:col-span-6">
             <span
               aria-hidden="true"
               className="absolute -top-10 -left-1 font-[family-name:var(--font-display)] text-7xl text-[var(--color-text)]/10 select-none"
@@ -111,7 +117,7 @@ export default function HomePage() {
               government-adjacent platform.
             </Text>
           </div>
-          <div className="relative">
+          <div className="relative col-span-4 md:col-span-4 lg:col-span-6">
             <span
               aria-hidden="true"
               className="absolute -top-10 -left-1 font-[family-name:var(--font-display)] text-7xl text-[var(--color-text)]/10 select-none"
@@ -126,14 +132,15 @@ export default function HomePage() {
               directly into how I design.
             </Text>
           </div>
-        </div>
+        </Grid>
       </Section>
 
-      {/* Featured previews */}
+      {/* Featured previews. Same standardization: was a raw
+          `grid md:grid-cols-2`. */}
       <Section density="default">
-        <div className="grid gap-8 md:grid-cols-2">
+        <Grid gap="md" className="gap-8">
           {flagshipWork && (
-            <div>
+            <div className="col-span-4 md:col-span-4 lg:col-span-6">
               <p className="mb-3 text-sm font-medium text-[var(--color-text-muted)]">
                 Featured work
               </p>
@@ -141,14 +148,14 @@ export default function HomePage() {
             </div>
           )}
           {flagshipResearch && (
-            <div>
+            <div className="col-span-4 md:col-span-4 lg:col-span-6">
               <p className="mb-3 text-sm font-medium text-[var(--color-text-muted)]">
                 Featured research
               </p>
               <ProjectCard project={flagshipResearch} />
             </div>
           )}
-        </div>
+        </Grid>
       </Section>
 
       {/* Current status. Blueprint Part 3: closes the logistics gap
