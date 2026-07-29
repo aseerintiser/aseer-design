@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
@@ -27,6 +27,8 @@ export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     function onScroll() {
@@ -36,6 +38,30 @@ export function NavBar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Focus management for the mobile menu: without this, opening it via
+  // keyboard leaves focus stranded on the trigger button while the menu
+  // it just revealed sits unreachable except by tabbing through whatever
+  // else is on the page first. Move focus into the menu on open, close on
+  // Escape, and return focus to the trigger on close so a keyboard user
+  // never loses their place.
+  useEffect(() => {
+    if (open) {
+      firstLinkRef.current?.focus();
+      function onKeyDown(event: KeyboardEvent) {
+        if (event.key === "Escape") {
+          setOpen(false);
+          triggerRef.current?.focus();
+        }
+      }
+      window.addEventListener("keydown", onKeyDown);
+      return () => window.removeEventListener("keydown", onKeyDown);
+    }
+  }, [open]);
+
+  function isActiveHref(href: string) {
+    return href === "/" ? pathname === "/" : pathname.startsWith(href);
+  }
 
   return (
     <header
@@ -57,10 +83,7 @@ export function NavBar() {
         <nav aria-label="Primary" className="hidden md:block">
           <ul className="flex items-center gap-2">
             {nav.map((item) => {
-              const isActive =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(item.href);
+              const isActive = isActiveHref(item.href);
               return (
                 <li key={item.href} className="relative">
                   <Link
@@ -93,6 +116,7 @@ export function NavBar() {
         </nav>
 
         <button
+          ref={triggerRef}
           type="button"
           className="inline-flex items-center justify-center rounded-[var(--radius-md)] p-2 md:hidden"
           aria-expanded={open}
@@ -122,17 +146,27 @@ export function NavBar() {
           className="border-t border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-4 md:hidden"
         >
           <ul className="flex flex-col gap-1">
-            {nav.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-[var(--radius-md)] px-3 py-3 text-base font-medium hover:bg-[var(--color-bg-subtle)]"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {nav.map((item, index) => {
+              const isActive = isActiveHref(item.href);
+              return (
+                <li key={item.href}>
+                  <Link
+                    ref={index === 0 ? firstLinkRef : undefined}
+                    href={item.href}
+                    aria-current={isActive ? "page" : undefined}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "block rounded-[var(--radius-md)] px-3 py-3 text-base font-medium transition-colors duration-[var(--duration-fast)]",
+                      isActive
+                        ? "bg-[var(--color-bg-subtle)] text-[var(--color-text)]"
+                        : "text-[var(--color-text-muted)] hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-text)]",
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
       )}
