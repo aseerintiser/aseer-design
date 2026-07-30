@@ -56,7 +56,19 @@ const placeholderNarrative = {
 /** Shared "Convay at a Glance" block, byte-identical across all four
  * Convay case studies on the live site -- kept as one constant here so
  * the four call sites can't quietly drift from each other, rather than
- * pasted four times. */
+ * pasted four times.
+ *
+ * TODO(verification-ledger): the figures below (93% transcription
+ * accuracy, 10,000-participant capacity, the SIDSSA 2025 framing, and
+ * the €5M government-projects figure) are already live on aseer.design
+ * today and are migrated verbatim per this milestone's "don't rewrite,
+ * flag instead" rule. But per the internal verification ledger these
+ * sit at "Tier 3" sourcing (self-reported / not independently
+ * confirmed) and, per that ledger, shouldn't be reused without a
+ * caveat or softened framing. This is a real conflict between what's
+ * already public and what the ledger recommends -- left unresolved
+ * here intentionally; a future content milestone should either source
+ * these properly, add an explicit caveat, or soften the claims. */
 const convayAtAGlance: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Convay at a Glance" },
   {

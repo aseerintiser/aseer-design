@@ -24,8 +24,14 @@ function SectionNumber({ n }: { n: number }) {
 function renderBlock(block: CaseStudyBlock, key: number) {
   switch (block.type) {
     case "heading":
+      // Semantic level 3 (not 4) here: the section-opening heading above
+      // is an h2, so an in-section sub-heading must be an h3 to avoid
+      // skipping a level in the document outline. `size={4}` keeps the
+      // smaller visual treatment the source's sub-headings call for --
+      // semantic level and visual size are independent on this
+      // component precisely so accessibility and design don't conflict.
       return (
-        <Heading key={key} level={4} display={false} className="mt-8 first:mt-0">
+        <Heading key={key} level={3} size={4} display={false} className="mt-8 first:mt-0">
           {block.text}
         </Heading>
       );
