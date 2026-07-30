@@ -40,6 +40,41 @@ export interface CaseStudyMeta {
 }
 
 /**
+ * Rich body content for migrated case studies (Milestone 2). Live
+ * aseer.design case studies don't follow a uniform section structure --
+ * each project has its own organic heading sequence ("Convay at a
+ * Glance", "The Problem", "Design Process & Reasoning", etc.) mixed with
+ * paragraphs, bullet lists, pull quotes, and image galleries. This is a
+ * block-based schema so that structure can be preserved exactly as
+ * migrated, rather than force-fitting live content into the abstract
+ * seven-section framework meant for *future* case-study writing
+ * (Portfolio_Strategy_Roadmap.md Section 12).
+ *
+ * `text` fields may contain literal **bold** and *italic* markers,
+ * migrated verbatim from the source site's markdown-like formatting --
+ * rendered via `renderInlineMarkdown` (src/lib/inline-markdown.tsx),
+ * not stripped, since that emphasis is part of the original voice.
+ */
+export type CaseStudyBlock =
+  | { type: "heading"; level: 3 | 4; text: string }
+  | { type: "paragraph"; text: string }
+  | { type: "list"; items: string[] }
+  | { type: "quote"; text: string; attribution?: string }
+  | {
+      type: "image";
+      src: string;
+      width: number;
+      height: number;
+      alt: string;
+      caption?: string;
+    }
+  | {
+      type: "imageRow";
+      images: { src: string; width: number; height: number; alt: string }[];
+    }
+  | { type: "link"; text: string; href: string };
+
+/**
  * Full case-study content, following the seven-section framework from
  * Portfolio_Content_Architecture_Blueprint.md Part 5. Body fields are
  * intentionally left as short placeholders for this milestone; the
@@ -48,19 +83,38 @@ export interface CaseStudyMeta {
  */
 export interface CaseStudy extends ProjectSummary {
   meta: CaseStudyMeta;
-  context: string;
-  roleAndCollaboration: string;
-  decisions: { title: string; body: string }[];
-  evidence: { body: string; metrics?: SourcedMetric[] };
-  outcome: { body: string; metrics?: SourcedMetric[] };
-  reflection: string;
+  // These six are optional because migrated ("complete") case studies
+  // use `body` instead -- see below. Still required in practice for
+  // "placeholder" case studies (the not-yet-written research track).
+  context?: string;
+  roleAndCollaboration?: string;
+  decisions?: { title: string; body: string }[];
+  evidence?: { body: string; metrics?: SourcedMetric[] };
+  outcome?: { body: string; metrics?: SourcedMetric[] };
+  reflection?: string;
   /** "placeholder" means the six narrative fields above are all still
    * the same generic filler sentence, not real case-study writing.
-   * CaseStudyLayout uses this to render one honest, well-designed "in
-   * progress" state instead of pretending there are six distinct
-   * finished sections that all happen to say the same thing -- repeating
-   * identical filler six times per case study (and identically across
-   * every case study) reads as an abandoned template, which is a worse
-   * impression than one clear, deliberate "not written yet" panel. */
+   * "complete" means real content has been migrated -- CaseStudyLayout
+   * renders `body` (see below) instead of the six flat fields, which are
+   * ignored once `body` is present. CaseStudyLayout uses this to render
+   * one honest, well-designed "in progress" state instead of pretending
+   * there are six distinct finished sections that all happen to say the
+   * same thing -- repeating identical filler six times per case study
+   * (and identically across every case study) reads as an abandoned
+   * template, which is a worse impression than one clear, deliberate
+   * "not written yet" panel. */
   contentStatus?: "placeholder" | "complete";
+  /** Real, migrated case-study content (Milestone 2). See CaseStudyBlock
+   * above for why this is block-based rather than the flat fields. Only
+   * present when contentStatus is "complete". */
+  body?: CaseStudyBlock[];
+  /** Verbatim from the live site's CATEGORY / ROLE lines, which are
+   * richer (multiple values) than the single-string `meta.role` field
+   * designed for the not-yet-written research case studies. Shown
+   * instead of meta.role/team when present. */
+  liveMeta?: {
+    category: string[];
+    role: string[];
+    tools: string[];
+  };
 }

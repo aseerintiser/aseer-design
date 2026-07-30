@@ -1,37 +1,12 @@
-import type { CaseStudy, SourcedMetric } from "@/content/types";
+import type { CaseStudy } from "@/content/types";
 import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { MetaRow } from "@/components/ui/MetaRow";
-import { EvidenceStatusTag } from "@/components/ui/EvidenceStatusTag";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
-import { StaggerContainer, StaggerItem } from "@/components/ui/Stagger";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-
-function MetricList({ metrics }: { metrics: SourcedMetric[] }) {
-  return (
-    <StaggerContainer className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      {metrics.map((metric) => (
-        <StaggerItem
-          key={metric.label}
-          className="rounded-[var(--radius-md)] border border-[var(--color-border)] p-4"
-        >
-          <dl>
-            <div className="flex items-start justify-between gap-2">
-              <dt className="text-sm text-[var(--color-text-muted)]">
-                {metric.label}
-              </dt>
-              <EvidenceStatusTag status={metric.status} />
-            </div>
-            <dd className="mt-1 font-mono text-xl font-medium tabular-nums">
-              {metric.value}
-            </dd>
-          </dl>
-        </StaggerItem>
-      ))}
-    </StaggerContainer>
-  );
-}
+import { CaseStudyBody } from "./CaseStudyBody";
+import { renderInlineMarkdown } from "@/lib/inline-markdown";
 
 /** Large ghost numeral marking each section, an editorial "chapter
  * marker" device (Design Brief Nice-to-Have) that also reinforces the
@@ -49,56 +24,63 @@ function SectionNumber({ n }: { n: string }) {
 }
 
 /**
- * The reusable seven-section case-study template, implementing
- * Portfolio_Content_Architecture_Blueprint.md Part 5 exactly in this
- * order: Header, Context, Role & Collaboration, Decisions & Trade-offs,
- * Evidence & Testing, Outcome, Reflection.
+ * Case-study page shell: header (title, scope, meta) plus either real
+ * migrated content or an honest "not written yet" placeholder.
  *
- * Motion is deliberately uneven across sections rather than one Reveal
- * wrapped around everything: Context and Role & Collaboration are plain
- * paragraphs and render directly (per the Creative Direction's "plain
- * text generally doesn't need one at all"); Decisions and the metric
- * blocks are the sections that actually benefit from a reveal (data,
- * discrete items) and use a coordinated stagger instead of N identical
- * fade-ups.
- *
- * The seven sections only render once `caseStudy.contentStatus` is
- * "complete". While it's "placeholder" (every case study right now),
- * a single consolidated section renders instead -- see the
- * `isPlaceholder` branch below.
+ * Originally this rendered a fixed seven-section framework
+ * (Portfolio_Content_Architecture_Blueprint.md Part 5) for every case
+ * study. Milestone 2 replaced that with `caseStudy.body` -- migrated
+ * live-site content that keeps each project's own organic section
+ * structure instead of force-fitting it into that template (see
+ * CaseStudyBody.tsx). Case studies without real content yet (the
+ * research track, still sourced only from the Career Archive) fall back
+ * to a single consolidated placeholder panel instead of pretending six
+ * distinct sections exist.
  */
 export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
-  const isPlaceholder = caseStudy.contentStatus === "placeholder";
+  // Migrated (Milestone 2) case studies carry richer, multi-value
+  // Role/Category/Tools straight from the live site's CATEGORY/ROLE/TOOLS
+  // lines. Team and Duration have no live-site equivalent (the source
+  // site doesn't state them per project) so those still come from the
+  // archive-sourced `meta` fields either way.
+  const metaItems = caseStudy.liveMeta
+    ? [
+        { label: "Role", value: caseStudy.liveMeta.role.join(", ") },
+        { label: "Category", value: caseStudy.liveMeta.category.join(", ") },
+        { label: "Duration", value: caseStudy.meta.duration },
+        { label: "Tools", value: caseStudy.liveMeta.tools.join(", ") },
+      ]
+    : [
+        { label: "Role", value: caseStudy.meta.role },
+        { label: "Team", value: caseStudy.meta.team },
+        { label: "Duration", value: caseStudy.meta.duration },
+        { label: "Tools", value: caseStudy.meta.tools },
+      ];
 
   return (
     <article>
       <ScrollProgress />
 
       {/* 1. Header. Role, team, duration, and tools are real facts
-          (sourced from the career archive), so these render regardless
-          of contentStatus -- only the six narrative sections below are
-          gated on it. */}
+          (sourced from the career archive or migrated from the live
+          site), so these render regardless of contentStatus -- only the
+          narrative sections below are gated on it. */}
       <Section as="header" density="open">
         <Eyebrow>{caseStudy.track === "work" ? "Work" : "Research"}</Eyebrow>
         <Heading level={1} size="display" className="mt-2 max-w-4xl">
           {caseStudy.title}
         </Heading>
         <Text size="lead" muted className="mt-4 max-w-[var(--measure)]">
-          {caseStudy.oneLineScope}
+          {renderInlineMarkdown(caseStudy.oneLineScope)}
         </Text>
         <div className="mt-10 border-t border-[var(--color-border)] pt-8">
-          <MetaRow
-            items={[
-              { label: "Role", value: caseStudy.meta.role },
-              { label: "Team", value: caseStudy.meta.team },
-              { label: "Duration", value: caseStudy.meta.duration },
-              { label: "Tools", value: caseStudy.meta.tools },
-            ]}
-          />
+          <MetaRow items={metaItems} />
         </div>
       </Section>
 
-      {isPlaceholder ? (
+      {caseStudy.body ? (
+        <CaseStudyBody blocks={caseStudy.body} />
+      ) : (
         /* One honest, considered "not written yet" state instead of six
            sections that would otherwise all repeat the same generic
            filler sentence (and repeat it identically across every other
@@ -114,77 +96,6 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
             and outcome, is still being drafted.
           </Text>
         </Section>
-      ) : (
-        <>
-          {/* 2. Context */}
-          <Section density="default">
-            <SectionNumber n="01" />
-            <Heading level={2}>Context</Heading>
-            <Text className="mt-4 max-w-[var(--measure)]">{caseStudy.context}</Text>
-          </Section>
-
-          {/* 3. Role & Collaboration */}
-          <Section density="default" tone="dark">
-            <SectionNumber n="02" />
-            <Heading level={2}>Role &amp; Collaboration</Heading>
-            <Text className="mt-4 max-w-[var(--measure)]">
-              {caseStudy.roleAndCollaboration}
-            </Text>
-          </Section>
-
-          {/* 4. Decisions & Trade-offs */}
-          <Section density="default">
-            <SectionNumber n="03" />
-            <Heading level={2}>Decisions &amp; Trade-offs</Heading>
-            <StaggerContainer className="mt-6 space-y-8">
-              {caseStudy.decisions.map((decision) => (
-                <StaggerItem key={decision.title}>
-                  <Heading level={3} display={false}>
-                    {decision.title}
-                  </Heading>
-                  <Text className="mt-2 max-w-[var(--measure)]">{decision.body}</Text>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </Section>
-
-          {/* 5. Evidence & Testing */}
-          <Section density="dense" tone="dark">
-            <SectionNumber n="04" />
-            <Heading level={2}>Evidence &amp; Testing</Heading>
-            <Text className="mt-4 max-w-[var(--measure)]">
-              {caseStudy.evidence.body}
-            </Text>
-            {caseStudy.evidence.metrics && caseStudy.evidence.metrics.length > 0 && (
-              <div className="mt-6">
-                <MetricList metrics={caseStudy.evidence.metrics} />
-              </div>
-            )}
-          </Section>
-
-          {/* 6. Outcome */}
-          <Section density="default">
-            <SectionNumber n="05" />
-            <Heading level={2}>Outcome</Heading>
-            <Text className="mt-4 max-w-[var(--measure)]">{caseStudy.outcome.body}</Text>
-            {caseStudy.outcome.metrics && caseStudy.outcome.metrics.length > 0 && (
-              <div className="mt-6">
-                <MetricList metrics={caseStudy.outcome.metrics} />
-              </div>
-            )}
-          </Section>
-
-          {/* 7. Reflection. Extra-open density and no numeral -- a
-              deliberate quiet beat at the close, per the Creative
-              Direction's "deliberately large, empty beat... mirrors a pause
-              before a closing scene." */}
-          <Section density="open">
-            <Heading level={2}>Reflection</Heading>
-            <Text size="lead" className="mt-4 max-w-[var(--measure)]">
-              {caseStudy.reflection}
-            </Text>
-          </Section>
-        </>
       )}
     </article>
   );
