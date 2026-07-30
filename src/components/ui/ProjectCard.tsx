@@ -6,6 +6,7 @@ import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/reac
 import type { ProjectSummary } from "@/content/types";
 import { ProjectVisual } from "./ProjectVisual";
 import { ArrowIcon } from "./ArrowIcon";
+import { renderInlineMarkdown } from "@/lib/inline-markdown";
 import { cn } from "@/lib/utils";
 
 const scaleLabel: Record<ProjectSummary["scale"], string> = {
@@ -106,9 +107,16 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
             {scaleLabel[project.scale]}
             {isContingent ? " · Decision pending" : ""}
           </p>
-          <p className="flex items-center gap-1.5 text-sm text-[var(--color-text)]">
-            <span>{project.oneLineScope}</span>
-            <ArrowIcon className="h-3.5 w-3.5 shrink-0 -translate-x-1 text-[var(--color-accent)] opacity-0 transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-0 group-hover:opacity-100" />
+          <p className="flex items-start gap-1.5 text-sm text-[var(--color-text)]">
+            {/* line-clamp-2: migrated (Milestone 2) case studies carry a
+                full multi-sentence intro paragraph in oneLineScope (real
+                content, verbatim from the live site's own project intro),
+                which is the right length for the case-study header but
+                far too long for a compact index card. Clamping is a
+                visual/formatting change only -- the underlying text is
+                untouched, just visually truncated with an ellipsis. */}
+            <span className="line-clamp-2">{renderInlineMarkdown(project.oneLineScope)}</span>
+            <ArrowIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 -translate-x-1 text-[var(--color-accent)] opacity-0 transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:translate-x-0 group-hover:opacity-100" />
           </p>
         </div>
       </div>
