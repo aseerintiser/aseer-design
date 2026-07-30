@@ -1372,32 +1372,39 @@ const convayNotificationsBody: CaseStudyBlock[] = [
 // generic, schema-registered block types, not Lumi-specific -- any
 // future case study can use them as data without new component work.
 //
-// Milestone D: real assets, captured directly from the live Lumi
-// prototype (tweak-big-44404856.figma.site) via browser automation,
-// with Aseer's explicit permission to derive presentation assets from
-// authentic project material rather than waiting for manually-supplied
-// files. Nothing here is invented -- every screen, the real TOAS/POAS
-// rent figures, and the fallback response text are all real captures.
-// Self-hosted in /public/lumi (not hotlinked from framerusercontent.com
-// like the migrated Convay/FitVibe/TravelMate assets) since these were
-// captured directly, not fetched from a blocked domain:
-//   - hero.jpg / thumbnail.jpg: the real landing screen, cropped two
-//     ways (full card for the case study body, a tighter logo+tagline
-//     crop for ProjectCard's 4:3 media block).
-//   - tampere-housing.jpg: the real "Student housing -> Tampere" screen,
-//     showing TOAS and POAS with the actual €250-550/month rent range
-//     and working outbound links (verified via the page's own DOM:
-//     toas.fi/en, poas.fi/en).
-//   - fallback-demo.mp4 + fallback-poster.jpg: a real off-script
-//     question ("What if I want to bring my cat with me?") typed
-//     outside the guided housing flow, and Lumi's actual AI-fallback
-//     response (real pet-import guidance, Key points card, and real
-//     HOAS/TOAS/YTHS/Migri links) -- built as a short sequence of real
-//     captured frames (ffmpeg concat) rather than a live screen
-//     recording, since this sandbox's browser-recording pipeline proved
-//     unreliable mid-session; still four genuine, unaltered screen
-//     states of the real interaction, not a smoothed or embellished
-//     reconstruction.
+// Milestone D (revised): real assets sourced from Appendix F of Aseer's
+// thesis ("Representative Lumi Interaction Screens"), not from live
+// browser captures. The first pass of this milestone used screenshots I
+// captured myself from the live prototype (tweak-big-44404856.figma.site)
+// via browser automation; Aseer judged that pass's image and video
+// quality as too low, and pointed to the thesis appendix as a better
+// source. Every asset below is a crop of an actual Appendix F figure
+// (Aseer supplied the thesis .docx directly; the figures were extracted
+// from word/media/ inside it) -- nothing here is invented, and the crop
+// step only trims the surrounding browser-window padding, it doesn't
+// alter the captured screen itself:
+//   - hero.jpg / thumbnail.jpg: Figure F1 ("Lumi's landing interface as
+//     presented to participants"), cropped two ways (full card for the
+//     case study body, a tighter top portion for ProjectCard's 4:3
+//     media block).
+//   - tampere-housing.jpg: Figure F2 ("Example housing-domain
+//     navigation"), showing TOAS and POAS with the actual
+//     €250-550/month rent range and working outbound links.
+//   - fallback-poster.jpg: Figure F5 ("Example open-ended conversational
+//     support in which the participant moves outside the predefined
+//     click-through path"). This replaces the earlier fallback-demo.mp4
+//     -- that video was a real interaction (I typed an off-script pet
+//     -import question into the live prototype myself), but Appendix F5
+//     is stronger source material for a research case study: it's an
+//     actual study participant's off-script exchange, not my own
+//     re-enactment, and the thesis only preserves it as a single still
+//     frame rather than a recording, so this is now presented as a
+//     static image rather than a click-to-play video. The alt/caption
+//     below describe this exchange (a participant saying they felt
+//     overwhelmed and didn't know what to prioritize, and Lumi's
+//     free-tier fallback layer responding with a structured "Key
+//     points" card), not the pet-import question from the earlier
+//     capture.
 //
 // One thing remains deliberately deferred, flagged rather than faked:
 // the seven-themes findings diagram in "What we found" does NOT use
@@ -1411,8 +1418,8 @@ const lumiBody: CaseStudyBlock[] = [
   {
     type: "image",
     src: "/lumi/hero.jpg",
-    width: 700,
-    height: 812,
+    width: 723,
+    height: 1034,
     alt: "The Lumi landing screen: a chat assistant introducing itself and offering six topics -- student housing, healthcare, working while studying, residence permits, university services, and banking.",
   },
   { type: "heading", level: 3, text: "The problem" },
@@ -1485,19 +1492,18 @@ const lumiBody: CaseStudyBlock[] = [
   {
     type: "image",
     src: "/lumi/tampere-housing.jpg",
-    width: 700,
-    height: 812,
+    width: 1596,
+    height: 1103,
     alt: "The 'Student housing in Tampere' screen, showing TOAS and POAS with their typical rent range (€250-550/month) and working links out to their official application sites.",
     caption: "Real institutions, named directly, with working links out to their official sites.",
   },
   {
-    type: "video",
-    src: "/lumi/fallback-demo.mp4",
-    poster: "/lumi/fallback-poster.jpg",
-    width: 700,
-    height: 812,
-    alt: "A typed, off-script question (\"What if I want to bring my cat with me?\") triggering Lumi's AI fallback, which answers in the same visual voice as the guided flow: a full paragraph response plus a Key points card with real pet-import requirements and outbound links.",
-    caption: "A real off-script question, and Lumi's actual fallback response.",
+    type: "image",
+    src: "/lumi/fallback-poster.jpg",
+    width: 1596,
+    height: 1087,
+    alt: "A participant telling Lumi they felt overwhelmed after moving to Finland and didn't know what to prioritize -- a question outside the guided click-through path -- and Lumi's AI fallback answering in the same visual voice as the guided flow: a full paragraph response plus a Key points card covering housing, residence permits, and banking.",
+    caption: "A real study participant going off-script, and Lumi's actual fallback response.",
   },
 
   { type: "heading", level: 3, text: "What we found" },
@@ -1878,17 +1884,17 @@ export const caseStudies: CaseStudy[] = [
       duration: "2025 – 2026",
       tools: "Figma (prototype), Atlas.ti",
     },
-    // Milestone D: a real thumbnail, cropped tighter than the full
-    // hero.jpg used in the case study body (logo + name + tagline,
-    // cropped to 4:3 specifically for ProjectCard's media block) so the
-    // homepage's "Featured research" card finally shows the actual
-    // product instead of the generated ProjectVisual gradient -- the
-    // same fix already applied to 5 of 6 Work case studies in
-    // Milestone 3.
+    // Milestone D (revised): a real thumbnail, cropped tighter than the
+    // full hero.jpg used in the case study body (top portion of Appendix
+    // Figure F1: logo + name + tagline, cropped to 4:3 for ProjectCard's
+    // media block) so the homepage's "Featured research" card finally
+    // shows the actual product instead of the generated ProjectVisual
+    // gradient -- the same fix already applied to 5 of 6 Work case
+    // studies in Milestone 3.
     thumbnail: {
       src: "/lumi/thumbnail.jpg",
-      width: 612,
-      height: 460,
+      width: 723,
+      height: 542,
       alt: "The Lumi landing screen: logo, name, and tagline (\"Your guide to student life in Finland\").",
     },
     body: lumiBody,
