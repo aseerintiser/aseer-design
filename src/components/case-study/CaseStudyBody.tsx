@@ -43,13 +43,13 @@ function renderBlock(block: CaseStudyBlock, key: number) {
       );
     case "paragraph":
       return (
-        <Text key={key} className="mt-4 max-w-[var(--measure)]">
+        <Text key={key} className="mt-4">
           {renderInlineMarkdown(block.text)}
         </Text>
       );
     case "list":
       return (
-        <ul key={key} className="mt-4 max-w-[var(--measure)] list-disc space-y-2 pl-5">
+        <ul key={key} className="mt-4 list-disc space-y-2 pl-5">
           {block.items.map((item, index) => (
             <li key={index} className="text-[var(--color-text)]">
               {renderInlineMarkdown(item)}
@@ -152,10 +152,21 @@ export function CaseStudyBody({ blocks }: { blocks: CaseStudyBlock[] }) {
   return (
     <>
       {sections.map((section, index) => (
+        // Visual QA milestone: this Section previously used the default
+        // (1280px) container width, while the paragraph/list text inside
+        // it was separately capped to the narrower reading measure with
+        // no auto-centering -- on real wide viewports that left the text
+        // hugging the container's left edge with 500-700px of dead,
+        // unbalanced space to its right. Narrowing the container itself
+        // to the reading measure means every block in a section (heading,
+        // paragraph, list, quote, callout, timeline, image) shares one
+        // centered column with equal margins on both sides, which reads
+        // as an intentional editorial layout instead of a rendering bug.
         <Section
           key={index}
           density={index === sections.length - 1 ? "open" : "default"}
           tone={index % 2 === 1 ? "dark" : undefined}
+          measure="narrow"
         >
           {section.heading.text && <SectionNumber n={index + 1} />}
           {section.heading.text && <Heading level={2}>{section.heading.text}</Heading>}

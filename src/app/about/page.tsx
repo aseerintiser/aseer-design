@@ -58,9 +58,16 @@ export default function AboutPage() {
         </Grid>
       </Section>
 
-      <Section density="dense" tone="dark">
+      {/* Visual QA milestone: these plain-text sections previously sat in
+          the default (1280px) container while their text was separately
+          capped to the reading measure with no centering -- on wide
+          viewports that left a single short heading/paragraph hugging the
+          left edge with hundreds of pixels of dead space to its right.
+          Narrowing the Section itself to the reading measure centers the
+          whole block instead, so the margins read as intentional. */}
+      <Section density="dense" tone="dark" measure="narrow">
         <Heading level={3}>Current status</Heading>
-        <Text className="mt-2 max-w-[var(--measure)]">{site.currentStatus}</Text>
+        <Text className="mt-2">{site.currentStatus}</Text>
       </Section>
 
       {about.sections.map((section, index) => (
@@ -68,9 +75,10 @@ export default function AboutPage() {
           key={section.heading}
           density={index === about.sections.length - 1 ? "open" : "default"}
           tone={index % 2 === 0 ? undefined : "dark"}
+          measure="narrow"
         >
           <Heading level={2}>{section.heading}</Heading>
-          <div className="mt-4 max-w-[var(--measure)] space-y-4">
+          <div className="mt-4 space-y-4">
             {section.paragraphs.map((paragraph, paragraphIndex) => (
               <Text key={paragraphIndex}>{paragraph}</Text>
             ))}
@@ -92,7 +100,7 @@ export default function AboutPage() {
             </div>
           )}
           {"quote" in section && section.quote && (
-            <div className="mt-6 max-w-[var(--measure)]">
+            <div className="mt-6">
               <PullQuote text={section.quote} />
             </div>
           )}

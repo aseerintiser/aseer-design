@@ -87,10 +87,10 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
            case study on the site) -- that pattern reads as an abandoned
            template, not a portfolio still being written. This says the
            same thing once, clearly, and stops. */
-        <Section density="open" tone="dark">
+        <Section density="open" tone="dark" measure="narrow">
           <SectionNumber n="—" />
           <Heading level={2}>Full case study in progress</Heading>
-          <Text muted className="mt-4 max-w-[var(--measure)]">
+          <Text muted className="mt-4">
             The role, team, duration, and tools above are accurate. The full
             write-up, covering context, decisions and trade-offs, evidence,
             and outcome, is still being drafted.

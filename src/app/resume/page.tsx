@@ -21,9 +21,15 @@ export const metadata: Metadata = {
  */
 export default function ResumePage() {
   return (
-    <Section density="open">
+    // Visual QA milestone: this page has no rich grid or cards to fill
+    // the rest of the width the way Work/Research do below their own
+    // intro line, so a heading + one sentence + button + meta row inside
+    // the default 1280px container left a whole page reading as mostly
+    // blank on wide viewports. Narrowing the Section to the reading
+    // measure centers the entire page's content instead.
+    <Section density="open" measure="narrow">
       <Heading level={1}>Resume</Heading>
-      <Text muted className="mt-4 max-w-[var(--measure)]">
+      <Text muted className="mt-4">
         {site.title} · {site.currentStatus}
       </Text>
 
@@ -40,7 +46,7 @@ export default function ResumePage() {
         </Button>
       </div>
 
-      <div className="mt-12 max-w-[var(--measure)]">
+      <div className="mt-12">
         <MetaRow
           items={[
             { label: "Based in", value: "Tampere, Finland" },
