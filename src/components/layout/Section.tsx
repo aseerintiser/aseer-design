@@ -31,9 +31,9 @@ interface SectionProps {
 // the Creative Direction calls for is a real, traceable relationship
 // between these three values, not three independently-guessed numbers.
 const densityClass = {
-  default: "py-[var(--spacing-3xl)] md:py-[var(--spacing-4xl)]",
-  open: "py-[var(--spacing-4xl)] md:py-[var(--spacing-5xl)]",
-  dense: "py-[var(--spacing-xl)] md:py-[var(--spacing-2xl)]",
+  default: "py-[var(--space-3xl)] md:py-[var(--space-4xl)]",
+  open: "py-[var(--space-4xl)] md:py-[var(--space-5xl)]",
+  dense: "py-[var(--space-xl)] md:py-[var(--space-2xl)]",
 } as const;
 
 export function Section({

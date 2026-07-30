@@ -29,17 +29,37 @@
      hero/section-break moments and dense evidence sections can reference
      the scale explicitly and stay honest about the rhythm the creative
      direction calls for (generous at the extremes, tight in evidence
-     blocks), rather than reaching for arbitrary values. */
-  --spacing-2xs: 0.25rem; /* 4px  */
-  --spacing-xs: 0.5rem; /* 8px  */
-  --spacing-sm: 0.75rem; /* 12px */
-  --spacing-md: 1rem; /* 16px */
-  --spacing-lg: 1.5rem; /* 24px */
-  --spacing-xl: 2rem; /* 32px */
-  --spacing-2xl: 3rem; /* 48px */
-  --spacing-3xl: 4rem; /* 64px */
-  --spacing-4xl: 6rem; /* 96px */
-  --spacing-5xl: 8rem; /* 128px */
+     blocks), rather than reaching for arbitrary values.
+
+     Visual QA milestone: this scale was previously named using the
+     spacing prefix directly (spacing-sm, spacing-4xl, and so on). That
+     collided with a reserved Tailwind v4 theme namespace: Tailwind
+     generates every named max-width, width, and height utility by
+     reading that exact scale, so defining spacing-sm here silently
+     redefined what the max-w-sm utility means everywhere on the site,
+     and the same for every other size in this scale that also happens
+     to match one of Tailwind own reserved size names.
+     Confirmed on the live deployment: the homepage hero heading and
+     portrait container were both computing against this scale instead
+     of Tailwind real container sizes -- a 96px-wide heading forced the
+     H1 to wrap one word per line, and a 12px-wide portrait container
+     collapsed the hero photo to a barely visible speck. The same
+     collision silently broke every case study heading, the About page
+     heading and one of its images, the footer body paragraph, and the
+     Lumi "Go deeper" link card.
+     Renamed to a plain "space" prefix, which is not a Tailwind reserved
+     key, so this scale can still be referenced explicitly without
+     shadowing any built-in utility. */
+  --space-2xs: 0.25rem; /* 4px  */
+  --space-xs: 0.5rem; /* 8px  */
+  --space-sm: 0.75rem; /* 12px */
+  --space-md: 1rem; /* 16px */
+  --space-lg: 1.5rem; /* 24px */
+  --space-xl: 2rem; /* 32px */
+  --space-2xl: 3rem; /* 48px */
+  --space-3xl: 4rem; /* 64px */
+  --space-4xl: 6rem; /* 96px */
+  --space-5xl: 8rem; /* 128px */
 
   /* Reading column width for case-study body copy (Design Brief must-have:
      "case study body copy in a narrower reading column than full page
