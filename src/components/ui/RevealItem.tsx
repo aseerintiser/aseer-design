@@ -33,14 +33,20 @@ export function RevealItem({ label, detail, className }: RevealItemProps) {
   const shouldReduceMotion = useReducedMotion();
   const detailId = useId();
 
+  // Visual Polish milestone: the button previously carried the row's
+  // only vertical padding (py-1, ~28px total with line-height) -- under
+  // the 44px touch-target minimum for a tap-to-reveal control. min-h-11
+  // plus its own py-2.5 now guarantees a real 44px target regardless of
+  // label length; the wrapper's padding was trimmed to compensate so
+  // rows don't end up double-padded and overly loose.
   return (
-    <div className={cn("border-b border-[var(--color-border)] py-3 last:border-b-0", className)}>
+    <div className={cn("border-b border-[var(--color-border)] py-1 last:border-b-0", className)}>
       <button
         type="button"
         aria-expanded={open}
         aria-controls={detailId}
         onClick={() => setOpen((value) => !value)}
-        className="flex w-full items-center justify-between gap-3 py-1 text-left"
+        className="flex min-h-11 w-full items-center justify-between gap-3 py-2.5 text-left"
       >
         <span className="font-medium text-[var(--color-text)]">
           {renderInlineMarkdown(label)}

@@ -26,11 +26,24 @@ export default function AboutPage() {
         <Heading level={1} size="display" className="max-w-3xl">
           {about.heading}
         </Heading>
+        {/* Visual Polish milestone: two fixes. (1) These three photos have
+            different native aspect ratios (square, 16:9, 4:3); the
+            container previously had no height of its own, so `h-full`
+            on the image was a no-op and each photo rendered at its own
+            natural height, producing an uneven row instead of a matched
+            strip. A shared aspect-ratio container plus object-cover now
+            crops all three consistently. (2) The grid's md tier is 8
+            columns, which 3 equal items can't divide evenly (col-span-4
+            here previously gave 2-up-then-1 at tablet widths); the row
+            now stays a single stacked column through md and only
+            becomes 3-across at lg (12 columns / 3 = 4, divides
+            cleanly), matching the same "stack until it divides evenly"
+            pattern RevealGroup already uses for its 3 clusters. */}
         <Grid gap="md" className="mt-10">
           {about.topImages.map((image) => (
             <div
               key={image.src}
-              className="col-span-4 md:col-span-4 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]"
+              className="col-span-4 aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] md:col-span-8 lg:col-span-4"
             >
               <Image
                 src={image.src}
@@ -38,7 +51,7 @@ export default function AboutPage() {
                 height={image.height}
                 alt={image.alt}
                 className="h-full w-full object-cover"
-                sizes="(min-width: 768px) 33vw, 100vw"
+                sizes="(min-width: 1024px) 33vw, 100vw"
               />
             </div>
           ))}

@@ -26,7 +26,16 @@ export default function ResearchIndexPage() {
       </Text>
       {/* Same reasoning as the Work index: the single flagship (Lumi)
           gets a full-width feature row instead of competing at equal
-          size with the other two research entries. */}
+          size with the other two research entries.
+
+          Visual Polish milestone: `rest` currently has exactly 2
+          entries (RoboCarnival, Bachelor's Thesis). The Work index's
+          equivalent col-span-4 works there because 12/4 divides evenly
+          into 3 full rows for 6 items; with only 2 items here, that
+          same col-span-4 left one item on its own row with two empty
+          column-tracks beside it at lg. col-span-6 gives these two
+          entries an even, two-up row that fills the full 12 columns
+          instead. */}
       <Grid className="mt-12" gap="lg">
         {flagship.map((project) => (
           <div key={project.slug} className="col-span-4 md:col-span-8 lg:col-span-12">
@@ -34,7 +43,7 @@ export default function ResearchIndexPage() {
           </div>
         ))}
         {rest.map((project) => (
-          <div key={project.slug} className="col-span-4 md:col-span-4">
+          <div key={project.slug} className="col-span-4 md:col-span-4 lg:col-span-6">
             <ProjectCard project={project} />
           </div>
         ))}

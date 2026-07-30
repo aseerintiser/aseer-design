@@ -21,6 +21,14 @@ import { cn } from "@/lib/utils";
  * Five items, per Portfolio_Content_Architecture_Blueprint.md Part 2:
  * Home, Work, Research, About, Resume, with Contact kept out of the nav
  * as a persistent footer CTA instead.
+ *
+ * Visual Polish milestone: the live nav array actually carries seven
+ * items (Work, Articles, Certifications, Testimonials, About Me,
+ * Research, Resume), which need roughly 650-700px alongside the logo --
+ * the horizontal layout below used to switch on at `md` (768px), a
+ * width where that easily crowds or wraps. It now switches at `lg`
+ * (1024px) instead, both fixing that and matching the breakpoint the
+ * rest of the site's 12-column grid already treats as "desktop."
  */
 export function NavBar() {
   const [open, setOpen] = useState(false);
@@ -80,7 +88,7 @@ export function NavBar() {
           {site.shortName}
         </Link>
 
-        <nav aria-label="Primary" className="hidden md:block">
+        <nav aria-label="Primary" className="hidden lg:block">
           <ul className="flex items-center gap-2">
             {nav.map((item) => {
               const isActive = isActiveHref(item.href);
@@ -118,7 +126,7 @@ export function NavBar() {
         <button
           ref={triggerRef}
           type="button"
-          className="inline-flex items-center justify-center rounded-[var(--radius-md)] p-2 md:hidden"
+          className="inline-flex items-center justify-center rounded-[var(--radius-md)] p-2.5 lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((value) => !value)}
@@ -143,7 +151,7 @@ export function NavBar() {
         <nav
           id="mobile-nav"
           aria-label="Primary"
-          className="border-t border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-4 md:hidden"
+          className="border-t border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-4 lg:hidden"
         >
           <ul className="flex flex-col gap-1">
             {nav.map((item, index) => {

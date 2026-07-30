@@ -16,11 +16,16 @@ export default function TestimonialsPage() {
   return (
     <Section density="open">
       <Heading level={1}>{testimonialsHeading}</Heading>
+      {/* Visual Polish milestone: 5 images in a 2-column grid leaves the
+          last one pinned to the left with an empty gap beside it --
+          `last:sm:col-span-2` spans it across the full row instead, and
+          the max-width/mx-auto keep it the same size as its siblings
+          rather than stretching, so it just centers in its own row. */}
       <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
         {testimonialImages.map((imageId, index) => (
           <div
             key={imageId}
-            className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)]"
+            className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)] last:sm:col-span-2 last:sm:mx-auto last:sm:w-1/2"
           >
             <Image
               src={testimonialImageUrl(imageId)}
