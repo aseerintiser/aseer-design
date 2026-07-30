@@ -1658,6 +1658,314 @@ const lumiBody: CaseStudyBlock[] = [
   },
 ];
 
+/**
+ * aRENEWberg (Cultural Festival Platform, Arenberg UNESCO Site) case
+ * study body, replacing the earlier placeholder. Adapted from the
+ * approved Case_Study_Final.md (Case Studies/aRENEWberg/Arenberg/) with
+ * only the formatting changes needed for this block schema: paragraph
+ * breaks, the cost table converted to a list (no table block type
+ * exists), and the [Visual: ...] cues resolved to real images captured
+ * from the live prototype at order-query-60065275.figma.site. Prose is
+ * otherwise unchanged from the approved copy. Page title, slug, and
+ * meta fields are governed by the Visual QA milestone's instruction to
+ * preserve the page's existing identity -- only `meta.tools` and
+ * `meta.team` were corrected to match facts established by the
+ * approved case study (the entry previously guessed "Figma" for tools;
+ * the real build was plain HTML/CSS/JS, hosted as a Figma Sites
+ * prototype for review).
+ */
+const arenewbergBody: CaseStudyBlock[] = [
+  {
+    type: "image",
+    src: "/arenewberg/hero.png",
+    width: 378,
+    height: 840,
+    alt: "The aRENEWberg app's splash screen: the wordmark over a dark, gridded background, the tagline 'Music · Culture · Exploration · Heritage,' and an Enter button.",
+  },
+
+  { type: "heading", level: 3, text: "The short version" },
+  {
+    type: "paragraph",
+    text: "A UNESCO heritage coal mine outside Lille doesn't know how many visitors it gets in a year. There's no ticketing system, no attendance count, nothing to measure against. That absence was the actual starting point: our team of six had five days to design something that could bring in an audience the site had never really reached, people under thirty, and to prove it could work with a real, usable prototype, not just a pitch deck.",
+  },
+  {
+    type: "paragraph",
+    text: "I was the Creative Manager on the team. I helped shape the concept, then built the prototype that proves it works: a full app a visitor could actually use from arrival to the end of the night.",
+  },
+  {
+    type: "paragraph",
+    text: "What we ended up with is aRENEWberg, a twice-yearly cultural event held on the mining site itself, and the app that ties it together. Here's how we got there.",
+  },
+
+  { type: "heading", level: 3, text: "The site" },
+  {
+    type: "paragraph",
+    text: "Arenberg is a former coal mine in Wallers, in the north of France. It ran from 1903 until 1989. In 2012 it became part of a UNESCO World Heritage listing, alongside the rest of the Nord-Pas de Calais mining basin.",
+  },
+  {
+    type: "paragraph",
+    text: "That status sounds like an advantage. In practice it creates a strange kind of stillness. UNESCO recognizes the site but doesn't fund it. Money for upkeep, staffing, and events has to come from somewhere else, and it's never guaranteed. The site hosts the occasional film shoot and cultural event, but it has no consistent public program, which is part of why nobody tracks who visits.",
+  },
+  {
+    type: "paragraph",
+    text: "The area right outside the gates is also residential. Any event on site happens next to people's homes. That constraint shaped almost every decision that followed.",
+  },
+  {
+    type: "paragraph",
+    text: "Our brief, as a team, started broad: rethink how travel could help preserve a historical landmark. We narrowed it fast, because a broad brief doesn't get you anywhere in five days. The question we actually designed against: how do we make this place appealing to a younger generation, without turning it into something it isn't?",
+  },
+
+  { type: "heading", level: 3, text: "What we learned" },
+  {
+    type: "paragraph",
+    text: "We had five days, not five months, so the research had to be targeted. Three conversations shaped almost everything that followed: Audrey, who works in urban regeneration and site management, Simon, from the local tourism office, and Irene, a researcher who specializes in cultural heritage. We also looked closely at how comparable heritage sites operate.",
+  },
+  {
+    type: "paragraph",
+    text: "We didn't get the chance to talk to the young visitors we were actually designing for. That's a real limitation, and I come back to it later. But the three experts pointed at the same gap from three different directions, and that was enough to move forward with confidence: Arenberg isn't short on history. It's short on reasons for someone young to show up.",
+  },
+  {
+    type: "paragraph",
+    text: "The clearest comparison is Lewarde, another former mine about forty minutes away, now run as a full heritage museum.",
+  },
+  {
+    type: "callout",
+    text: "Lewarde: 150,000 visitors a year, 15,000 catalogued objects, a restaurant, guided tours. Arenberg: no visitor data at all.",
+  },
+  {
+    type: "paragraph",
+    text: "Arenberg has none of that infrastructure. What it does have, and what no indoor museum can offer, is a real forest with over 150 kilometers of trails right on the property. We weren't going to out-museum a museum. We could build something Lewarde structurally can't: an outdoor, after-dark, youth-facing event that uses the site's scale instead of competing on artifacts.",
+  },
+
+  { type: "heading", level: 3, text: "The concept: aRENEWberg" },
+  {
+    type: "image",
+    src: "/arenewberg/logo.png",
+    width: 928,
+    height: 760,
+    alt: "The aRENEWberg wordmark: 'RENEW' in green diagonally overlapping 'A...BERG' in dark grey, with a small 'Northern France' subtitle.",
+  },
+  {
+    type: "paragraph",
+    text: "So we proposed a seasonal event, not a redesign of the site itself. Twice a year, early spring and midsummer, aRENEWberg turns the mine into a one-night cultural event: a photo scavenger hunt across the site, a headphone-based silent disco, silent film screenings, a market for local businesses, and a quiet forest area for anyone who wants to step away from the noise.",
+  },
+  {
+    type: "paragraph",
+    text: "Each piece earns its place for a specific reason. The scavenger hunt is low-barrier and shareable, exactly the kind of thing that spreads on social media without an ad budget. The silent formats solve a real constraint, explained below. The market and the forest area use what the site already has, local businesses and 150 kilometers of trails, instead of asking for a budget that didn't exist.",
+  },
+  {
+    type: "paragraph",
+    text: "The twice-yearly cadence was deliberate too. Frequent enough to build a returning audience. Infrequent enough that it doesn't turn a heritage site into a nightclub, or wear out its welcome with the people who live next to it.",
+  },
+
+  { type: "heading", level: 3, text: "The decision that mattered most" },
+  {
+    type: "paragraph",
+    text: "Here's the constraint that shaped the whole event. Residents next door don't want noise. We also wanted the event to be genuinely welcoming to neurodivergent visitors, who often find loud, crowded environments overwhelming.",
+  },
+  {
+    type: "paragraph",
+    text: "Those two requirements usually pull in opposite directions. A disco needs sound. Inclusive design usually means giving people more control, not less.",
+  },
+  {
+    type: "paragraph",
+    text: "This is also where two parts of the team met without planning to. The ethics and inclusivity group had been pushing for more sensory control for neurodivergent visitors. My track, practicality and feasibility, had been trying to solve the noise problem before it became a reason for the site to reject the whole event. Neither group set out to solve the other's problem. We ended up in the same place anyway.",
+  },
+  {
+    type: "paragraph",
+    text: "The answer was wireless headphones instead of speakers. Everyone at the silent disco and the film screenings wears headphones, picks their own channel, and controls their own volume. From outside the venue, there's almost no sound. From inside, a neurodivergent visitor has more control over their sensory experience than they would at almost any other version of this event.",
+  },
+  {
+    type: "callout",
+    text: "One design choice. Two teams working from different angles. Two problems solved at once. That's the strongest single decision in this project, and it's the kind of outcome I look for on every project since.",
+  },
+  {
+    type: "image",
+    src: "/arenewberg/silent-disco.png",
+    width: 394,
+    height: 840,
+    alt: "The Activities tab with the Silent Disco card expanded: 'Wireless headphones, three DJs, zero noise complaints,' Winding Tower Hall, €5, 'Headsets at the door.'",
+    caption: "The Silent Disco card explaining its own reasoning, not just the pitch deck.",
+  },
+  {
+    type: "paragraph",
+    text: "The interface says this plainly, not just the pitch deck. The Silent Disco card doesn't say \"join here\" and stop. It says why: wireless headphones, three DJs, zero noise complaints. That's the actual reasoning, visible to the visitor.",
+  },
+
+  { type: "heading", level: 3, text: "What we said no to" },
+  {
+    type: "paragraph",
+    text: "Not every decision was about solving two problems at once. Some were just about knowing what we couldn't afford. Good ideas are cheap in a five-day sprint. Knowing which ones to cut is expensive.",
+  },
+  {
+    type: "list",
+    items: [
+      "**Hologram system for immersive mine tours** — ~€500,000. Not shipped; flagged as barely realistic by the team itself.",
+      "**VR mining game** — ~€100,000. Not shipped.",
+      "**Zip line between two headframes** — ~€150,000–200,000. Not shipped.",
+      "**Scavenger hunt** — prize budget only. Shipped.",
+      "**Silent disco + film screenings** — ~€300–600/night, headphone rental. Shipped, priced at €5 to cover rental cost, not profit.",
+      "**Forest rest area** — ~€100–200. Shipped.",
+    ],
+  },
+  {
+    type: "paragraph",
+    text: "None of the big three survived the feasibility pass, because a twice-a-year community event with no confirmed funding source has to run on a budget that could plausibly exist. Cutting the hologram system wasn't a loss of ambition. It was the difference between a concept that sounds good in a pitch and one that could actually happen twice a year on a real budget.",
+  },
+
+  { type: "heading", level: 3, text: "The prototype" },
+  {
+    type: "paragraph",
+    text: "Six activities happening in one place, with no single source of information, isn't an event. It's just noise. Without an app, someone arriving on the night has no way to know where the silent disco is, how to join the scavenger hunt, or when the market closes. It also gives the site something it never had: a digital presence, and a way to actually learn who shows up.",
+  },
+  {
+    type: "paragraph",
+    text: "I built the prototype myself: a working, full click-through app, not static mockups. It has five sections, and each one does one job.",
+  },
+
+  { type: "heading", level: 4, text: "Home" },
+  {
+    type: "paragraph",
+    text: "The first thing a visitor sees: what's happening right now, what's coming up next, and one clear action to take. A live schedule bar shows the night's timeline. The Scavenger Hunt sits front and center, since it's the main draw, with a live player count and a direct way to join. Smaller cards below surface the Silent Disco and the film screening without demanding attention they haven't earned yet.",
+  },
+  {
+    type: "image",
+    src: "/arenewberg/home.png",
+    width: 410,
+    height: 840,
+    alt: "The Home tab: 'Festival Live, Arenberg Mine,' a schedule-chip timeline (Gates/Market/Hunt), a live Scavenger Hunt card with 147 players and 2h remaining, and quick-access Silent Disco and Open Air Cinema cards.",
+  },
+  { type: "divider" },
+
+  { type: "heading", level: 4, text: "The hunt" },
+  {
+    type: "paragraph",
+    text: "The hunt is the spine of the prototype. Seven clues, each tied to a real location on site, each worth points, with a live leaderboard so visitors can see where they stand.",
+  },
+  {
+    type: "paragraph",
+    text: "Every clue ends the same way: post the photo with the event hashtag. That's not a bolted-on social feature. It's how the team designed for the event to be seen beyond the people who actually attend, built into the core loop instead of added afterward.",
+  },
+  {
+    type: "paragraph",
+    text: "Finishing all seven clues ends on a summary screen: every clue found, the points from each one, a running total. It's a small moment, meant to be the kind of payoff that makes someone want to come back for the next one.",
+  },
+  {
+    type: "imageRow",
+    images: [
+      {
+        src: "/arenewberg/hunt-clue.png",
+        width: 420,
+        height: 840,
+        alt: "Clue 1 of 7: 'Find the iron winding wheel, the rotating heart that once hauled miners 825 metres below ground,' with a live leaderboard showing the visitor in 3rd place.",
+      },
+      {
+        src: "/arenewberg/hunt-instructions.png",
+        width: 420,
+        height: 840,
+        alt: "The same clue with instructions expanded: walk to the main entrance archway, find the iron wheel, frame it in a photo, then post on Instagram or TikTok with #aRENEWberg.",
+      },
+      {
+        src: "/arenewberg/hunt-complete.png",
+        width: 390,
+        height: 840,
+        alt: "'Hunt Complete! All 7 Clues Found,' 920 points, with a per-clue point breakdown from Main Entrance to Headframe.",
+      },
+    ],
+  },
+  { type: "divider" },
+
+  { type: "heading", level: 4, text: "The map" },
+  {
+    type: "paragraph",
+    text: "Five zones, color-coded, with a live \"you are here\" marker and every clue plotted. Tap a zone and a detail card slides up with hours, what's on offer, and how to pay. This screen solves the exact confusion the team named as the reason to build an app in the first place: a visitor arriving with no idea where anything is.",
+  },
+  {
+    type: "image",
+    src: "/arenewberg/map.png",
+    width: 386,
+    height: 840,
+    alt: "The Festival Map: five color-coded zones (Forest, Cinema, Disco, Market, Entrance) around the Headframe, a 'you are here' marker, and the Market zone's detail card expanded below.",
+  },
+  { type: "divider" },
+
+  { type: "heading", level: 4, text: "Profile" },
+  {
+    type: "paragraph",
+    text: "The profile tab is where the app's values live in the product, not just in the pitch deck. A digital ticket with a scannable QR code doubles as the actual entry mechanism for the night. A running timeline shows everything a visitor has done that evening. And three preference toggles: Eco Mode, which dims the screen to support the event's zero-waste goal, Event Alerts, and Share Location, with a plain line underneath it: help friends find you on site, never shared outside the app.",
+  },
+  {
+    type: "imageRow",
+    images: [
+      {
+        src: "/arenewberg/profile.png",
+        width: 392,
+        height: 840,
+        alt: "The Profile tab: identity card, rank/points/clues/hours stats, a 3rd-place leaderboard callout, the collapsed Entry Pass, and the start of the 'Your Night' timeline.",
+      },
+      {
+        src: "/arenewberg/entry-pass.png",
+        width: 394,
+        height: 840,
+        alt: "The Entry Pass expanded: a scannable QR code, 'General Admission,' and 'Scan at entrance, valid 20 June only.'",
+      },
+      {
+        src: "/arenewberg/preferences.png",
+        width: 394,
+        height: 840,
+        alt: "The 'Your Night' timeline (Checked in, Visited the Market, Started Scavenger Hunt, Joined Silent Disco) above the Preferences toggles: Eco Mode, Event Alerts, and Share Location.",
+      },
+    ],
+  },
+
+  { type: "heading", level: 3, text: "Why the app is deliberately simple" },
+  {
+    type: "paragraph",
+    text: "None of this needed to be complicated to build. I made it a single-file app in plain HTML, CSS, and JavaScript. No framework, nothing that needed a build process.",
+  },
+  {
+    type: "paragraph",
+    text: "That wasn't a shortcut. A prototype's job is to prove an idea works, not to show off technical skill, and this idea didn't need much: something that loads fast, and an interface simple enough that someone can figure it out in the first thirty seconds after arriving. I default to the simplest tool that can do the job, every time.",
+  },
+
+  { type: "heading", level: 3, text: "Where it stands, and what I'd do differently" },
+  {
+    type: "paragraph",
+    text: "We presented aRENEWberg to a jury on the final day, as part of the Créathon's normal structure. There's no recorded score or written feedback to share here.",
+  },
+  {
+    type: "paragraph",
+    text: "Two things stand out looking back, and both changed how I think about scope and research.",
+  },
+  {
+    type: "paragraph",
+    text: "We built one version of this app in five days. We never got the chance to test it, or iterate on it, before the deadline hit. That's normal for a sprint this short, but it's worth naming: what's shown here is a first pass, not a validated design. If I had another week, I'd spend it watching someone actually use the app, not adding features to it.",
+  },
+  {
+    type: "paragraph",
+    text: "The bigger gap is who we talked to. Three experts gave us a strong outside view of the site's problems. Nobody in the actual target age group ever looked at the app or reacted to the concept. Expert opinion is a fast way to get oriented in five days, but it isn't a substitute for the people you're designing for. I'd treat it that way from the start next time: a starting point, not a stand-in.",
+  },
+  {
+    type: "paragraph",
+    text: "The event-frequency question stayed open too. Twice a year with headphones instead of speakers is a reasonable answer, but it's still an assumption we reasoned our way to on paper. I'd want to test it against an actual resident before I trusted it.",
+  },
+  {
+    type: "paragraph",
+    text: "What I'm confident stands up: the research pointed at a real, specific gap, the headphone decision solved two constraints at once instead of trading one off against the other, and the prototype is a working demonstration of the idea, not just a description of it. Five days isn't enough time to get everything right. It's enough to prove the core idea is sound, and to know exactly what to test next.",
+  },
+
+  { type: "heading", level: 3, text: "Team" },
+  {
+    type: "paragraph",
+    text: "Built with Eva Pereira (Business Manager), Maja Ziółkowska (Maker), Lama Karameh (Team Leader), Karl Bou-Sakr (Communication), and Flavien Girard (Team Builder), during the ECIU Créathon at INSA Hauts-de-France, June 2026.",
+  },
+  {
+    type: "linkCard",
+    text: "Explore the working prototype",
+    href: "https://order-query-60065275.figma.site",
+  },
+];
+
 export const caseStudies: CaseStudy[] = [
   {
     slug: "convay-mobile-app-revamp",
@@ -1904,15 +2212,28 @@ export const caseStudies: CaseStudy[] = [
     title: "Cultural Festival Platform, Arenberg UNESCO Site",
     track: "work",
     scale: "product",
+    contentStatus: "complete",
     oneLineScope:
       "A mobile app concept for a cultural festival at a UNESCO heritage site, built during a six-person ECIU Créathon team.",
     meta: {
       role: "Creative Manager",
-      team: "Six-person multidisciplinary team, 13-university consortium",
+      // Corrected from the earlier placeholder guess ("Tools: Figma") now
+      // that the approved case study confirms the actual build: a
+      // single-file, framework-free HTML/CSS/JS app, reviewed as a
+      // hosted Figma Sites prototype -- Figma the design tool wasn't
+      // used to build it. Team wording matches the case study's own
+      // "Team:" line rather than the prior generic ECIU-consortium note.
+      team: "6-person multidisciplinary team (design, engineering, business)",
       duration: "June 2026",
-      tools: "Figma",
+      tools: "HTML, CSS, JavaScript",
     },
-    ...placeholderNarrative,
+    thumbnail: {
+      src: "/arenewberg/thumbnail.png",
+      width: 378,
+      height: 284,
+      alt: "The aRENEWberg splash screen: wordmark, tagline, and Enter button on a dark, gridded background.",
+    },
+    body: arenewbergBody,
   },
   {
     slug: "robocarnival",
