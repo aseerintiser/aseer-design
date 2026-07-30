@@ -2,6 +2,7 @@
 
 import { useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
 import type { ProjectSummary } from "@/content/types";
 import { ProjectVisual } from "./ProjectVisual";
@@ -19,10 +20,17 @@ const scaleLabel: Record<ProjectSummary["scale"], string> = {
 interface ProjectCardProps {
   project: ProjectSummary;
   className?: string;
+  /** Milestone 3: suppress the "Flagship" pill when the card already sits
+   * under its own "Featured work"/"Featured research" label (the
+   * homepage's two hero previews) -- showing both says the same thing
+   * twice in the same glance. Index grids (Work/Research pages), which
+   * have no such label above each card, keep the pill by default. */
+  showFlagshipBadge?: boolean;
 }
 
 /**
- * Shared card for the Work and Research index grids.
+ * Shared card for the Work and Research index grids (and the homepage's
+ * two featured previews).
  *
  * Redesigned per the Creative Direction's explicit Avoid: "the generic
  * bordered-box-with-drop-shadow card... let the image and a considered
@@ -30,11 +38,16 @@ interface ProjectCardProps {
  * whole-card translate here; instead the media block itself scales
  * gently on hover, a cursor-tracked "View case study" label appears
  * (the Nice-to-Have this brief calls out for exactly this use), and
- * elevation is a soft, real shadow rather than a jump. No real
- * screenshots exist yet, so the media block is a deterministic
- * generated visual (ProjectVisual), not an invented image.
+ * elevation is a soft, real shadow rather than a jump.
+ *
+ * Milestone 2 migrated real screenshots/GIFs for most case studies, so
+ * (Milestone 3) the media block now prefers `project.thumbnail` -- the
+ * case study's own opening shot -- and only falls back to the generated
+ * ProjectVisual placeholder for projects that don't have one yet
+ * (research track, still unwritten) or where the real assets don't crop
+ * cleanly into a 4:3 card (see content/projects.ts per-project notes).
  */
-export function ProjectCard({ project, className }: ProjectCardProps) {
+export function ProjectCard({ project, className, showFlagshipBadge = true }: ProjectCardProps) {
   const isContingent = project.status === "contingent";
   const href = `/${project.track === "work" ? "work" : "research"}/${project.slug}`;
   const shouldReduceMotion = useReducedMotion();
@@ -63,11 +76,23 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
         className="relative overflow-hidden rounded-[var(--radius-lg)] shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-shadow duration-[var(--duration-slow)] ease-[var(--ease-standard)] group-hover:shadow-[0_20px_40px_-16px_rgba(0,0,0,0.28)]"
       >
         <div className="aspect-[4/3] w-full overflow-hidden">
-          <ProjectVisual
-            seed={project.slug}
-            monogram={project.title.charAt(0)}
-            className="h-full w-full transition-transform duration-[600ms] ease-[var(--ease-standard)] group-hover:scale-[1.06]"
-          />
+          {project.thumbnail ? (
+            <Image
+              src={project.thumbnail.src}
+              width={project.thumbnail.width}
+              height={project.thumbnail.height}
+              alt={project.thumbnail.alt}
+              unoptimized={project.thumbnail.src.endsWith(".gif")}
+              className="h-full w-full object-cover transition-transform duration-[600ms] ease-[var(--ease-standard)] group-hover:scale-[1.06]"
+              sizes="(min-width: 1024px) 45vw, 90vw"
+            />
+          ) : (
+            <ProjectVisual
+              seed={project.slug}
+              monogram={project.title.charAt(0)}
+              className="h-full w-full transition-transform duration-[600ms] ease-[var(--ease-standard)] group-hover:scale-[1.06]"
+            />
+          )}
         </div>
 
         {/* Cursor-tracked wayfinding label. One of the two narrow, named
@@ -97,7 +122,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
             <h3 className="font-[family-name:var(--font-display)] text-lg">
               {project.title}
             </h3>
-            {project.isFlagship && (
+            {project.isFlagship && showFlagshipBadge && (
               <span className="shrink-0 rounded-[var(--radius-full)] bg-[var(--color-accent)] px-2 py-0.5 text-xs font-medium text-[var(--color-accent-contrast)]">
                 Flagship
               </span>
