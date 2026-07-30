@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Section } from "@/components/layout/Section";
 import { Grid } from "@/components/layout/Grid";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { Button } from "@/components/ui/Button";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ProjectCard } from "@/components/ui/ProjectCard";
-import { ProjectVisual } from "@/components/ui/ProjectVisual";
 import { KineticHeadline } from "@/components/ui/KineticHeadline";
 import { Reveal } from "@/components/ui/Reveal";
+import { renderInlineMarkdown } from "@/lib/inline-markdown";
 import { site } from "@/content/site";
 import { projectSummaries } from "@/content/projects";
 
@@ -26,35 +26,46 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero. Asymmetric 7/5 split rather than a centered stack, per the
+      {/* Hero. Milestone 2: headline, bio, skill lines, and portrait are
+          migrated verbatim from the live homepage (content/site.ts).
+          Asymmetric 7/5 split rather than a centered stack, per the
           Creative Direction's "controlled asymmetry, not centered stacks
-          by default." The headline is the one kinetic-motion moment on
-          the page (plays once, on load, never loops); everything else in
-          the text column renders immediately -- no animation gates a
-          visitor's access to real content. The visual panel is a
-          generated abstract composition (no real photography exists
-          yet) that overlaps the section below it for a touch of real
-          depth instead of a flat stack. */}
+          by default" -- the live page itself doesn't use a strict grid,
+          so this split is a structural/formatting improvement, not a
+          content change. The headline is the one kinetic-motion moment
+          on the page (plays once, on load, never loops); everything else
+          in the text column renders immediately -- no animation gates a
+          visitor's access to real content. */}
       <Section density="open" as="section" className="overflow-visible">
         <Grid gap="lg" className="items-center">
           <div className="col-span-4 md:col-span-8 lg:col-span-7">
-            <Eyebrow>{site.title}</Eyebrow>
-            <Heading level={1} size="display" className="mt-3 max-w-4xl">
-              <KineticHeadline text={site.name} />
+            <Heading level={1} size="display" className="max-w-4xl">
+              <KineticHeadline text={site.tagline} />
             </Heading>
             {/* The headline's word-stagger runs roughly 0.05-0.55s after
                 mount (see wordContainer/wordItem in lib/motion). Without a
-                delay here, the proof point and CTAs would render instantly
-                and sit still for half a second next to a headline still
-                animating -- two disconnected timings in one hero. A single
-                Reveal at 0.35s brings them in while the last word or two is
-                still settling, so the whole hero reads as one coordinated
-                entrance instead of "headline animation, then everything
-                else." */}
+                delay here, the bio and CTAs would render instantly and
+                sit still for half a second next to a headline still
+                animating -- two disconnected timings in one hero. A
+                single Reveal at 0.35s brings them in while the last word
+                or two is still settling, so the whole hero reads as one
+                coordinated entrance instead of "headline animation, then
+                everything else." */}
             <Reveal delay={0.35}>
-              <Text size="lead" muted className="mt-6 max-w-[var(--measure)]">
-                {site.heroProofPoint}
-              </Text>
+              <div className="mt-6 max-w-[var(--measure)] space-y-4">
+                {site.bio.map((paragraph, index) => (
+                  <Text key={index} size={index === 0 ? "lead" : "body"} muted={index > 0}>
+                    {renderInlineMarkdown(paragraph)}
+                  </Text>
+                ))}
+              </div>
+              <div className="mt-6 space-y-1">
+                {site.skillLines.map((line) => (
+                  <p key={line} className="text-sm text-[var(--color-text-muted)]">
+                    {line}
+                  </p>
+                ))}
+              </div>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Button href="/work">View Work</Button>
                 <Button href="/research" variant="secondary">
@@ -66,22 +77,30 @@ export default function HomePage() {
 
           <div className="col-span-4 md:col-span-8 lg:col-span-5">
             <Reveal delay={0.15}>
-              {/* justify-self-end was a no-op here: this div's parent is
-                  Reveal's motion.div, not the Grid directly, so
-                  justify-self never had a grid container to act against
-                  and the panel was silently rendering flush-left (default
-                  block position) at every breakpoint, not just mobile.
+              {/* justify-self-end was a no-op here previously: this div's
+                  parent is Reveal's motion.div, not the Grid directly, so
+                  justify-self never had a grid container to act against.
                   Margin-based alignment works regardless of parent display
-                  type: mx-auto centers it under the stacked mobile/md
-                  layout, and lg:mr-0 (overriding the mx-auto margin-right
-                  at that breakpoint) pushes it flush right once the 7/5
-                  split is actually in effect. */}
-              <div className="relative -mb-24 aspect-[4/5] w-full max-w-sm mx-auto overflow-hidden rounded-[var(--radius-lg)] shadow-[0_30px_60px_-24px_rgba(0,0,0,0.35)] md:-mb-32 lg:mr-0">
-                <ProjectVisual
-                  seed={site.name}
-                  monogram={site.shortName.charAt(0)}
-                  className="h-full w-full"
+                  type: mx-auto centers it while stacked on mobile/md, and
+                  lg:mr-0 (overriding mx-auto's margin-right at that
+                  breakpoint) pushes it flush right once the 7/5 split is
+                  actually in effect. */}
+              <div className="relative mx-auto aspect-square w-full max-w-sm overflow-hidden rounded-[var(--radius-lg)] shadow-[0_30px_60px_-24px_rgba(0,0,0,0.35)] lg:mr-0">
+                <Image
+                  src={site.portrait.src}
+                  alt={site.portrait.alt}
+                  width={site.portrait.width}
+                  height={site.portrait.height}
+                  priority
+                  className="h-full w-full object-cover"
+                  sizes="(min-width: 1024px) 384px, 90vw"
                 />
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-4 left-4 rounded-[var(--radius-full)] bg-[var(--color-bg)]/90 px-3 py-1.5 text-xs font-medium tracking-wide text-[var(--color-text)] shadow-[0_4px_16px_rgba(0,0,0,0.18)] backdrop-blur"
+                >
+                  {site.badge}
+                </span>
               </div>
             </Reveal>
           </div>
