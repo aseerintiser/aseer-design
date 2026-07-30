@@ -1368,6 +1368,18 @@ export const caseStudies: CaseStudy[] = [
     scale: "product",
     isFlagship: true,
     contentStatus: "complete",
+    // Milestone 3: the case study's own opening shot, reused as this
+    // card's thumbnail instead of a generated placeholder -- see
+    // ProjectSummary.thumbnail in content/types.ts for why only some
+    // projects get one. This is the same GIF that opens the full case
+    // study, already sized 1600x1200 (4:3), matching ProjectCard's media
+    // aspect ratio exactly, so it renders here uncropped.
+    thumbnail: img(
+      "TIUlfB8AWBViTdf78QjQ3hKq2o.gif",
+      1600,
+      1200,
+      "Convay mobile app walkthrough",
+    ),
     oneLineScope:
       "Convay was growing fast. The platform was reaching global audiences and hosting high-stakes meetings, yet its mobile app felt stuck in the past. Users couldn't easily join meetings, key features were missing, and the experience felt clunky. I stepped in to help redesign the mobile flow from the ground up, making it simpler to use, faster to join, and aligned with the web experience. The goal? Make sure users could rely on Convay, wherever they are.",
     meta: {
@@ -1390,6 +1402,12 @@ export const caseStudies: CaseStudy[] = [
     scale: "product",
     isFlagship: true,
     contentStatus: "complete",
+    thumbnail: img(
+      "7mhLYobFRspDQYe7igyV2dg5zqQ.gif",
+      1600,
+      1200,
+      "Convay AI meeting transcription walkthrough",
+    ),
     oneLineScope:
       "Convay AI for Physical Meetings started with a simple question: *Why should only online meetings be easy to document?* In high-stakes rooms, whether it's a government briefing or an internal sync, people still scramble to take notes or forget key points entirely. This feature was our answer: **record audio, let AI handle the rest.** Transcripts, summaries, multilingual support, all packaged into a simple, intuitive flow that turns real-world conversations into shareable outcomes.",
     meta: {
@@ -1416,6 +1434,14 @@ export const caseStudies: CaseStudy[] = [
     // cards (a 2-up row); adding a 3rd would break that grid. Worth
     // revisiting in a dedicated pass, not as a side effect of a content
     // migration commit.
+    //
+    // No `thumbnail` (Milestone 3): unlike the other five migrated case
+    // studies, this one doesn't open with a clean 4:3 hero shot -- its
+    // first imageRow is six assorted, irregularly-sized diagrams (a
+    // 647x245 banner, several tall portrait crops). Forcing any one of
+    // those into ProjectCard's 4:3 media block would crop it badly.
+    // Keeps the generated ProjectVisual placeholder instead, which is
+    // the more honest choice than a bad crop of a real asset.
     contentStatus: "complete",
     oneLineScope:
       "Convay's fast growth created a need for consistency and scalability, but the platform had no design system in place. As the only UX designer assigned to the task, I took the initiative to create Convay's first design system from scratch. With guidance from the product team and close collaboration with developers, I built a scalable foundation defining colors, typography, spacing, components, and patterns. This design system unified the platform's visual language across light and dark themes and improved team workflows—making handoffs easier, updates faster, and new features more consistent. Today, it supports Convay's core platform and upcoming features across web and mobile, enabling the product to scale with confidence.",
@@ -1444,6 +1470,12 @@ export const caseStudies: CaseStudy[] = [
     track: "work",
     scale: "product",
     contentStatus: "complete",
+    thumbnail: img(
+      "szd3CmjkaLoDxcVmwh26M4KGcA.gif",
+      1600,
+      1200,
+      "FitVibe app walkthrough",
+    ),
     oneLineScope:
       "FitVibe is a comprehensive fitness app designed for fitness enthusiasts and individuals pursuing a healthy lifestyle. It offers a range of features including workout and diet planners, progress tracking, social interaction, gamified challenges, and an e-commerce shop. With a focus on personalized guidance and community support, FitVibe caters to passionate fitness enthusiasts and those seeking to improve their well-being.",
     meta: {
@@ -1476,6 +1508,12 @@ export const caseStudies: CaseStudy[] = [
     // omission during a migration pass.
     status: "contingent",
     contentStatus: "complete",
+    thumbnail: img(
+      "gltG0cxn5SXfakeqUdUin2pbW8E.gif",
+      1600,
+      1200,
+      "TravelMate AI app walkthrough",
+    ),
     oneLineScope:
       "TravelMate AI is a mobile-based conversational assistant designed to make traveling simpler and stress-free. It helps tourists navigate new cities, get instant recommendations, translate on the go, and access emergency info in real time. By combining chat, voice, and travel utilities in one app, TravelMate brings together tools that are usually scattered across multiple platforms, giving users a single, reliable travel companion.",
     meta: {
@@ -1497,6 +1535,12 @@ export const caseStudies: CaseStudy[] = [
     track: "work",
     scale: "feature",
     contentStatus: "complete",
+    thumbnail: img(
+      "VlxHzd93ClWznE7PstrL1EmwKY.gif",
+      1600,
+      1200,
+      "Convay notifications walkthrough",
+    ),
     oneLineScope:
       "In a platform used across 46+ countries, including by government agencies, missing a critical update can break workflows. I helped design a centralized, categorized notification system for Convay, ensuring users could easily stay on top of meetings, messages, and file updates. This feature was a small yet strategic step toward making Convay a seamless, scalable collaboration tool.",
     meta: {
@@ -1595,7 +1639,7 @@ export const caseStudies: CaseStudy[] = [
 ];
 
 export const projectSummaries: ProjectSummary[] = caseStudies.map(
-  ({ slug, title, track, oneLineScope, scale, isFlagship, status }) => ({
+  ({ slug, title, track, oneLineScope, scale, isFlagship, status, thumbnail }) => ({
     slug,
     title,
     track,
@@ -1603,6 +1647,7 @@ export const projectSummaries: ProjectSummary[] = caseStudies.map(
     scale,
     isFlagship,
     status,
+    thumbnail,
   }),
 );
 

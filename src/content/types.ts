@@ -30,6 +30,15 @@ export interface ProjectSummary {
    * Section 3). Rendered with a distinct, honest placeholder state
    * rather than being silently included as finished content. */
   status?: "draft" | "contingent";
+  /** Milestone 3: a real screenshot/GIF from the case study itself, used
+   * by ProjectCard instead of the generated ProjectVisual placeholder.
+   * Only set for migrated case studies that open with a clean,
+   * card-shaped (roughly 4:3) hero shot -- a portrait-orientation app
+   * screenshot forced into a 4:3 card would crop badly, so those
+   * projects intentionally keep the honest generated placeholder rather
+   * than a bad crop of a real asset. See content/projects.ts for the
+   * per-project reasoning. */
+  thumbnail?: { src: string; width: number; height: number; alt: string };
 }
 
 export interface CaseStudyMeta {
