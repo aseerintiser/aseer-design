@@ -255,10 +255,22 @@ export default function HomePage() {
           closes the page on the same quiet dark note the Track split
           opened with, and gives the page a real light→dark→light→dark
           rhythm on the way to the (light) footer. Reveal wraps it since
-          it was the last remaining section with no entrance motion. */}
-      <Section density="default" tone="dark">
+          it was the last remaining section with no entrance motion.
+
+          Visual QA milestone: confirmed live at a real 1920px viewport --
+          `density="default"` gave one short status line the same
+          vertical padding as a full content section, and with no width
+          constraint of its own the line just sat pinned to the left of
+          the full-width dark band, reading as an empty, unfinished-
+          looking section rather than a deliberate closing beat. `dense`
+          matches the tighter rhythm this line's actual weight calls for,
+          and centering it turns a stray leftover line into a considered,
+          quiet closing statement. */}
+      <Section density="dense" tone="dark">
         <Reveal>
-          <Text muted>{site.currentStatus}</Text>
+          <Text muted className="text-center">
+            {site.currentStatus}
+          </Text>
         </Reveal>
       </Section>
     </>
