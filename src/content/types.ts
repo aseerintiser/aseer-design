@@ -81,7 +81,52 @@ export type CaseStudyBlock =
       type: "imageRow";
       images: { src: string; width: number; height: number; alt: string }[];
     }
-  | { type: "link"; text: string; href: string };
+  | { type: "link"; text: string; href: string }
+  | {
+      /** Lumi Milestone B: grouped, tap-to-reveal content -- e.g. design
+       * principles or themes organized into named clusters, each stating
+       * a label by default and one line of rationale on demand. Renders
+       * via RevealGroup/RevealItem. Only use this when every item has
+       * real, already-written detail text -- never invent a rationale
+       * just to populate the shape (see Lumi's own findings-diagram
+       * section, which deliberately does NOT use this block because
+       * that content doesn't exist yet). */
+      type: "revealGroup";
+      groups: {
+        heading?: string;
+        items: { label: string; detail: string }[];
+      }[];
+    }
+  | {
+      /** A single passage that deserves its own visual weight (a subtle
+       * background/contrast shift) rather than blending into the
+       * section's inherited tone -- for a case study's one pivotal
+       * moment, not a decorative highlight used repeatedly. */
+      type: "callout";
+      text: string;
+    }
+  | {
+      /** A minimal visual break between two beats inside the same
+       * section, for when a new heading would be too heavy-handed but a
+       * plain paragraph break isn't enough. */
+      type: "divider";
+    }
+  | {
+      /** An ordered sequence of short labeled steps -- a research
+       * methodology's pilot-to-main-study arc, or a product's process
+       * phases. Horizontal on desktop, vertical on mobile. */
+      type: "timeline";
+      steps: { label: string; detail?: string }[];
+    }
+  | {
+      /** A small icon-plus-label link card for a closing invitation
+       * ("read the full thesis," "request a demo") -- more deliberate
+       * than the plain underlined `link` block above, without being a
+       * full button. */
+      type: "linkCard";
+      text: string;
+      href: string;
+    };
 
 /**
  * Full case-study content, following the seven-section framework from

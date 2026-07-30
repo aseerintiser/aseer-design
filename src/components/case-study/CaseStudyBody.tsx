@@ -5,6 +5,11 @@ import { Text } from "@/components/ui/Text";
 import { PullQuote } from "@/components/ui/PullQuote";
 import { CaseStudyImage } from "./CaseStudyImage";
 import { ImageRow } from "./ImageRow";
+import { RevealGroup } from "./RevealGroup";
+import { Callout } from "./Callout";
+import { Divider } from "./Divider";
+import { Timeline } from "./Timeline";
+import { LinkCard } from "./LinkCard";
 import { renderInlineMarkdown } from "@/lib/inline-markdown";
 
 /** Ghost numeral matching the one used for placeholder/research case
@@ -88,6 +93,16 @@ function renderBlock(block: CaseStudyBlock, key: number) {
           </a>
         </p>
       );
+    case "revealGroup":
+      return <RevealGroup key={key} groups={block.groups} />;
+    case "callout":
+      return <Callout key={key} text={block.text} />;
+    case "divider":
+      return <Divider key={key} />;
+    case "timeline":
+      return <Timeline key={key} steps={block.steps} />;
+    case "linkCard":
+      return <LinkCard key={key} text={block.text} href={block.href} />;
     default:
       return null;
   }

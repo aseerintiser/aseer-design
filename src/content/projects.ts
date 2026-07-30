@@ -1,4 +1,5 @@
 import type { CaseStudy, CaseStudyBlock, ProjectSummary } from "./types";
+import { site } from "./site";
 
 /**
  * Project data.
@@ -1361,34 +1362,31 @@ const convayNotificationsBody: CaseStudyBlock[] = [
 ];
 
 // ---------------------------------------------------------------------
-// Research track: Lumi (Milestone 3, "Lumi Milestone A")
+// Research track: Lumi (Milestones A-C of the approved Lumi
+// implementation plan; content from Lumi_Case_Study_FINAL.md)
 // ---------------------------------------------------------------------
-// Content-only pass from Lumi_Case_Study_FINAL.md, using only the block
-// types that already exist (heading/paragraph/list/quote) -- no new
-// components were built for this pass, per that milestone's explicit
-// scope ("Milestone A" of the approved Lumi implementation plan).
-// Several visuals the final copy calls for are deferred to later
-// milestones, each flagged inline below rather than faked:
-//   - Hero image, Tampere housing screenshot, and the off-script
-//     fallback recording (Milestone D) all need real assets from Aseer
-//     that don't exist in this build environment -- no image/imageRow
-//     blocks are used here at all, rather than pointing at a fabricated
-//     placeholder src.
-//   - The research timeline and participant-summary strip (Milestone C's
-//     Timeline component) are covered narratively in "The study"'s prose
-//     instead of a separate visual for now.
-//   - The hallucination-moment emphasis panel + divider (Milestone C's
-//     Callout/Divider) render as a plain paragraph here.
-//   - The seven-principles graphic (Milestone B's RevealItem) renders as
-//     three heading/list groups below -- real, complete content, just
-//     without the tap-to-reveal treatment yet.
-//   - The seven-themes findings diagram (also Milestone B) is NOT given
-//     real per-theme content here on purpose: the copy itself says the
-//     full analysis behind those seven themes "is reserved for future
-//     academic publication," so unlike the principles above, there's no
-//     real per-theme text yet to put in a reveal component. Milestone B
-//     will need to confirm with Aseer what (if anything) each theme can
-//     actually say before building that piece.
+// Milestone A: full body content using only block types that already
+// existed (heading/paragraph/list/quote). Milestone B added the
+// `revealGroup` block + RevealItem component (tap-to-reveal). Milestone
+// C added `callout`/`divider`/`timeline`/`linkCard`. All four are
+// generic, schema-registered block types, not Lumi-specific -- any
+// future case study can use them as data without new component work.
+//
+// Two things remain deliberately deferred, each flagged inline rather
+// than faked:
+//   - Milestone D (no image/imageRow/media blocks anywhere in this
+//     body): the hero, the Tampere housing screenshot, and the
+//     off-script fallback recording all need real assets from Aseer
+//     that don't exist in this build environment. Nothing to build yet,
+//     just nothing to wire up -- see the ProjectSummary.thumbnail
+//     comment on this entry below.
+//   - The seven-themes findings diagram in "What we found" does NOT use
+//     `revealGroup`, unlike the seven principles in "What it means"
+//     which do: the copy itself says the full analysis behind those
+//     seven themes "is reserved for future academic publication," so
+//     there's no real per-theme text yet to reveal. Needs a decision
+//     from Aseer (what, if anything, each theme can say publicly) before
+//     that piece can be built -- flagged, not invented.
 const lumiBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "The problem" },
   {
@@ -1430,6 +1428,19 @@ const lumiBody: CaseStudyBlock[] = [
     type: "paragraph",
     text: "Two pilot sessions came first. They showed me exactly where the prototype broke, and that shaped everything I built next.",
   },
+  // Milestone C: labels/detail drawn only from facts already stated in
+  // the paragraphs above (2 pilot sessions; 15 participants, ~35 minutes
+  // each) -- not new information, just the same facts in the final
+  // copy's own requested "compact pilot-to-final iteration timeline"
+  // shape.
+  {
+    type: "timeline",
+    steps: [
+      { label: "Pilot session 1" },
+      { label: "Pilot session 2" },
+      { label: "Main study", detail: "15 participants, single sessions, ~35 minutes each" },
+    ],
+  },
 
   { type: "heading", level: 3, text: "Building Lumi" },
   {
@@ -1454,14 +1465,19 @@ const lumiBody: CaseStudyBlock[] = [
     type: "paragraph",
     text: "It formed slowly, in small moments: an official link that worked, a price range that matched what someone already expected, a summary that read as precise instead of vague. Each one added a little more confidence.",
   },
+  // Milestone C: the case study's one pivotal moment gets its own
+  // visual weight (Callout) rather than blending into the surrounding
+  // paragraphs, per the final copy's own "Components deserving special
+  // presentation" note.
   {
-    type: "paragraph",
+    type: "callout",
     text: "But trust could also disappear all at once. In one session, Lumi confidently named a housing provider that doesn't exist. The participant clicked the link it gave. Nothing loaded. That single moment was enough. Everything Lumi had earned up until then stopped mattering, and the participant's trust reset instantly, not gradually.",
   },
   {
     type: "paragraph",
     text: "That asymmetry, slow to form, fast to break, turned out to be the clearest finding of the study.",
   },
+  { type: "divider" },
   {
     type: "paragraph",
     text: "A second pattern stood out almost as strongly. Vague reassurance didn't move people. Specific facts did. When Lumi gave one participant a real price range for student housing, they said it plainly: \"I was immediately motivated... attracted to the price.\"",
@@ -1492,29 +1508,60 @@ const lumiBody: CaseStudyBlock[] = [
     type: "paragraph",
     text: "The clearest output of this research is a set of seven design principles for building trustworthy conversational AI in high-stakes settings, not just for Lumi, but for any assistant operating in this kind of context. Each one traces back to something that actually happened in the study, not just intuition.",
   },
-  { type: "heading", level: 4, text: "What made trust possible" },
+  // Milestone B: the seven principles as a tap-to-reveal graphic,
+  // grouped into the same three dimensions the copy itself names. Label
+  // stays visible by default (the scan); detail (already-written
+  // rationale, not new content) reveals on demand. This is the one
+  // place in Lumi that uses `revealGroup` -- the findings diagram in
+  // "What we found" deliberately does not, see the file-level comment
+  // above for why.
   {
-    type: "list",
-    items: [
-      "**Source-anchored.** Every claim traceable to a real, named authority.",
-      "**Structurally minimal.** Calm and scannable, never overwhelming.",
-    ],
-  },
-  { type: "heading", level: 4, text: "What kept trust honest" },
-  {
-    type: "list",
-    items: [
-      "**Scope-stated.** Honest about what it does and doesn't cover.",
-      "**Verification-supporting.** Designed for people who will double-check it, not against them.",
-    ],
-  },
-  { type: "heading", level: 4, text: "Where trust needs protecting" },
-  {
-    type: "list",
-    items: [
-      "**Hallucination-conservative.** Built to fail safely, not confidently, the direct lesson from the one moment trust broke in this study.",
-      "**Vulnerability-aware.** Sensitive to who's asking and why.",
-      "**Action-closing.** Orientation isn't enough. It should help people actually act.",
+    type: "revealGroup",
+    groups: [
+      {
+        heading: "What made trust possible",
+        items: [
+          {
+            label: "Source-anchored",
+            detail: "Every claim traceable to a real, named authority.",
+          },
+          {
+            label: "Structurally minimal",
+            detail: "Calm and scannable, never overwhelming.",
+          },
+        ],
+      },
+      {
+        heading: "What kept trust honest",
+        items: [
+          {
+            label: "Scope-stated",
+            detail: "Honest about what it does and doesn't cover.",
+          },
+          {
+            label: "Verification-supporting",
+            detail: "Designed for people who will double-check it, not against them.",
+          },
+        ],
+      },
+      {
+        heading: "Where trust needs protecting",
+        items: [
+          {
+            label: "Hallucination-conservative",
+            detail:
+              "Built to fail safely, not confidently, the direct lesson from the one moment trust broke in this study.",
+          },
+          {
+            label: "Vulnerability-aware",
+            detail: "Sensitive to who's asking and why.",
+          },
+          {
+            label: "Action-closing",
+            detail: "Orientation isn't enough. It should help people actually act.",
+          },
+        ],
+      },
     ],
   },
   {
@@ -1548,6 +1595,16 @@ const lumiBody: CaseStudyBlock[] = [
   {
     type: "paragraph",
     text: "The full thesis and a working demo of the prototype are available on request.",
+  },
+  // Milestone C: a real, working action (a mailto: link reusing the
+  // site's own contact email, not a fabricated URL) instead of a bare
+  // sentence, so this reads as a genuine invitation per the final
+  // copy's own note. The label is UI microcopy for the affordance
+  // itself, not case-study narrative content.
+  {
+    type: "linkCard",
+    text: "Request the thesis & a demo",
+    href: `mailto:${site.email}?subject=${encodeURIComponent("Lumi: thesis and demo request")}`,
   },
 ];
 
