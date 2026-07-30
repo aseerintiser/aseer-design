@@ -1360,6 +1360,197 @@ const convayNotificationsBody: CaseStudyBlock[] = [
   },
 ];
 
+// ---------------------------------------------------------------------
+// Research track: Lumi (Milestone 3, "Lumi Milestone A")
+// ---------------------------------------------------------------------
+// Content-only pass from Lumi_Case_Study_FINAL.md, using only the block
+// types that already exist (heading/paragraph/list/quote) -- no new
+// components were built for this pass, per that milestone's explicit
+// scope ("Milestone A" of the approved Lumi implementation plan).
+// Several visuals the final copy calls for are deferred to later
+// milestones, each flagged inline below rather than faked:
+//   - Hero image, Tampere housing screenshot, and the off-script
+//     fallback recording (Milestone D) all need real assets from Aseer
+//     that don't exist in this build environment -- no image/imageRow
+//     blocks are used here at all, rather than pointing at a fabricated
+//     placeholder src.
+//   - The research timeline and participant-summary strip (Milestone C's
+//     Timeline component) are covered narratively in "The study"'s prose
+//     instead of a separate visual for now.
+//   - The hallucination-moment emphasis panel + divider (Milestone C's
+//     Callout/Divider) render as a plain paragraph here.
+//   - The seven-principles graphic (Milestone B's RevealItem) renders as
+//     three heading/list groups below -- real, complete content, just
+//     without the tap-to-reveal treatment yet.
+//   - The seven-themes findings diagram (also Milestone B) is NOT given
+//     real per-theme content here on purpose: the copy itself says the
+//     full analysis behind those seven themes "is reserved for future
+//     academic publication," so unlike the principles above, there's no
+//     real per-theme text yet to put in a reveal component. Milestone B
+//     will need to confirm with Aseer what (if anything) each theme can
+//     actually say before building that piece.
+const lumiBody: CaseStudyBlock[] = [
+  { type: "heading", level: 3, text: "The problem" },
+  {
+    type: "paragraph",
+    text: "Moving to a new country means learning a system nobody explains to you. Where to register. Which office handles what. Which number on a form actually matters.",
+  },
+  {
+    type: "paragraph",
+    text: "Finland's public services are, on paper, well organized. In practice, newcomers still have to piece the sequence together themselves: asking a friend, searching in English on a Finnish institution's website, or guessing.",
+  },
+  {
+    type: "paragraph",
+    text: "One participant in my study put it simply. Talking about their first months in the country, they said it \"often feels like you're just left here... you are kind of lost.\"",
+  },
+  {
+    type: "quote",
+    text: "Often feels like you're just left here... you are kind of lost.",
+    attribution: "A study participant, on arriving without guidance",
+  },
+  {
+    type: "paragraph",
+    text: "14 of the 15 people I studied described some version of the same thing: they wished something like Lumi had existed when they arrived.",
+  },
+
+  { type: "heading", level: 3, text: "The study" },
+  {
+    type: "paragraph",
+    text: "I designed Lumi to test a specific question: when an AI assistant helps someone through an unfamiliar, high-stakes system, what actually makes them trust it, or stop trusting it?",
+  },
+  {
+    type: "paragraph",
+    text: "To find out, I recruited 15 international students at Tampere University who had personally navigated these systems as newcomers, and ran single-session studies with each of them. Every session lasted about 35 minutes and moved through four real scenarios: student housing, banking, healthcare, and university services. Before and after each session, I asked participants to describe what they felt, not just what they thought.",
+  },
+  {
+    type: "paragraph",
+    text: "All sessions were consented and recorded, and every participant's data was anonymized before analysis. I analyzed the sessions using reflexive thematic analysis, a well-established qualitative method, and used an existing academic framework called Trust-as-Affect as a lens, not a theory I was trying to prove. Throughout, I looked for contradictions in the data as carefully as I looked for agreement, one wrong answer mattered as much as a pattern across many.",
+  },
+  {
+    type: "paragraph",
+    text: "Two pilot sessions came first. They showed me exactly where the prototype broke, and that shaped everything I built next.",
+  },
+
+  { type: "heading", level: 3, text: "Building Lumi" },
+  {
+    type: "paragraph",
+    text: "The first version of Lumi worked well when people clicked through its guided structure. It failed the moment someone typed a question outside that structure, and in the pilot sessions, that happened often enough to break the interaction entirely. If I'd run the main study on that version, I would have lost the exact moments I was there to study: real, unscripted moments of doubt and confidence, every time someone went off-script.",
+  },
+  {
+    type: "paragraph",
+    text: "So I added a constrained AI layer underneath the structured design, one that could handle open-ended questions while keeping Lumi's tone and shape consistent. This carried its own risk: a second system, however well constrained, could easily have felt like two different assistants stitched together, or introduced new failures of its own. I tested it carefully before the main study began, and in practice, the transition held up. Typing a question outside the guided path felt like a natural continuation of the same conversation, not a handoff to something else.",
+  },
+  {
+    type: "paragraph",
+    text: "Every screen followed the same design logic: real institutions named directly (TOAS for housing, Kela for benefits, YTHS for healthcare), links out to their official pages, and short, scannable summaries instead of long paragraphs. Then I watched what happened when real people relied on it.",
+  },
+
+  { type: "heading", level: 3, text: "What we found" },
+  {
+    type: "paragraph",
+    text: "Trust didn't behave the way I expected going in.",
+  },
+  {
+    type: "paragraph",
+    text: "It formed slowly, in small moments: an official link that worked, a price range that matched what someone already expected, a summary that read as precise instead of vague. Each one added a little more confidence.",
+  },
+  {
+    type: "paragraph",
+    text: "But trust could also disappear all at once. In one session, Lumi confidently named a housing provider that doesn't exist. The participant clicked the link it gave. Nothing loaded. That single moment was enough. Everything Lumi had earned up until then stopped mattering, and the participant's trust reset instantly, not gradually.",
+  },
+  {
+    type: "paragraph",
+    text: "That asymmetry, slow to form, fast to break, turned out to be the clearest finding of the study.",
+  },
+  {
+    type: "paragraph",
+    text: "A second pattern stood out almost as strongly. Vague reassurance didn't move people. Specific facts did. When Lumi gave one participant a real price range for student housing, they said it plainly: \"I was immediately motivated... attracted to the price.\"",
+  },
+  {
+    type: "quote",
+    text: "I was immediately motivated... attracted to the price.",
+    attribution: "A study participant, on seeing a real price range",
+  },
+  {
+    type: "paragraph",
+    text: "Participants also stayed a little careful even when they trusted Lumi, checking its answers against another source out of habit, not suspicion, since they already knew AI systems can be wrong.",
+  },
+  // NOTE: the final copy marks a pull-quote here too ("participant on
+  // checking Lumi against another source"), but unlike the two quotes
+  // above, no literal quoted speech for this one is included in
+  // Lumi_Case_Study_FINAL.md -- only the paraphrase above. Rendered as a
+  // plain paragraph rather than inventing quoted words; if Aseer has the
+  // actual quote from the interview data, this can get the same
+  // treatment as the other two.
+  {
+    type: "paragraph",
+    text: "These patterns fell into three broad areas: what made trust possible in the first place, how people managed it moment to moment, and where it eventually broke down. Across the study, they organized into seven themes. *(The full analysis behind these themes is reserved for future academic publication.)*",
+  },
+
+  { type: "heading", level: 3, text: "What it means" },
+  {
+    type: "paragraph",
+    text: "The clearest output of this research is a set of seven design principles for building trustworthy conversational AI in high-stakes settings, not just for Lumi, but for any assistant operating in this kind of context. Each one traces back to something that actually happened in the study, not just intuition.",
+  },
+  { type: "heading", level: 4, text: "What made trust possible" },
+  {
+    type: "list",
+    items: [
+      "**Source-anchored.** Every claim traceable to a real, named authority.",
+      "**Structurally minimal.** Calm and scannable, never overwhelming.",
+    ],
+  },
+  { type: "heading", level: 4, text: "What kept trust honest" },
+  {
+    type: "list",
+    items: [
+      "**Scope-stated.** Honest about what it does and doesn't cover.",
+      "**Verification-supporting.** Designed for people who will double-check it, not against them.",
+    ],
+  },
+  { type: "heading", level: 4, text: "Where trust needs protecting" },
+  {
+    type: "list",
+    items: [
+      "**Hallucination-conservative.** Built to fail safely, not confidently, the direct lesson from the one moment trust broke in this study.",
+      "**Vulnerability-aware.** Sensitive to who's asking and why.",
+      "**Action-closing.** Orientation isn't enough. It should help people actually act.",
+    ],
+  },
+  {
+    type: "paragraph",
+    text: "This research also contributes to how trust itself is understood in human-AI interaction, extending an existing academic framework in ways I'm continuing to develop toward publication. The seven principles are what I'd build from that understanding today. The next test is building them into something people rely on before they ever have a reason to doubt it.",
+  },
+
+  { type: "heading", level: 3, text: "Reflection" },
+  {
+    type: "paragraph",
+    text: "This was a small study: 15 people, one university, one prototype. It doesn't describe how everyone experiences trust in AI, only how these 15 people did, in real depth.",
+  },
+  {
+    type: "paragraph",
+    text: "I was also both the designer of Lumi and the researcher studying it, a position I stayed conscious of throughout, especially once the prototype's own mistakes became some of the most important data in the study.",
+  },
+  {
+    type: "paragraph",
+    text: "If I ran this again, I'd recruit across more than one university, and stress-test the fallback layer harder before the real sessions began.",
+  },
+  {
+    type: "paragraph",
+    text: "What stayed with me most is simple. An AI system doesn't earn trust once. It earns it constantly, and it can lose it instantly.",
+  },
+
+  { type: "heading", level: 3, text: "Go deeper" },
+  {
+    type: "paragraph",
+    text: "This project is part of my Master's thesis, completed at Tampere University and graded 5/5. I'm preparing parts of this study for academic publication, so a few details stay under wraps for now, but I'm glad to share more directly.",
+  },
+  {
+    type: "paragraph",
+    text: "The full thesis and a working demo of the prototype are available on request.",
+  },
+];
+
 export const caseStudies: CaseStudy[] = [
   {
     slug: "convay-mobile-app-revamp",
@@ -1558,7 +1749,8 @@ export const caseStudies: CaseStudy[] = [
   },
   // -----------------------------------------------------------------
   // Research track: no live-site equivalent (see file-level comment
-  // above). Untouched by this migration milestone.
+  // above). Lumi is written (see lumiBody above); the other four are
+  // still untouched placeholders.
   // -----------------------------------------------------------------
   {
     slug: "lumi",
@@ -1566,15 +1758,31 @@ export const caseStudies: CaseStudy[] = [
     track: "research",
     scale: "research",
     isFlagship: true,
+    contentStatus: "complete",
+    // Final intro paragraph from Lumi_Case_Study_FINAL.md, replacing the
+    // earlier one-line placeholder summary.
     oneLineScope:
-      "Master's thesis on trust in conversational AI, 15 international-student participants, graded 5/5.",
+      "Lumi is a conversational AI prototype I designed to help international students find their way through Finnish public services. This case study covers what happened when I studied real newcomers using it, and what that revealed about how trust in AI actually works.",
     meta: {
-      role: "Researcher & designer (solo, supervised)",
+      // "Sole researcher and designer" is the final copy's own header
+      // wording (previously "Researcher & designer (solo, supervised)").
+      // Team/duration/tools are unchanged background facts not covered
+      // by the final copy, so left as they were. The final copy's
+      // "Method" (qualitative study, 15 participants, reflexive thematic
+      // analysis) and "Outcome" (Master's thesis, graded 5/5) don't have
+      // their own CaseStudyMeta fields -- both are already conveyed
+      // narratively in the body (The study / Go deeper) instead.
+      role: "Sole researcher and designer",
       team: "Supervised by Prof. Thomas Olsson and Amir Pakpour Haji Agha",
       duration: "2025 – 2026",
       tools: "Figma (prototype), Atlas.ti",
     },
-    ...placeholderNarrative,
+    // No thumbnail yet -- no real image exists in this build environment
+    // (see lumiBody's opening comment). Keeps the honest ProjectVisual
+    // placeholder on the homepage's "Featured research" card and the
+    // Research index, same as Convay Design System's deliberate
+    // no-thumbnail case.
+    body: lumiBody,
   },
   {
     slug: "cultural-festival-platform",
