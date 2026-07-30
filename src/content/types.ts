@@ -126,6 +126,20 @@ export type CaseStudyBlock =
       type: "linkCard";
       text: string;
       href: string;
+    }
+  | {
+      /** Click-to-play video: a static poster until the reader starts
+       * it, plays once, no loop, muted. For a recorded interaction
+       * (e.g. an off-script question triggering an AI fallback) where a
+       * native, always-looping, unmutable .gif can't express "plays
+       * once, no loop." Renders via ControlledMedia. */
+      type: "video";
+      src: string;
+      poster: string;
+      width: number;
+      height: number;
+      alt: string;
+      caption?: string;
     };
 
 /**

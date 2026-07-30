@@ -1362,7 +1362,7 @@ const convayNotificationsBody: CaseStudyBlock[] = [
 ];
 
 // ---------------------------------------------------------------------
-// Research track: Lumi (Milestones A-C of the approved Lumi
+// Research track: Lumi (Milestones A-D of the approved Lumi
 // implementation plan; content from Lumi_Case_Study_FINAL.md)
 // ---------------------------------------------------------------------
 // Milestone A: full body content using only block types that already
@@ -1372,22 +1372,49 @@ const convayNotificationsBody: CaseStudyBlock[] = [
 // generic, schema-registered block types, not Lumi-specific -- any
 // future case study can use them as data without new component work.
 //
-// Two things remain deliberately deferred, each flagged inline rather
-// than faked:
-//   - Milestone D (no image/imageRow/media blocks anywhere in this
-//     body): the hero, the Tampere housing screenshot, and the
-//     off-script fallback recording all need real assets from Aseer
-//     that don't exist in this build environment. Nothing to build yet,
-//     just nothing to wire up -- see the ProjectSummary.thumbnail
-//     comment on this entry below.
-//   - The seven-themes findings diagram in "What we found" does NOT use
-//     `revealGroup`, unlike the seven principles in "What it means"
-//     which do: the copy itself says the full analysis behind those
-//     seven themes "is reserved for future academic publication," so
-//     there's no real per-theme text yet to reveal. Needs a decision
-//     from Aseer (what, if anything, each theme can say publicly) before
-//     that piece can be built -- flagged, not invented.
+// Milestone D: real assets, captured directly from the live Lumi
+// prototype (tweak-big-44404856.figma.site) via browser automation,
+// with Aseer's explicit permission to derive presentation assets from
+// authentic project material rather than waiting for manually-supplied
+// files. Nothing here is invented -- every screen, the real TOAS/POAS
+// rent figures, and the fallback response text are all real captures.
+// Self-hosted in /public/lumi (not hotlinked from framerusercontent.com
+// like the migrated Convay/FitVibe/TravelMate assets) since these were
+// captured directly, not fetched from a blocked domain:
+//   - hero.jpg / thumbnail.jpg: the real landing screen, cropped two
+//     ways (full card for the case study body, a tighter logo+tagline
+//     crop for ProjectCard's 4:3 media block).
+//   - tampere-housing.jpg: the real "Student housing -> Tampere" screen,
+//     showing TOAS and POAS with the actual €250-550/month rent range
+//     and working outbound links (verified via the page's own DOM:
+//     toas.fi/en, poas.fi/en).
+//   - fallback-demo.mp4 + fallback-poster.jpg: a real off-script
+//     question ("What if I want to bring my cat with me?") typed
+//     outside the guided housing flow, and Lumi's actual AI-fallback
+//     response (real pet-import guidance, Key points card, and real
+//     HOAS/TOAS/YTHS/Migri links) -- built as a short sequence of real
+//     captured frames (ffmpeg concat) rather than a live screen
+//     recording, since this sandbox's browser-recording pipeline proved
+//     unreliable mid-session; still four genuine, unaltered screen
+//     states of the real interaction, not a smoothed or embellished
+//     reconstruction.
+//
+// One thing remains deliberately deferred, flagged rather than faked:
+// the seven-themes findings diagram in "What we found" does NOT use
+// `revealGroup`, unlike the seven principles in "What it means" which
+// do: the copy itself says the full analysis behind those seven themes
+// "is reserved for future academic publication," so there's no real
+// per-theme text yet to reveal. Needs a decision from Aseer (what, if
+// anything, each theme can say publicly) before that piece can be
+// built.
 const lumiBody: CaseStudyBlock[] = [
+  {
+    type: "image",
+    src: "/lumi/hero.jpg",
+    width: 700,
+    height: 812,
+    alt: "The Lumi landing screen: a chat assistant introducing itself and offering six topics -- student housing, healthcare, working while studying, residence permits, university services, and banking.",
+  },
   { type: "heading", level: 3, text: "The problem" },
   {
     type: "paragraph",
@@ -1454,6 +1481,23 @@ const lumiBody: CaseStudyBlock[] = [
   {
     type: "paragraph",
     text: "Every screen followed the same design logic: real institutions named directly (TOAS for housing, Kela for benefits, YTHS for healthcare), links out to their official pages, and short, scannable summaries instead of long paragraphs. Then I watched what happened when real people relied on it.",
+  },
+  {
+    type: "image",
+    src: "/lumi/tampere-housing.jpg",
+    width: 700,
+    height: 812,
+    alt: "The 'Student housing in Tampere' screen, showing TOAS and POAS with their typical rent range (€250-550/month) and working links out to their official application sites.",
+    caption: "Real institutions, named directly, with working links out to their official sites.",
+  },
+  {
+    type: "video",
+    src: "/lumi/fallback-demo.mp4",
+    poster: "/lumi/fallback-poster.jpg",
+    width: 700,
+    height: 812,
+    alt: "A typed, off-script question (\"What if I want to bring my cat with me?\") triggering Lumi's AI fallback, which answers in the same visual voice as the guided flow: a full paragraph response plus a Key points card with real pet-import requirements and outbound links.",
+    caption: "A real off-script question, and Lumi's actual fallback response.",
   },
 
   { type: "heading", level: 3, text: "What we found" },
@@ -1834,11 +1878,19 @@ export const caseStudies: CaseStudy[] = [
       duration: "2025 – 2026",
       tools: "Figma (prototype), Atlas.ti",
     },
-    // No thumbnail yet -- no real image exists in this build environment
-    // (see lumiBody's opening comment). Keeps the honest ProjectVisual
-    // placeholder on the homepage's "Featured research" card and the
-    // Research index, same as Convay Design System's deliberate
-    // no-thumbnail case.
+    // Milestone D: a real thumbnail, cropped tighter than the full
+    // hero.jpg used in the case study body (logo + name + tagline,
+    // cropped to 4:3 specifically for ProjectCard's media block) so the
+    // homepage's "Featured research" card finally shows the actual
+    // product instead of the generated ProjectVisual gradient -- the
+    // same fix already applied to 5 of 6 Work case studies in
+    // Milestone 3.
+    thumbnail: {
+      src: "/lumi/thumbnail.jpg",
+      width: 612,
+      height: 460,
+      alt: "The Lumi landing screen: logo, name, and tagline (\"Your guide to student life in Finland\").",
+    },
     body: lumiBody,
   },
   {
