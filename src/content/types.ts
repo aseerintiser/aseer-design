@@ -54,4 +54,13 @@ export interface CaseStudy extends ProjectSummary {
   evidence: { body: string; metrics?: SourcedMetric[] };
   outcome: { body: string; metrics?: SourcedMetric[] };
   reflection: string;
+  /** "placeholder" means the six narrative fields above are all still
+   * the same generic filler sentence, not real case-study writing.
+   * CaseStudyLayout uses this to render one honest, well-designed "in
+   * progress" state instead of pretending there are six distinct
+   * finished sections that all happen to say the same thing -- repeating
+   * identical filler six times per case study (and identically across
+   * every case study) reads as an abandoned template, which is a worse
+   * impression than one clear, deliberate "not written yet" panel. */
+  contentStatus?: "placeholder" | "complete";
 }

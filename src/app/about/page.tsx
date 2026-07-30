@@ -23,7 +23,7 @@ export default function AboutPage() {
       <Section density="open">
         <Heading level={1}>About</Heading>
         <Text muted className="mt-4 max-w-[var(--measure)]">
-          Placeholder — who-I-am copy pending a later milestone.
+          This section is being written and isn&apos;t live yet.
         </Text>
       </Section>
 
@@ -32,29 +32,38 @@ export default function AboutPage() {
         <Text className="mt-2 max-w-[var(--measure)]">{site.currentStatus}</Text>
       </Section>
 
+      {/* This section's copy needs a deliberate tone decision before
+          it's rewritten (the accessibility-motivation framing currently
+          on the live About page shouldn't be a silent carryover; see
+          Master_Portfolio_Knowledge_Base.md Section 2.3) -- that's a
+          content decision for a later milestone, not something to
+          resolve here. The visible placeholder below intentionally
+          doesn't cite internal planning documents: whatever isn't
+          finished yet, a real visitor should never see an internal
+          filename or section reference in body copy. */}
       <Section density="default">
         <Heading level={2}>What drives me</Heading>
         <Text muted className="mt-4 max-w-[var(--measure)]">
-          Placeholder — the accessibility motivation currently on the live
-          About page needs a deliberate tone decision before it&apos;s
-          rewritten here (see Master_Portfolio_Knowledge_Base.md, Section
-          2.3), not a silent carryover.
+          This section is being rewritten and isn&apos;t live yet.
         </Text>
       </Section>
 
+      {/* Selection of which 3-5 certifications to feature is a content
+          decision pending later (Portfolio_Content_Architecture_Blueprint.md
+          Part 7); same rule as above applies to the visible copy. */}
       <Section density="default">
         <Heading level={2}>Certifications</Heading>
         <Text muted className="mt-4 max-w-[var(--measure)]">
-          Placeholder — condensed to 3-5 items pending your selection (see
-          Portfolio_Content_Architecture_Blueprint.md Part 7).
+          Certifications are being condensed to a short, relevant list and
+          aren&apos;t live yet.
         </Text>
       </Section>
 
       <Section density="default">
         <Heading level={2}>Outside of design</Heading>
         <Text muted className="mt-4 max-w-[var(--measure)]">
-          Placeholder — filmmaking and photography material pending a
-          later milestone.
+          Filmmaking and photography material is being selected and isn&apos;t
+          live yet.
         </Text>
       </Section>
     </>

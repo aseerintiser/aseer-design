@@ -35,6 +35,7 @@ const placeholderNarrative = {
     body: "Placeholder — outcome detail pending a later milestone.",
   },
   reflection: "Placeholder — reflection pending a later milestone.",
+  contentStatus: "placeholder" as const,
 };
 
 export const caseStudies: CaseStudy[] = [
