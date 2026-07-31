@@ -32,9 +32,33 @@
 // "Research" has no live-site equivalent at all (it was this project's
 // own addition, sourced from the Career Archive, for a future track the
 // live site doesn't currently have) -- kept as-is, out of scope for a
-// content migration milestone, placed after About Me.
+// content migration milestone.
+//
+// Nav Order milestone: reordered from the migrated live-site order into
+// three tiers, reasoned from what a recruiter actually needs at each
+// point in the visit rather than the order items happened to be added
+// in:
+//
+// 1. Proof (Work, Research, Design Showcase) -- the actual evidence,
+//    first. Research sits right beside Work rather than second-to-last:
+//    the homepage bio and hero both position Aseer as a Product
+//    Designer *and* HCI researcher in the same breath, so a nav that
+//    buried Research near the end quietly contradicted that dual
+//    positioning. Design Showcase stays third, still early, per Aseer's
+//    own direction that recruiters should see it quickly -- just grouped
+//    with the other "here's what I can do" items instead of interrupting
+//    Work and Research.
+// 2. Identity (About Me, Resume) -- who's behind the work and the quick
+//    facts/download, for a visitor who's now interested enough to want
+//    that context.
+// 3. Supporting credibility (Testimonials, Certifications, Articles) --
+//    social proof, credentials, and writing, useful but not what closes
+//    the case on their own. Articles goes last: least time-sensitive,
+//    and the one item here that isn't really about Aseer's own project
+//    work.
 export const nav = [
   { label: "Work", href: "/work", external: false },
+  { label: "Research", href: "/research", external: false },
   // Design Showcase stopgap milestone: a handful of concept UI pieces
   // (a learning-platform site, a fintech waitlist page, a wellness app,
   // a student job board) from before this rebuild, kept out of Work/
@@ -45,15 +69,8 @@ export const nav = [
   // of all four pieces exist, it's a real in-site page (see
   // content/design-showcase.ts and app/design-showcase/page.tsx), which
   // itself links out to the full interactive prototype at the bottom.
-  // Placed right after Work per Aseer's own direction: on the previous
-  // site this was the first thing a recruiter saw, so it stays early in
-  // the nav rather than getting buried.
   { label: "Design Showcase", href: "/design-showcase", external: false },
-  { label: "Articles", href: "/articles", external: false },
-  { label: "Certifications", href: "/certifications", external: false },
-  { label: "Testimonials", href: "/testimonials", external: false },
   { label: "About Me", href: "/about", external: false },
-  { label: "Research", href: "/research", external: false },
   // TODO(resume-link): the live site's nav "Resume" link and the
   // About page's "View my resume" link point to two *different* Google
   // Drive file IDs (1zwDpl7iUsqWKVv07J2ZsyUVxeSb2hCK8 vs
@@ -63,6 +80,9 @@ export const nav = [
   // /resume page (its own disabled-pending-confirmation state), instead
   // of silently picking one external link.
   { label: "Resume", href: "/resume", external: false },
+  { label: "Testimonials", href: "/testimonials", external: false },
+  { label: "Certifications", href: "/certifications", external: false },
+  { label: "Articles", href: "/articles", external: false },
 ] as const;
 
 export const site = {
