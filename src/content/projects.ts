@@ -2217,15 +2217,19 @@ export const caseStudies: CaseStudy[] = [
       "A mobile app concept for a cultural festival at a UNESCO heritage site, built during a six-person ECIU Créathon team.",
     meta: {
       role: "Creative Manager",
-      // Corrected from the earlier placeholder guess ("Tools: Figma") now
-      // that the approved case study confirms the actual build: a
-      // single-file, framework-free HTML/CSS/JS app, reviewed as a
-      // hosted Figma Sites prototype -- Figma the design tool wasn't
-      // used to build it. Team wording matches the case study's own
-      // "Team:" line rather than the prior generic ECIU-consortium note.
+      // Corrected per Aseer directly: prototyped with Figma Make (not
+      // hand-built HTML/CSS/JS as an earlier assistant-generated
+      // background note had assumed) -- Figma Make generates real,
+      // framework-free HTML/CSS/JS as its output and publishes it as a
+      // Figma Sites link, which is why the case study body's "single-file
+      // app in plain HTML, CSS, and JavaScript, no framework" build note
+      // and the live order-query-60065275.figma.site prototype URL both
+      // still hold; only the *tool* used to produce that output was
+      // misattributed. Team wording matches the case study's own "Team:"
+      // line rather than the prior generic ECIU-consortium note.
       team: "6-person multidisciplinary team (design, engineering, business)",
       duration: "June 2026",
-      tools: "HTML, CSS, JavaScript",
+      tools: "Figma (Make)",
     },
     thumbnail: {
       src: "/arenewberg/thumbnail.png",
