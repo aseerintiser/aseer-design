@@ -1974,6 +1974,234 @@ const arenewbergBody: CaseStudyBlock[] = [
   },
 ];
 
+// Supporting project, not a flagship case study -- kept deliberately
+// shorter than aRENEWberg/Lumi/Convay per the implementation brief
+// ("lighter and faster to consume... 3 to 5 minute reading
+// experience"). Text is verbatim from the approved final case study
+// (Multimodal-Robot-Interaction-Case-Study-Final.md); the only changes
+// made for web presentation are: (1) the source's bracket placeholders
+// ([Robot Platforms], [Interaction Flow], etc.) are replaced with real
+// photos recovered from the project's Assets folder and from the
+// embedded images inside the team's RoboCarnival slide deck, matched
+// to whichever nearby paragraph they actually provide evidence for
+// (not always the paragraph the bracket sat next to -- e.g. the
+// hand-petting-the-cat photo is placed at the "touch channel needed no
+// explanation" finding, since that's the sentence it's actually
+// evidence for); (2) the opening hook paragraph now sits as the first
+// paragraph under "The project" heading rather than floating above any
+// heading, since every other section in this component needs a
+// heading to belong to; (3) "Best team" is a level-4 sub-heading
+// inside "RoboCarnival" rather than its own full section, since it's
+// one paragraph and a direct continuation of the same event, not a
+// new topic -- this is what keeps the page feeling light rather than
+// like nine full chapter breaks; (4) a short Timeline block up top
+// summarizes the chronology already stated in the text, for a reader
+// skimming in under a minute. No sentence of the approved writing was
+// reworded, cut, or added to.
+const robocarnivalBody: CaseStudyBlock[] = [
+  {
+    type: "image",
+    src: "/robocarnival/hero.jpg",
+    width: 1915,
+    height: 1072,
+    alt: "Aseer sitting between Misty (left, small robot with a round camera-eyed head), a Joy for All companion cat (in his lap), and QT (right, a tall robot with an expressive screen face).",
+    caption: "Misty, the companion cat, and QT — the three robots, one modality each, at the center of this project.",
+  },
+
+  { type: "heading", level: 3, text: "The project" },
+  {
+    type: "timeline",
+    steps: [
+      { label: "Course", detail: "Social Robots: Design, Research & Interaction, Tampere University" },
+      { label: "Research workshops", detail: "Visiting high schoolers test QT, Misty, and the cat (March 2025)" },
+      { label: "RoboCarnival", detail: "Public demo station, Hervanta campus (April 2025)" },
+      { label: "Best Team", detail: "Voted by the visiting students" },
+    ],
+  },
+  {
+    type: "paragraph",
+    text: "A robot's face alone isn't enough to communicate an emotion, and people will trust a robot's touch faster than its words. That's the short version of what this project taught me. It's a university course project, not a flagship case study, but it's the clearest example in my portfolio of designing for a physical, multimodal interface, and it taught me things a screen-based project couldn't.",
+  },
+  {
+    type: "paragraph",
+    text: "Our course, Social Robots: Design, Research and Interaction, was built around a framework called robot literacy: the idea that using and understanding robots is a skill, and that different people need different things to build that skill. The course split this into six areas, from basic awareness of what robots are and do, to programming them, to the ethics of trusting them. Each team picked one area to explore and build a public demo around.",
+  },
+  {
+    type: "paragraph",
+    text: "My team of five was assigned interaction: how someone who has never met a robot before figures out how to engage with it. We turned that into a handful of research questions: how teenagers read a robot's non-verbal cues, how they think about robots as companions, what makes them willing to interact at all, and how modalities like touch, voice, and gesture change that willingness. We had three robots on loan to explore those questions with, one per channel.",
+  },
+  {
+    type: "image",
+    src: "/robocarnival/robot-platforms.jpg",
+    width: 1034,
+    height: 735,
+    alt: "QT (left, tall, with a smiling screen face) and Misty (right, small, with a round camera-eyed head) set up on a table in the workshop room.",
+    caption: "QT and Misty, set up in the workshop room ahead of a session. The cat spent most of its time being held, not sitting on a table.",
+  },
+
+  { type: "heading", level: 3, text: "My role" },
+  {
+    type: "paragraph",
+    text: "I want to be specific here, because this was a team project and I don't want to claim more than I did.",
+  },
+  {
+    type: "paragraph",
+    text: "We ran several research workshops with visiting high school students over the course of the project. I facilitated one of these sessions myself: running the activities, keeping time, and making the calls on when to move on. For the others, I worked as an observer, staying quiet and watching what participants did and said when no one was managing them directly. Facilitating and observing gave me two different views of the same activities, and both fed into the same shared notes. After the workshops, the five of us went through those notes together, pulled out the patterns, and built our final presentation deck as a joint effort. None of that analysis or storytelling was mine alone.",
+  },
+  {
+    type: "paragraph",
+    text: "One piece I did own individually: I shot and edited the short video we used for our pitch at RoboCarnival. It was a side task compared to the research, but it meant picking up a camera and an editing timeline on a tight deadline, which is its own kind of design constraint.",
+  },
+  {
+    type: "paragraph",
+    text: "With roles sorted, here's what we were actually working with.",
+  },
+
+  { type: "heading", level: 3, text: "Three robots, three modalities" },
+  {
+    type: "paragraph",
+    text: "None of us wrote new behavior for these robots. QT, Misty, and the cat all came with existing capabilities, and programming them from scratch was actually a different team's project within the same course. Our job was to choose which of those existing capabilities to use, and to build a short, legible flow around them.",
+  },
+  {
+    type: "heading", level: 4, text: "QT — voice",
+  },
+  {
+    type: "paragraph",
+    text: "For QT, that meant loading in a set of spoken questions we wanted it to ask visitors, things like \"where is the microphone?\" or \"would you find a robot like this creepy?\" QT would ask, the visitor would answer out loud, and we'd watch how they responded to being addressed directly by a robot.",
+  },
+  {
+    type: "heading", level: 4, text: "Misty — non-verbal expression",
+  },
+  {
+    type: "paragraph",
+    text: "For Misty, it meant picking a handful of her preset facial expressions and sounds for an emotion-guessing game. An operator on our team would trigger an expression, visitors would write or draw what emotion they thought it was, and then we'd reveal the intended one.",
+  },
+  {
+    type: "heading", level: 4, text: "The cat — touch",
+  },
+  {
+    type: "paragraph",
+    text: "The cat, a Joy for All companion pet (the same product line used in a lot of eldercare and dementia research), needed no configuration at all. It reacted to touch: petting, holding, moving it. That simplicity turned out to matter a lot.",
+  },
+
+  { type: "heading", level: 3, text: "Testing modalities with real teenagers" },
+  {
+    type: "paragraph",
+    text: "One session in March is a good example of how these workshops worked: four groups of visiting high school students came through in one afternoon to test how these three channels actually landed. It wasn't a controlled study. Four groups, one afternoon. But the patterns showed up consistently enough across groups, and across the other sessions we ran, that I'd trust them as a real signal, not just a one-off reaction. Each group went through the same structure: a quick icebreaker about their attitudes toward robots, a round with Misty's emotion-guessing game, some free time with QT, and a closing discussion where they sketched ideas for how Misty's emotions could be made clearer.",
+  },
+  {
+    type: "paragraph",
+    text: "A few things came out of this that shaped everything after.",
+  },
+  {
+    type: "paragraph",
+    text: "The non-verbal channel was harder to read than we expected. Groups regularly mixed up Misty's expressions, mistaking her \"party mode\" for amazement, or unsure if a sound meant laughter or crying. Their own suggestions were telling: several students said Misty needed a mouth, not just eyes, because a face with fewer moving parts gives you less to read. One student made the connection to face masks during the pandemic, pointing out that people could still read emotion around a covered mouth, which meant the eyes alone should theoretically be enough. But on a simplified robot face, they weren't.",
+  },
+  {
+    type: "paragraph",
+    text: "The touch channel needed no explanation at all. The cat was the most consistently popular thing in the room across all four groups. Students petted it without being told how, and the reactions were immediate and warm. One student said they couldn't \"dehumanize\" the cat enough to imagine using it for a chore like the dishes. Another compared it directly to their own pet.",
+  },
+  {
+    type: "image",
+    src: "/robocarnival/cat-touch.jpg",
+    width: 644,
+    height: 504,
+    alt: "Close-up of a hand petting the grey and white robotic companion cat on a table.",
+    caption: "The cat needed no instructions. Visitors petted it without being told how.",
+  },
+  {
+    type: "paragraph",
+    text: "The voice channel sat somewhere in between. Talking to QT was novel and often funny to them, but it also surfaced real questions: one student asked where the camera and microphone actually were, which opened into a genuine conversation about privacy that we hadn't planned for.",
+  },
+  {
+    type: "image",
+    src: "/robocarnival/workshop-canvas.jpg",
+    width: 1034,
+    height: 791,
+    alt: "A paper canvas taped to a wall, headed 'INTERACTION WITH ROBOTS,' with handwritten questions and rows of colored sticky notes with participants' answers.",
+    caption: "The co-design canvas used in each workshop session, where groups wrote and drew their answers.",
+  },
+
+  { type: "heading", level: 3, text: "From notes to a public station" },
+  {
+    type: "paragraph",
+    text: "Once we pulled the patterns together across these workshops, the team sat down and turned them into a set of decisions for RoboCarnival. We used a simple impact-versus-feasibility exercise to sort through ideas, things like letting visitors redesign Misty's face by drawing, or running two robots through a short back-and-forth to show them interacting with each other. Most of those got parked. What survived was closer to what we already had: three robots, three modalities, side by side, with better facilitation built around each one.",
+  },
+  {
+    type: "paragraph",
+    text: "The main change wasn't to the robots. It was to us. We built explicit talking points for the moments we knew would be confusing, like why Misty's face alone often wasn't enough, and we leaned harder into the parts that worked without any explanation, like just letting people pet the cat before we said anything at all.",
+  },
+  {
+    type: "imageRow",
+    images: [
+      {
+        src: "/robocarnival/feasibility-matrix.png",
+        width: 939,
+        height: 735,
+        alt: "An impact-versus-feasibility matrix with ideas like '3 stations, different modality' and 'changing emotions of a robot by drawing' plotted across four quadrants.",
+      },
+      {
+        src: "/robocarnival/station-sketch.png",
+        width: 811,
+        height: 392,
+        alt: "A hand-drawn sketch of three tables: QT with a deck of questions, Misty with a box for snacks, and the cat on a blanket.",
+      },
+    ],
+  },
+
+  { type: "heading", level: 3, text: "RoboCarnival" },
+  {
+    type: "paragraph",
+    text: "RoboCarnival was the course's public exhibition, held in the Language Center lobby at Tampere University's Hervanta campus. Every team ran its own station side by side, each covering a different slice of robot literacy: ours was interaction, others covered programming, ethics, or trust. High school students from across Tampere came through in groups over the course of the day.",
+  },
+  {
+    type: "paragraph",
+    text: "Getting ready for it meant packing our findings into something a stranger could absorb walking past a table in under a minute, plus the pitch video mentioned above, which was the other thing on our checklist that week.",
+  },
+  {
+    type: "paragraph",
+    text: "At our table, QT, Misty, and the cat sat side by side, and we walked visitors through all three in a few minutes each. Having run the same activities several times already in our earlier workshops meant we had a sense of where people would get stuck and where they wouldn't need help at all, which made the day feel far less improvised than it could have.",
+  },
+  {
+    type: "image",
+    src: "/robocarnival/team-presenting.jpg",
+    width: 1600,
+    height: 1043,
+    alt: "The team's RoboCarnival table, with QT standing at the center, teammates on one side, and a group of visiting students gathered around writing notes.",
+    caption: "The team's RoboCarnival table, with QT centered and visiting students working through the station.",
+  },
+  {
+    type: "heading", level: 4, text: "Best team",
+  },
+  {
+    type: "paragraph",
+    text: "At the end of the day, the visiting high school students voted on their favorite station, and ours was chosen. We were later given a certificate recognizing the team for the project, noting we'd been picked as the best team by the students who came through. It's a nice thing to have, and I want to be clear about what it is: a vote from a friendly, one-day audience of teenagers, not an industry award. I'm proud of it in that context.",
+  },
+  {
+    type: "quote",
+    text: "You were chosen to be the best team by highschool students. Congratulations!!!",
+    attribution: "Certificate of Appreciation, RoboStudio, Tampere University",
+  },
+
+  { type: "heading", level: 3, text: "What I took from this" },
+  {
+    type: "paragraph",
+    text: "The biggest lesson was about redundancy across channels. Misty's face, on its own, wasn't a reliable way to communicate an emotion, however good the intention behind the design was. People needed more than one signal to be confident in what they were reading, and when we only gave them one, they guessed wrong more often than we expected going in. That's stuck with me. When I look at any interface now, robotic, voice, or otherwise, I ask what happens when the primary signal is ambiguous, and whether there's a second one backing it up.",
+  },
+  {
+    type: "paragraph",
+    text: "Working with physical robots also changed how I think about failure. There's no console log to check when a robot doesn't respond the way you expect in front of a room of teenagers. You either have a backup plan ready, or the moment just falls flat. Our workshop script had built-in fallback activities for exactly this reason, and having them there took real pressure off the day.",
+  },
+  {
+    type: "paragraph",
+    text: "Public demonstration taught me something different: how much you learn by watching someone react to your work in real time, with no chance to explain it first. A lot of my research experience since has involved trying to get that same kind of unscripted, first-contact reaction as early as possible, because it tells you things a script or a survey won't.",
+  },
+  {
+    type: "paragraph",
+    text: "This is the project that first showed me how a signal I designed can be read completely differently by the person receiving it, and that gap between intention and interpretation is something I now check for by default in any multimodal or AI-driven interface I work on.",
+  },
+];
+
 export const caseStudies: CaseStudy[] = [
   {
     slug: "convay-mobile-app-revamp",
@@ -2252,15 +2480,33 @@ export const caseStudies: CaseStudy[] = [
     title: "Multimodal Robot Interaction (RoboCarnival)",
     track: "research",
     scale: "research",
+    // Corrected "...Best Team Award..." -> "...voted Best Team...": the
+    // approved case study is explicit that this was "a vote from a
+    // friendly, one-day audience of teenagers, not an industry award,"
+    // so the old subtitle's "Award" framing is exactly the overstatement
+    // the case study itself warns against. Same fix pattern as
+    // aRENEWberg's meta.tools correction -- a factual-accuracy edit, not
+    // a content rewrite.
     oneLineScope:
-      "A multimodal interaction concept across three robot platforms, Best Team Award at RoboCarnival 2025.",
+      "A multimodal interaction concept across three robot platforms, voted Best Team by visiting high schoolers at RoboCarnival 2025.",
+    contentStatus: "complete",
     meta: {
-      role: "Team member",
-      team: "Social Robots course team",
-      duration: "2025",
-      tools: "QT, Misty, robot cat (course-provided platforms)",
+      // Refined from the placeholder's generic "Team member" / "Social
+      // Robots course team" now that the approved case study states the
+      // real facts: Aseer's actual split of responsibilities, the five
+      // named teammates, and which robot covered which channel.
+      role: "Workshop facilitator, observer & video editor",
+      team: "Anna, Aseer, Emon, Fati, Jasmin (5-person team)",
+      duration: "~6 weeks, spring 2025",
+      tools: "QT (voice), Misty (expression), Joy for All companion cat (touch)",
     },
-    ...placeholderNarrative,
+    thumbnail: {
+      src: "/robocarnival/hero.jpg",
+      width: 1915,
+      height: 1072,
+      alt: "Aseer sitting between Misty, a Joy for All companion cat, and QT.",
+    },
+    body: robocarnivalBody,
   },
   {
     slug: "boycott4palestine",
