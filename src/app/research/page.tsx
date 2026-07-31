@@ -29,13 +29,13 @@ export default function ResearchIndexPage() {
           size with the other two research entries.
 
           Visual Polish milestone: `rest` currently has exactly 2
-          entries (RoboCarnival, Bachelor's Thesis). The Work index's
-          equivalent col-span-4 works there because 12/4 divides evenly
-          into 3 full rows for 6 items; with only 2 items here, that
-          same col-span-4 left one item on its own row with two empty
-          column-tracks beside it at lg. col-span-6 gives these two
-          entries an even, two-up row that fills the full 12 columns
-          instead. */}
+          entries (RoboCarnival, Tailoring Game Difficulty to Player
+          Types). The Work index's equivalent col-span-4 works there
+          because 12/4 divides evenly into 3 full rows for 6 items;
+          with only 2 items here, that same col-span-4 left one item on
+          its own row with two empty column-tracks beside it at lg.
+          col-span-6 gives these two entries an even, two-up row that
+          fills the full 12 columns instead. */}
       <Grid className="mt-12" gap="lg">
         {flagship.map((project) => (
           <div key={project.slug} className="col-span-4 md:col-span-8 lg:col-span-12">

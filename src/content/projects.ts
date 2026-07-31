@@ -22,37 +22,22 @@ import { site } from "./site";
  * and the Milestone 2 report for why (this build environment can't
  * fetch binaries from that domain).
  *
- * The five "research" case studies (Lumi, RoboCarnival, Bachelor's
- * thesis, Cultural Festival Platform, Boycott4Palestine) don't exist on
- * the live site at all -- they were this project's own earlier addition
- * from the Career Archive for a future track. Out of scope for this
- * migration milestone; left untouched below as placeholderNarrative.
+ * Lumi, RoboCarnival, Cultural Festival Platform, and Tailoring Game
+ * Difficulty to Player Types don't exist on the live site at all --
+ * they were this project's own later additions (research track plus
+ * one work-track case study), each migrated from its own approved
+ * case-study document once written. Two earlier placeholder entries
+ * this comment used to describe here (Boycott4Palestine, a Bengali NLP
+ * bachelor's thesis) were removed outright in a later "portfolio
+ * implementation" milestone rather than kept as placeholders -- both
+ * were cut from the portfolio's scope entirely, not just left
+ * unwritten.
  *
  * TravelMate AI is migrated with real content (it IS live and published)
  * but keeps its `status: "contingent"` flag -- see the TODO on that
  * entry for why that's a live conflict this migration doesn't silently
  * resolve.
  */
-
-const placeholderNarrative = {
-  context: "Placeholder — case study context pending a later milestone.",
-  roleAndCollaboration:
-    "Placeholder — role and collaboration detail pending a later milestone.",
-  decisions: [
-    {
-      title: "Placeholder decision",
-      body: "Placeholder — decisions and trade-offs pending a later milestone.",
-    },
-  ],
-  evidence: {
-    body: "Placeholder — evidence and testing detail pending a later milestone.",
-  },
-  outcome: {
-    body: "Placeholder — outcome detail pending a later milestone.",
-  },
-  reflection: "Placeholder — reflection pending a later milestone.",
-  contentStatus: "placeholder" as const,
-};
 
 /** Shared "Convay at a Glance" block, byte-identical across all four
  * Convay case studies on the live site -- kept as one constant here so
@@ -2202,6 +2187,148 @@ const robocarnivalBody: CaseStudyBlock[] = [
   },
 ];
 
+// Supporting research project, deliberately lighter than Lumi (the
+// flagship research project) per the approved Portfolio Blueprint:
+// "This project should never feel like it's trying to compete with
+// Lumi on depth." Text is verbatim from Case-Study-Final.md -- the
+// only changes made for web presentation are: (1) the source's
+// `[Visual: chart-XX.png]` markers become real image blocks, placed
+// exactly where the source placed them; (2) the one paragraph marked
+// `[Callout]`/`[End callout]` in the source becomes a `callout` block
+// instead of a plain paragraph, per the source's own explicit
+// instruction ("render it as a visually distinct block... not as a
+// regular paragraph"); (3) no hero/cover image, per the source's
+// explicit instruction not to add one (the original article's cover
+// was a licensed stock photo, intentionally excluded as non-original
+// material) -- this case study opens directly on its first heading,
+// unlike Lumi/aRENEWberg/RoboCarnival, which all open on a real photo.
+//
+// The brief for this milestone is explicit that this project must not
+// be framed as a "Bachelor's project" on the card, hero, subtitle, or
+// meta strip, and that the fact it was undergraduate HCI coursework
+// should appear exactly once, inside the body, not repeated in the
+// page chrome. That one mention already exists verbatim in the
+// source's own Overview paragraph ("during an HCI course in the final
+// years of my undergrad") -- nothing needed to be added for this.
+// meta.role/team/tools below are deliberately reworded from the
+// source's own "Header / context strip" (which does say "HCI
+// coursework project · Bachelor's in Software Engineering") to keep
+// that framing out of the hero entirely, per the same instruction.
+const gameDifficultyBody: CaseStudyBlock[] = [
+  { type: "heading", level: 3, text: "Overview" },
+  {
+    type: "paragraph",
+    text: "This was one of the first research projects I worked on, during an HCI course in the final years of my undergrad. The question behind it was simple: what actually keeps someone playing a video game, and does difficulty level have much to do with it?",
+  },
+  {
+    type: "paragraph",
+    text: "I ran a 28-person survey, analyzed the responses, and turned the findings into a short set of recommendations for game designers. It's a small study, and I want to say that plainly up front. What it gave me was something more lasting than the findings themselves: practice running a research method from question to write-up, start to finish. That habit has carried into every research project I've done since.",
+  },
+  {
+    type: "image",
+    src: "/game-difficulty/chart-01-motivational-factors.png",
+    width: 1782,
+    height: 1082,
+    alt: "Horizontal bar chart, what motivates players to keep playing: engaging storyline 67.9%, reward system 60.7%, challenging difficulty level 53.6%, social interaction with other players 35.7%, other 0%. n = 28.",
+    caption: "What motivates players to keep playing (n = 28).",
+  },
+
+  { type: "heading", level: 3, text: "Why this project" },
+  {
+    type: "paragraph",
+    text: "Most games use a single difficulty slider — easy, medium, hard — as if every player wants the same experience, just dialed up or down. That seemed like an assumption worth checking. If the goal is to keep players engaged, it made sense to first ask players what actually engages them, rather than assume harder automatically means better.",
+  },
+  {
+    type: "paragraph",
+    text: "That's the HCI question underneath this project: understand behavior and preference before designing around an assumption.",
+  },
+
+  { type: "heading", level: 3, text: "Method" },
+  {
+    type: "paragraph",
+    text: "I built a Google Form survey covering what makes games engaging, what makes them frustrating, and how often players change difficulty mid-game. It ran for 28 responses. Most respondents were casual gamers in the 18–24 age range, playing primarily on PC or mobile.",
+  },
+
+  { type: "heading", level: 3, text: "What the survey found" },
+  {
+    type: "paragraph",
+    text: "**Storyline beats difficulty as an engagement driver.** Asked what makes a game engaging, 85.7% of respondents pointed to storyline, ahead of graphics (71.4%) and sound (46.4%). Difficulty level ranked last, at 35.7%.",
+  },
+  {
+    type: "image",
+    src: "/game-difficulty/chart-02-factors-engaging.png",
+    width: 1782,
+    height: 1082,
+    alt: "Horizontal bar chart, what makes a game engaging: storyline 85.7%, graphics 71.4%, sound effects and music 46.4%, difficulty level 35.7%, other 7.1%. n = 28.",
+    caption: "What makes a game engaging (n = 28).",
+  },
+  {
+    type: "callout",
+    text: "**But challenge is still what keeps people coming back.** A separate question asked what motivates players to keep playing, and challenge and reward both scored highly — engaging storyline (67.9%), reward systems (60.7%), and challenging difficulty (53.6%) were the top three. Put next to the finding above, there's a real tension: players don't call difficulty \"engaging,\" but it's still one of the top things keeping them in a game. Story pulls people in. Challenge is part of what keeps them there.",
+  },
+  {
+    type: "paragraph",
+    text: "**Frustration comes from content, not difficulty.** The top frustrations were a lack of engaging content (64.3%) and bugs and glitches (53.6%). Unfair difficulty ranked lower, at 32.1% — frustration was more about what's missing from a game than about how hard it is.",
+  },
+  {
+    type: "image",
+    src: "/game-difficulty/chart-03-factors-frustrating.png",
+    width: 1782,
+    height: 1082,
+    alt: "Horizontal bar chart, what frustrates players most: lack of engaging content 64.3%, bugs and glitches 53.6%, poor game design 42.9%, unfair difficulty level 32.1%, other 3.6%. n = 28.",
+    caption: "What frustrates players most (n = 28).",
+  },
+  {
+    type: "paragraph",
+    text: "**Most players rarely touch the difficulty setting.** Half of respondents said they only switch difficulty when they get stuck or bored, and another 17.9% said they never switch at all. Only a small minority — about 7% combined — said they adjust it often or always.",
+  },
+  {
+    type: "image",
+    src: "/game-difficulty/chart-04-difficulty-switching.png",
+    width: 2499,
+    height: 1097,
+    alt: "Donut chart, how often players switch difficulty: rarely, only when stuck or bored 50%, occasionally 25%, never 17.9%, often 3.6%, always 3.6%. n = 28.",
+    caption: "How often players switch difficulty mid-game (n = 28).",
+  },
+  {
+    type: "paragraph",
+    text: "That last point is worth sitting with. If most players set a difficulty level once and leave it, a single difficulty slider isn't really serving distinct player \"types\" — it's mostly being ignored after the first choice. Most of what drives engagement or frustration is happening somewhere else in the game.",
+  },
+  {
+    type: "paragraph",
+    text: "On preferred difficulty itself, moderate and hard were the most selected ranges (64.3% and 50% — respondents could select more than one), which fits with the \"casual gamer\" profile of most respondents: they want some challenge, just not an extreme one. That said, the study measured preferences in aggregate. It didn't cluster respondents into distinct player types the way the project's title suggests — a gap I'd close first if I revisited this work.",
+  },
+
+  { type: "heading", level: 3, text: "What I recommended" },
+  {
+    type: "list",
+    items: [
+      "Invest in storyline and visual presentation — these had the strongest link to what players call \"engaging.\"",
+      "Keep reward systems and challenge present, since they motivate continued play even when players don't describe them as \"engaging.\"",
+      "Prioritize regular content updates and bug fixes over difficulty tuning — this is where players say frustration actually comes from.",
+      "Support both single-player and multiplayer modes, since playing with friends came up consistently as a preference.",
+    ],
+  },
+
+  { type: "heading", level: 3, text: "Limitations" },
+  {
+    type: "paragraph",
+    text: "Twenty-eight responses is a small sample, skewed toward one age group and self-selected respondents, so these findings describe this group's stated preferences more than gamers in general. It was a self-report survey — it captures what people say motivates them, not necessarily what they'd actually do in play. And it was a single method: no interviews, no usability testing, no prototyping alongside it. These are patterns in stated preference, not validated design decisions.",
+  },
+
+  { type: "heading", level: 3, text: "What I'd do differently now" },
+  {
+    type: "paragraph",
+    text: "The biggest gap is method diversity. A survey is good at telling you what people believe about themselves; it's weaker at telling you what actually happens when they play. If I ran this again, I'd pair the survey with a short usability test or session recordings, so stated preference could be checked against real behavior — and I'd design the sampling to actually segment player types, instead of measuring preferences in aggregate. That shift, from one method to several, and from broad patterns to defined segments, is the throughline into the research I do now.",
+  },
+
+  { type: "heading", level: 3, text: "Reflection" },
+  {
+    type: "paragraph",
+    text: "This project didn't produce a finished design — it produced a habit. Write questions that isolate one variable at a time. Read a table of percentages until you find the one comparison that actually says something, like storyline pulling players in while challenge keeps them there. Say plainly what a small study can't prove. That last part is the one I still check first on every research project I run.",
+  },
+];
+
 export const caseStudies: CaseStudy[] = [
   {
     slug: "convay-mobile-app-revamp",
@@ -2509,34 +2636,35 @@ export const caseStudies: CaseStudy[] = [
     body: robocarnivalBody,
   },
   {
-    slug: "boycott4palestine",
-    title: "Boycott4Palestine",
-    track: "work",
-    scale: "product",
-    oneLineScope:
-      "An informational web platform, built solo with AI-assisted, prompt-driven development end to end.",
-    meta: {
-      role: "Sole builder",
-      team: "Solo",
-      duration: "2025",
-      tools: "Lovable (AI-assisted, prompt-driven development)",
-    },
-    ...placeholderNarrative,
-  },
-  {
-    slug: "bachelors-thesis",
-    title: "A Diverse and Explainable Multi-hop QA Dataset for Bengali",
+    slug: "game-difficulty-player-types",
+    title: "Tailoring Game Difficulty to Player Types",
     track: "research",
     scale: "research",
+    // Given verbatim by Aseer -- do not adjust wording or add "Bachelor's"
+    // framing here (see the gameDifficultyBody comment above for the
+    // full reasoning on where that framing is and isn't allowed to
+    // appear).
     oneLineScope:
-      "Undergraduate NLP thesis: the first multi-hop QA dataset in Bengali, benchmarked against established datasets.",
+      "Survey-based UX research exploring how game difficulty influences player engagement • 2023",
+    contentStatus: "complete",
     meta: {
-      role: "Researcher",
-      team: "Supervised by Prof. Abu Raihan Mostofa Kamal and Mohammad Anas Jawad",
-      duration: "2019 – 2023",
-      tools: "Dataset construction, automated evaluation",
+      // Deliberately reworded from the source's own header strip ("HCI
+      // coursework project · Bachelor's in Software Engineering") to
+      // keep that framing out of the hero/meta strip per this
+      // milestone's explicit instruction -- the one permitted mention
+      // of the HCI course lives inside the body's Overview section.
+      role: "Survey design, analysis & reporting",
+      team: "Team project",
+      duration: "2023",
+      tools: "Online survey (Google Forms), descriptive statistics",
     },
-    ...placeholderNarrative,
+    // No thumbnail: the source material explicitly excludes adding a
+    // hero/cover image (the original article's cover was a licensed
+    // stock photo, not original material), and none of the four chart
+    // assets crop into a legible 4:3 card -- same reasoning as other
+    // projects in this file that intentionally keep the generated
+    // ProjectVisual placeholder rather than force a bad crop.
+    body: gameDifficultyBody,
   },
 ];
 
