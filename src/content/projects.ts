@@ -1707,6 +1707,14 @@ const arenewbergBody: CaseStudyBlock[] = [
     text: "That status sounds like an advantage. In practice it creates a strange kind of stillness. UNESCO recognizes the site but doesn't fund it. Money for upkeep, staffing, and events has to come from somewhere else, and it's never guaranteed. The site hosts the occasional film shoot and cultural event, but it has no consistent public program, which is part of why nobody tracks who visits.",
   },
   {
+    type: "image",
+    src: "/arenewberg/site-visit.jpg",
+    width: 1280,
+    height: 960,
+    alt: "A large group of ECIU Créathon participants standing outside a brick building at the Arenberg mining site, with the site's landmark steel headframe tower rising behind it.",
+    caption: "Arenberg's headframe tower, photographed during the Créathon's on-site visit. Recognizable from anywhere on the property, and the reason the site is landmarked at all.",
+  },
+  {
     type: "paragraph",
     text: "The area right outside the gates is also residential. Any event on site happens next to people's homes. That constraint shaped almost every decision that followed.",
   },
