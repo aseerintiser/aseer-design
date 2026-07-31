@@ -2653,8 +2653,12 @@ export const caseStudies: CaseStudy[] = [
       // keep that framing out of the hero/meta strip per this
       // milestone's explicit instruction -- the one permitted mention
       // of the HCI course lives inside the body's Overview section.
+      // team: "Solo" per Aseer directly -- this was solo work, not a
+      // team project (matches the body copy's own consistent first-
+      // person-singular voice: "I ran a 28-person survey," "I built a
+      // Google Form," etc., with no "we"/"our team" language anywhere).
       role: "Survey design, analysis & reporting",
-      team: "Team project",
+      team: "Solo",
       duration: "2023",
       tools: "Online survey (Google Forms), descriptive statistics",
     },
