@@ -20,7 +20,7 @@ export const featuredIn: ArticleEntry[] = [
       height: 1043,
     },
     heading: "Robostudio proudly presents: An annual Robocarnival event at Hervanta campus!",
-    body: "A university exhibition where our team showcased a social robot interaction workshop designed by us. Our project was voted as one of the top two by visitors. My 1-minute robot video was cheered by the audience — a proud highlight of my master's journey.",
+    body: "A university exhibition where our team showcased a social robot interaction workshop designed by us. Our project was voted as one of the top two by visitors. My 1-minute robot video was cheered by the audience, a proud highlight of my master's journey.",
     href: "https://blogs.tuni.fi/cs/robostudio/robostudio-proudly-presents-an-annual-robocarnival-event-at-hervanta-campus/",
   },
   {
@@ -64,7 +64,7 @@ export const myWritings: ArticleEntry[] = [
       height: 492,
     },
     heading:
-      "The Ethical Design Battle: Chrome vs Brave — Embracing Ethical Design for a Better Browsing Experience",
+      "The Ethical Design Battle: Chrome vs Brave, Embracing Ethical Design for a Better Browsing Experience",
     body: "A comparative UX study on Brave and Chrome, focusing on privacy, user empowerment, and the importance of ethical design practices.",
     href: "https://aseerintiser.medium.com/the-ethical-design-battle-chrome-vs-brave-embracing-ethical-design-for-a-better-browsing-378893b51a61",
   },

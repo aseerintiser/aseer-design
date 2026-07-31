@@ -226,7 +226,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Design Process & Reasoning" },
   {
     type: "paragraph",
-    text: "**Research and Exploration**\nWe started by identifying key pain points from previous mobile versions—clunky navigation, required logins, and limited access to meeting summaries and recordings. The user base included government officials, general users, and institutional teams, many of whom used Android. I reviewed existing mobile analytics and collaborated with PMs and support teams to map out friction areas.",
+    text: "**Research and Exploration**\nWe started by identifying key pain points from previous mobile versions: clunky navigation, required logins, and limited access to meeting summaries and recordings. The user base included government officials, general users, and institutional teams, many of whom used Android. I reviewed existing mobile analytics and collaborated with PMs and support teams to map out friction areas.",
   },
   {
     type: "quote",
@@ -388,7 +388,7 @@ const convayAiBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Design Process" },
   {
     type: "paragraph",
-    text: "**Research**: We began by identifying a key gap in physical meetings — no easy way to document discussions in real-time. Through internal interviews and team feedback, we confirmed that manual notes often led to missed details, especially in fast-paced syncs or confidential meetings. This insight guided the idea: make in-person meetings as easy to document and summarize as online ones.",
+    text: "**Research**: We began by identifying a key gap in physical meetings: no easy way to document discussions in real-time. Through internal interviews and team feedback, we confirmed that manual notes often led to missed details, especially in fast-paced syncs or confidential meetings. This insight guided the idea: make in-person meetings as easy to document and summarize as online ones.",
   },
   {
     type: "paragraph",
@@ -539,7 +539,7 @@ const convayAiBody: CaseStudyBlock[] = [
       "**~85% transcription accuracy** was achieved in quiet environments, even with varied speaker tones.",
       "Teams reported **30–40% reduction in time** spent creating meeting notes.",
       "The **AI summarization feature** helped users quickly recall key takeaways, especially in **confidential internal syncs** where formal minutes were previously missing.",
-      "Support for **Bengali transcription** gave Convay a unique edge over global competitors—especially for local government adoption.",
+      "Support for **Bengali transcription** gave Convay a unique edge over global competitors, especially for local government adoption.",
       "The streamlined export process (PDF) made it easy to **share documentation post-meeting**, helping teams align faster.",
     ],
   },
@@ -802,10 +802,10 @@ const fitvibeBody: CaseStudyBlock[] = [
   {
     type: "list",
     items: [
-      "**Limited Access to Advanced Equipment** — Users express frustration over the lack of access to advanced gym equipment, highlighting the need for alternative exercises or modifications that can be performed with basic equipment.",
-      "**Lack of Knowledge and Guidance** — Participants struggle with limited knowledge about exercise and nutrition, necessitating the inclusion of educational resources, tutorials, and expert guidance within the app to support their fitness journey.",
-      "**Time Constraints and Busy Schedules** — Users with busy schedules find it challenging to prioritize exercise and often struggle to find time for workouts. Designing time-efficient routines and integrating reminders or scheduling features can address this pain point.",
-      "**Lack of Motivation and Accountability** — Users express difficulty in staying motivated and accountable to their fitness goals. Incorporating motivational features, such as progress tracking, rewards, and social support, can help address this challenge and enhance user engagement.",
+      "**Limited Access to Advanced Equipment**: Users express frustration over the lack of access to advanced gym equipment, highlighting the need for alternative exercises or modifications that can be performed with basic equipment.",
+      "**Lack of Knowledge and Guidance**: Participants struggle with limited knowledge about exercise and nutrition, necessitating the inclusion of educational resources, tutorials, and expert guidance within the app to support their fitness journey.",
+      "**Time Constraints and Busy Schedules**: Users with busy schedules find it challenging to prioritize exercise and often struggle to find time for workouts. Designing time-efficient routines and integrating reminders or scheduling features can address this pain point.",
+      "**Lack of Motivation and Accountability**: Users express difficulty in staying motivated and accountable to their fitness goals. Incorporating motivational features, such as progress tracking, rewards, and social support, can help address this challenge and enhance user engagement.",
     ],
   },
   { type: "heading", level: 4, text: "Define Phase" },
@@ -1000,15 +1000,15 @@ const fitvibeBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "*Step 1 — Add up the score contribution from each question:*\nFor Question 1: (3 x 5) + (4 x 6) + (5 x 1) = 37. Similarly done the calculation for each question.",
+    text: "*Step 1: Add up the score contribution from each question:*\nFor Question 1: (3 x 5) + (4 x 6) + (5 x 1) = 37. Similarly done the calculation for each question.",
   },
   {
     type: "paragraph",
-    text: "*Step 2 — Multiply the total by 2.5:*\nSUS score = (37+29+43+21+38+24+34+29+36+21) x 2.5 = 902.5",
+    text: "*Step 2: Multiply the total by 2.5:*\nSUS score = (37+29+43+21+38+24+34+29+36+21) x 2.5 = 902.5",
   },
   {
     type: "paragraph",
-    text: "*Step 3 — Divide the SUS score by the number of respondents:*\n902.5 / 12 = **75.21**",
+    text: "*Step 3: Divide the SUS score by the number of respondents:*\n902.5 / 12 = **75.21**",
   },
   { type: "heading", level: 4, text: "SUS Result" },
   {
@@ -1081,7 +1081,7 @@ const travelMateBody: CaseStudyBlock[] = [
   { type: "image", ...img("nOM36AUEzLOD673zi9osVUO6xw.png", 804, 2160), alt: "Itinerary planner" },
   {
     type: "paragraph",
-    text: "**Transport Hub**\nShows options for walking, metro, and taxis with cost and time estimates. This direct comparison helps travelers make faster, more informed choices — a key need in unfamiliar cities.",
+    text: "**Transport Hub**\nShows options for walking, metro, and taxis with cost and time estimates. This direct comparison helps travelers make faster, more informed choices, a key need in unfamiliar cities.",
   },
   { type: "image", ...img("j5uJwrQlFKN05Uhl8UuR8amZaM.png", 804, 1748), alt: "Transport hub" },
   {
@@ -1144,7 +1144,7 @@ const travelMateBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Takeaways" },
   {
     type: "paragraph",
-    text: "Designing TravelMate pushed me to think beyond just screens and flows. I had to design for **real-world travel contexts** — moments of joy, stress, and urgency — and make sure the app adapted smoothly to each.",
+    text: "Designing TravelMate pushed me to think beyond just screens and flows. I had to design for **real-world travel contexts** (moments of joy, stress, and urgency) and make sure the app adapted smoothly to each.",
   },
   {
     type: "paragraph",
@@ -1312,10 +1312,10 @@ const convayNotificationsBody: CaseStudyBlock[] = [
   {
     type: "list",
     items: [
-      "**Faster Info Retrieval** — Distinct icons and categorized tabs helped users identify and access relevant updates up to **30% faster** during internal testing.",
-      "**Improved User Confidence** — Replacing vague icons with familiar symbols (like the checkmark) made interactions more intuitive, reducing user hesitation.",
-      "**Cleaner Experience** — Categorized filters and thoughtful empty states led to a **cleaner, less overwhelming interface**, especially for new or infrequent users.",
-      "**Foundation for Scalability** — The modular notification structure was designed to accommodate future additions (e.g. system alerts or task reminders) without breaking the UX.",
+      "**Faster Info Retrieval**: Distinct icons and categorized tabs helped users identify and access relevant updates up to **30% faster** during internal testing.",
+      "**Improved User Confidence**: Replacing vague icons with familiar symbols (like the checkmark) made interactions more intuitive, reducing user hesitation.",
+      "**Cleaner Experience**: Categorized filters and thoughtful empty states led to a **cleaner, less overwhelming interface**, especially for new or infrequent users.",
+      "**Foundation for Scalability**: The modular notification structure was designed to accommodate future additions (e.g. system alerts or task reminders) without breaking the UX.",
     ],
   },
   {
@@ -1325,7 +1325,7 @@ const convayNotificationsBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "While no live user metrics were available during my design phase, qualitative feedback during testing highlighted increased clarity, faster scanning, and reduced frustration — key outcomes in a high-collaboration product like Convay.",
+    text: "While no live user metrics were available during my design phase, qualitative feedback during testing highlighted increased clarity, faster scanning, and reduced frustration, key outcomes in a high-collaboration product like Convay.",
   },
   { type: "heading", level: 3, text: "Takeaways" },
   {
@@ -1793,12 +1793,12 @@ const arenewbergBody: CaseStudyBlock[] = [
   {
     type: "list",
     items: [
-      "**Hologram system for immersive mine tours** — ~€500,000. Not shipped; flagged as barely realistic by the team itself.",
-      "**VR mining game** — ~€100,000. Not shipped.",
-      "**Zip line between two headframes** — ~€150,000–200,000. Not shipped.",
-      "**Scavenger hunt** — prize budget only. Shipped.",
-      "**Silent disco + film screenings** — ~€300–600/night, headphone rental. Shipped, priced at €5 to cover rental cost, not profit.",
-      "**Forest rest area** — ~€100–200. Shipped.",
+      "**Hologram system for immersive mine tours**: ~€500,000. Not shipped; flagged as barely realistic by the team itself.",
+      "**VR mining game**: ~€100,000. Not shipped.",
+      "**Zip line between two headframes**: ~€150,000–200,000. Not shipped.",
+      "**Scavenger hunt**: prize budget only. Shipped.",
+      "**Silent disco + film screenings**: ~€300–600/night, headphone rental. Shipped, priced at €5 to cover rental cost, not profit.",
+      "**Forest rest area**: ~€100–200. Shipped.",
     ],
   },
   {
@@ -1990,7 +1990,7 @@ const robocarnivalBody: CaseStudyBlock[] = [
     width: 1915,
     height: 1072,
     alt: "Aseer sitting between Misty (left, small robot with a round camera-eyed head), a Joy for All companion cat (in his lap), and QT (right, a tall robot with an expressive screen face).",
-    caption: "Misty, the companion cat, and QT — the three robots, one modality each, at the center of this project.",
+    caption: "Misty, the companion cat, and QT, the three robots, one modality each, at the center of this project.",
   },
 
   { type: "heading", level: 3, text: "The project" },
@@ -2048,21 +2048,21 @@ const robocarnivalBody: CaseStudyBlock[] = [
     text: "None of us wrote new behavior for these robots. QT, Misty, and the cat all came with existing capabilities, and programming them from scratch was actually a different team's project within the same course. Our job was to choose which of those existing capabilities to use, and to build a short, legible flow around them.",
   },
   {
-    type: "heading", level: 4, text: "QT — voice",
+    type: "heading", level: 4, text: "QT: voice",
   },
   {
     type: "paragraph",
     text: "For QT, that meant loading in a set of spoken questions we wanted it to ask visitors, things like \"where is the microphone?\" or \"would you find a robot like this creepy?\" QT would ask, the visitor would answer out loud, and we'd watch how they responded to being addressed directly by a robot.",
   },
   {
-    type: "heading", level: 4, text: "Misty — non-verbal expression",
+    type: "heading", level: 4, text: "Misty: non-verbal expression",
   },
   {
     type: "paragraph",
     text: "For Misty, it meant picking a handful of her preset facial expressions and sounds for an emotion-guessing game. An operator on our team would trigger an expression, visitors would write or draw what emotion they thought it was, and then we'd reveal the intended one.",
   },
   {
-    type: "heading", level: 4, text: "The cat — touch",
+    type: "heading", level: 4, text: "The cat: touch",
   },
   {
     type: "paragraph",
@@ -2236,7 +2236,7 @@ const gameDifficultyBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Why this project" },
   {
     type: "paragraph",
-    text: "Most games use a single difficulty slider — easy, medium, hard — as if every player wants the same experience, just dialed up or down. That seemed like an assumption worth checking. If the goal is to keep players engaged, it made sense to first ask players what actually engages them, rather than assume harder automatically means better.",
+    text: "Most games use a single difficulty slider (easy, medium, hard) as if every player wants the same experience, just dialed up or down. That seemed like an assumption worth checking. If the goal is to keep players engaged, it made sense to first ask players what actually engages them, rather than assume harder automatically means better.",
   },
   {
     type: "paragraph",
@@ -2264,11 +2264,11 @@ const gameDifficultyBody: CaseStudyBlock[] = [
   },
   {
     type: "callout",
-    text: "**But challenge is still what keeps people coming back.** A separate question asked what motivates players to keep playing, and challenge and reward both scored highly — engaging storyline (67.9%), reward systems (60.7%), and challenging difficulty (53.6%) were the top three. Put next to the finding above, there's a real tension: players don't call difficulty \"engaging,\" but it's still one of the top things keeping them in a game. Story pulls people in. Challenge is part of what keeps them there.",
+    text: "**But challenge is still what keeps people coming back.** A separate question asked what motivates players to keep playing, and challenge and reward both scored highly: engaging storyline (67.9%), reward systems (60.7%), and challenging difficulty (53.6%) were the top three. Put next to the finding above, there's a real tension: players don't call difficulty \"engaging,\" but it's still one of the top things keeping them in a game. Story pulls people in. Challenge is part of what keeps them there.",
   },
   {
     type: "paragraph",
-    text: "**Frustration comes from content, not difficulty.** The top frustrations were a lack of engaging content (64.3%) and bugs and glitches (53.6%). Unfair difficulty ranked lower, at 32.1% — frustration was more about what's missing from a game than about how hard it is.",
+    text: "**Frustration comes from content, not difficulty.** The top frustrations were a lack of engaging content (64.3%) and bugs and glitches (53.6%). Unfair difficulty ranked lower, at 32.1%. Frustration was more about what's missing from a game than about how hard it is.",
   },
   {
     type: "image",
@@ -2280,7 +2280,7 @@ const gameDifficultyBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "**Most players rarely touch the difficulty setting.** Half of respondents said they only switch difficulty when they get stuck or bored, and another 17.9% said they never switch at all. Only a small minority — about 7% combined — said they adjust it often or always.",
+    text: "**Most players rarely touch the difficulty setting.** Half of respondents said they only switch difficulty when they get stuck or bored, and another 17.9% said they never switch at all. Only a small minority (about 7% combined) said they adjust it often or always.",
   },
   {
     type: "image",
@@ -2292,20 +2292,20 @@ const gameDifficultyBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "That last point is worth sitting with. If most players set a difficulty level once and leave it, a single difficulty slider isn't really serving distinct player \"types\" — it's mostly being ignored after the first choice. Most of what drives engagement or frustration is happening somewhere else in the game.",
+    text: "That last point is worth sitting with. If most players set a difficulty level once and leave it, a single difficulty slider isn't really serving distinct player \"types\"; it's mostly being ignored after the first choice. Most of what drives engagement or frustration is happening somewhere else in the game.",
   },
   {
     type: "paragraph",
-    text: "On preferred difficulty itself, moderate and hard were the most selected ranges (64.3% and 50% — respondents could select more than one), which fits with the \"casual gamer\" profile of most respondents: they want some challenge, just not an extreme one. That said, the study measured preferences in aggregate. It didn't cluster respondents into distinct player types the way the project's title suggests — a gap I'd close first if I revisited this work.",
+    text: "On preferred difficulty itself, moderate and hard were the most selected ranges (64.3% and 50%; respondents could select more than one), which fits with the \"casual gamer\" profile of most respondents: they want some challenge, just not an extreme one. That said, the study measured preferences in aggregate. It didn't cluster respondents into distinct player types the way the project's title suggests, a gap I'd close first if I revisited this work.",
   },
 
   { type: "heading", level: 3, text: "What I recommended" },
   {
     type: "list",
     items: [
-      "Invest in storyline and visual presentation — these had the strongest link to what players call \"engaging.\"",
+      "Invest in storyline and visual presentation: these had the strongest link to what players call \"engaging.\"",
       "Keep reward systems and challenge present, since they motivate continued play even when players don't describe them as \"engaging.\"",
-      "Prioritize regular content updates and bug fixes over difficulty tuning — this is where players say frustration actually comes from.",
+      "Prioritize regular content updates and bug fixes over difficulty tuning: this is where players say frustration actually comes from.",
       "Support both single-player and multiplayer modes, since playing with friends came up consistently as a preference.",
     ],
   },
@@ -2313,19 +2313,19 @@ const gameDifficultyBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Limitations" },
   {
     type: "paragraph",
-    text: "Twenty-eight responses is a small sample, skewed toward one age group and self-selected respondents, so these findings describe this group's stated preferences more than gamers in general. It was a self-report survey — it captures what people say motivates them, not necessarily what they'd actually do in play. And it was a single method: no interviews, no usability testing, no prototyping alongside it. These are patterns in stated preference, not validated design decisions.",
+    text: "Twenty-eight responses is a small sample, skewed toward one age group and self-selected respondents, so these findings describe this group's stated preferences more than gamers in general. It was a self-report survey: it captures what people say motivates them, not necessarily what they'd actually do in play. And it was a single method: no interviews, no usability testing, no prototyping alongside it. These are patterns in stated preference, not validated design decisions.",
   },
 
   { type: "heading", level: 3, text: "What I'd do differently now" },
   {
     type: "paragraph",
-    text: "The biggest gap is method diversity. A survey is good at telling you what people believe about themselves; it's weaker at telling you what actually happens when they play. If I ran this again, I'd pair the survey with a short usability test or session recordings, so stated preference could be checked against real behavior — and I'd design the sampling to actually segment player types, instead of measuring preferences in aggregate. That shift, from one method to several, and from broad patterns to defined segments, is the throughline into the research I do now.",
+    text: "The biggest gap is method diversity. A survey is good at telling you what people believe about themselves; it's weaker at telling you what actually happens when they play. If I ran this again, I'd pair the survey with a short usability test or session recordings, so stated preference could be checked against real behavior, and I'd design the sampling to actually segment player types, instead of measuring preferences in aggregate. That shift, from one method to several, and from broad patterns to defined segments, is the throughline into the research I do now.",
   },
 
   { type: "heading", level: 3, text: "Reflection" },
   {
     type: "paragraph",
-    text: "This project didn't produce a finished design — it produced a habit. Write questions that isolate one variable at a time. Read a table of percentages until you find the one comparison that actually says something, like storyline pulling players in while challenge keeps them there. Say plainly what a small study can't prove. That last part is the one I still check first on every research project I run.",
+    text: "This project didn't produce a finished design: it produced a habit. Write questions that isolate one variable at a time. Read a table of percentages until you find the one comparison that actually says something, like storyline pulling players in while challenge keeps them there. Say plainly what a small study can't prove. That last part is the one I still check first on every research project I run.",
   },
 ];
 
@@ -2432,7 +2432,7 @@ export const caseStudies: CaseStudy[] = [
     },
     contentStatus: "complete",
     oneLineScope:
-      "Convay's fast growth created a need for consistency and scalability, but the platform had no design system in place. As the only UX designer assigned to the task, I took the initiative to create Convay's first design system from scratch. With guidance from the product team and close collaboration with developers, I built a scalable foundation defining colors, typography, spacing, components, and patterns. This design system unified the platform's visual language across light and dark themes and improved team workflows—making handoffs easier, updates faster, and new features more consistent. Today, it supports Convay's core platform and upcoming features across web and mobile, enabling the product to scale with confidence.",
+      "Convay's fast growth created a need for consistency and scalability, but the platform had no design system in place. As the only UX designer assigned to the task, I took the initiative to create Convay's first design system from scratch. With guidance from the product team and close collaboration with developers, I built a scalable foundation defining colors, typography, spacing, components, and patterns. This design system unified the platform's visual language across light and dark themes and improved team workflows: making handoffs easier, updates faster, and new features more consistent. Today, it supports Convay's core platform and upcoming features across web and mobile, enabling the product to scale with confidence.",
     meta: {
       role: "UX Designer",
       team: "Product managers + engineering (team size to be confirmed)",

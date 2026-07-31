@@ -8,21 +8,6 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { CaseStudyBody } from "./CaseStudyBody";
 import { renderInlineMarkdown } from "@/lib/inline-markdown";
 
-/** Large ghost numeral marking each section, an editorial "chapter
- * marker" device (Design Brief Nice-to-Have) that also reinforces the
- * fixed seven-part structure itself -- a reviewer can see at a glance
- * how far through the framework they are. */
-function SectionNumber({ n }: { n: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className="mb-2 block font-[family-name:var(--font-display)] text-sm text-[var(--color-text-muted)]/70 select-none"
-    >
-      {n}
-    </span>
-  );
-}
-
 /**
  * Case-study page shell: header (title, scope, meta) plus either real
  * migrated content or an honest "not written yet" placeholder.
@@ -88,7 +73,11 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
            template, not a portfolio still being written. This says the
            same thing once, clearly, and stops. */
         <Section density="open" tone="dark" measure="narrow">
-          <SectionNumber n="—" />
+          {/* Typography cleanup milestone: this panel previously opened
+              with a ghost em-dash numeral standing in for a section
+              number that doesn't exist yet. There's no real chapter to
+              count here, so the honest fix is to not show a numeral at
+              all, rather than invent a placeholder glyph. */}
           <Heading level={2}>Full case study in progress</Heading>
           <Text muted className="mt-4">
             The role, team, duration, and tools above are accurate. The full

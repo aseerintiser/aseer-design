@@ -19,8 +19,12 @@ export function PullQuote({ text, attribution }: PullQuoteProps) {
         {renderInlineMarkdown(text)}
       </p>
       {attribution && (
+        // Typography cleanup milestone: dropped the leading em dash --
+        // the smaller, muted, non-italic footer treatment already
+        // distinguishes this from the quote itself, so the attribution
+        // doesn't need a dash to read as one.
         <footer className="mt-3 text-sm text-[var(--color-text-muted)] not-italic">
-          — {attribution}
+          {attribution}
         </footer>
       )}
     </blockquote>

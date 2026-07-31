@@ -63,12 +63,12 @@ export default function CertificationsPage() {
                     key={imageId}
                     type="button"
                     onClick={() => open(images, index)}
-                    aria-label={`View larger: ${section.heading} — item ${index + 1}`}
+                    aria-label={`View larger: ${section.heading}, item ${index + 1}`}
                     className="group relative aspect-[4/3] w-36 cursor-zoom-in overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)] sm:w-40 lg:w-48"
                   >
                     <Image
                       src={certificationImageUrl(imageId)}
-                      alt={`${section.heading} — item ${index + 1}`}
+                      alt={`${section.heading}, item ${index + 1}`}
                       fill
                       className="object-contain p-2 transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:opacity-80"
                       sizes="(min-width: 1024px) 192px, (min-width: 640px) 160px, 144px"

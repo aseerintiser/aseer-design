@@ -19,20 +19,22 @@ const siteUrl = "https://aseer.design";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${site.name} — ${site.title}`,
-    template: `%s — ${site.name}`,
+    // Middle dot, not an em dash -- matches the name/title separator
+    // already used on-site (Eyebrow on the homepage hero, resume page).
+    default: `${site.name} · ${site.title}`,
+    template: `%s · ${site.name}`,
   },
   description: site.heroProofPoint,
   openGraph: {
     type: "website",
     url: siteUrl,
     siteName: site.name,
-    title: `${site.name} — ${site.title}`,
+    title: `${site.name} · ${site.title}`,
     description: site.heroProofPoint,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — ${site.title}`,
+    title: `${site.name} · ${site.title}`,
     description: site.heroProofPoint,
   },
   robots: {

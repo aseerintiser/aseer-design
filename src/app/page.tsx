@@ -14,7 +14,9 @@ import { site } from "@/content/site";
 import { projectSummaries } from "@/content/projects";
 
 export const metadata: Metadata = {
-  title: `${site.name} — ${site.title}`,
+  // Middle dot, matching layout.tsx's default title and the Eyebrow /
+  // resume-page name/title separator convention already used on-site.
+  title: `${site.name} · ${site.title}`,
 };
 
 export default function HomePage() {

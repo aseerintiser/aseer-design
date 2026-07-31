@@ -12,7 +12,7 @@ Early build. The design system, layout primitives, navigation, motion foundation
 - TypeScript (strict mode)
 - Tailwind CSS v4
 - [Motion](https://motion.dev/) for animation, with `prefers-reduced-motion` respected throughout
-- Self-hosted variable fonts via `@fontsource-variable` (Fraunces + Inter) — no runtime dependency on Google Fonts
+- Self-hosted variable fonts via `@fontsource-variable` (Fraunces + Inter), no runtime dependency on Google Fonts
 
 ## Getting started
 
