@@ -17,9 +17,17 @@ import { ArrowIcon } from "./ArrowIcon";
 
 export interface LightboxImage {
   src: string;
-  width: number;
-  height: number;
   alt: string;
+  /** Omit width/height when the source's real dimensions genuinely
+   * aren't known (e.g. certifications.ts's Framer-hosted images, which
+   * never carried them) rather than inventing a guessed aspect ratio --
+   * the overlay falls back to a `fill` container in that case, the same
+   * "don't invent what isn't known" approach certifications/page.tsx
+   * already takes for the same images. Pass real numbers whenever
+   * they're available (CaseStudyImage, ImageRow, testimonials) for
+   * crisper, correctly-proportioned sizing. */
+  width?: number;
+  height?: number;
 }
 
 interface LightboxContextValue {
@@ -201,20 +209,36 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
               transition={{ duration: shouldReduceMotion ? 0 : 0.15 }}
               onClick={(event: ReactMouseEvent) => event.stopPropagation()}
             >
-              {/* Intrinsic width/height (not `fill`) to match how every
-                  other image on the site is rendered -- CSS caps and
-                  object-contain scale it down without upscaling past
-                  its own source resolution or distorting its aspect
-                  ratio. */}
-              <Image
-                src={current.src}
-                width={current.width}
-                height={current.height}
-                alt={current.alt}
-                sizes="90vw"
-                className="h-auto max-h-[85vh] w-auto max-w-[90vw] rounded-[var(--radius-md)] object-contain"
-                unoptimized={current.src.endsWith(".gif")}
-              />
+              {current.width && current.height ? (
+                // Intrinsic width/height (not `fill`) to match how every
+                // other image on the site is rendered -- CSS caps and
+                // object-contain scale it down without upscaling past
+                // its own source resolution or distorting its aspect
+                // ratio.
+                <Image
+                  src={current.src}
+                  width={current.width}
+                  height={current.height}
+                  alt={current.alt}
+                  sizes="90vw"
+                  className="h-auto max-h-[85vh] w-auto max-w-[90vw] rounded-[var(--radius-md)] object-contain"
+                  unoptimized={current.src.endsWith(".gif")}
+                />
+              ) : (
+                // No known source dimensions (e.g. certifications.ts) --
+                // a fixed-size `fill` container rather than a guessed
+                // aspect ratio, same reasoning the certifications page
+                // itself already uses for these exact images.
+                <div className="relative h-[85vh] w-[90vw] max-w-[1200px]">
+                  <Image
+                    src={current.src}
+                    alt={current.alt}
+                    fill
+                    sizes="90vw"
+                    className="rounded-[var(--radius-md)] object-contain"
+                  />
+                </div>
+              )}
             </motion.div>
 
             {group && group.length > 1 && (

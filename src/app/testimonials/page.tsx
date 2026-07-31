@@ -1,18 +1,34 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
+import { useLightbox } from "@/components/ui/Lightbox";
 import { testimonialsHeading, testimonialImages, testimonialImageUrl } from "@/content/testimonials";
-
-export const metadata: Metadata = {
-  title: "Testimonials",
-};
 
 /**
  * Milestone 2: new page, migrated from the live aseer.design
  * /testimonials page (didn't exist in this project before).
+ *
+ * Media Experience milestone: these are screenshots of real written
+ * recommendations -- the whole point is the text inside them, which is
+ * easy to misjudge as "not needing enlarging" but is exactly the kind
+ * of content a visitor reasonably wants to read at full size rather
+ * than squint at in a half-width grid tile. Wired into the same shared
+ * Lightbox every case-study image uses (real width/height already
+ * known per image -- see content/testimonials.ts -- so no dimensions
+ * need to be guessed), as one browsable group so a visitor who opens
+ * one can step through all five with Left/Right or a swipe.
  */
 export default function TestimonialsPage() {
+  const { open } = useLightbox();
+  const images = testimonialImages.map((image) => ({
+    src: testimonialImageUrl(image.id),
+    width: image.width,
+    height: image.height,
+    alt: "Testimonial",
+  }));
+
   return (
     <Section density="open">
       <Heading level={1}>{testimonialsHeading}</Heading>
@@ -35,14 +51,22 @@ export default function TestimonialsPage() {
             key={image.id}
             className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)] last:sm:col-span-2 last:sm:mx-auto last:sm:w-1/2"
           >
-            <Image
-              src={testimonialImageUrl(image.id)}
-              width={image.width}
-              height={image.height}
-              alt={`Testimonial ${index + 1}`}
-              className="h-auto w-full"
-              sizes="(min-width: 640px) 50vw, 100vw"
-            />
+            <button
+              type="button"
+              onClick={() => open(images, index)}
+              aria-label={`View larger: testimonial ${index + 1}`}
+              className="group block w-full cursor-zoom-in"
+            >
+              <Image
+                src={testimonialImageUrl(image.id)}
+                width={image.width}
+                height={image.height}
+                alt={`Testimonial ${index + 1}`}
+                className="h-auto w-full transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:opacity-90"
+                sizes="(min-width: 640px) 50vw, 100vw"
+                quality={90}
+              />
+            </button>
           </div>
         ))}
       </div>
