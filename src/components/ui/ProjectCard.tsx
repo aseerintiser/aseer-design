@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
@@ -53,6 +53,7 @@ export function ProjectCard({ project, className, showFlagshipBadge = true }: Pr
   const shouldReduceMotion = useReducedMotion();
 
   const cardRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [hovering, setHovering] = useState(false);
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
@@ -65,6 +66,40 @@ export function ProjectCard({ project, className, showFlagshipBadge = true }: Pr
     cursorX.set(event.clientX - bounds.left);
     cursorY.set(event.clientY - bounds.top);
   }
+
+  // Media Experience milestone: Work/Research index pages and the
+  // homepage's featured row can easily have half a dozen of these video
+  // thumbnails mounted at once. `autoPlay` on every one of them meant
+  // every video thumbnail decoded and played continuously the instant
+  // the page loaded, on/off screen alike -- real, needless CPU/battery
+  // cost, especially on mobile, for thumbnails nobody is currently
+  // looking at. An IntersectionObserver instead plays only the ones
+  // actually on screen and pauses the rest, so the "one improvement,
+  // whole-portfolio benefit" this milestone asks for applies to every
+  // current and future video thumbnail without each page needing its
+  // own logic. Also respects prefers-reduced-motion: a reader who's
+  // asked for less motion gets the static first frame instead of
+  // several autoplaying videos in a row.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || shouldReduceMotion) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          video.play().catch(() => {
+            // Autoplay can still be rejected by the browser in rare
+            // cases (e.g. data-saver mode) -- the poster/first frame is
+            // a perfectly fine fallback, so there's nothing to recover.
+          });
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [shouldReduceMotion]);
 
   return (
     <Link href={href} className={cn("group block", className)}>
@@ -93,12 +128,17 @@ export function ProjectCard({ project, className, showFlagshipBadge = true }: Pr
               // static or GIF thumbnail in layout, radius, and hover
               // behavior -- only the underlying element differs.
               <video
+                ref={videoRef}
                 src={project.thumbnail.src}
-                autoPlay
                 loop
                 muted
                 playsInline
-                preload="auto"
+                // metadata, not auto: play() (triggered by the
+                // IntersectionObserver above once a card is actually on
+                // screen) starts buffering real playback data on
+                // demand, instead of every off-screen card's thumbnail
+                // proactively downloading in full on page load.
+                preload="metadata"
                 aria-label={project.thumbnail.alt}
                 className="h-full w-full object-cover transition-transform duration-[600ms] ease-[var(--ease-standard)] group-hover:scale-[1.06]"
               />

@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { useLightbox } from "@/components/ui/Lightbox";
+import { cn } from "@/lib/utils";
 
 interface CaseStudyImageProps {
   src: string;
@@ -6,30 +10,78 @@ interface CaseStudyImageProps {
   height: number;
   alt: string;
   caption?: string;
+  /** Defaults to true -- see the `enlargeable` note on the "image" block
+   * in content/types.ts. */
+  enlargeable?: boolean;
 }
 
-/**
- * Single migrated screenshot/GIF (Milestone 2). Sourced directly from
- * framerusercontent.com -- see next.config.ts remotePatterns comment and
- * the Milestone 2 report for why these aren't self-hosted yet. Real
- * width/height from the source are passed straight to next/image to
- * avoid layout shift and preserve the original aspect ratio exactly, per
- * the migration brief's "preserve image quality, maintain aspect
- * ratios" rule.
- */
-export function CaseStudyImage({ src, width, height, alt, caption }: CaseStudyImageProps) {
+// Media Experience milestone: previously always `w-full`, so every
+// image -- including narrow, tall phone-mockup screenshots -- stretched
+// to fill the full ~800px reading column regardless of its own native
+// resolution. That both reduced legibility (a phone screen rendered
+// nearly life-size-of-a-tablet reads worse, not better) and upscaled
+// past the source image's real pixel width, the actual cause of
+// visible softness/pixelation, not a compression setting. The fix
+// applies to every CaseStudyImage, not just visibly "mobile" ones:
+// never render wider than the image's own native width, and cap
+// portrait (taller-than-4:3) images -- the shape phone mockups and
+// vertical flows share -- to a tighter width so they read at a
+// legible, roughly on-screen size instead of ballooning to match
+// whatever landscape screenshots sit elsewhere in the same case study.
+const LANDSCAPE_MAX = 800;
+const PORTRAIT_MAX = 420;
+
+export function CaseStudyImage({
+  src,
+  width,
+  height,
+  alt,
+  caption,
+  enlargeable = true,
+}: CaseStudyImageProps) {
+  const { open } = useLightbox();
+  const isPortrait = width / height < 0.75;
+  const cappedWidth = Math.min(width, isPortrait ? PORTRAIT_MAX : LANDSCAPE_MAX);
+
+  const image = (
+    <Image
+      src={src}
+      width={width}
+      height={height}
+      alt={alt}
+      className={cn(
+        "h-auto w-full",
+        enlargeable &&
+          "transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:opacity-90",
+      )}
+      sizes={
+        isPortrait
+          ? `${cappedWidth}px`
+          : `(min-width: 1024px) ${cappedWidth}px, 100vw`
+      }
+      unoptimized={src.endsWith(".gif")}
+      quality={90}
+    />
+  );
+
   return (
     <figure className="mx-auto max-w-full">
-      <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]">
-        <Image
-          src={src}
-          width={width}
-          height={height}
-          alt={alt}
-          className="h-auto w-full"
-          sizes="(min-width: 1024px) 800px, 100vw"
-          unoptimized={src.endsWith(".gif")}
-        />
+      <div
+        className="mx-auto overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]"
+        style={{ maxWidth: cappedWidth }}
+      >
+        {enlargeable ? (
+          <button
+            type="button"
+            onClick={() => open([{ src, width, height, alt }], 0)}
+            aria-label={`View larger: ${alt}`}
+            className="group block w-full cursor-zoom-in"
+          >
+            {image}
+          </button>
+        ) : (
+          image
+        )}
       </div>
       {caption && (
         <figcaption className="mt-2 text-center text-sm text-[var(--color-text-muted)]">

@@ -76,10 +76,18 @@ export type CaseStudyBlock =
       height: number;
       alt: string;
       caption?: string;
+      /** Media Experience milestone: every image/imageRow block is
+       * click-to-enlarge by default (CaseStudyImage/ImageRow both open
+       * the shared Lightbox), since case-study images are screenshots,
+       * prototypes, and diagrams people genuinely want to inspect
+       * closer. Set to `false` for the rare purely decorative image
+       * where enlarging adds nothing. */
+      enlargeable?: boolean;
     }
   | {
       type: "imageRow";
       images: { src: string; width: number; height: number; alt: string }[];
+      enlargeable?: boolean;
     }
   | { type: "link"; text: string; href: string }
   | {

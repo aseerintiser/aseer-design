@@ -30,6 +30,17 @@ function ReplayIcon() {
   );
 }
 
+function FullscreenIcon() {
+  return (
+    <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M1 5V1h4v1.4H2.4V5H1Zm10-3.6V1h4v4h-1.4V2.4H11ZM1 11v4h4v-1.4H2.4V11H1Zm13.6 2.6V11H16v4h-4v-1.4h2.6Z"
+      />
+    </svg>
+  );
+}
+
 /**
  * Click-to-play media: a static poster until the reader deliberately
  * starts it, plays once through, no loop, muted (there's no audio to
@@ -61,6 +72,16 @@ export function ControlledMedia({ src, poster, width, height, alt, caption }: Co
     setState("playing");
   }
 
+  // Media Experience milestone: the brief specifically calls out
+  // fullscreen viewing as one of the interactions worth supporting for
+  // video. The native Fullscreen API does this with no new dependency
+  // and no custom player chrome -- the browser's own fullscreen video
+  // surface (which already includes its own scrubber/controls) takes
+  // over once requested.
+  function goFullscreen() {
+    videoRef.current?.requestFullscreen?.();
+  }
+
   return (
     <figure className="mx-auto max-w-full">
       <div
@@ -89,6 +110,16 @@ export function ControlledMedia({ src, poster, width, height, alt, caption }: Co
             <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-bg)]/95 text-[var(--color-text)] shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
               {state === "ended" ? <ReplayIcon /> : <PlayIcon />}
             </span>
+          </button>
+        )}
+        {state === "playing" && (
+          <button
+            type="button"
+            onClick={goFullscreen}
+            aria-label="View fullscreen"
+            className="absolute right-3 bottom-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 text-white transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-black/60"
+          >
+            <FullscreenIcon />
           </button>
         )}
       </div>

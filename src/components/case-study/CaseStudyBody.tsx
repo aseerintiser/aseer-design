@@ -72,13 +72,14 @@ function renderBlock(block: CaseStudyBlock, key: number) {
             height={block.height}
             alt={block.alt}
             caption={block.caption}
+            enlargeable={block.enlargeable}
           />
         </div>
       );
     case "imageRow":
       return (
         <div key={key} className="mt-6">
-          <ImageRow images={block.images} />
+          <ImageRow images={block.images} enlargeable={block.enlargeable} />
         </div>
       );
     case "link":

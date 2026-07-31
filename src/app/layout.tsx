@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { NavBar } from "@/components/layout/NavBar";
 import { Footer } from "@/components/layout/Footer";
+import { LightboxProvider } from "@/components/ui/Lightbox";
 import { site } from "@/content/site";
 // Self-hosted variable fonts (no request to Google Fonts at build or
 // runtime). "full.css" includes the optical-size axis Fraunces needs for
@@ -53,7 +54,13 @@ export default function RootLayout({
         <div className="grain-overlay" aria-hidden="true" />
         <SkipLink />
         <NavBar />
-        <main id="main-content">{children}</main>
+        {/* Media Experience milestone: mounted once here so every
+            click-to-enlarge trigger anywhere in the app (CaseStudyImage,
+            ImageRow, and anything added later) shares one overlay
+            implementation instead of each rolling its own modal. */}
+        <LightboxProvider>
+          <main id="main-content">{children}</main>
+        </LightboxProvider>
         <Footer />
       </body>
     </html>

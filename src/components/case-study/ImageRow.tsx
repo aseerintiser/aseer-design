@@ -1,7 +1,16 @@
+"use client";
+
 import Image from "next/image";
+import { useLightbox } from "@/components/ui/Lightbox";
+import { cn } from "@/lib/utils";
 
 interface ImageRowProps {
   images: { src: string; width: number; height: number; alt: string }[];
+  /** Defaults to true -- see the `enlargeable` note on the "imageRow"
+   * block in content/types.ts. Clicking any tile opens the whole row as
+   * one browsable group (Left/Right, swipe on mobile), not just the
+   * single tile clicked. */
+  enlargeable?: boolean;
 }
 
 /**
@@ -28,21 +37,30 @@ interface ImageRowProps {
  * ratio each one is, and mismatched source resolutions can no longer
  * throw two same-purpose screenshots out of proportion with each
  * other.
+ *
+ * Media Experience milestone: each tile now opens the shared Lightbox
+ * as a browsable group -- clicking any image in the row lets a visitor
+ * step through the whole row with Left/Right or a swipe, rather than
+ * only ever seeing one enlarged image with no way to see its neighbors
+ * at full size too.
  */
-export function ImageRow({ images }: ImageRowProps) {
+export function ImageRow({ images, enlargeable = true }: ImageRowProps) {
+  const { open } = useLightbox();
+
   return (
     <div className="flex flex-wrap justify-center gap-4">
-      {images.map((image, index) => (
-        <div
-          key={`${image.src}-${index}`}
-          className="h-56 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] sm:h-64 lg:h-72"
-        >
+      {images.map((image, index) => {
+        const tile = (
           <Image
             src={image.src}
             width={image.width}
             height={image.height}
             alt={image.alt}
-            className="h-full w-auto max-w-full object-cover"
+            className={cn(
+              "h-full w-auto max-w-full object-cover",
+              enlargeable &&
+                "transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:opacity-90",
+            )}
             // A fixed-height tile's rendered width follows from each
             // image's own aspect ratio, not the viewport, so a vw-based
             // hint (the old 45vw, sized for the previous width-scaled
@@ -55,9 +73,30 @@ export function ImageRow({ images }: ImageRowProps) {
             // the common narrow ones.
             sizes="(min-width: 1024px) 400px, (min-width: 640px) 340px, 300px"
             unoptimized={image.src.endsWith(".gif")}
+            quality={90}
           />
-        </div>
-      ))}
+        );
+
+        return (
+          <div
+            key={`${image.src}-${index}`}
+            className="h-56 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] sm:h-64 lg:h-72"
+          >
+            {enlargeable ? (
+              <button
+                type="button"
+                onClick={() => open(images, index)}
+                aria-label={`View larger: ${image.alt}`}
+                className="group block h-full cursor-zoom-in"
+              >
+                {tile}
+              </button>
+            ) : (
+              tile
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
