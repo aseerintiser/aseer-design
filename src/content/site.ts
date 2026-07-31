@@ -88,7 +88,17 @@ export const nav = [
 export const site = {
   name: "Md Aseer Intiser",
   shortName: "Aseer",
-  title: "UX & Product Designer",
+  // Homepage Writing Finalization milestone: "UX & Product Designer" ->
+  // "Product Designer & HCI Researcher". This string drives every page's
+  // <title>/OG metadata (layout.tsx), the homepage hero eyebrow, the
+  // Resume page eyebrow, and (see footer.copyright below) is echoed in
+  // the footer -- it's the one identity string that appears on every
+  // single page. Homepage-Copy-Review.md Section 2.1/4 flagged this as
+  // the one open question in that review: the old title was industry-
+  // only, which sat oddly against the site's explicit goal of reading as
+  // equally credible to design and research audiences. Approved as-is by
+  // Aseer.
+  title: "Product Designer & HCI Researcher",
   // Homepage Finalization milestone: rewritten to state a single,
   // confident claim instead of two overlapping ones ("trustworthy... backed
   // by research" repeated the same idea twice). The hero eyebrow now
@@ -104,9 +114,23 @@ export const site = {
   // of sitting in its own weaker paragraph. Paragraph two's facts
   // (Software Engineering background, HTI Master's, Convay, 45+ countries,
   // governments/global teams) are unchanged, just tightened.
+  //
+  // Homepage Writing Finalization milestone (Homepage-Copy-Review.md
+  // Sections 2.3/2.4): two fixes. (1) Paragraph one opened with "I design
+  // digital products," almost word for word repeating the headline just
+  // above it -- reworded to "I start by understanding..." so the two
+  // don't say the same thing twice in the first two sentences on the
+  // page. (2) Paragraph two's Convay description didn't match the
+  // Convay case study's own language ("SaaS platform" vs. the case
+  // study's "video conferencing platform... trusted by governments") --
+  // reworded to match. Country count confirmed by Aseer as 45+ (the case
+  // study body in content/projects.ts says "46+" in a couple of places;
+  // that's a separate, not-yet-fixed inconsistency to correct in a
+  // future projects.ts content pass, out of scope for this
+  // homepage-only milestone).
   bio: [
-    "**I design digital products by first understanding how people think and behave**, then shaping that into the interface itself. Lately, that's pulled me toward trust and human-AI interaction.",
-    "With a background in **Software Engineering** and a **Master's in Human-Technology Interaction**, I've designed for **Convay**, a SaaS platform used by governments and global teams in **45+ countries**.",
+    "**I start by understanding how people think and behave**, then shape that into the interface itself. Lately, that's pulled me toward trust and human-AI interaction.",
+    "With a background in **Software Engineering** and a **Master's in Human-Technology Interaction**, I've designed for **Convay**, a video conferencing platform trusted by governments and global teams in **45+ countries**.",
   ],
   // Homepage Finalization milestone: "Human Psychology" (a field of study,
   // not really a practiced skill) swapped for "Behavioral Research" --
@@ -133,9 +157,15 @@ export const site = {
   },
   // Kept from the pre-migration placeholder: a real, verified fact not
   // stated on the live homepage itself, still accurate and useful in the
-  // hero's supporting line.
+  // hero's supporting line. Homepage Writing Finalization milestone:
+  // reworded to match the corrected, consistent Convay description used
+  // in bio[1] and the Design track-split line in page.tsx (see
+  // Homepage-Copy-Review.md Section 2.4) -- this field only ever
+  // surfaces as the meta description (layout.tsx), not on the page
+  // itself, but it was still a fourth, differently-worded version of
+  // the same fact and needed to match the other three.
   heroProofPoint:
-    "Convay, an enterprise video platform used in 45+ countries, including government deployments.",
+    "Convay, a video conferencing platform trusted by governments and global teams in 45+ countries.",
   // Homepage Finalization milestone: rewritten from two terse,
   // resume-fragment-style sentences ("M.Sc. ... completing 2026. Open to
   // relocation.") into one sentence a person would actually say, same
@@ -156,7 +186,12 @@ export const site = {
     openTo: "Open to roles across design, research, and AI,",
     openToLine2: "wherever the work means understanding people and building for them.",
     body: "If your team is designing or researching something people need to trust, I'd love to talk.",
-    copyright: "© Md Aseer Intiser · UX & Product Designer",
+    // Homepage Writing Finalization milestone: kept in sync with the
+    // `title` field above manually -- this is a separate string literal,
+    // not composed from `site.title`, so it doesn't update automatically
+    // when that field changes. Flagging that explicitly here since it's
+    // exactly the kind of thing that quietly drifts out of sync later.
+    copyright: "© Md Aseer Intiser · Product Designer & HCI Researcher",
   },
   // Live footer social order: LinkedIn, Medium, GitHub.
   socials: [

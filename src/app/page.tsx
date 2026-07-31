@@ -44,14 +44,29 @@ export default function HomePage() {
           information only existed as a small nav wordmark and a
           decorative "✦ ASEER ✦ RESEARCH & DESIGN" chip overlapping the
           portrait's corner, which also used different terminology --
-          "Research & Design" -- than the "UX & Product Designer" title
-          used everywhere else on the site). The headline is still the one
+          "Research & Design" -- than the site's title field used
+          everywhere else on the site). The headline is still the one
           kinetic-motion moment on the page (plays once, on load, never
           loops); everything else renders immediately or via the same
           0.35s-delayed Reveal as before -- no animation gates a visitor's
-          access to real content. */}
+          access to real content.
+
+          Homepage Writing Finalization milestone: this wrapper was
+          max-w-4xl (896px), a hard cap independent of the Container it
+          sits in (which itself allows up to max-w-7xl / 1280px). On a
+          real 1400px+ viewport that left roughly a third of the
+          Container empty to the right of the text, with nothing else on
+          the page to balance it -- confirmed live, this is the "hero
+          only fills half the screen" issue flagged for this milestone.
+          Widened to max-w-6xl (1152px): meaningfully closes that gap
+          without going fully edge-to-edge, and without reintroducing a
+          second visual element (portrait, etc.) that the earlier
+          Homepage Finalization milestone deliberately removed. The bio
+          and skill-line rows below keep their own tighter
+          max-w-[var(--measure)] reading-width cap regardless, so this
+          only affects how much room the eyebrow and headline get. */}
       <Section density="open" as="section" className="overflow-visible">
-        <div className="max-w-4xl">
+        <div className="max-w-6xl">
           <Eyebrow>
             {site.name} · {site.title}
           </Eyebrow>
@@ -154,10 +169,30 @@ export default function HomePage() {
                   Cultural Festival Platform). Convay is still named --
                   it's the strongest, most concrete credibility signal
                   this line can make -- but as the flagship example of a
-                  broader practice, not the whole of it. */}
+                  broader practice, not the whole of it.
+
+                  Homepage Writing Finalization milestone
+                  (Homepage-Copy-Review.md Section 2.6): this line
+                  previously said "including four years shaping Convay"
+                  in an earlier draft of that review -- Aseer caught that
+                  this was simply wrong (Convay was Sep 2023-Jul 2024, per
+                  his CV and the meta.duration field on the Convay case
+                  studies in content/projects.ts, well under a year), so
+                  no duration claim is made here at all now. It also
+                  previously repeated bio[1]'s "government-adjacent video
+                  platform used in 45+ countries" claim verbatim-ish one
+                  screen down, with a different, softer descriptor
+                  ("adjacent") and a different country count (45 vs. the
+                  case study's own 46) than bio[1] used. Rather than just
+                  copy bio[1]'s now-corrected phrasing here too (which
+                  would make these two lines nearly word-for-word
+                  duplicates), this line now does a different job --
+                  breadth of practice -- and leaves the specific
+                  governments/45+ countries proof to bio[1], where it's
+                  said once, clearly, and only once. */}
               <Text muted className="relative mt-2">
-                Enterprise and concept product design, including Convay, a
-                government-adjacent video platform used in 45+ countries.
+                Enterprise product design shaped around Convay, plus
+                self-directed concept work exploring new interface ideas.
               </Text>
             </StaggerItem>
             <StaggerItem className="relative col-span-4 md:col-span-4 lg:col-span-6">
