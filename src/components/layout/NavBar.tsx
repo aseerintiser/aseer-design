@@ -91,12 +91,15 @@ export function NavBar() {
         <nav aria-label="Primary" className="hidden lg:block">
           <ul className="flex items-center gap-2">
             {nav.map((item) => {
-              const isActive = isActiveHref(item.href);
+              const isActive = !item.external && isActiveHref(item.href);
               return (
                 <li key={item.href} className="relative">
                   <Link
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
+                    {...(item.external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
                     className={cn(
                       "relative block px-3 py-2 text-sm font-medium transition-colors duration-[var(--duration-fast)]",
                       isActive
@@ -105,6 +108,16 @@ export function NavBar() {
                     )}
                   >
                     {item.label}
+                    {/* External items (currently just Design Showcase,
+                        pointing at the source Figma prototype) get a small
+                        arrow instead of the active-page underline, since
+                        they can never be the "current page" -- a quiet
+                        visual cue that this one leaves the site. */}
+                    {item.external && (
+                      <span aria-hidden="true" className="ml-1 text-xs">
+                        ↗
+                      </span>
+                    )}
                     {isActive && (
                       <motion.span
                         layoutId="nav-underline"
@@ -155,7 +168,7 @@ export function NavBar() {
         >
           <ul className="flex flex-col gap-1">
             {nav.map((item, index) => {
-              const isActive = isActiveHref(item.href);
+              const isActive = !item.external && isActiveHref(item.href);
               return (
                 <li key={item.href}>
                   <Link
@@ -163,6 +176,9 @@ export function NavBar() {
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
                     onClick={() => setOpen(false)}
+                    {...(item.external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
                     className={cn(
                       "block rounded-[var(--radius-md)] px-3 py-3 text-base font-medium transition-colors duration-[var(--duration-fast)]",
                       isActive
@@ -171,6 +187,11 @@ export function NavBar() {
                     )}
                   >
                     {item.label}
+                    {item.external && (
+                      <span aria-hidden="true" className="ml-1 text-xs">
+                        ↗
+                      </span>
+                    )}
                   </Link>
                 </li>
               );
