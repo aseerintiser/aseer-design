@@ -2615,11 +2615,21 @@ export const caseStudies: CaseStudy[] = [
       duration: "June 2026",
       tools: "Figma (Make)",
     },
+    // Thumbnail Refresh milestone: swapped the static splash-screen crop
+    // for a real screen recording (splash screen -> a scavenger-hunt clue
+    // -> the festival's live activity list), so the card shows the
+    // product actually working rather than just its title screen. The
+    // source clip (Scene9, later re-exported by Aseer as
+    // Scene9-c7fb1a1a.gif after the first export turned out to have a
+    // persistent third-party watermark baked across the whole animation)
+    // was a 25fps/1600x1200, ~24MB raw GIF; trimmed ~0.3s off each end
+    // (a fade to/from black) and re-encoded to 1100px-wide H.264, same
+    // treatment as Lumi and Convay Design System (see ProjectCard.tsx).
     thumbnail: {
-      src: "/arenewberg/thumbnail.png",
-      width: 378,
-      height: 284,
-      alt: "The aRENEWberg splash screen: wordmark, tagline, and Enter button on a dark, gridded background.",
+      src: "/arenewberg/thumbnail.mp4",
+      width: 1100,
+      height: 826,
+      alt: "The aRENEWberg app: splash screen, a scavenger-hunt clue, and the festival's live activity list.",
     },
     body: arenewbergBody,
   },
