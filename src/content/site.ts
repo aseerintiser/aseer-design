@@ -55,22 +55,42 @@ export const site = {
   name: "Md Aseer Intiser",
   shortName: "Aseer",
   title: "UX & Product Designer",
-  // Live homepage badge line, directly above the H1.
-  badge: "✦ ASEER ✦ RESEARCH & DESIGN",
-  // Live homepage H1, verbatim.
-  tagline: "Designing trustworthy digital experiences, backed by research.",
-  // Live homepage bio, three paragraphs, verbatim (first is bold in the
-  // source).
+  // Homepage Finalization milestone: rewritten to state a single,
+  // confident claim instead of two overlapping ones ("trustworthy... backed
+  // by research" repeated the same idea twice). The hero eyebrow now
+  // states name + title directly (composed from `name`/`title` above, see
+  // page.tsx), so this line no longer needs to carry identity on its own --
+  // it can just say what the work is about.
+  tagline: "Designing digital products people trust, grounded in research.",
+  // Homepage Finalization milestone: trimmed from three paragraphs to two.
+  // The original third paragraph ("intuitive, inclusive, and scalable
+  // solutions") was a generic three-adjective list that repeated ideas
+  // already implied elsewhere; its one genuinely distinctive fact --
+  // trust and human-AI interaction -- is folded into paragraph one instead
+  // of sitting in its own weaker paragraph. Paragraph two's facts
+  // (Software Engineering background, HTI Master's, Convay, 45+ countries,
+  // governments/global teams) are unchanged, just tightened.
   bio: [
-    "**I create human-centered digital experiences** by combining UX research, interaction design, and human psychology.",
-    "With a background in **Software Engineering** and a **Master's in Human-Technology Interaction**, I've designed for **Convay**, a SaaS platform adopted in **45+ countries** and used by governments and global teams for large-scale collaboration.",
-    "I focus on building intuitive, inclusive, and scalable solutions, with a growing interest in **trust and human-AI interaction**.",
+    "**I design digital products by first understanding how people think and behave**, then shaping that into the interface itself. Lately, that's pulled me toward trust and human-AI interaction.",
+    "With a background in **Software Engineering** and a **Master's in Human-Technology Interaction**, I've designed for **Convay**, a SaaS platform used by governments and global teams in **45+ countries**.",
   ],
-  // Live homepage skill-tag lines, verbatim.
+  // Homepage Finalization milestone: "Human Psychology" (a field of study,
+  // not really a practiced skill) swapped for "Behavioral Research" --
+  // concrete, and consistent with the trust/human-AI framing now stated
+  // up front in the bio, rather than restating a discipline name.
   skillLines: [
     "UX Research • User Evaluation • Design Systems",
-    "Human-AI Interaction • Accessibility • Human Psychology",
+    "Human-AI Interaction • Accessibility • Behavioral Research",
   ],
+  // Homepage Finalization milestone: no longer rendered on the homepage.
+  // The hero previously gave a large square portrait + this photo roughly
+  // equal visual weight to the headline, which for a product design
+  // portfolio put a personal photo in competition with the work itself.
+  // The About page (content/about.ts, about.topImages) already carries
+  // three real photos of Aseer, so removing this from the homepage isn't
+  // removing his photo from the site -- just from the one page where the
+  // work should be doing the talking. Left here, unused, in case a future
+  // page wants it rather than deleting a real asset reference outright.
   portrait: {
     src: "https://framerusercontent.com/images/2bZSUdqkPs4VGBtGfwyuSAZLP4.png",
     width: 1563,
@@ -82,14 +102,26 @@ export const site = {
   // hero's supporting line.
   heroProofPoint:
     "Convay, an enterprise video platform used in 45+ countries, including government deployments.",
-  currentStatus: "M.Sc. Human-Technology Interaction, Tampere University, completing 2026. Open to relocation.",
+  // Homepage Finalization milestone: rewritten from two terse,
+  // resume-fragment-style sentences ("M.Sc. ... completing 2026. Open to
+  // relocation.") into one sentence a person would actually say, same
+  // facts (degree, university, year, relocation).
+  currentStatus:
+    "I'm finishing my M.Sc. in Human-Technology Interaction at Tampere University in 2026, and I'm open to relocating for the right opportunity.",
   email: "md.aseerintiser@gmail.com",
-  // Live footer copy, verbatim.
+  // Homepage Finalization milestone: footer CTA rewritten. "Let's design
+  // together" and "UX / Product design opportunities" only spoke to design,
+  // which quietly excluded the research/HCI half of this portfolio (Lumi,
+  // RoboCarnival, the game-difficulty study). The new heading keeps the
+  // site's trust throughline going into its last words instead of
+  // introducing a new idea at the very end. openTo/openToLine2 describe
+  // the work thematically (design, research, AI; understanding people and
+  // building for them) rather than enumerating six role titles as a list.
   footer: {
-    heading: ["Let's", "design", "together"],
-    openTo: "Open to exciting",
-    openToLine2: "UX / Product design opportunities.",
-    body: "Let's chat about how I can help your team design intuitive, accessible, and scalable products.",
+    heading: ["Let's", "build", "something", "worth", "trusting"],
+    openTo: "Open to roles across design, research, and AI,",
+    openToLine2: "wherever the work means understanding people and building for them.",
+    body: "If your team is designing or researching something people need to trust, I'd love to talk.",
     copyright: "© Md Aseer Intiser · UX & Product Designer",
   },
   // Live footer social order: LinkedIn, Medium, GitHub.

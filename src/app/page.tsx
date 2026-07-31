@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Section } from "@/components/layout/Section";
 import { Grid } from "@/components/layout/Grid";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { Button } from "@/components/ui/Button";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { KineticHeadline } from "@/components/ui/KineticHeadline";
 import { Reveal } from "@/components/ui/Reveal";
@@ -27,103 +27,79 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero. Milestone 2: headline, bio, skill lines, and portrait are
-          migrated verbatim from the live homepage (content/site.ts).
-          Asymmetric 7/5 split rather than a centered stack, per the
-          Creative Direction's "controlled asymmetry, not centered stacks
-          by default" -- the live page itself doesn't use a strict grid,
-          so this split is a structural/formatting improvement, not a
-          content change. The headline is the one kinetic-motion moment
-          on the page (plays once, on load, never loops); everything else
-          in the text column renders immediately -- no animation gates a
-          visitor's access to real content. */}
+      {/* Hero. Homepage Finalization milestone: replaced the two-column
+          7/5 split (text + large square portrait) with a single
+          typographic column. For a product design portfolio, a photo the
+          size of the headline was competing with the one thing the page
+          should be selling -- the work -- and benchmarked poorly against
+          personal sites from designers at Linear/Stripe/Vercel/Notion,
+          which rarely give a face equal visual weight to the headline on
+          their homepage. The portrait already exists on the About page
+          (about.topImages, three photos), so this isn't removing Aseer's
+          photo from the site, just from the one page where restraint
+          matters more. Reclaimed width goes to a confident, single-column
+          hero instead of being refilled with something else.
+
+          The eyebrow now states name + title directly (previously this
+          information only existed as a small nav wordmark and a
+          decorative "✦ ASEER ✦ RESEARCH & DESIGN" chip overlapping the
+          portrait's corner, which also used different terminology --
+          "Research & Design" -- than the "UX & Product Designer" title
+          used everywhere else on the site). The headline is still the one
+          kinetic-motion moment on the page (plays once, on load, never
+          loops); everything else renders immediately or via the same
+          0.35s-delayed Reveal as before -- no animation gates a visitor's
+          access to real content. */}
       <Section density="open" as="section" className="overflow-visible">
-        <Grid gap="lg" className="items-center">
-          <div className="col-span-4 md:col-span-8 lg:col-span-7">
-            <Heading level={1} size="display" className="max-w-4xl">
-              <KineticHeadline text={site.tagline} />
-            </Heading>
-            {/* The headline's word-stagger runs roughly 0.05-0.55s after
-                mount (see wordContainer/wordItem in lib/motion). Without a
-                delay here, the bio and CTAs would render instantly and
-                sit still for half a second next to a headline still
-                animating -- two disconnected timings in one hero. A
-                single Reveal at 0.35s brings them in while the last word
-                or two is still settling, so the whole hero reads as one
-                coordinated entrance instead of "headline animation, then
-                everything else." */}
-            <Reveal delay={0.35}>
-              <div className="mt-6 max-w-[var(--measure)] space-y-4">
-                {site.bio.map((paragraph, index) => (
-                  <Text key={index} size={index === 0 ? "lead" : "body"} muted={index > 0}>
-                    {renderInlineMarkdown(paragraph)}
-                  </Text>
-                ))}
-              </div>
-              {/* Milestone 3: previously two bare paragraphs, visually
-                  indistinguishable from any other muted text on the page
-                  -- easy to read as leftover copy rather than a
-                  considered accent. A thin top rule sets this apart as
-                  its own quiet strip, and uppercase/tracked type (the
-                  same treatment Eyebrow uses elsewhere) reads as a
-                  deliberate label row instead of two stray sentences. */}
-              <div className="mt-6 space-y-1.5 border-t border-[var(--color-border)] pt-4">
-                {site.skillLines.map((line) => (
-                  <p
-                    key={line}
-                    className="text-xs font-medium tracking-wide text-[var(--color-text-muted)] uppercase"
-                  >
-                    {line}
-                  </p>
-                ))}
-              </div>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Button href="/work">View Work</Button>
-                <Button href="/research" variant="secondary">
-                  View Research
-                </Button>
-              </div>
-            </Reveal>
-          </div>
-
-          <div className="col-span-4 md:col-span-8 lg:col-span-5">
-            <Reveal delay={0.15}>
-              {/* justify-self-end was a no-op here previously: this div's
-                  parent is Reveal's motion.div, not the Grid directly, so
-                  justify-self never had a grid container to act against.
-                  Margin-based alignment works regardless of parent display
-                  type: mx-auto centers it while stacked on mobile/md, and
-                  lg:mr-0 (overriding mx-auto's margin-right at that
-                  breakpoint) pushes it flush right once the 7/5 split is
-                  actually in effect.
-
-                  Milestone 3: `group` + a slow hover scale on the image
-                  gives the one static, non-interactive element in the
-                  hero a small amount of the same considered-craft touch
-                  every other surface on the site has, without being
-                  distracting -- it only responds to a deliberate hover,
-                  and the shadow deepens in step so the lift reads as one
-                  physical motion rather than the image just zooming. */}
-              <div className="group relative mx-auto aspect-square w-full max-w-sm overflow-hidden rounded-[var(--radius-lg)] shadow-[0_30px_60px_-24px_rgba(0,0,0,0.35)] transition-shadow duration-[var(--duration-slow)] ease-[var(--ease-standard)] hover:shadow-[0_40px_80px_-24px_rgba(0,0,0,0.45)] lg:mr-0">
-                <Image
-                  src={site.portrait.src}
-                  alt={site.portrait.alt}
-                  width={site.portrait.width}
-                  height={site.portrait.height}
-                  priority
-                  className="h-full w-full object-cover transition-transform duration-[700ms] ease-[var(--ease-standard)] group-hover:scale-[1.04]"
-                  sizes="(min-width: 1024px) 384px, 90vw"
-                />
-                <span
-                  aria-hidden="true"
-                  className="absolute bottom-4 left-4 rounded-[var(--radius-full)] bg-[var(--color-bg)]/90 px-3 py-1.5 text-xs font-medium tracking-wide text-[var(--color-text)] shadow-[0_4px_16px_rgba(0,0,0,0.18)] backdrop-blur"
+        <div className="max-w-4xl">
+          <Eyebrow>
+            {site.name} · {site.title}
+          </Eyebrow>
+          <Heading level={1} size="display" className="mt-3">
+            <KineticHeadline text={site.tagline} />
+          </Heading>
+          {/* The headline's word-stagger runs roughly 0.05-0.55s after
+              mount (see wordContainer/wordItem in lib/motion). Without a
+              delay here, the bio and CTAs would render instantly and sit
+              still for half a second next to a headline still animating
+              -- two disconnected timings in one hero. A single Reveal at
+              0.35s brings them in while the last word or two is still
+              settling, so the whole hero reads as one coordinated
+              entrance instead of "headline animation, then everything
+              else." */}
+          <Reveal delay={0.35}>
+            <div className="mt-6 max-w-[var(--measure)] space-y-4">
+              {site.bio.map((paragraph, index) => (
+                <Text key={index} size={index === 0 ? "lead" : "body"} muted={index > 0}>
+                  {renderInlineMarkdown(paragraph)}
+                </Text>
+              ))}
+            </div>
+            {/* Milestone 3: previously two bare paragraphs, visually
+                indistinguishable from any other muted text on the page --
+                easy to read as leftover copy rather than a considered
+                accent. A thin top rule sets this apart as its own quiet
+                strip, and uppercase/tracked type (the same treatment
+                Eyebrow uses elsewhere) reads as a deliberate label row
+                instead of two stray sentences. */}
+            <div className="mt-6 max-w-[var(--measure)] space-y-1.5 border-t border-[var(--color-border)] pt-4">
+              {site.skillLines.map((line) => (
+                <p
+                  key={line}
+                  className="text-xs font-medium tracking-wide text-[var(--color-text-muted)] uppercase"
                 >
-                  {site.badge}
-                </span>
-              </div>
-            </Reveal>
-          </div>
-        </Grid>
+                  {line}
+                </p>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Button href="/work">View Work</Button>
+              <Button href="/research" variant="secondary">
+                View Research
+              </Button>
+            </div>
+          </Reveal>
+        </div>
       </Section>
 
       {/* Track split. Blueprint Part 3: "not just two nav links but a
@@ -171,9 +147,17 @@ export default function HomePage() {
               <Heading level={2} size={3} className="relative">
                 Design
               </Heading>
+              {/* Homepage Finalization milestone: "mostly at Convay" read
+                  as a hedge ("mostly" implying there isn't much else),
+                  and undersold the Work track's actual range (Convay's
+                  four projects, plus FitVibe, TravelMate AI, and the
+                  Cultural Festival Platform). Convay is still named --
+                  it's the strongest, most concrete credibility signal
+                  this line can make -- but as the flagship example of a
+                  broader practice, not the whole of it. */}
               <Text muted className="relative mt-2">
-                Product and UX design work, mostly at Convay, an enterprise,
-                government-adjacent platform.
+                Enterprise and concept product design, including Convay, a
+                government-adjacent video platform used in 45+ countries.
               </Text>
             </StaggerItem>
             <StaggerItem className="relative col-span-4 md:col-span-4 lg:col-span-6">
@@ -187,8 +171,8 @@ export default function HomePage() {
                 Research
               </Heading>
               <Text muted className="relative mt-2">
-                Research on trust, AI, and public-service technology, feeding
-                directly into how I design.
+                Research into trust, AI, and public-service technology,
+                feeding directly into how I design.
               </Text>
             </StaggerItem>
           </Grid>
