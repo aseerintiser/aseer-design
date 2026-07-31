@@ -108,11 +108,14 @@ export function NavBar() {
                     )}
                   >
                     {item.label}
-                    {/* External items (currently just Design Showcase,
-                        pointing at the source Figma prototype) get a small
-                        arrow instead of the active-page underline, since
-                        they can never be the "current page" -- a quiet
-                        visual cue that this one leaves the site. */}
+                    {/* External items get a small arrow instead of the
+                        active-page underline, since they can never be the
+                        "current page" -- a quiet visual cue that this one
+                        leaves the site. None of the current nav items are
+                        external (Design Showcase became a real in-site
+                        page once real image exports existed), but the
+                        field stays on every item so this keeps working the
+                        moment a future item needs it. */}
                     {item.external && (
                       <span aria-hidden="true" className="ml-1 text-xs">
                         ↗

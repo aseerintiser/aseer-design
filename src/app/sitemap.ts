@@ -4,7 +4,7 @@ import { caseStudies } from "@/content/projects";
 const siteUrl = "https://aseer.design";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/work", "/research", "/about", "/resume"].map(
+  const staticRoutes = ["", "/work", "/design-showcase", "/research", "/about", "/resume"].map(
     (path) => ({
       url: `${siteUrl}${path}`,
       lastModified: new Date(),

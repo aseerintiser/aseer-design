@@ -40,17 +40,15 @@ export const nav = [
   // a student job board) from before this rebuild, kept out of Work/
   // Research since they're practice pieces, not case studies -- see
   // Design-Showcase-Proposal.md for the full reasoning and the plan for
-  // a proper in-site version once real image exports of these four
-  // pieces are available. Until then, this points straight at the
-  // source Figma prototype rather than nothing. Placed right after Work
-  // per Aseer's own direction: on the previous site this was the first
-  // thing a recruiter saw, so it stays early in the nav rather than
-  // getting buried.
-  {
-    label: "Design Showcase",
-    href: "https://www.figma.com/proto/sbZqfwEyL25YeBvaWugK9B/Design-Showcase---Sample-Work",
-    external: true,
-  },
+  // a proper "Craft" page later. Originally this pointed straight at the
+  // source Figma prototype as a placeholder; now that real image exports
+  // of all four pieces exist, it's a real in-site page (see
+  // content/design-showcase.ts and app/design-showcase/page.tsx), which
+  // itself links out to the full interactive prototype at the bottom.
+  // Placed right after Work per Aseer's own direction: on the previous
+  // site this was the first thing a recruiter saw, so it stays early in
+  // the nav rather than getting buried.
+  { label: "Design Showcase", href: "/design-showcase", external: false },
   { label: "Articles", href: "/articles", external: false },
   { label: "Certifications", href: "/certifications", external: false },
   { label: "Testimonials", href: "/testimonials", external: false },
