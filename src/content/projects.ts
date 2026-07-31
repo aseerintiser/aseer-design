@@ -2662,12 +2662,30 @@ export const caseStudies: CaseStudy[] = [
       duration: "2023",
       tools: "Online survey (Google Forms), descriptive statistics",
     },
-    // No thumbnail: the source material explicitly excludes adding a
-    // hero/cover image (the original article's cover was a licensed
-    // stock photo, not original material), and none of the four chart
-    // assets crop into a legible 4:3 card -- same reasoning as other
-    // projects in this file that intentionally keep the generated
-    // ProjectVisual placeholder rather than force a bad crop.
+    // Custom editorial cover, purpose-built for this card (later
+    // milestone): none of the four research charts crop into a legible
+    // 4:3 thumbnail, and the source material explicitly excludes an
+    // in-body hero/cover image (the original article's cover was a
+    // licensed stock photo). A hand-built SVG (public/game-difficulty/
+    // thumbnail.svg, ~5KB, kept alongside as the editable source)
+    // combines a game-controller silhouette with a difficulty/player-
+    // type bar chart and a 28-dot survey-respondent field -- one
+    // cohesive visual, built entirely from this file's own design
+    // tokens (dark-mode bg/text values, --color-accent, the same
+    // feTurbulence grain technique globals.css already uses site-wide)
+    // rather than a generic stock or AI-generated graphic. Shipped as a
+    // rasterized PNG (2000x1500, optimized ~180KB) rather than the raw
+    // SVG: next/image's built-in optimizer rejects local SVGs by
+    // default (a Next.js security default, not a bug), and every other
+    // thumbnail in this file is already a raster asset -- PNG keeps
+    // this one consistent with that existing convention instead of
+    // requiring a next.config.ts change for a single image.
+    thumbnail: {
+      src: "/game-difficulty/thumbnail.png",
+      width: 2000,
+      height: 1500,
+      alt: "Editorial illustration: a game controller silhouette beside an ascending bar chart with player-type markers, over a dark gradient with a scattered field of 28 dots representing survey respondents.",
+    },
     body: gameDifficultyBody,
   },
 ];
