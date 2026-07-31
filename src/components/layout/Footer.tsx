@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { site } from "@/content/site";
 import { Container } from "./Container";
 
@@ -42,6 +43,24 @@ export function Footer() {
 
           <div className="flex flex-col items-start gap-4 md:items-end">
             <ul className="flex gap-6">
+              {/* Resume Strategy milestone (Resume-Strategy-Research.md,
+                  Option D): the Professional CV's one other prominent,
+                  generally-discoverable placement besides the About
+                  page -- a footer link, not a primary-nav item, matching
+                  the one closely-analogous real example found in
+                  research (a UX designer's footer nav row). Internal
+                  link to /resume rather than straight to the Google
+                  Drive file, so the page's own status line and Academic
+                  CV cross-link (see app/resume/page.tsx) are part of
+                  the path, not skipped. */}
+              <li>
+                <Link
+                  href="/resume"
+                  className="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
+                >
+                  Resume
+                </Link>
+              </li>
               {site.socials.map((social) => (
                 <li key={social.href}>
                   <a

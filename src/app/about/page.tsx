@@ -83,9 +83,25 @@ export default function AboutPage() {
               <Text key={paragraphIndex}>{paragraph}</Text>
             ))}
           </div>
+          {/* Resume Strategy milestone (Resume-Strategy-Research.md,
+              Option D): this was rendered as plain, unlinked, italic
+              "pending confirmation" text while the two conflicting
+              live-site resume links were unresolved. Aseer has since
+              confirmed the correct file (site.resumeUrl), so this is now
+              a real link -- one of the Professional CV's two prominent
+              placements (the other being Footer.tsx), per the research
+              finding that a resume link is more commonly found inline in
+              About-page prose than as a top-level nav item. */}
           {"linkText" in section && section.linkText && (
-            <Text muted size="small" className="mt-4 italic">
-              {section.linkText} (link pending confirmation — see resume page)
+            <Text muted size="small" className="mt-4">
+              <a
+                href={site.resumeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="font-medium text-[var(--color-accent)] underline underline-offset-4"
+              >
+                {section.linkText}
+              </a>
             </Text>
           )}
           {"image" in section && section.image && (

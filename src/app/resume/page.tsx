@@ -12,12 +12,19 @@ export const metadata: Metadata = {
 
 /**
  * Blueprint Part 3: frictionless one-click download, plus a light
- * on-page summary. The download itself is intentionally left
- * unresolved rather than pointing at either of the two conflicting
- * live resume links (Master_Portfolio_Knowledge_Base.md Section 2.7,
- * "two different Google Drive file IDs... worth confirming which is
- * current"); wiring a single, correct file is a Milestone 0 content
- * decision, not a foundation-layer one.
+ * on-page summary.
+ *
+ * Resume Strategy milestone (Resume-Strategy-Research.md, Option D):
+ * the two-conflicting-links problem this page used to work around
+ * (Master_Portfolio_Knowledge_Base.md Section 2.7) is resolved -- Aseer
+ * confirmed site.resumeUrl directly, replacing the disabled placeholder
+ * button below. This page is also no longer linked from the primary
+ * nav (see the nav array in content/site.ts); it's reached via
+ * Footer.tsx and the About page's "View my resume" line instead, per
+ * the research finding that resume links are more commonly a
+ * footer/inline convention than a top-level nav destination. A quiet
+ * cross-link to the Academic CV is included below for anyone who
+ * lands here specifically looking for that instead.
  */
 export default function ResumePage() {
   return (
@@ -34,15 +41,8 @@ export default function ResumePage() {
       </Text>
 
       <div className="mt-8">
-        {/* A real disabled <button>, not a Link with aria-disabled: an
-            anchor's default navigation still fires on click or Enter
-            regardless of aria-disabled, so the previous version silently
-            sent visitors to "#" instead of actually doing nothing. The
-            single resume link is still unresolved between two conflicting
-            live URLs (see Master_Portfolio_Knowledge_Base.md 2.7); this
-            stays genuinely inert until that's settled. */}
-        <Button type="button" disabled title="Resume link pending confirmation">
-          Download PDF (link pending)
+        <Button href={site.resumeUrl} target="_blank" rel="noreferrer">
+          Download Resume (PDF)
         </Button>
       </div>
 
@@ -56,6 +56,19 @@ export default function ResumePage() {
           ]}
         />
       </div>
+
+      <Text muted size="small" className="mt-8">
+        Looking for a fuller academic record instead?{" "}
+        <a
+          href={site.academicCvUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="font-medium text-[var(--color-accent)] underline underline-offset-4"
+        >
+          View my academic CV
+        </a>
+        .
+      </Text>
     </Section>
   );
 }

@@ -48,14 +48,24 @@
 //    own direction that recruiters should see it quickly -- just grouped
 //    with the other "here's what I can do" items instead of interrupting
 //    Work and Research.
-// 2. Identity (About Me, Resume) -- who's behind the work and the quick
-//    facts/download, for a visitor who's now interested enough to want
-//    that context.
+// 2. Identity (About Me) -- who's behind the work, for a visitor who's
+//    now interested enough to want that context.
 // 3. Supporting credibility (Testimonials, Certifications, Articles) --
 //    social proof, credentials, and writing, useful but not what closes
 //    the case on their own. Articles goes last: least time-sensitive,
 //    and the one item here that isn't really about Aseer's own project
 //    work.
+//
+// Resume Strategy milestone (Resume-Strategy-Research.md, Option D,
+// approved by Aseer): "Resume" removed from this primary nav entirely.
+// Research into real personal sites (not just advice articles) found
+// resume/CV links placed in a footer and/or inline in prose far more
+// often than as a top-level nav item competing with the actual case
+// studies -- a nav item literally labeled "Resume" implies it's
+// equally important evidence, which undersells the work itself. The
+// Professional CV now lives in Footer.tsx and the About page instead
+// (see site.resumeUrl below); the /resume page itself still exists and
+// is still in the sitemap, just no longer nav-linked.
 export const nav = [
   { label: "Work", href: "/work", external: false },
   { label: "Research", href: "/research", external: false },
@@ -71,15 +81,6 @@ export const nav = [
   // itself links out to the full interactive prototype at the bottom.
   { label: "Design Showcase", href: "/design-showcase", external: false },
   { label: "About Me", href: "/about", external: false },
-  // TODO(resume-link): the live site's nav "Resume" link and the
-  // About page's "View my resume" link point to two *different* Google
-  // Drive file IDs (1zwDpl7iUsqWKVv07J2ZsyUVxeSb2hCK8 vs
-  // 1kPFkVVXdec47KeCuIc3eO-RXJlzp-qvz), confirming the conflict already
-  // flagged in Master_Portfolio_Knowledge_Base.md Section 2.7. Rather
-  // than guess which is current, this keeps pointing at the internal
-  // /resume page (its own disabled-pending-confirmation state), instead
-  // of silently picking one external link.
-  { label: "Resume", href: "/resume", external: false },
   { label: "Testimonials", href: "/testimonials", external: false },
   { label: "Certifications", href: "/certifications", external: false },
   { label: "Articles", href: "/articles", external: false },
@@ -166,6 +167,25 @@ export const site = {
   // the same fact and needed to match the other three.
   heroProofPoint:
     "Convay, a video conferencing platform trusted by governments and global teams in 45+ countries.",
+  // Resume Strategy milestone (Resume-Strategy-Research.md, Option D):
+  // two separate documents for two separate audiences, confirmed
+  // directly by Aseer (replacing the two *conflicting* live-site links
+  // for the same document that this project could never resolve on its
+  // own -- see the removed TODO(resume-link) note that used to sit on
+  // the nav array above). resumeUrl is the one surfaced prominently
+  // (Footer.tsx, the About page's "View my resume" line, and the
+  // /resume page's download button) since Aseer's stated primary
+  // audience is industry. academicCvUrl is surfaced once, quietly, on
+  // the Research index page -- near the content that makes it relevant,
+  // not given equal top-level billing -- per the research finding that
+  // no real personal site showing both documents with equal prominence
+  // could be found, and that doing so risked reading as an unresolved
+  // identity split right at the moment a visitor is evaluating
+  // credentials.
+  resumeUrl:
+    "https://drive.google.com/file/d/14UctoOJTXeNWzWLhRxxFcBzXCO2jEnNM/view?usp=drive_link",
+  academicCvUrl:
+    "https://drive.google.com/file/d/15Z0_jcPJy7dOHw2uERxdm3mpMJ8TRQ1D/view?usp=drive_link",
   // Homepage Finalization milestone: rewritten from two terse,
   // resume-fragment-style sentences ("M.Sc. ... completing 2026. Open to
   // relocation.") into one sentence a person would actually say, same
