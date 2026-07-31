@@ -2404,13 +2404,32 @@ export const caseStudies: CaseStudy[] = [
     // revisiting in a dedicated pass, not as a side effect of a content
     // migration commit.
     //
-    // No `thumbnail` (Milestone 3): unlike the other five migrated case
-    // studies, this one doesn't open with a clean 4:3 hero shot -- its
-    // first imageRow is six assorted, irregularly-sized diagrams (a
-    // 647x245 banner, several tall portrait crops). Forcing any one of
-    // those into ProjectCard's 4:3 media block would crop it badly.
-    // Keeps the generated ProjectVisual placeholder instead, which is
-    // the more honest choice than a bad crop of a real asset.
+    // Thumbnail Refresh milestone: previously no `thumbnail` (Milestone 3
+    // note, kept below for history) -- the case study's own first
+    // imageRow is six assorted, irregularly-sized diagrams that don't
+    // crop cleanly into a 4:3 card. A screen recording sidesteps that
+    // problem entirely instead of forcing a bad crop: it's a scroll
+    // through the actual design-system tokens (color, spacing, shadow
+    // scales) rather than any single irregular diagram. Trimmed ~0.8s off
+    // each end of the source clip (a fade to/from a blank frame) so the
+    // loop opens and closes on real content instead of an empty
+    // rectangle; re-encoded from a 25fps/1600x1200 ~48MB raw export to
+    // 1100px-wide H.264 (see ProjectCard.tsx for why video over GIF).
+    //
+    // Prior note: unlike the other five migrated case studies, this one
+    // doesn't open with a clean 4:3 hero shot -- its first imageRow is
+    // six assorted, irregularly-sized diagrams (a 647x245 banner, several
+    // tall portrait crops). Forcing any one of those into ProjectCard's
+    // 4:3 media block would crop it badly. Kept the generated
+    // ProjectVisual placeholder instead, which was the more honest choice
+    // than a bad crop of a real asset -- until this real screen
+    // recording became available.
+    thumbnail: {
+      src: "/convay-design-system/thumbnail.mp4",
+      width: 1100,
+      height: 826,
+      alt: "Scrolling through Convay's design system: color tokens, spacing scale, and shadow values in Figma.",
+    },
     contentStatus: "complete",
     oneLineScope:
       "Convay's fast growth created a need for consistency and scalability, but the platform had no design system in place. As the only UX designer assigned to the task, I took the initiative to create Convay's first design system from scratch. With guidance from the product team and close collaboration with developers, I built a scalable foundation defining colors, typography, spacing, components, and patterns. This design system unified the platform's visual language across light and dark themes and improved team workflows—making handoffs easier, updates faster, and new features more consistent. Today, it supports Convay's core platform and upcoming features across web and mobile, enabling the product to scale with confidence.",
@@ -2555,18 +2574,20 @@ export const caseStudies: CaseStudy[] = [
       duration: "2025 – 2026",
       tools: "Figma (prototype), Atlas.ti",
     },
-    // Milestone D (revised): a real thumbnail, cropped tighter than the
-    // full hero.jpg used in the case study body (top portion of Appendix
-    // Figure F1: logo + name + tagline, cropped to 4:3 for ProjectCard's
-    // media block) so the homepage's "Featured research" card finally
-    // shows the actual product instead of the generated ProjectVisual
-    // gradient -- the same fix already applied to 5 of 6 Work case
-    // studies in Milestone 3.
+    // Thumbnail Refresh milestone: swapped the static landing-screen crop
+    // for a real screen recording of Lumi in use (the widget opening,
+    // topic buttons, a live conversation) -- motion that shows the
+    // product actually working, not just its splash screen. Source clip
+    // was a 25fps/1600x1200, ~40MB raw export; re-encoded to 1100px-wide
+    // H.264 (see ProjectCard.tsx for why video instead of a native GIF).
+    // 723x542 kept as the width/height metadata (matches the video's 4:3
+    // aspect; ProjectCard only reads these for the aspect-ratio math, not
+    // for actually sizing a <video> element).
     thumbnail: {
-      src: "/lumi/thumbnail.jpg",
+      src: "/lumi/thumbnail.mp4",
       width: 723,
       height: 542,
-      alt: "The Lumi landing screen: logo, name, and tagline (\"Your guide to student life in Finland\").",
+      alt: "Lumi in use: the chat widget opening, topic buttons, and a live conversation answering a student's question about healthcare in Finland.",
     },
     body: lumiBody,
   },

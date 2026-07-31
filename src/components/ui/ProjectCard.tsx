@@ -77,15 +77,42 @@ export function ProjectCard({ project, className, showFlagshipBadge = true }: Pr
       >
         <div className="aspect-[4/3] w-full overflow-hidden">
           {project.thumbnail ? (
-            <Image
-              src={project.thumbnail.src}
-              width={project.thumbnail.width}
-              height={project.thumbnail.height}
-              alt={project.thumbnail.alt}
-              unoptimized={project.thumbnail.src.endsWith(".gif")}
-              className="h-full w-full object-cover transition-transform duration-[600ms] ease-[var(--ease-standard)] group-hover:scale-[1.06]"
-              sizes="(min-width: 1024px) 45vw, 90vw"
-            />
+            project.thumbnail.src.endsWith(".mp4") ? (
+              // Thumbnail Refresh milestone: a few case studies' opening
+              // shots are screen recordings, not static screenshots --
+              // motion (a scrolling design-token panel, a chat widget
+              // cycling through prompts) is the whole point of the asset.
+              // A native looping .gif could show the same motion, but at
+              // these resolutions/durations a GIF is a genuinely
+              // enormous file (the raw source clips were 24-48MB each)
+              // for zero visual benefit over video; muted/autoplay/loop
+              // video is visually indistinguishable from a looping GIF
+              // to anyone looking at the card, at roughly 1-3MB instead
+              // of tens of MB. Same object-cover/hover-scale treatment as
+              // the Image branch below so it's indistinguishable from a
+              // static or GIF thumbnail in layout, radius, and hover
+              // behavior -- only the underlying element differs.
+              <video
+                src={project.thumbnail.src}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                aria-label={project.thumbnail.alt}
+                className="h-full w-full object-cover transition-transform duration-[600ms] ease-[var(--ease-standard)] group-hover:scale-[1.06]"
+              />
+            ) : (
+              <Image
+                src={project.thumbnail.src}
+                width={project.thumbnail.width}
+                height={project.thumbnail.height}
+                alt={project.thumbnail.alt}
+                unoptimized={project.thumbnail.src.endsWith(".gif")}
+                className="h-full w-full object-cover transition-transform duration-[600ms] ease-[var(--ease-standard)] group-hover:scale-[1.06]"
+                sizes="(min-width: 1024px) 45vw, 90vw"
+              />
+            )
           ) : (
             <ProjectVisual
               seed={project.slug}
