@@ -99,14 +99,27 @@ export const about = {
         alt: "Aseer holding a camera",
       },
       quote: "I've filmed a sunset on three different continents and once edited a short film on a moving train.",
+      // A curated collage of stills from Aseer's own filmmaking work,
+      // the actual proof behind the paragraph and quote above it, shown
+      // full-width right before the tags and the link to see more.
+      wideImage: {
+        src: "/about/filmmaking-collage.png",
+        width: 1662,
+        height: 875,
+        alt: "A collage of stills from Aseer's short films and travel footage",
+      },
+      // Trimmed from 8 to 6: "Cinematography" duplicated "Filmmaking"
+      // and "FIFA" duplicated "Gaming" one line up: two tags doing the
+      // work of one each. Rendered before the button now, not after:
+      // a row of pills directly under a button read as one blurred
+      // group, same visual weight, no clear order. Tags as a closing
+      // texture, button as the section's one real action, reads
+      // cleaner than the other way around.
+      tags: ["Filmmaking", "Photography", "Travel", "Cricket", "Gaming", "Music"],
       externalLink: {
         text: "Watch my stories",
         href: "https://aseerniloy.wixsite.com/portfolio",
       },
-      // Trimmed from 8 to 6: "Cinematography" duplicated "Filmmaking"
-      // and "FIFA" duplicated "Gaming" one line up: two tags doing the
-      // work of one each.
-      tags: ["Filmmaking", "Photography", "Travel", "Cricket", "Gaming", "Music"],
     },
   ],
   closing:
