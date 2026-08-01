@@ -31,92 +31,88 @@ export default function HomePage() {
     <>
       {/* Hero. Homepage Finalization milestone: replaced the two-column
           7/5 split (text + large square portrait) with a single
-          typographic column. For a product design portfolio, a photo the
-          size of the headline was competing with the one thing the page
-          should be selling -- the work -- and benchmarked poorly against
-          personal sites from designers at Linear/Stripe/Vercel/Notion,
-          which rarely give a face equal visual weight to the headline on
-          their homepage. The portrait already exists on the About page
-          (about.topImages, three photos), so this isn't removing Aseer's
-          photo from the site, just from the one page where restraint
-          matters more. Reclaimed width goes to a confident, single-column
-          hero instead of being refilled with something else.
+          typographic column -- a photo the size of the headline competed
+          with the work itself, and benchmarked poorly against personal
+          sites from designers at Linear/Stripe/Vercel/Notion, which
+          rarely give a face equal visual weight to the headline. The
+          portrait still exists on the About page; this only restrains
+          the one page where restraint matters more. The eyebrow states
+          name + title directly, and the headline is still the one
+          kinetic-motion moment on the page (plays once, on load); the
+          bio/skills/CTAs render via the same 0.35s-delayed Reveal as
+          before so the whole hero reads as one coordinated entrance.
 
-          The eyebrow now states name + title directly (previously this
-          information only existed as a small nav wordmark and a
-          decorative "✦ ASEER ✦ RESEARCH & DESIGN" chip overlapping the
-          portrait's corner, which also used different terminology --
-          "Research & Design" -- than the site's title field used
-          everywhere else on the site). The headline is still the one
-          kinetic-motion moment on the page (plays once, on load, never
-          loops); everything else renders immediately or via the same
-          0.35s-delayed Reveal as before -- no animation gates a visitor's
-          access to real content.
-
-          Homepage Writing Finalization milestone: this wrapper was
-          max-w-4xl (896px), a hard cap independent of the Container it
-          sits in (which itself allows up to max-w-7xl / 1280px). On a
-          real 1400px+ viewport that left roughly a third of the
-          Container empty to the right of the text, with nothing else on
-          the page to balance it -- confirmed live, this is the "hero
-          only fills half the screen" issue flagged for this milestone.
-          Widened to max-w-6xl (1152px): meaningfully closes that gap
-          without going fully edge-to-edge, and without reintroducing a
-          second visual element (portrait, etc.) that the earlier
-          Homepage Finalization milestone deliberately removed. The bio
-          and skill-line rows below keep their own tighter
-          max-w-[var(--measure)] reading-width cap regardless, so this
-          only affects how much room the eyebrow and headline get. */}
+          Hero Composition & First Impression milestone (see
+          Hero-Composition-Review.md, Option C): two prior milestones
+          tuned this hero's width as a plain `max-w` cap (max-w-4xl, then
+          max-w-6xl) independent of the page's own 12-column Grid --
+          reasonable on its own, but it meant the gap between the hero's
+          text and the Container's right edge was whatever was left over
+          after a headline of a given length, not a chosen proportion.
+          Every section below the hero (track split, featured work)
+          already uses the shared Grid component with an explicit
+          col-span; the hero was the one section on the page that didn't.
+          Replacing the max-w wrapper with a Grid + explicit col-span
+          (4 of 4 on mobile, 6 of 8 on tablet, 8 of 12 on desktop, the
+          "controlled asymmetry" Grid.tsx's own comment calls for)
+          fixes that: the margin is now locked to the grid, so it reads
+          as a deliberate proportion at every breakpoint instead of an
+          accident of sentence length. The bio and skill-line rows still
+          cap at max-w-[var(--measure)] inside that column -- unrelated
+          problem, unrelated fix: that cap is about paragraph line length
+          staying readable, not about where the column itself sits. */}
       <Section density="open" as="section" className="overflow-visible">
-        <div className="max-w-6xl">
-          <Eyebrow>
-            {site.name} · {site.title}
-          </Eyebrow>
-          <Heading level={1} size="display" className="mt-3">
-            <KineticHeadline text={site.tagline} />
-          </Heading>
-          {/* The headline's word-stagger runs roughly 0.05-0.55s after
-              mount (see wordContainer/wordItem in lib/motion). Without a
-              delay here, the bio and CTAs would render instantly and sit
-              still for half a second next to a headline still animating
-              -- two disconnected timings in one hero. A single Reveal at
-              0.35s brings them in while the last word or two is still
-              settling, so the whole hero reads as one coordinated
-              entrance instead of "headline animation, then everything
-              else." */}
-          <Reveal delay={0.35}>
-            <div className="mt-6 max-w-[var(--measure)] space-y-4">
-              {site.bio.map((paragraph, index) => (
-                <Text key={index} size={index === 0 ? "lead" : "body"} muted={index > 0}>
-                  {renderInlineMarkdown(paragraph)}
-                </Text>
-              ))}
-            </div>
-            {/* Milestone 3: previously two bare paragraphs, visually
-                indistinguishable from any other muted text on the page --
-                easy to read as leftover copy rather than a considered
-                accent. A thin top rule sets this apart as its own quiet
-                strip, and uppercase/tracked type (the same treatment
-                Eyebrow uses elsewhere) reads as a deliberate label row
-                instead of two stray sentences. */}
-            <div className="mt-6 max-w-[var(--measure)] space-y-1.5 border-t border-[var(--color-border)] pt-4">
-              {site.skillLines.map((line) => (
-                <p
-                  key={line}
-                  className="text-xs font-medium tracking-wide text-[var(--color-text-muted)] uppercase"
-                >
-                  {line}
-                </p>
-              ))}
-            </div>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Button href="/work">View Work</Button>
-              <Button href="/research" variant="secondary">
-                View Research
-              </Button>
-            </div>
-          </Reveal>
-        </div>
+        <Grid>
+          <div className="col-span-4 md:col-span-6 lg:col-span-8">
+            <Eyebrow>
+              {site.name} · {site.title}
+            </Eyebrow>
+            <Heading level={1} size="display" className="mt-3">
+              <KineticHeadline text={site.tagline} />
+            </Heading>
+            {/* The headline's word-stagger runs roughly 0.05-0.55s after
+                mount (see wordContainer/wordItem in lib/motion). Without a
+                delay here, the bio and CTAs would render instantly and sit
+                still for half a second next to a headline still animating
+                -- two disconnected timings in one hero. A single Reveal at
+                0.35s brings them in while the last word or two is still
+                settling, so the whole hero reads as one coordinated
+                entrance instead of "headline animation, then everything
+                else." */}
+            <Reveal delay={0.35}>
+              <div className="mt-6 max-w-[var(--measure)] space-y-4">
+                {site.bio.map((paragraph, index) => (
+                  <Text key={index} size={index === 0 ? "lead" : "body"} muted={index > 0}>
+                    {renderInlineMarkdown(paragraph)}
+                  </Text>
+                ))}
+              </div>
+              {/* Milestone 3: previously two bare paragraphs, visually
+                  indistinguishable from any other muted text on the page --
+                  easy to read as leftover copy rather than a considered
+                  accent. A thin top rule sets this apart as its own quiet
+                  strip, and uppercase/tracked type (the same treatment
+                  Eyebrow uses elsewhere) reads as a deliberate label row
+                  instead of two stray sentences. */}
+              <div className="mt-6 max-w-[var(--measure)] space-y-1.5 border-t border-[var(--color-border)] pt-4">
+                {site.skillLines.map((line) => (
+                  <p
+                    key={line}
+                    className="text-xs font-medium tracking-wide text-[var(--color-text-muted)] uppercase"
+                  >
+                    {line}
+                  </p>
+                ))}
+              </div>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Button href="/work">View Work</Button>
+                <Button href="/research" variant="secondary">
+                  View Research
+                </Button>
+              </div>
+            </Reveal>
+          </div>
+        </Grid>
       </Section>
 
       {/* Track split. Blueprint Part 3: "not just two nav links but a
