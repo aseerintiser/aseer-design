@@ -99,43 +99,10 @@ export const about = {
         alt: "Aseer holding a camera",
       },
       quote: "I've filmed a sunset on three different continents and once edited a short film on a moving train.",
-      // A curated collage of stills from Aseer's own filmmaking work,
-      // the actual proof behind the paragraph and quote above it, shown
-      // full-width right before the link to the full reel.
-      wideImage: {
-        src: "/about/filmmaking-collage.png",
-        width: 1662,
-        height: 875,
-        alt: "A collage of stills from Aseer's short films and travel footage",
-      },
       externalLink: {
         text: "Watch my stories",
         href: "https://aseerniloy.wixsite.com/portfolio",
       },
-      // Three lifestyle photos, migrated from the old top-of-page block
-      // (Milestone 2) and moved here since they support this section's
-      // travel/outside-of-work narrative directly, instead of leading
-      // the page before a visitor has any context for them.
-      photoStrip: [
-        {
-          src: "https://framerusercontent.com/images/WB2c50eEvwiJ0Kdme0JYmKs5c.png",
-          width: 1563,
-          height: 1563,
-          alt: "A young man riding a bicycle",
-        },
-        {
-          src: "https://framerusercontent.com/images/5aSvwzp3nRXbQFLbiib7jb2NrJU.png",
-          width: 1920,
-          height: 1080,
-          alt: "A man skating",
-        },
-        {
-          src: "https://framerusercontent.com/images/jFMGJRhJI6nE4lRH1sjadQf98ks.png",
-          width: 2048,
-          height: 1536,
-          alt: "A boat surfing",
-        },
-      ],
       // Trimmed from 8 to 6: "Cinematography" duplicated "Filmmaking"
       // and "FIFA" duplicated "Gaming" one line up: two tags doing the
       // work of one each.

@@ -144,22 +144,6 @@ export default function AboutPage() {
               <PullQuote text={section.quote} />
             </div>
           )}
-          {/* Wide proof image (the filmmaking collage): comes after the
-              quote, since it's the visual evidence for the claim just
-              made, and right before the link inviting a visitor to see
-              more of it. */}
-          {"wideImage" in section && section.wideImage && (
-            <div className="mt-6 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]">
-              <Image
-                src={section.wideImage.src}
-                width={section.wideImage.width}
-                height={section.wideImage.height}
-                alt={section.wideImage.alt}
-                className="h-auto w-full"
-                sizes="(min-width: 672px) 42rem, 100vw"
-              />
-            </div>
-          )}
           {/* Upgraded from a plain inline text link with a trailing
               emoji to the same Button treatment used everywhere else on
               the site external links get real visual weight (matches
@@ -177,32 +161,6 @@ export default function AboutPage() {
                 {section.externalLink.text}
               </Button>
             </div>
-          )}
-          {/* Visual Polish milestone: three photos with different native
-              aspect ratios (square, 16:9, 4:3), so a shared aspect-ratio
-              container plus object-cover crops all three to a matched
-              strip instead of an uneven row. The grid's md tier is 8
-              columns, which 3 equal items can't divide evenly, so the
-              row stays a single stacked column through md and only
-              becomes 3-across at lg (12 / 3 = 4, divides cleanly). */}
-          {"photoStrip" in section && section.photoStrip && (
-            <Grid gap="md" className="mt-6">
-              {section.photoStrip.map((image) => (
-                <div
-                  key={image.src}
-                  className="col-span-4 aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] md:col-span-8 lg:col-span-4"
-                >
-                  <Image
-                    src={image.src}
-                    width={image.width}
-                    height={image.height}
-                    alt={image.alt}
-                    className="h-full w-full object-cover"
-                    sizes="(min-width: 1024px) 33vw, 100vw"
-                  />
-                </div>
-              ))}
-            </Grid>
           )}
           {"tags" in section && section.tags && (
             <ul className="mt-6 flex flex-wrap gap-2">
