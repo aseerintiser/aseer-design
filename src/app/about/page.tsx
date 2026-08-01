@@ -100,6 +100,29 @@ export default function AboutPage() {
               </a>
             </Text>
           )}
+          {/* Portrait-style photo (e.g. Aseer holding a camera): kept
+              small and inline, right after the paragraph it illustrates,
+              same treatment this field has always had. */}
+          {"image" in section && section.image && (
+            <div className="mt-6 max-w-xs overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]">
+              <Image
+                src={section.image.src}
+                width={section.image.width}
+                height={section.image.height}
+                alt={section.image.alt}
+                className="h-auto w-full"
+              />
+            </div>
+          )}
+          {"quote" in section && section.quote && (
+            <div className="mt-6">
+              <PullQuote text={section.quote} />
+            </div>
+          )}
+          {/* Wide proof image (the filmmaking collage): comes after the
+              quote, since it's the visual evidence for the claim just
+              made, and right before the link inviting a visitor to see
+              more of it. */}
           {"wideImage" in section && section.wideImage && (
             <div className="mt-6 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]">
               <Image
@@ -112,22 +135,23 @@ export default function AboutPage() {
               />
             </div>
           )}
-          {"quote" in section && section.quote && (
-            <div className="mt-6">
-              <PullQuote text={section.quote} />
-            </div>
-          )}
+          {/* Upgraded from a plain inline text link with a trailing
+              emoji to the same Button treatment used everywhere else on
+              the site external links get real visual weight (matches
+              the homepage/hero CTA pattern) instead of reading like an
+              afterthought under a hobby paragraph. */}
           {"externalLink" in section && section.externalLink && (
-            <p className="mt-4">
-              <a
+            <div className="mt-6">
+              <Button
                 href={section.externalLink.href}
                 target="_blank"
                 rel="noreferrer"
-                className="text-sm font-medium text-[var(--color-accent)] underline underline-offset-4"
+                variant="secondary"
+                size="sm"
               >
-                {section.externalLink.text} 📷
-              </a>
-            </p>
+                {section.externalLink.text}
+              </Button>
+            </div>
           )}
           {/* Visual Polish milestone: three photos with different native
               aspect ratios (square, 16:9, 4:3), so a shared aspect-ratio

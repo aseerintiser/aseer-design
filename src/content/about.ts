@@ -68,21 +68,28 @@ export const about = {
       paragraphs: [
         "Outside of work, I'm usually behind a camera. Filmmaking is where I slow down and notice things I'd otherwise miss: light, timing, the small decisions that make a moment feel real instead of staged. That habit of noticing carries over into design more than people expect.",
       ],
-      // The new wide still, a curated collage of frames from Aseer's own
-      // filmmaking work, replaces the old single unlabeled portrait
-      // image here (about.ts previously had alt: "" on this field,
-      // itself a sign it was never fully finished). This is the one
-      // asset in the whole site that actually demonstrates the
-      // filmmaking claim rather than just stating it.
+      // Restored: the original portrait-style photo of Aseer holding a
+      // camera (present since Milestone 2, briefly dropped during the
+      // About Page Rebuild milestone by mistake). Sits right after the
+      // paragraph, before the quote, same position it always had.
+      image: {
+        src: "https://framerusercontent.com/images/wU56WDpraknSWD3JVfLhEmFXQI.png",
+        width: 613,
+        height: 721,
+        alt: "Aseer holding a camera",
+      },
+      quote: "I've filmed a sunset on three different continents and once edited a short film on a moving train.",
+      // A curated collage of stills from Aseer's own filmmaking work,
+      // the actual proof behind the paragraph and quote above it, shown
+      // full-width right before the link to the full reel.
       wideImage: {
         src: "/about/filmmaking-collage.png",
         width: 1662,
         height: 875,
         alt: "A collage of stills from Aseer's short films and travel footage",
       },
-      quote: "I've filmed a sunset on three different continents and once edited a short film on a moving train.",
       externalLink: {
-        text: "Watch My Stories",
+        text: "Watch my full reel",
         href: "https://aseerniloy.wixsite.com/portfolio",
       },
       // Three lifestyle photos, migrated from the old top-of-page block
