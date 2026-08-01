@@ -144,51 +144,11 @@ export default function AboutPage() {
               <PullQuote text={section.quote} />
             </div>
           )}
-          {/* Wide proof image (the filmmaking collage): comes right
-              after the quote, since it's the visual evidence for the
-              claim just made. */}
-          {"wideImage" in section && section.wideImage && (
-            <div className="mt-6 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]">
-              <Image
-                src={section.wideImage.src}
-                width={section.wideImage.width}
-                height={section.wideImage.height}
-                alt={section.wideImage.alt}
-                className="h-auto w-full"
-                sizes="(min-width: 672px) 42rem, 100vw"
-              />
-            </div>
-          )}
-          {/* Tags now sit before the button, with their own small label,
-              instead of directly beneath it. A row of bordered pills
-              stacked right under a bordered button used to read as one
-              blurred group at a glance; the label gives the pills their
-              own identity, and the button, now last, reads as the
-              section's one real action instead of getting lost above
-              a list. */}
-          {"tags" in section && section.tags && (
-            <div className="mt-6">
-              <Text size="small" muted className="text-xs font-medium tracking-wide uppercase">
-                Also into
-              </Text>
-              <ul className="mt-3 flex flex-wrap gap-2">
-                {section.tags.map((tag) => (
-                  <li
-                    key={tag}
-                    className="rounded-[var(--radius-full)] bg-[var(--color-bg-subtle)] px-3 py-1 text-sm text-[var(--color-text-muted)]"
-                  >
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
           {/* Upgraded from a plain inline text link with a trailing
               emoji to the same Button treatment used everywhere else on
               the site external links get real visual weight (matches
               the homepage/hero CTA pattern) instead of reading like an
-              afterthought under a hobby paragraph. Last element in the
-              section now, its natural closing action. */}
+              afterthought under a hobby paragraph. */}
           {"externalLink" in section && section.externalLink && (
             <div className="mt-6">
               <Button
@@ -201,6 +161,18 @@ export default function AboutPage() {
                 {section.externalLink.text}
               </Button>
             </div>
+          )}
+          {"tags" in section && section.tags && (
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {section.tags.map((tag) => (
+                <li
+                  key={tag}
+                  className="rounded-[var(--radius-full)] border border-[var(--color-border)] px-3 py-1 text-sm text-[var(--color-text-muted)]"
+                >
+                  {tag}
+                </li>
+              ))}
+            </ul>
           )}
         </Section>
       ))}
