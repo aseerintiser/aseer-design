@@ -48,6 +48,26 @@ export const about = {
         "Software engineering taught me how systems break. What pulled me toward design was realizing that, most of the time, the system wasn't actually the problem. The people using it were being misunderstood instead. That's the short version of why I went back for a master's in Human-Technology Interaction instead of staying purely technical.",
         "In practice, that shows up as an order of operations more than a specific skill: research comes before interface decisions, not after. At Convay, that meant sitting close to research and engineering rather than keeping them in separate lanes, building design systems that developers could actually implement, and testing ideas with real users before assuming I already knew the answer.",
       ],
+      // Two real moments from that research practice, not staged: sorting
+      // findings into themes on a wall (affinity mapping, a core HCI
+      // method) and a human-robot interaction workshop. Placed here,
+      // early in the page, because they're evidence for the paragraph
+      // above rather than personal/hobby photos, so they belong with the
+      // research claim, not down in "When I'm Not Designing".
+      researchPhotos: [
+        {
+          src: "/about/affinity-mapping.png",
+          width: 640,
+          height: 480,
+          alt: "Aseer doing affinity mapping, sorting research findings on a wall of sticky notes",
+        },
+        {
+          src: "/about/hci-robots.png",
+          width: 640,
+          height: 360,
+          alt: "Aseer with two social robots during a human-robot interaction workshop",
+        },
+      ],
       linkText: "View my resume",
     },
     {
@@ -89,7 +109,7 @@ export const about = {
         alt: "A collage of stills from Aseer's short films and travel footage",
       },
       externalLink: {
-        text: "Watch my full reel",
+        text: "Watch my stories",
         href: "https://aseerniloy.wixsite.com/portfolio",
       },
       // Three lifestyle photos, migrated from the old top-of-page block

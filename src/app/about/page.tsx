@@ -83,6 +83,31 @@ export default function AboutPage() {
               <Text key={paragraphIndex}>{paragraph}</Text>
             ))}
           </div>
+          {/* Two real research photos (affinity mapping, an HCI robot
+              workshop): placed as direct evidence for the paragraph
+              above, not decoration, so they sit here rather than in the
+              "When I'm Not Designing" section further down the page.
+              Two items divide evenly at every breakpoint (4/2, 8/2,
+              12/2), so no stack-until-lg workaround is needed here. */}
+          {"researchPhotos" in section && section.researchPhotos && (
+            <Grid gap="md" className="mt-6">
+              {section.researchPhotos.map((image) => (
+                <div
+                  key={image.src}
+                  className="col-span-4 aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] md:col-span-4 lg:col-span-6"
+                >
+                  <Image
+                    src={image.src}
+                    width={image.width}
+                    height={image.height}
+                    alt={image.alt}
+                    className="h-full w-full object-cover"
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                  />
+                </div>
+              ))}
+            </Grid>
+          )}
           {/* Resume Strategy milestone (Resume-Strategy-Research.md,
               Option D): one of the Professional CV's two prominent
               placements (the other being Footer.tsx), per the research
