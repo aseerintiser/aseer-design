@@ -2507,7 +2507,7 @@ export const caseStudies: CaseStudy[] = [
     meta: {
       role: "To be confirmed",
       team: "To be confirmed",
-      duration: "To be confirmed",
+      duration: "Jan 2025 – May 2025",
       tools: "To be confirmed",
     },
     liveMeta: {
