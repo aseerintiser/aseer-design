@@ -1,95 +1,120 @@
 /**
- * About page content, migrated verbatim from the live aseer.design
- * /about-me page (Milestone 2). Certifications, previously a condensed
- * placeholder section on this page, now has its own dedicated page
- * (/certifications) to match the live site's own nav structure -- the
- * live site has never combined the two.
+ * About page content.
+ *
+ * About Page Rebuild milestone: the previous version of this file was
+ * migrated verbatim from the live aseer.design /about-me page
+ * (Milestone 2) and had never been reconsidered since, unlike the rest
+ * of the site, which had been through several rounds of review by this
+ * point. It read as five separate resume-style sections ("Who I Am",
+ * "What I Do Best", "What Drives Me") that mostly restated the same two
+ * or three facts already stated on the homepage (Software Engineering
+ * background, HTI Master's, Convay), plus a top block of three lifestyle
+ * photos with no clear connection to anything else on the page.
+ *
+ * Rewritten as one narrative: the engineering-to-design path is the
+ * throughline the homepage doesn't have room for, "What Drives Me" and
+ * "What I'm Exploring Now" are grounded in specific, already-documented
+ * facts (the colorblindness/accessibility connection, the trust
+ * question Lumi's case study is actually about) instead of generic
+ * claims, and "Who I Am" + "What I Do Best" are merged into one section
+ * ("How I Got Here") since they were answering the same question. The
+ * three original lifestyle photos move down to sit with the filmmaking
+ * section they actually support, rather than leading the page before
+ * any of that context exists. A real portrait (site.portrait, unused
+ * since the Homepage Finalization milestone deliberately kept it off
+ * the homepage) now runs in the hero instead, since a page titled
+ * "About" is the one place on this site where a photo of Aseer
+ * competing for attention with the headline is the right call, not the
+ * wrong one.
  */
 
 export const about = {
-  heading: "Hello, I'm Aseer, a problem-solver by heart, a designer by choice.",
-  // Three lifestyle photos shown near the top of the live page.
-  topImages: [
-    {
-      src: "https://framerusercontent.com/images/WB2c50eEvwiJ0Kdme0JYmKs5c.png",
-      width: 1563,
-      height: 1563,
-      alt: "A young man riding a bicycle",
-    },
-    {
-      src: "https://framerusercontent.com/images/5aSvwzp3nRXbQFLbiib7jb2NrJU.png",
-      width: 1920,
-      height: 1080,
-      alt: "A man skating",
-    },
-    {
-      src: "https://framerusercontent.com/images/jFMGJRhJI6nE4lRH1sjadQf98ks.png",
-      width: 2048,
-      height: 1536,
-      alt: "A boat surfing",
-    },
-  ],
+  heading: "I'm Aseer. I came to design from software engineering, not the other way around.",
+  intro:
+    "That order still shows. I want to understand how something works, and who it's for, before I try to make it better, whether that's a product, a research question, or a short film.",
+  // Reuses site.portrait (content/site.ts): a real photo of Aseer,
+  // deliberately kept off the homepage so it wouldn't compete with the
+  // work there, but reserved for exactly this page instead.
+  portrait: {
+    src: "https://framerusercontent.com/images/2bZSUdqkPs4VGBtGfwyuSAZLP4.png",
+    width: 1563,
+    height: 1563,
+    alt: "Portrait of Md Aseer Intiser",
+  },
   sections: [
     {
-      heading: "Who I Am",
+      heading: "How I Got Here",
       paragraphs: [
-        "I'm Aseer, a UX and Product Designer with a background in Software Engineering and a master's degree in Human-Technology Interaction.",
-        "I specialize in UX research, product strategy, user psychology, and usability testing to design digital experiences that are intuitive, accessible, and scalable.",
+        "Software engineering taught me how systems break. What pulled me toward design was realizing that, most of the time, the system wasn't actually the problem. The people using it were being misunderstood instead. That's the short version of why I went back for a master's in Human-Technology Interaction instead of staying purely technical.",
+        "In practice, that shows up as an order of operations more than a specific skill: research comes before interface decisions, not after. At Convay, that meant sitting close to research and engineering rather than keeping them in separate lanes, building design systems that developers could actually implement, and testing ideas with real users before assuming I already knew the answer.",
       ],
-      // TODO(resume-link): this is the *second* of the two conflicting
-      // Google Drive resume links found during migration -- see the
-      // nav-level TODO in content/site.ts. Left unlinked here (plain
-      // text) rather than pointed at either file until that's resolved.
       linkText: "View my resume",
-    },
-    {
-      heading: "What I Do Best",
-      paragraphs: [
-        "My work combines design thinking with technical insight. I've built design systems from scratch, collaborated closely with developers, and worked on AI-driven and SaaS products that aim to solve real-world problems.",
-        "I enjoy simplifying complexity through user-centered design and crafting systems that grow with the product.",
-      ],
     },
     {
       heading: "What Drives Me",
       paragraphs: [
-        "What makes my approach unique is my understanding of both people and technology.",
-        "I care deeply about accessibility because I experience color blindness myself. That personal lens helps me design more inclusive solutions for a wider range of users.",
+        "I care about trust, probably because so much of what I design now involves AI, and AI is exactly the kind of technology people are right to be cautious about. I'd rather build something that's honest about what it can and can't do than something that oversells itself to look impressive in a demo.",
+        "I also design with accessibility in mind because I experience it firsthand. I'm colorblind, so the parts of an interface that quietly fail (a status shown only in color, a chart with no pattern behind the palette) aren't abstract edge cases to me. They're things I actually run into.",
       ],
     },
     {
       heading: "What I'm Exploring Now",
       paragraphs: [
-        "Right now, I'm diving deeper into the intersection of AI and UX, exploring how emerging technologies can improve the way we interact with products.",
-        "I'm also curious about how storytelling and psychology influence user behavior and decision-making in digital spaces.",
+        "Right now I'm interested in a fairly specific question: how much people should trust an AI system, and how design can help them calibrate that instead of defaulting to blind trust or blanket suspicion. That question came out of Lumi, a conversational AI project I researched and designed for public services, and it's the thread I want to keep pulling on: in a PhD program eventually, or in an industry research role that takes it just as seriously.",
       ],
     },
     {
       heading: "When I'm Not Designing",
       paragraphs: [
-        "When I'm not designing, you'll find me behind a camera, capturing fleeting moments of light and silence. Filmmaking isn't just a hobby, it's how I slow down, observe, and tell stories without saying a word.",
+        "Outside of work, I'm usually behind a camera. Filmmaking is where I slow down and notice things I'd otherwise miss: light, timing, the small decisions that make a moment feel real instead of staged. That habit of noticing carries over into design more than people expect.",
       ],
-      image: {
-        src: "https://framerusercontent.com/images/wU56WDpraknSWD3JVfLhEmFXQI.png",
-        width: 613,
-        height: 721,
-        alt: "",
+      // The new wide still, a curated collage of frames from Aseer's own
+      // filmmaking work, replaces the old single unlabeled portrait
+      // image here (about.ts previously had alt: "" on this field,
+      // itself a sign it was never fully finished). This is the one
+      // asset in the whole site that actually demonstrates the
+      // filmmaking claim rather than just stating it.
+      wideImage: {
+        src: "/about/filmmaking-collage.png",
+        width: 1662,
+        height: 875,
+        alt: "A collage of stills from Aseer's short films and travel footage",
       },
-      quote:
-        "I don't just design screens, I've filmed a sunset on three different continents and once edited a short film in a moving train.",
+      quote: "I've filmed a sunset on three different continents and once edited a short film on a moving train.",
       externalLink: {
         text: "Watch My Stories",
         href: "https://aseerniloy.wixsite.com/portfolio",
       },
-      tags: [
-        "Cinematography",
-        "Filmmaking",
-        "Travel",
-        "Cricket",
-        "Photography",
-        "Music",
-        "Gaming",
-        "FIFA",
+      // Three lifestyle photos, migrated from the old top-of-page block
+      // (Milestone 2) and moved here since they support this section's
+      // travel/outside-of-work narrative directly, instead of leading
+      // the page before a visitor has any context for them.
+      photoStrip: [
+        {
+          src: "https://framerusercontent.com/images/WB2c50eEvwiJ0Kdme0JYmKs5c.png",
+          width: 1563,
+          height: 1563,
+          alt: "A young man riding a bicycle",
+        },
+        {
+          src: "https://framerusercontent.com/images/5aSvwzp3nRXbQFLbiib7jb2NrJU.png",
+          width: 1920,
+          height: 1080,
+          alt: "A man skating",
+        },
+        {
+          src: "https://framerusercontent.com/images/jFMGJRhJI6nE4lRH1sjadQf98ks.png",
+          width: 2048,
+          height: 1536,
+          alt: "A boat surfing",
+        },
       ],
+      // Trimmed from 8 to 6: "Cinematography" duplicated "Filmmaking"
+      // and "FIFA" duplicated "Gaming" one line up: two tags doing the
+      // work of one each.
+      tags: ["Filmmaking", "Photography", "Travel", "Cricket", "Gaming", "Music"],
     },
   ],
+  closing:
+    "If any of this sounds like the kind of person you'd want on a project, the work is the better place to look next.",
 } as const;

@@ -4,6 +4,7 @@ import { Section } from "@/components/layout/Section";
 import { Grid } from "@/components/layout/Grid";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
+import { Button } from "@/components/ui/Button";
 import { PullQuote } from "@/components/ui/PullQuote";
 import { site } from "@/content/site";
 import { about } from "@/content/about";
@@ -13,48 +14,47 @@ export const metadata: Metadata = {
 };
 
 /**
- * Milestone 2: content migrated verbatim from the live aseer.design
- * /about-me page (content/about.ts). Certifications, previously a
- * condensed placeholder section here, now lives on its own
- * /certifications page instead, matching the live site's actual nav
- * structure rather than this project's earlier placeholder guess at it.
+ * About Page Rebuild milestone: full structural and content rewrite
+ * (see the header comment in content/about.ts for the reasoning). Kept
+ * the same layout primitives and section-alternation pattern the rest
+ * of the site already uses (Section/Grid/Heading/Text, dark-tone
+ * alternation between sections) rather than introducing anything new,
+ * since the goal was for this page to read as one more page in the
+ * same site, not a redesign of its own.
  */
 export default function AboutPage() {
   return (
     <>
+      {/* Hero: heading + intro paragraph alongside a real portrait.
+          site.portrait was deliberately kept off the homepage
+          (Homepage Finalization milestone: "a photo the size of the
+          headline competed with the work itself") -- this is the page
+          that photo was held back for. Kept deliberately narrower than
+          the text column (5 of 12 at lg, not an even split) so it reads
+          as a supporting presence, not a second headline. */}
       <Section density="open">
-        <Heading level={1} size="display" className="max-w-3xl">
-          {about.heading}
-        </Heading>
-        {/* Visual Polish milestone: two fixes. (1) These three photos have
-            different native aspect ratios (square, 16:9, 4:3); the
-            container previously had no height of its own, so `h-full`
-            on the image was a no-op and each photo rendered at its own
-            natural height, producing an uneven row instead of a matched
-            strip. A shared aspect-ratio container plus object-cover now
-            crops all three consistently. (2) The grid's md tier is 8
-            columns, which 3 equal items can't divide evenly (col-span-4
-            here previously gave 2-up-then-1 at tablet widths); the row
-            now stays a single stacked column through md and only
-            becomes 3-across at lg (12 columns / 3 = 4, divides
-            cleanly), matching the same "stack until it divides evenly"
-            pattern RevealGroup already uses for its 3 clusters. */}
-        <Grid gap="md" className="mt-10">
-          {about.topImages.map((image) => (
-            <div
-              key={image.src}
-              className="col-span-4 aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] md:col-span-8 lg:col-span-4"
-            >
+        <Grid gap="md">
+          <div className="col-span-4 md:col-span-5 lg:col-span-7">
+            <Heading level={1} size="display">
+              {about.heading}
+            </Heading>
+            <Text size="lead" className="mt-6 max-w-[var(--measure)]">
+              {about.intro}
+            </Text>
+          </div>
+          <div className="col-span-4 md:col-span-3 lg:col-span-5">
+            <div className="aspect-square overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]">
               <Image
-                src={image.src}
-                width={image.width}
-                height={image.height}
-                alt={image.alt}
+                src={about.portrait.src}
+                width={about.portrait.width}
+                height={about.portrait.height}
+                alt={about.portrait.alt}
                 className="h-full w-full object-cover"
-                sizes="(min-width: 1024px) 33vw, 100vw"
+                sizes="(min-width: 1024px) 40vw, (min-width: 768px) 37vw, 100vw"
+                priority
               />
             </div>
-          ))}
+          </div>
         </Grid>
       </Section>
 
@@ -73,7 +73,7 @@ export default function AboutPage() {
       {about.sections.map((section, index) => (
         <Section
           key={section.heading}
-          density={index === about.sections.length - 1 ? "open" : "default"}
+          density="default"
           tone={index % 2 === 0 ? undefined : "dark"}
           measure="narrow"
         >
@@ -84,11 +84,7 @@ export default function AboutPage() {
             ))}
           </div>
           {/* Resume Strategy milestone (Resume-Strategy-Research.md,
-              Option D): this was rendered as plain, unlinked, italic
-              "pending confirmation" text while the two conflicting
-              live-site resume links were unresolved. Aseer has since
-              confirmed the correct file (site.resumeUrl), so this is now
-              a real link -- one of the Professional CV's two prominent
+              Option D): one of the Professional CV's two prominent
               placements (the other being Footer.tsx), per the research
               finding that a resume link is more commonly found inline in
               About-page prose than as a top-level nav item. */}
@@ -104,14 +100,15 @@ export default function AboutPage() {
               </a>
             </Text>
           )}
-          {"image" in section && section.image && (
-            <div className="mt-6 max-w-xs overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]">
+          {"wideImage" in section && section.wideImage && (
+            <div className="mt-6 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]">
               <Image
-                src={section.image.src}
-                width={section.image.width}
-                height={section.image.height}
-                alt={section.image.alt}
+                src={section.wideImage.src}
+                width={section.wideImage.width}
+                height={section.wideImage.height}
+                alt={section.wideImage.alt}
                 className="h-auto w-full"
+                sizes="(min-width: 672px) 42rem, 100vw"
               />
             </div>
           )}
@@ -132,6 +129,32 @@ export default function AboutPage() {
               </a>
             </p>
           )}
+          {/* Visual Polish milestone: three photos with different native
+              aspect ratios (square, 16:9, 4:3), so a shared aspect-ratio
+              container plus object-cover crops all three to a matched
+              strip instead of an uneven row. The grid's md tier is 8
+              columns, which 3 equal items can't divide evenly, so the
+              row stays a single stacked column through md and only
+              becomes 3-across at lg (12 / 3 = 4, divides cleanly). */}
+          {"photoStrip" in section && section.photoStrip && (
+            <Grid gap="md" className="mt-6">
+              {section.photoStrip.map((image) => (
+                <div
+                  key={image.src}
+                  className="col-span-4 aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] md:col-span-8 lg:col-span-4"
+                >
+                  <Image
+                    src={image.src}
+                    width={image.width}
+                    height={image.height}
+                    alt={image.alt}
+                    className="h-full w-full object-cover"
+                    sizes="(min-width: 1024px) 33vw, 100vw"
+                  />
+                </div>
+              ))}
+            </Grid>
+          )}
           {"tags" in section && section.tags && (
             <ul className="mt-6 flex flex-wrap gap-2">
               {section.tags.map((tag) => (
@@ -146,6 +169,22 @@ export default function AboutPage() {
           )}
         </Section>
       ))}
+
+      {/* Closing: deliberately quiet, no display-size heading of its own,
+          since Footer.tsx already provides the page's real closing CTA
+          moment ("Let's build something worth trusting") one scroll
+          further down. This just bridges back to the evidence -- the
+          same "the work should do the talking" reasoning already
+          documented on the homepage hero, applied here. */}
+      <Section density="open" measure="narrow">
+        <Text size="lead">{about.closing}</Text>
+        <div className="mt-6 flex flex-wrap gap-4">
+          <Button href="/work">View Work</Button>
+          <Button href="/research" variant="secondary">
+            View Research
+          </Button>
+        </div>
+      </Section>
     </>
   );
 }
