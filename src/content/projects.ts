@@ -33,10 +33,10 @@ import { site } from "./site";
  * were cut from the portfolio's scope entirely, not just left
  * unwritten.
  *
- * TravelMate AI is migrated with real content (it IS live and published)
- * but keeps its `status: "contingent"` flag -- see the TODO on that
- * entry for why that's a live conflict this migration doesn't silently
- * resolve.
+ * TravelMate AI is migrated with real content (it IS live and published).
+ * Its earlier `status: "contingent"` flag has since been removed: the
+ * keep/cut/reframe question is resolved (kept), so it no longer renders
+ * the "Decision pending" badge -- see the note on that entry.
  */
 
 /** Shared "Convay at a Glance" block, byte-identical across all four
@@ -2484,17 +2484,13 @@ export const caseStudies: CaseStudy[] = [
     title: "TravelMate AI",
     track: "work",
     scale: "product",
-    // TODO(travelmate-status): Master_Portfolio_Knowledge_Base.md
-    // Section 3 flags this project's keep/cut/reframe decision as still
-    // open. But it IS live and published on aseer.design right now, with
-    // a full case study -- so per this migration's "treat the live site
-    // as primary source" rule, its real content is migrated below rather
-    // than withheld. The `status: "contingent"` flag is deliberately kept
-    // rather than silently cleared, so this conflict between "already
-    // live" and "decision still open" stays visible for a content
-    // milestone to actually resolve, instead of being quietly decided by
-    // omission during a migration pass.
-    status: "contingent",
+    // The `status: "contingent"` flag (and the "Decision pending" badge
+    // it rendered on the project card) is removed as of the typography
+    // cleanup / TravelMate content pass: the keep/cut/reframe question
+    // Master_Portfolio_Knowledge_Base.md Section 3 flagged is resolved.
+    // TravelMate is kept, with a full published case study and a
+    // confirmed duration -- it's finished content now, not a project
+    // still waiting on a decision.
     contentStatus: "complete",
     thumbnail: img(
       "gltG0cxn5SXfakeqUdUin2pbW8E.gif",
