@@ -15,7 +15,6 @@ import { TrustAsymmetryDemo } from "./TrustAsymmetryDemo";
 import { BeforeAfterFlow } from "./BeforeAfterFlow";
 import { PainPointList } from "./PainPointList";
 import { ComparisonDiagram } from "./ComparisonDiagram";
-import { FlowStepsDiagram } from "./FlowStepsDiagram";
 import { VariantComparison } from "./VariantComparison";
 import { PhaseFilmstrip } from "./PhaseFilmstrip";
 import { ReducedMotionHero } from "./ReducedMotionHero";
@@ -186,7 +185,15 @@ function renderBlock(
         />
       );
     case "flowSteps":
-      return <FlowStepsDiagram key={key} steps={block.steps} />;
+      // Reuses Timeline rather than a bespoke chip-and-arrow layout: an
+      // earlier version built its own horizontal-chips-plus-arrow-glyph
+      // diagram, which broke visually the moment it needed to wrap (a
+      // step's trailing arrow could end up stranded at the end of one
+      // row with its target chip pushed to the next). Timeline's
+      // node-and-connecting-line pattern is already proven elsewhere on
+      // this site and has no such wrap case, since flex-1 items shrink
+      // together instead of wrapping.
+      return <Timeline key={key} steps={block.steps.map((step) => ({ label: step }))} />;
     case "variantComparison":
       return <VariantComparison key={key} label={block.label} variants={block.variants} />;
     case "phaseGroup":

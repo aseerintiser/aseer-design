@@ -179,9 +179,13 @@ export type CaseStudyBlock =
       /** Convay AI for Physical Meetings rebuild: a real ordered-list
        * step sequence, replacing an inline "step 1 -> step 2 -> ..."
        * italic text with an actual visual diagram
-       * (04_Visual_Specification.md). Renders via FlowStepsDiagram.
-       * Generic and content-agnostic; any case study describing a
-       * linear flow in prose only is a candidate for this block. */
+       * (04_Visual_Specification.md). Renders via the existing Timeline
+       * component (node-and-connecting-line, not a bespoke chip-and-
+       * arrow layout -- an earlier version built its own and it broke
+       * visually on wrap). `steps` is a plain string array here since
+       * Timeline's own `detail` field isn't needed for a short label-only
+       * sequence. Generic and content-agnostic; any case study
+       * describing a linear flow in prose only is a candidate. */
       type: "flowSteps";
       steps: string[];
     }
