@@ -145,11 +145,10 @@ export function TrustAsymmetryDemo() {
         ))}
         <Button
           type="button"
-          variant="ghost"
+          variant="secondary"
           size="sm"
           withArrow={false}
           onClick={handleNegative}
-          className="text-[var(--color-text-muted)]"
         >
           A housing provider that doesn't exist
         </Button>
