@@ -606,221 +606,517 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
 // ---------------------------------------------------------------------
 // 2. Convay AI for Physical Meetings
 // ---------------------------------------------------------------------
+// Convay AI for Physical Meetings rebuild (see the "Convay AI for
+// Physical Meetings" package: 01_Audit.md through 08_Final_Review.md).
+// Renumbers eight sections 01-08 (the live page ran 02-09 with no
+// visible "01"), retires "Feature Overview" as a standalone section
+// (folded into "The Problem" and the new "My Role and What I Built"),
+// and splits "Design Process" into "Design Process" and a new dedicated
+// "The Flow, Screen by Screen" so the thirteen-screen walkthrough reads
+// as a grouped, four-phase sequence instead of one continuous stack of
+// near-duplicate full-bleed screenshots.
+//
+// Three judgment calls made against this package's own "check with me"
+// list, resolved directly with Aseer rather than guessed:
+// (1) accuracy figures: keep 93% only, the ~85% figure is dropped
+//     rather than reconciled, since two different numbers for the same
+//     claim aren't being kept either way;
+// (2) Status field: omitted entirely, matching the Mobile App Revamp
+//     rebuild, where it was added and then explicitly removed;
+// (3) next case study: Convay Design System.
+//
+// A fourth item this package flagged for "final visual confirmation"
+// (the exact file-to-caption pairing for near-duplicate screens in
+// Export & Edit) is resolved from this codebase's own already-shipped
+// captions rather than the package's Group E guess, which conflicts
+// with it: the package guessed QPbvQ4Uv6u7wvuiLmDxrjc9Cyyg.png and
+// 2nXhRwbs20IRostKL2PZ6VfuxVg.png were the dark/light Meeting Panel
+// variant comparison, but this codebase already pairs that comparison's
+// captions (word-for-word matches to 03_Content_Final.md's "This
+// version aligns with Convay's main theme..." / "A lighter interface
+// for improved visibility...") with 1Xrqe0NuG8d4DN8vwSWL99pzRPk.png and
+// uouzaoVXpICMh8XHJiS4I9DMEsg.png instead. That leaves
+// QPbvQ4Uv6u7wvuiLmDxrjc9Cyyg.png, 2nXhRwbs20IRostKL2PZ6VfuxVg.png, and
+// uIyaqFwBePdCbz9bJa5Guu6VM.png as three already-grouped, near-identical
+// states of the Edit Meeting Title screen (already an imageRow together
+// in the pre-rebuild content), which is also exactly the kind of
+// near-duplicate the package predicted living in this phase. I have not
+// visually confirmed what specifically differs between these three
+// (this sandbox can't render the page), so their alt text below is
+// honest and general -- a plausible open/edit/confirm sequence, not a
+// verified one -- flagged again in the final walkthrough.
 const convayAiBody: CaseStudyBlock[] = [
+  // Hero visual: the establishing mosaic GIF gets its own
+  // prefers-reduced-motion-safe component (05_Interaction_and_Motion.md:
+  // "a hard requirement, not a nice-to-have," since a GIF cannot itself
+  // respond to that media query), with the six static preview screens as
+  // a supporting row beneath it and a one-line caption per
+  // 03_Content_Final.md.
+  {
+    type: "reducedMotionHero",
+    gifSrc: img("7mhLYobFRspDQYe7igyV2dg5zqQ.gif", 1600, 1200).src,
+    fallbackSrc: img("1Xrqe0NuG8d4DN8vwSWL99pzRPk.png", 1600, 1200).src,
+    width: 1600,
+    height: 1200,
+    gifAlt:
+      "Looping preview of Convay AI for Physical Meetings, cycling through the meeting panel, transcript, and summary screens.",
+    fallbackAlt:
+      "Convay AI for Physical Meetings, Main Meeting Panel screen, a single still from the hero animation shown when motion is reduced.",
+  },
   {
     type: "imageRow",
     images: [
-      img("7mhLYobFRspDQYe7igyV2dg5zqQ.gif", 1600, 1200),
-      img("1Xrqe0NuG8d4DN8vwSWL99pzRPk.png", 2048, 1280),
-      img("8MC8dnNQxy5ID9JHklgxyokoRE0.png", 2048, 1280),
-      img("vjGrDy2Z0TywkCKJsDAFJaV9io.png", 2048, 1280),
-      img("YJ889zIFFjZ35VfVtpImTq0dxVs.png", 2048, 1280),
-      img("wvjdbZNqmnqe9WrrgfaDvgLenAk.png", 2048, 1280),
-      img("veV5cHUbDznR85kSt8TtYr2dSg.png", 2048, 1280),
+      img(
+        "1Xrqe0NuG8d4DN8vwSWL99pzRPk.png",
+        2048,
+        1280,
+        "Convay AI for Physical Meetings, Main Meeting Panel preview screen.",
+      ),
+      img(
+        "8MC8dnNQxy5ID9JHklgxyokoRE0.png",
+        2048,
+        1280,
+        "Convay AI for Physical Meetings, meeting dashboard preview screen.",
+      ),
+      img(
+        "vjGrDy2Z0TywkCKJsDAFJaV9io.png",
+        2048,
+        1280,
+        "Convay AI for Physical Meetings, transcription loading preview screen.",
+      ),
+      img(
+        "YJ889zIFFjZ35VfVtpImTq0dxVs.png",
+        2048,
+        1280,
+        "Convay AI for Physical Meetings, transcript preview screen.",
+      ),
+      img(
+        "wvjdbZNqmnqe9WrrgfaDvgLenAk.png",
+        2048,
+        1280,
+        "Convay AI for Physical Meetings, meeting summary preview screen.",
+      ),
+      img(
+        "veV5cHUbDznR85kSt8TtYr2dSg.png",
+        2048,
+        1280,
+        "Convay AI for Physical Meetings, meeting transcription preview screen.",
+      ),
     ],
   },
+  {
+    type: "paragraph",
+    variant: "caption",
+    text: "A first look at Convay AI for Physical Meetings, from the meeting dashboard to a finished, shareable summary.",
+  },
+
+  // 01. Convay at a Glance -- unchanged position and content
+  // (02_Information_Architecture.md), so this keeps reusing the shared
+  // block rather than forking it. Publication marks for References &
+  // Mentions are added via the `referenceMarks` field on this case
+  // study's entry below, not by editing this shared block, since three
+  // other case studies spread the exact same array.
   ...convayAtAGlance,
-  { type: "heading", level: 3, text: "Feature Overview" },
+
+  // 02. The Problem -- merges the live page's "Problem Statement" with
+  // the framing sentences from "Feature Overview" that describe the gap
+  // (physical meetings go undocumented, existing tools serve online
+  // settings only). One new visual anchor: a plain, labeled comparison,
+  // not a fabricated product screenshot (06_Assets_Checklist.md).
+  { type: "heading", level: 3, text: "The Problem" },
   {
     type: "paragraph",
-    text: "Convay AI for Physical Meetings brings offline conversations into the digital workspace. Instead of relying on handwritten notes or memory, users can now **record in-person meetings**, **generate full transcripts**, **summarize them with AI**, and **export** everything, seamlessly. The feature was designed to be fast, accurate, and secure, especially for **confidential internal syncs and government use cases**. Whether it's a small strategy meeting or a closed-door briefing, teams leave with clear, shareable documentation, just like they would in a virtual meeting.",
+    text: "In high-stakes in-person meetings, like government briefings or internal syncs, crucial details often go undocumented. Teams either take rough notes or rely on memory, risking missed tasks, misunderstood decisions, and accountability gaps. Traditional transcription tools cater mostly to online settings, leaving physical conversations in a productivity blind spot.",
   },
   {
     type: "paragraph",
-    text: "This feature also supports **multilingual transcription**, including English and Bengali, making Convay **one of the first platforms to support real-time, localized summaries** for physical meetings.",
-  },
-  { type: "heading", level: 3, text: "Problem Statement" },
-  {
-    type: "paragraph",
-    text: "In high-stakes in-person meetings, like government briefings or internal syncs, **crucial details often go undocumented**. Teams either take rough notes or rely on memory, risking missed tasks, misunderstood decisions, and accountability gaps. Traditional transcription tools cater mostly to online settings, leaving physical conversations in a productivity blind spot.",
+    text: "Convay needed a way to bring offline meeting intelligence into its digital ecosystem, without making users change their natural workflow. The goal was clear: create a feature that could automatically capture, structure, and summarize real-world discussions with the same quality and ease as online calls. It had to be simple enough for a 10-minute sync, yet secure and reliable for official proceedings.",
   },
   {
-    type: "paragraph",
-    text: "Convay needed a way to bring **offline meeting intelligence into its digital ecosystem**, without making users change their natural workflow. The goal was clear: create a feature that could **automatically capture, structure, and summarize real-world discussions** with the same quality and ease as online calls. It had to be simple enough for a 10-minute sync, yet secure and reliable for official proceedings.",
+    type: "twoColumnCompare",
+    leftLabel: "Online meetings",
+    leftText: "Recorded, transcribed, and summarized automatically.",
+    rightLabel: "Physical meetings",
+    rightText: "Handwritten notes, memory, or nothing at all.",
+    caption: "The gap this feature closes.",
   },
-  { type: "heading", level: 3, text: "My Role and Responsibilities" },
+
+  // 03. My Role and What I Built (new, merged) -- replaces "My Role and
+  // Responsibilities," now paired with the feature description that
+  // used to open "Feature Overview" and the page's first screenshot.
+  // The single biggest pacing fix in this package: on the live page, a
+  // reader waited through Feature Overview, Problem Statement, and all
+  // of My Role, roughly 550 words, before seeing any image. Here, they
+  // see one within the first two sections.
+  { type: "heading", level: 3, text: "My Role and What I Built" },
   {
     type: "paragraph",
-    text: "I was part of the core design team during the early concept and prototyping phase of this feature. My focus was to **translate a vague product idea into a clear, usable experience**.",
+    text: "I was part of the core design team during the early concept and prototyping phase of this feature. My focus was to translate a vague product idea into a clear, usable experience.",
   },
   {
     type: "paragraph",
-    text: "I designed the full user flow, starting from how someone would set up an in-person meeting, to how they'd record, review, and extract insights after the session. I created UI mockups, built multiple design variants for testing, and worked closely with developers to ensure technical feasibility. My decisions were guided by **real-world use cases**, like small internal syncs and government meetings where formal documentation was essential.",
+    text: "I designed the full user flow, starting from how someone would set up an in-person meeting, to how they'd record, review, and extract insights after the session. I created UI mockups, built multiple design variants for testing, and worked closely with developers to ensure technical feasibility. My decisions were guided by real-world use cases, like small internal syncs and government meetings where formal documentation was essential.",
   },
   {
     type: "paragraph",
-    text: "I also ran **internal usability testing** to compare interface versions, gathered feedback, and iterated based on what worked best for the users. Every design choice aimed to reduce friction and make the tool feel as seamless as pressing \"Record\" and getting a polished summary back.",
+    text: "I also ran internal usability testing to compare interface versions, gathered feedback, and iterated based on what worked best for the users. Every design choice aimed to reduce friction and make the tool feel as seamless as pressing \"Record\" and getting a polished summary back.",
   },
+  { type: "heading", level: 4, text: "What I Built" },
+  {
+    type: "paragraph",
+    text: "Convay AI for Physical Meetings brings offline conversations into the digital workspace. Instead of relying on handwritten notes or memory, users can now record in-person meetings, generate full transcripts, summarize them with AI, and export everything, seamlessly. The feature was designed to be fast, accurate, and secure, especially for confidential internal syncs and government use cases. Whether it's a small strategy meeting or a closed-door briefing, teams leave with clear, shareable documentation, just like they would in a virtual meeting.",
+  },
+  {
+    type: "paragraph",
+    text: "This feature also supports multilingual transcription, including English and Bengali, making Convay one of the first platforms to support real-time, localized summaries for physical meetings.",
+  },
+  {
+    type: "image",
+    ...img(
+      "1Xrqe0NuG8d4DN8vwSWL99pzRPk.png",
+      2048,
+      1280,
+      "The Main Meeting Panel: a large record control and live transcript, shown mid-session.",
+    ),
+    caption:
+      "The Main Meeting Panel: one large record control and a live transcript, designed to feel as simple as pressing \"Record\" and walking away.",
+  },
+
+  // 04. Design Process -- research, ideation, and testing narrative,
+  // minus the full screen-by-screen walkthrough, which moves to its own
+  // section below. The flow diagram is a real step component instead of
+  // inline italic text; the light/dark Meeting Panel test becomes one
+  // true side-by-side comparison instead of two screenshots roughly
+  // thirty screen-heights apart. The result (82% preferred dark) stays
+  // in Challenges and Solutions, where it's already stated with a real
+  // number, rather than being pre-announced here too
+  // (02_Information_Architecture.md's de-duplication note).
   { type: "heading", level: 3, text: "Design Process" },
+  { type: "heading", level: 4, text: "Research" },
   {
     type: "paragraph",
-    text: "**Research**: We began by identifying a key gap in physical meetings: no easy way to document discussions in real-time. Through internal interviews and team feedback, we confirmed that manual notes often led to missed details, especially in fast-paced syncs or confidential meetings. This insight guided the idea: make in-person meetings as easy to document and summarize as online ones.",
+    text: "We began by identifying a key gap in physical meetings: no easy way to document discussions in real-time. Through internal interviews and team feedback, we confirmed that manual notes often led to missed details, especially in fast-paced syncs or confidential meetings. This insight guided the idea: make in-person meetings as easy to document and summarize as online ones.",
+  },
+  { type: "heading", level: 4, text: "Ideation and Design" },
+  {
+    type: "paragraph",
+    text: "We mapped a simple, linear flow. Each screen was designed to be clean, minimal, and mobile-friendly to support quick use in real-world meeting environments.",
+  },
+  {
+    type: "flowSteps",
+    steps: ["Set meeting context", "Record audio", "Generate transcript", "Summarize", "Export"],
   },
   {
     type: "paragraph",
-    text: "**Ideation and Design**: We mapped a simple, linear flow:\n*set meeting context → record audio → generate transcript → summarize → export*.\nEach screen was designed to be clean, minimal, and mobile-friendly to support quick use in real-world meeting environments.",
+    text: "Every screen in that flow is walked through in the next section.",
+  },
+  { type: "heading", level: 4, text: "Iteration and Testing" },
+  {
+    type: "paragraph",
+    text: "During testing, we developed two versions of the Meeting Panel page to evaluate user preferences.",
   },
   {
-    type: "image",
-    ...img("8MC8dnNQxy5ID9JHklgxyokoRE0.png", 2048, 1280),
-    caption: "Meeting Dashboard Page: Users can access all meetings, start new ones, upload previous recording file or view recent recordings.",
-  },
-  {
-    type: "image",
-    ...img("zDYKNitEmcDcwHCOfBGC229sK4.png", 2048, 1280),
-    caption: "Meeting Information Page: Users can enter the title and description and click \"Start\" or \"Cancel.\"",
-  },
-  {
-    type: "image",
-    ...img("1Xrqe0NuG8d4DN8vwSWL99pzRPk.png", 2048, 1280),
-    caption: "Main Meeting Panel Page: Featuring a large microphone icon and live transcript display.",
-  },
-  {
-    type: "image",
-    ...img("410MKXb1alte85QbVYXpI4V1eps.png", 2048, 1280),
-    caption: "End Session Confirmation Modal: Prompting users to confirm ending the session.",
-  },
-  {
-    type: "image",
-    ...img("vjGrDy2Z0TywkCKJsDAFJaV9io.png", 2048, 1280),
-    caption: "Loading UI for Transcription: A visual indication of the transcription process.",
-  },
-  {
-    type: "image",
-    ...img("veV5cHUbDznR85kSt8TtYr2dSg.png", 2048, 1280),
-    caption: "Meeting Transcription Page: Where users can view and edit the transcription.",
-  },
-  {
-    type: "image",
-    ...img("EGFYtLezuDCMWYP1Gf4bbhznNqU.png", 2048, 1280),
-    caption: "AI Summarization Loading Screen: A loading skeleton while the AI summarizes the meeting.",
-  },
-  {
-    type: "image",
-    ...img("wvjdbZNqmnqe9WrrgfaDvgLenAk.png", 2048, 1280),
-    caption: "Meeting Summary Page: Displays the summarized content.",
-  },
-  {
-    type: "image",
-    ...img("0SJ3tiFMjwepbtayFx4vdt4Kc.png", 2048, 1276),
-    caption: "Export Options: For downloading the meeting summary and transcript.",
-  },
-  {
-    type: "image",
-    ...img("kcyNkZP0HCDiDoOg76iSiQ0.png", 2048, 1280),
-    caption: "Transcript Editing Options: A 3-dot modal for editing the transcript and renaming speakers.",
-  },
-  {
-    type: "image",
-    ...img("YJ889zIFFjZ35VfVtpImTq0dxVs.png", 2048, 1280),
-    caption: "Edit Transcript Page: Users can make changes to the transcript.",
-  },
-  {
-    type: "image",
-    ...img("RN6g2dJGuLKonbGP7IYfdPI3ulA.png", 2048, 1280),
-    caption: "Rename Speaker Page: Allows for renaming speakers.",
-  },
-  {
-    type: "imageRow",
-    images: [
-      img("QPbvQ4Uv6u7wvuiLmDxrjc9Cyyg.png", 2048, 1280),
-      img("2nXhRwbs20IRostKL2PZ6VfuxVg.png", 2048, 1280),
-      img("uIyaqFwBePdCbz9bJa5Guu6VM.png", 2048, 1280),
+    type: "variantComparison",
+    label: "A / B",
+    variants: [
+      {
+        ...img(
+          "1Xrqe0NuG8d4DN8vwSWL99pzRPk.png",
+          2048,
+          1280,
+          "Meeting Panel, dark variant: aligned with Convay's core product theme.",
+        ),
+        caption: "This version aligns with Convay's main theme, providing a cohesive look.",
+      },
+      {
+        ...img(
+          "uouzaoVXpICMh8XHJiS4I9DMEsg.png",
+          2048,
+          1280,
+          "Meeting Panel, light variant: higher visibility, but inconsistent with the platform's dark-mode aesthetic.",
+        ),
+        caption:
+          "A lighter interface for improved visibility, but it did not match the overall aesthetic of the Convay platform.",
+      },
     ],
   },
   {
     type: "paragraph",
-    text: "*Edit Meeting Title Page: Users can modify the meeting title.*",
+    text: "We also tested the transcript editing and summary flow, ensuring that each step felt intuitive and could work without onboarding.",
   },
-  {
-    type: "paragraph",
-    text: "**Iteration and Testing**: During testing, we developed two versions of the Meeting Panel page to evaluate user preferences:",
-  },
-  {
-    type: "image",
-    ...img("1Xrqe0NuG8d4DN8vwSWL99pzRPk.png", 2048, 1280),
-    caption: "This version aligns with Convay's main theme, providing a cohesive look.",
-  },
-  {
-    type: "image",
-    ...img("uouzaoVXpICMh8XHJiS4I9DMEsg.png", 2048, 1280),
-    caption: "A lighter interface for improved visibility, but it did not match the overall aesthetic of the Convay platform.",
-  },
-  {
-    type: "paragraph",
-    text: "Users strongly preferred the dark version, consistent with Convay's core product UI and easier on the eyes during extended use. We also tested the transcript editing and summary flow, ensuring that each step felt intuitive and could work without onboarding.",
-  },
-  { type: "paragraph", text: "Feedback led to:" },
+  { type: "heading", level: 4, text: "Feedback Led To" },
   {
     type: "list",
     items: [
-      "Removing the \"Mute\" text label (just icon)",
+      "Removing the \"Mute\" text label (icon only)",
       "Refining the AI summary button placement",
       "Smoothing transitions between transcript → summary → export",
     ],
   },
+
+  // 05. The Flow, Screen by Screen (new dedicated section) -- all
+  // thirteen named screens from the live page's walkthrough, none cut,
+  // regrouped into four phases so the sequence reads as a designed
+  // journey instead of an undifferentiated ~8,000-9,000px scroll
+  // (01_Audit.md). This codebase's Export & Edit phase actually holds
+  // fifteen images across those thirteen named screens, not thirteen
+  // one-to-one, since "Edit Meeting Title" already exists here as three
+  // near-duplicate states (see the file-level note above this constant).
+  { type: "heading", level: 3, text: "The Flow, Screen by Screen" },
+  {
+    type: "paragraph",
+    text: "The complete flow, grouped by phase, from setting up a meeting to walking away with a finished summary.",
+  },
+  {
+    type: "phaseGroup",
+    label: "Setup",
+    intro: "Starting a session takes two screens: find the meeting, then name it.",
+    images: [
+      {
+        ...img(
+          "8MC8dnNQxy5ID9JHklgxyokoRE0.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, Meeting Dashboard screen, showing options to access meetings, start a new one, upload a recording, or view recent recordings.",
+        ),
+        caption: "Meeting Dashboard: access all meetings, start new ones, upload a recording, or view recent recordings.",
+      },
+      {
+        ...img(
+          "zDYKNitEmcDcwHCOfBGC229sK4.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, Meeting Information screen, showing the meeting title and description fields before starting a session.",
+        ),
+        caption: "Meeting Information: enter a title and description, then Start or Cancel.",
+      },
+    ],
+  },
+  {
+    type: "phaseGroup",
+    label: "Record",
+    intro:
+      "The recording screen itself, and the one confirmation step that protects against ending a session by accident.",
+    images: [
+      {
+        ...img(
+          "1Xrqe0NuG8d4DN8vwSWL99pzRPk.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, Main Meeting Panel screen, showing the large record control and live transcript during a session.",
+        ),
+        caption: "Main Meeting Panel: a large microphone icon and live transcript display.",
+      },
+      {
+        ...img(
+          "410MKXb1alte85QbVYXpI4V1eps.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, End Session Confirmation screen, showing the prompt to confirm ending the session.",
+        ),
+        caption: "End Session Confirmation: prompts users to confirm ending the session.",
+      },
+    ],
+  },
+  {
+    type: "phaseGroup",
+    label: "Process",
+    intro: "Once a session ends, transcription and summarization run automatically, each with its own loading state.",
+    images: [
+      {
+        ...img(
+          "vjGrDy2Z0TywkCKJsDAFJaV9io.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, transcription loading screen, showing the in-progress indicator while the transcript is generated.",
+        ),
+        caption: "Loading UI for Transcription: a visual indication of the transcription process.",
+      },
+      {
+        ...img(
+          "veV5cHUbDznR85kSt8TtYr2dSg.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, Meeting Transcription screen, showing the editable transcript.",
+        ),
+        caption: "Meeting Transcription: view and edit the transcription.",
+      },
+      {
+        ...img(
+          "EGFYtLezuDCMWYP1Gf4bbhznNqU.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, AI summarization loading screen, showing the loading state while the summary is generated.",
+        ),
+        caption: "AI Summarization Loading: a loading skeleton while the AI summarizes the meeting.",
+      },
+      {
+        ...img(
+          "wvjdbZNqmnqe9WrrgfaDvgLenAk.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, Meeting Summary screen, showing the summarized content.",
+        ),
+        caption: "Meeting Summary: displays the summarized content.",
+      },
+    ],
+  },
+  {
+    type: "phaseGroup",
+    label: "Export & Edit",
+    intro: "The last stretch covers getting the output out the door, and fixing anything the transcript got wrong along the way.",
+    images: [
+      {
+        ...img(
+          "0SJ3tiFMjwepbtayFx4vdt4Kc.png",
+          2048,
+          1276,
+          "Convay AI for Physical Meetings, Export Options screen, showing options to download the meeting summary and transcript.",
+        ),
+        caption: "Export Options: downloading the meeting summary and transcript.",
+      },
+      {
+        ...img(
+          "kcyNkZP0HCDiDoOg76iSiQ0.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, Transcript Editing Options screen, showing the menu for editing the transcript and renaming speakers.",
+        ),
+        caption: "Transcript Editing Options: a 3-dot modal for editing the transcript and renaming speakers.",
+      },
+      {
+        ...img(
+          "YJ889zIFFjZ35VfVtpImTq0dxVs.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, Edit Transcript screen, showing the transcript open for editing.",
+        ),
+        caption: "Edit Transcript: make changes to the transcript.",
+      },
+      {
+        ...img(
+          "RN6g2dJGuLKonbGP7IYfdPI3ulA.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, Rename Speaker screen, showing the control for renaming a speaker.",
+        ),
+        caption: "Rename Speaker: renames a speaker throughout the transcript.",
+      },
+      {
+        // Three near-identical states of the same screen, not visually
+        // confirmed against the rendered page (see the note above this
+        // constant) -- an honest, general open/edit/confirm sequence,
+        // not a verified one.
+        ...img(
+          "QPbvQ4Uv6u7wvuiLmDxrjc9Cyyg.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, Edit Meeting Title screen, showing the meeting title field ready to edit.",
+        ),
+        caption: "Edit Meeting Title: modify the meeting title.",
+      },
+      {
+        ...img(
+          "2nXhRwbs20IRostKL2PZ6VfuxVg.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, Edit Meeting Title screen, showing a new title being entered.",
+        ),
+        caption: "Edit Meeting Title: a new title being entered.",
+      },
+      {
+        ...img(
+          "uIyaqFwBePdCbz9bJa5Guu6VM.png",
+          2048,
+          1280,
+          "Convay AI for Physical Meetings, Edit Meeting Title screen, showing the updated title after confirming.",
+        ),
+        caption: "Edit Meeting Title: the updated title after confirming.",
+      },
+    ],
+  },
+
+  // 06. Challenges and Solutions -- unchanged position and content, the
+  // "Users strongly preferred the dark version" sentence that used to
+  // pre-announce this section's 82% figure is gone from Design Process
+  // above (02_Information_Architecture.md's de-duplication note); this
+  // is now the only place that result appears.
   { type: "heading", level: 3, text: "Challenges and Solutions" },
   {
     type: "paragraph",
-    text: "**Challenge: Noisy physical environments reduced transcription quality**\nIn real-world settings like government offices and team syncs, background noise made it difficult to capture accurate transcripts.",
+    text: "**Noisy physical environments reduced transcription quality.** In real-world settings like government offices and team syncs, background noise made it difficult to capture accurate transcripts.",
   },
   {
     type: "paragraph",
-    text: "**Solution**: We explored early-stage **noise filtering** and **speaker identification** techniques during research. While still in development, internal tests showed a **notable boost in accuracy**, especially in quieter rooms.",
+    text: "We explored early-stage noise filtering and speaker identification techniques during research. While still in development, internal tests showed a notable boost in accuracy, especially in quieter rooms.",
   },
   { type: "quote", text: "Even in busy rooms, the transcript quality held up well.", attribution: "Internal Tester" },
   {
     type: "paragraph",
-    text: "**Challenge: Inconsistent UI between Meeting Panel and core platform**\nThe Meeting Panel was originally designed in **light mode**, while Convay's main UI used **dark mode**, causing visual dissonance and distraction.",
+    text: "**Inconsistent UI between Meeting Panel and core platform.** The Meeting Panel was originally designed in light mode, while Convay's main UI used dark mode, causing visual dissonance and distraction.",
   },
   {
     type: "paragraph",
-    text: "**Solution**: We tested both variants and switched to **dark mode** for consistency and better focus.\n→ **82%** of internal testers preferred the updated dark version.",
+    text: "We tested both variants (shown side by side above) and switched to dark mode for consistency and better focus.\n→ 82% of internal testers preferred the updated dark version.",
   },
   {
     type: "paragraph",
-    text: "**Challenge: Speaker renaming was time-consuming**\nUsers needed to manually update speaker names throughout the transcript, especially frustrating in longer meetings.",
+    text: "**Speaker renaming was time-consuming.** Users needed to manually update speaker names throughout the transcript, especially frustrating in longer meetings.",
   },
   {
     type: "paragraph",
-    text: "**Solution**: We designed a **bulk rename flow**, allowing users to rename once and apply it throughout.\n→ This reduced speaker editing time by an estimated **30–40%**.",
+    text: "We designed a bulk rename flow, allowing users to rename once and apply it throughout.\n→ This reduced speaker editing time by an estimated 30-40%.",
   },
   {
     type: "paragraph",
-    text: "**Challenge: Users were unsure about using AI summarization**\nSome users hesitated to click \"Summarize with AI,\" unsure of its purpose or outcome.",
+    text: "**Users were unsure about using AI summarization.** Some users hesitated to click \"Summarize with AI,\" unsure of its purpose or outcome.",
   },
   {
     type: "paragraph",
-    text: "**Solution**: We gave the button a **clear label**, **prominent placement**, and **optional use**, ensuring it felt helpful, not overwhelming.",
+    text: "We gave the button a clear label, prominent placement, and optional use, ensuring it felt helpful, not overwhelming.",
   },
-  { type: "quote", text: "I didn't expect it to be that simple. The summary saved me a ton of time.", attribution: "User feedback" },
+  {
+    type: "quote",
+    text: "I didn't expect it to be that simple. The summary saved me a ton of time.",
+    attribution: "User feedback",
+  },
+
+  // 07. Outcome and Impact -- unchanged position. Per Aseer's direct
+  // confirmation, the 93% figure is the one to keep; the live page's
+  // separate "~85%" figure for this feature specifically is dropped
+  // rather than reconciled with an inferred explanation, so there's
+  // exactly one accuracy figure on the page instead of two.
   { type: "heading", level: 3, text: "Outcome and Impact" },
   {
     type: "paragraph",
-    text: "Though still in its early stage, **Convay AI for Physical Meetings** delivered strong results in **internal testing** and team evaluations.",
+    text: "Though still in its early stage, Convay AI for Physical Meetings delivered strong results in internal testing and team evaluations.",
   },
   {
     type: "list",
     items: [
-      "**~85% transcription accuracy** was achieved in quiet environments, even with varied speaker tones.",
-      "Teams reported **30–40% reduction in time** spent creating meeting notes.",
-      "The **AI summarization feature** helped users quickly recall key takeaways, especially in **confidential internal syncs** where formal minutes were previously missing.",
-      "Support for **Bengali transcription** gave Convay a unique edge over global competitors, especially for local government adoption.",
-      "The streamlined export process (PDF) made it easy to **share documentation post-meeting**, helping teams align faster.",
+      "**93% transcription accuracy** was achieved in quiet environments, even with varied speaker tones, based on internal testing rather than a large-scale field study.",
+      "Teams reported a **30-40% reduction** in time spent creating meeting notes, an internal estimate from the same testing.",
+      "The AI summarization feature helped users quickly recall key takeaways, especially in confidential internal syncs where formal minutes were previously missing.",
+      "Support for Bengali transcription gave Convay a unique edge over global competitors, especially for local government adoption.",
+      "The streamlined export process (PDF) made it easy to share documentation post-meeting, helping teams align faster.",
     ],
   },
   {
     type: "paragraph",
-    text: "This feature also added a strategic angle: it positioned Convay not just as an online collaboration tool, but as a **Zoom + Otter.ai hybrid**, extending value even in offline and hybrid use cases. As Convay scales to **10,000+ participant support** and continues to serve **government ministries and international symposiums**, this feature shows how UX can drive product evolution and market differentiation.",
+    text: "This feature also added a strategic angle: it positioned Convay not just as an online collaboration tool, but as a Zoom + Otter.ai hybrid, extending value even in offline and hybrid use cases. As Convay scales to 10,000+ participant support and continues to serve government ministries and international symposiums, this feature shows how UX can drive product evolution and market differentiation.",
   },
+
+  // 08. Takeaways -- unchanged position and content. Closing pull quote
+  // protected exactly as written, per both the package and 01_Audit.md
+  // ("the single best sentence on the page").
   { type: "heading", level: 3, text: "Takeaways" },
   {
     type: "paragraph",
-    text: "Designing Convay AI for Physical Meetings helped me think beyond screens and solve for real-world complexity, like making offline meetings as actionable as online ones. I learned to simplify **AI workflows**, design **multilingual support** with accessibility in mind, and ensure **consistency** across light and dark modes.",
+    text: "Designing Convay AI for Physical Meetings helped me think beyond screens and solve for real-world complexity, like making offline meetings as actionable as online ones. I learned to simplify AI workflows, design multilingual support with accessibility in mind, and ensure consistency across light and dark modes.",
   },
   {
     type: "paragraph",
-    text: "This project also sharpened my **collaboration skills with developers**, especially while testing transcript editing logic and speaker detection flows. Most importantly, it reminded me that great UX isn't just about clarity, it's about **trust**. Especially when the users are government teams, confidential briefings, or high-stakes internal syncs.",
+    text: "This project also sharpened my collaboration skills with developers, especially while testing transcript editing logic and speaker detection flows. Most importantly, it reminded me that great UX isn't just about clarity, it's about trust. Especially when the users are government teams, confidential briefings, or high-stakes internal syncs.",
   },
   {
     type: "paragraph",
@@ -2681,6 +2977,28 @@ export const caseStudies: CaseStudy[] = [
       category: ["Web Design", "Product Design"],
       role: ["UX Designer", "UI Designer", "UX Researcher"],
       tools: ["Figma"],
+    },
+    // Decorative monogram chips for References & Mentions
+    // (06_Assets_Checklist.md). Keyed by exact link text, applied only
+    // to this case study -- see the `referenceMarks` note on CaseStudy
+    // in content/types.ts for why this doesn't touch the shared
+    // "Convay at a Glance" block the other three Convay case studies
+    // also spread. Text-based initials rather than sourced outlet
+    // logos: no authentic wordmark files exist anywhere in this
+    // project's assets, and downloading third-party brand marks from
+    // the web isn't something this pass does.
+    referenceMarks: {
+      "The Daily Star": "TDS",
+      "The Financial Express": "TFE",
+      "The Daily Observer": "TDO",
+      "SIDSSA 2025 Official Post": "SID",
+    },
+    // Points to the next Convay project in the existing Work-track
+    // order: same company, and the case study this feature's own UI
+    // work draws its design system from.
+    nextCaseStudy: {
+      title: "Convay Design System",
+      href: "/work/convay-design-system",
     },
     body: convayAiBody,
   },

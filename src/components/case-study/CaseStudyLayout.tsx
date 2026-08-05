@@ -90,7 +90,7 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
       </Section>
 
       {caseStudy.body ? (
-        <CaseStudyBody blocks={caseStudy.body} />
+        <CaseStudyBody blocks={caseStudy.body} referenceMarks={caseStudy.referenceMarks} />
       ) : (
         /* One honest, considered "not written yet" state instead of six
            sections that would otherwise all repeat the same generic

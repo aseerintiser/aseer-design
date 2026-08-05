@@ -161,6 +161,80 @@ export type CaseStudyBlock =
       items: { label: string; note: string }[];
     }
   | {
+      /** Convay AI for Physical Meetings rebuild: a plain, labeled
+       * two-column diagram (e.g. "online meetings" vs. "physical
+       * meetings"), built from tokens rather than a photographic or
+       * illustrative asset -- gives a text-only section a visual anchor
+       * without fabricating a product screenshot that doesn't exist
+       * (06_Assets_Checklist.md). Generic and content-agnostic, like
+       * beforeAfterFlow/painPointList above. */
+      type: "twoColumnCompare";
+      leftLabel: string;
+      leftText: string;
+      rightLabel: string;
+      rightText: string;
+      caption?: string;
+    }
+  | {
+      /** Convay AI for Physical Meetings rebuild: a real ordered-list
+       * step sequence, replacing an inline "step 1 -> step 2 -> ..."
+       * italic text with an actual visual diagram
+       * (04_Visual_Specification.md). Renders via FlowStepsDiagram.
+       * Generic and content-agnostic; any case study describing a
+       * linear flow in prose only is a candidate for this block. */
+      type: "flowSteps";
+      steps: string[];
+    }
+  | {
+      /** Convay AI for Physical Meetings rebuild: a true side-by-side
+       * A/B comparison, replacing two screenshots that were previously
+       * stacked far apart on the page. Deliberately does not reveal
+       * which variant "won" -- that result belongs in whatever section
+       * already states it with a real number, per
+       * 03_Content_Final.md/05_Interaction_and_Motion.md. `variants`
+       * should have exactly two entries in practice, but isn't
+       * type-limited to two, in case a future case study compares three
+       * real candidates. Renders via VariantComparison; clicking either
+       * image opens the lightbox scoped to just this pair. */
+      type: "variantComparison";
+      label?: string;
+      variants: { src: string; width: number; height: number; alt: string; caption: string }[];
+    }
+  | {
+      /** Convay AI for Physical Meetings rebuild: one labeled phase of a
+       * longer screen-by-screen walkthrough (e.g. "Setup," "Record"),
+       * rendered as a compact filmstrip with a phase label, a one-
+       * sentence intro, and per-image captions -- replaces a single
+       * continuous stack of full-bleed screenshots with a grouped,
+       * scannable sequence (02_Information_Architecture.md,
+       * 04_Visual_Specification.md). Renders via PhaseFilmstrip;
+       * clicking any thumbnail opens the lightbox scoped to just this
+       * phase's images, so navigation doesn't cross into an unrelated
+       * group (05_Interaction_and_Motion.md). */
+      type: "phaseGroup";
+      label: string;
+      intro: string;
+      images: { src: string; width: number; height: number; alt: string; caption: string }[];
+    }
+  | {
+      /** Convay AI for Physical Meetings rebuild: the hero establishing
+       * animation with a `prefers-reduced-motion` fallback. A looping
+       * GIF can't itself respond to that media query, so this swaps the
+       * whole image via `<picture><source media="(prefers-reduced-
+       * motion: reduce)">` (05_Interaction_and_Motion.md: "a hard
+       * requirement, not a nice-to-have"). Renders via ReducedMotionHero.
+       * `gifAlt`/`fallbackAlt` are separate since the fallback is a
+       * single still frame, not a looping mosaic, and deserves its own
+       * accurate description. */
+      type: "reducedMotionHero";
+      gifSrc: string;
+      fallbackSrc: string;
+      width: number;
+      height: number;
+      gifAlt: string;
+      fallbackAlt: string;
+    }
+  | {
       /** A minimal visual break between two beats inside the same
        * section, for when a new heading would be too heavy-handed but a
        * plain paragraph break isn't enough. */
@@ -280,4 +354,17 @@ export interface CaseStudy extends ProjectSummary {
    * a per-case-study field rather than a Footer change specifically so
    * it doesn't touch the shared Footer component or any other page. */
   nextCaseStudy?: { title: string; href: string };
+  /** Convay AI for Physical Meetings rebuild: decorative publication
+   * marks for the shared "Convay at a Glance" References & Mentions
+   * links (06_Assets_Checklist.md). `convayAtAGlance` in content/
+   * projects.ts is one shared block reused byte-identical across four
+   * Convay case studies specifically so its text can't drift between
+   * them -- adding marks by editing that shared block directly would
+   * put them on all four pages instead of just this one. Keeping marks
+   * as a per-case-study, keyed-by-link-text lookup instead means the
+   * shared block itself stays completely untouched, and every other
+   * case study's References row renders byte-for-byte as before. Marks
+   * are decorative (rendered with `alt`/`aria-hidden`, per the
+   * checklist): the adjacent link text already names the publication. */
+  referenceMarks?: Record<string, string>;
 }
