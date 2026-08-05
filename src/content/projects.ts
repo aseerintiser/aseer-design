@@ -2641,11 +2641,6 @@ export const caseStudies: CaseStudy[] = [
       category: ["Mobile Design", "Product Design"],
       role: ["UX Designer", "UI Designer", "UX Researcher"],
       tools: ["Figma"],
-      // New meta-row field (03_Content_Final.md): states the project's
-      // real status in the meta row, before the reader reaches the
-      // outcome section, rather than disclosing it mid-paragraph deep in
-      // the page (01_Audit.md's top-priority finding after sequencing).
-      status: "Design complete, validated internally",
     },
     // Closes the roughly 1,000px dead-space gap 01_Audit.md measured
     // between the meta row and the hero visual -- see CaseStudyLayout.tsx
