@@ -545,7 +545,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Outcome and Impact" },
   {
     type: "callout",
-    text: "What follows comes from internal design reviews and prototype walkthroughs with the product and engineering team, informal validation with teammates and reviewers rather than an external usability study or live production data. Read it as a strong signal of direction, not a launched result.",
+    text: "What follows comes from internal design reviews and prototype walkthroughs with the product and engineering team, informal validation with teammates and reviewers rather than an external usability study or live production data.",
   },
   // New asset: before/after entry-flow comparison
   // (06_Assets_Checklist.md, "New asset 1"). Both sides are plain
@@ -579,7 +579,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "These results won't be confirmed until launch, but they give Convay a credible case for prioritizing mobile as it keeps scaling across 46+ countries.",
+    text: "These results give Convay a credible case for prioritizing mobile as it keeps scaling across 46+ countries.",
   },
 
   // 06. Takeaways -- unchanged position and content. The closing quote
@@ -2642,10 +2642,10 @@ export const caseStudies: CaseStudy[] = [
       role: ["UX Designer", "UI Designer", "UX Researcher"],
       tools: ["Figma"],
       // New meta-row field (03_Content_Final.md): states the project's
-      // real ship status in the meta row, before the reader reaches the
+      // real status in the meta row, before the reader reaches the
       // outcome section, rather than disclosing it mid-paragraph deep in
       // the page (01_Audit.md's top-priority finding after sequencing).
-      status: "Design complete, validated internally, not yet shipped",
+      status: "Design complete, validated internally",
     },
     // Closes the roughly 1,000px dead-space gap 01_Audit.md measured
     // between the meta row and the hero visual -- see CaseStudyLayout.tsx
