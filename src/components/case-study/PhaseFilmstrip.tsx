@@ -31,15 +31,23 @@ interface PhaseFilmstripProps {
  * the same base screenshot instead of re-scanning each one as if it
  * were new (04_Visual_Specification.md).
  *
- * Visual fix: originally used a fixed-height, `object-cover` tile (the
- * h-56/64/72 gallery pattern used elsewhere on this site), but these
- * screenshots don't share one aspect ratio the way that pattern assumes
- * -- forcing them into a uniform box cropped real content off the top
- * and bottom of several screens. Tiles are width-capped with auto
- * height instead (the same no-crop approach CaseStudyImage already uses
- * for single images), so every screenshot always shows in full; rows
- * are no longer a uniform height as a result, which is the correct
- * trade-off given the actual images.
+ * Visual fix (round 1): originally used a fixed-height, `object-cover`
+ * tile (the h-56/64/72 gallery pattern used elsewhere on this site),
+ * but these screenshots don't share one aspect ratio the way that
+ * pattern assumes -- forcing them into a uniform box cropped real
+ * content off the top and bottom of several screens. Tiles became
+ * width-capped with auto height instead, so every screenshot always
+ * shows in full.
+ *
+ * Visual fix (round 2): that width cap (~160-224px) was copied from a
+ * gallery pattern sized for narrow portrait phone screenshots elsewhere
+ * on this site. These are landscape desktop UI screenshots, so the same
+ * cap rendered them too small to actually read without opening the
+ * lightbox -- confirmed from a rendered screenshot in chat. A real
+ * two-column grid (one column below ~640px) gives each screenshot
+ * roughly half the reading column's width, wide enough to read on
+ * screen, while still being more compact than the live page's original
+ * full-bleed, one-per-row treatment.
  *
  * The same hover/focus scrim as ImageRow/CaseStudyImage, and the same
  * lightbox. Passing only this phase's own images to `open()` keeps
@@ -56,9 +64,9 @@ export function PhaseFilmstrip({ label, intro, images }: PhaseFilmstripProps) {
         {label}
       </h3>
       <p className="mt-1 text-sm text-[var(--color-text-muted)]">{intro}</p>
-      <div className="mt-5 flex flex-wrap items-start justify-center gap-6">
+      <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2">
         {images.map((image, index) => (
-          <div key={image.src + index} className="w-40 sm:w-48 lg:w-56">
+          <div key={image.src + index}>
             <button
               type="button"
               onClick={() => open(images, index)}
@@ -71,7 +79,7 @@ export function PhaseFilmstrip({ label, intro, images }: PhaseFilmstripProps) {
                 height={image.height}
                 alt={image.alt}
                 className="h-auto w-full transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:opacity-90"
-                sizes="(min-width: 1024px) 224px, (min-width: 640px) 192px, 160px"
+                sizes="(min-width: 640px) 320px, 100vw"
                 quality={90}
               />
               <span
