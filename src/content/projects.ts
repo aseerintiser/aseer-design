@@ -136,20 +136,29 @@ const img = (id: string, width: number, height: number, alt = "") => ({
 // in the gallery), per the checklist's own instruction.
 const convayMobileAppRevampBody: CaseStudyBlock[] = [
   // Hero visual: the fanned three-phone composition (a GIF; the
-  // playback scrubber is genuinely in motion, not a static crop) plus a
-  // supporting row of six straight-on preview screens, kept as one hero
-  // moment with a one-line caption rather than an unexplained image.
-  // compactHero on the caseStudies entry below closes the gap between
-  // this and the header above it.
+  // playback scrubber is genuinely in motion, not a static crop) as its
+  // own full-width beat, followed by a supporting row of six
+  // straight-on preview screens below it. Originally one seven-tile
+  // ImageRow, but ImageRow forces every tile in a row to share one
+  // fixed height -- next to six tall portrait screenshots, the GIF's
+  // landscape 4:3 frame got squeezed down to match their height and
+  // rendered as a thin, cramped strip rather than the lead visual it's
+  // meant to be. Splitting it out as its own full-width `image` block
+  // lets it read at the size the composition was actually made for,
+  // with the static preview screens doing supporting work underneath.
+  // Kept as one hero moment with a one-line caption rather than an
+  // unexplained image. compactHero on the caseStudies entry below
+  // closes the gap between this and the header above it.
+  {
+    type: "image",
+    src: img("TIUlfB8AWBViTdf78QjQ3hKq2o.gif", 1600, 1200).src,
+    width: 1600,
+    height: 1200,
+    alt: "Three angled screens from the redesigned Convay mobile app, showing the meeting dashboard and calendar view.",
+  },
   {
     type: "imageRow",
     images: [
-      img(
-        "TIUlfB8AWBViTdf78QjQ3hKq2o.gif",
-        1600,
-        1200,
-        "Three angled screens from the redesigned Convay mobile app, showing the meeting dashboard and calendar view.",
-      ),
       img(
         "BkobjFZLUDbvcCYWoKrln3tuPI.png",
         750,
@@ -536,7 +545,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Outcome and Impact" },
   {
     type: "callout",
-    text: "The redesigned app hasn't shipped yet. What follows comes from internal design reviews and prototype walkthroughs with the product and engineering team, informal validation with teammates and reviewers rather than an external usability study or live production data. Read it as a strong signal of direction, not a launched result.",
+    text: "What follows comes from internal design reviews and prototype walkthroughs with the product and engineering team, informal validation with teammates and reviewers rather than an external usability study or live production data. Read it as a strong signal of direction, not a launched result.",
   },
   // New asset: before/after entry-flow comparison
   // (06_Assets_Checklist.md, "New asset 1"). Both sides are plain

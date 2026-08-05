@@ -12,7 +12,11 @@ interface PullQuoteProps {
    * look deliberately different, not just be one more instance of the
    * same pattern. "large" centers the quote, drops the left rule (extra
    * white space reads as weight here instead), and steps the size up
-   * one notch. Defaults to "default" so every existing call site is
+   * one modest notch above the default lead size -- large enough to
+   * read as deliberate, not so large that a short sentence orphans a
+   * single word onto its own line inside the narrow reading column;
+   * `text-balance` keeps whatever wrapping does happen even rather than
+   * front-loaded. Defaults to "default" so every existing call site is
    * completely unaffected. */
   size?: "default" | "large";
 }
@@ -38,7 +42,9 @@ export function PullQuote({ text, attribution, size = "default" }: PullQuoteProp
       <p
         className={cn(
           "font-[family-name:var(--font-display)] leading-snug text-[var(--color-text)] italic",
-          isLarge ? "text-[length:var(--text-h3)]" : "text-[length:var(--text-lead)]",
+          isLarge
+            ? "text-balance text-[length:clamp(1.25rem,1.05rem+0.7vw,1.625rem)]"
+            : "text-[length:var(--text-lead)]",
         )}
       >
         {renderInlineMarkdown(text)}
