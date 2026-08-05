@@ -3,71 +3,118 @@
 import Image from "next/image";
 import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
+import { Text } from "@/components/ui/Text";
+import { Button } from "@/components/ui/Button";
 import { useLightbox } from "@/components/ui/Lightbox";
-import { testimonialsHeading, testimonialImages, testimonialImageUrl } from "@/content/testimonials";
+import { testimonialsHeading, testimonials, testimonialImageUrl } from "@/content/testimonials";
 
 /**
- * Milestone 2: new page, migrated from the live aseer.design
- * /testimonials page (didn't exist in this project before).
+ * Testimonials Redesign milestone: previously this page was five
+ * LinkedIn screenshots in a grid, technically authentic but browsable
+ * rather than readable -- the actual recommendations only existed as
+ * text baked into images. The recommendation text is now transcribed
+ * (content/testimonials.ts) and set as real, readable type, the primary
+ * content of each card. The original screenshot is preserved exactly as
+ * it was and stays one click away behind "View original", wired into
+ * the same shared Lightbox every other image gallery on this site uses,
+ * so a visitor can still verify every word against the real screenshot
+ * at full resolution.
  *
- * Media Experience milestone: these are screenshots of real written
- * recommendations -- the whole point is the text inside them, which is
- * easy to misjudge as "not needing enlarging" but is exactly the kind
- * of content a visitor reasonably wants to read at full size rather
- * than squint at in a half-width grid tile. Wired into the same shared
- * Lightbox every case-study image uses (real width/height already
- * known per image -- see content/testimonials.ts -- so no dimensions
- * need to be guessed), as one browsable group so a visitor who opens
- * one can step through all five with Left/Right or a swipe.
+ * Order, images, and wording are unchanged from the previous version;
+ * only the presentation is new.
  */
 export default function TestimonialsPage() {
   const { open } = useLightbox();
-  const images = testimonialImages.map((image) => ({
-    src: testimonialImageUrl(image.id),
-    width: image.width,
-    height: image.height,
-    alt: "Testimonial",
+  const lightboxImages = testimonials.map((testimonial) => ({
+    src: testimonialImageUrl(testimonial.id),
+    width: testimonial.width,
+    height: testimonial.height,
+    alt: `Original LinkedIn recommendation from ${testimonial.name}`,
   }));
 
   return (
-    <Section density="open">
+    <Section density="open" measure="narrow">
       <Heading level={1}>{testimonialsHeading}</Heading>
-      {/* Visual Polish milestone: 5 images in a 2-column grid leaves the
-          last one pinned to the left with an empty gap beside it --
-          `last:sm:col-span-2` spans it across the full row instead, and
-          the max-width/mx-auto keep it the same size as its siblings
-          rather than stretching, so it just centers in its own row.
 
-          Visual QA milestone: `items-start` instead of the grid default
-          (stretch) so each row's two tiles can have different heights --
-          each screenshot now uses its own real width/height (see
-          content/testimonials.ts) instead of being forced into a fixed
-          aspect-ratio box, so a short recommendation and a long one
-          sitting side by side no longer letterboxes the short one with
-          dead space to match its taller neighbor. */}
-      <div className="mt-12 grid grid-cols-1 items-start gap-6 sm:grid-cols-2">
-        {testimonialImages.map((image, index) => (
-          <div
-            key={image.id}
-            className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)] last:sm:col-span-2 last:sm:mx-auto last:sm:w-1/2"
+      {/* A single readable column rather than a grid: recommendations
+          vary a lot in length (one paragraph up to four), and a
+          multi-column grid of cards that tall next to cards that short
+          reads as an uneven, unplanned layout. Stacked, generously
+          spaced cards read as a considered list instead, and keep every
+          card at the same, comfortable reading width. */}
+      <div className="mt-12 space-y-10">
+        {testimonials.map((testimonial, index) => (
+          <article
+            key={testimonial.id}
+            className="rounded-[var(--radius-lg)] border border-[var(--color-border)] p-6 sm:p-8"
           >
-            <button
-              type="button"
-              onClick={() => open(images, index)}
-              aria-label={`View larger: testimonial ${index + 1}`}
-              className="group block w-full cursor-zoom-in"
-            >
-              <Image
-                src={testimonialImageUrl(image.id)}
-                width={image.width}
-                height={image.height}
-                alt={`Testimonial ${index + 1}`}
-                className="h-auto w-full transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:opacity-90"
-                sizes="(min-width: 640px) 50vw, 100vw"
-                quality={90}
-              />
-            </button>
-          </div>
+            {/* Same left-accent quote treatment PullQuote uses elsewhere
+                on the site, generalized to multiple paragraphs here
+                since PullQuote itself only takes one string. */}
+            <div className="space-y-4 border-l-2 border-[var(--color-accent)] pl-6">
+              {testimonial.text.map((paragraph, paragraphIndex) => (
+                <Text key={paragraphIndex}>{paragraph}</Text>
+              ))}
+            </div>
+
+            <footer className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--color-border)] pt-5">
+              <div className="flex items-center gap-3">
+                {/* Small cropped preview of the original screenshot:
+                    doubles as the "supporting evidence" visual (a quiet
+                    signal this is real, without reproducing the whole
+                    image as the primary read) and, since it's an
+                    on-page <Image>, it's already loaded by the time
+                    someone clicks through, so the Lightbox opens
+                    instantly instead of showing a loading state. */}
+                {/* tabIndex=-1 + aria-hidden: the explicit "View
+                    original" button below is the one real control for
+                    keyboard and screen-reader users, so this thumbnail
+                    doesn't announce as a second, identically-purposed
+                    button right next to it. */}
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                  onClick={() => open(lightboxImages, index)}
+                  className="h-14 w-14 shrink-0 overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)] cursor-zoom-in"
+                >
+                  <Image
+                    src={testimonialImageUrl(testimonial.id)}
+                    width={testimonial.width}
+                    height={testimonial.height}
+                    alt=""
+                    className="h-full w-full object-cover"
+                    sizes="56px"
+                  />
+                </button>
+                <div>
+                  {/* A real h3, not just a bold <p>: lets screen-reader
+                      users jump between testimonials by heading, the
+                      same way they'd navigate a list of article titles.
+                      Sized and weighted to match the rest of this
+                      footer rather than pulling in Heading's own h3
+                      display styles, which are sized for section
+                      headings, not an attribution line. */}
+                  <h3 className="font-medium text-[var(--color-text)]">{testimonial.name}</h3>
+                  <Text size="small" muted className="mt-0.5">
+                    {testimonial.title}
+                  </Text>
+                  <Text size="small" muted className="mt-1 text-xs">
+                    {testimonial.context}
+                  </Text>
+                </div>
+              </div>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                withArrow={false}
+                onClick={() => open(lightboxImages, index)}
+              >
+                View original
+              </Button>
+            </footer>
+          </article>
         ))}
       </div>
     </Section>
