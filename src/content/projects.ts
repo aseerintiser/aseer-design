@@ -1512,6 +1512,14 @@ const lumiBody: CaseStudyBlock[] = [
     type: "paragraph",
     text: "That asymmetry, slow to form, fast to break, turned out to be the clearest finding of the study.",
   },
+  // Interactive milestone: this exact idea (a small interactive trust
+  // demo) was first proposed for the homepage hero, rejected there for
+  // overweighting one project and duplicating the "Featured work /
+  // Featured research" section (see Hero-Craftsmanship-Review.md and the
+  // conversation that followed), and kept for the one place it actually
+  // belongs: right here, immediately after the finding it demonstrates,
+  // built entirely from facts already stated in this case study.
+  { type: "interactive", key: "lumi-trust-asymmetry" },
   { type: "divider" },
   {
     type: "paragraph",

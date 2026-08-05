@@ -148,6 +148,20 @@ export type CaseStudyBlock =
       height: number;
       alt: string;
       caption?: string;
+    }
+  | {
+      /** A small, bespoke interactive component embedded in the body,
+       * for the rare passage where letting the reader try the finding
+       * themselves says it more clearly than more prose. Unlike the
+       * generic, data-driven block types above (revealGroup, timeline,
+       * etc.), this is deliberately keyed to a specific named component
+       * registered in CaseStudyBody.tsx, since a real interactive demo
+       * is necessarily bespoke to the finding it demonstrates, not a
+       * reusable shape other case studies would plug arbitrary data
+       * into. Use sparingly, one real, well-earned moment, not a
+       * pattern to reach for often. */
+      type: "interactive";
+      key: "lumi-trust-asymmetry";
     };
 
 /**

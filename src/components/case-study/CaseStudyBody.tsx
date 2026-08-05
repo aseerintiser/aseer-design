@@ -11,7 +11,15 @@ import { Divider } from "./Divider";
 import { Timeline } from "./Timeline";
 import { LinkCard } from "./LinkCard";
 import { ControlledMedia } from "./ControlledMedia";
+import { TrustAsymmetryDemo } from "./TrustAsymmetryDemo";
 import { renderInlineMarkdown } from "@/lib/inline-markdown";
+
+/** Registry for the "interactive" block type's bespoke components (see
+ * CaseStudyBlock in content/types.ts for why this is a named registry
+ * rather than a generic data-driven block like revealGroup/timeline). */
+const interactiveComponents = {
+  "lumi-trust-asymmetry": TrustAsymmetryDemo,
+} as const;
 
 /** Ghost numeral matching the one used for placeholder/research case
  * studies, reused here so migrated and not-yet-written case studies
@@ -118,6 +126,10 @@ function renderBlock(block: CaseStudyBlock, key: number) {
           />
         </div>
       );
+    case "interactive": {
+      const InteractiveComponent = interactiveComponents[block.key];
+      return <InteractiveComponent key={key} />;
+    }
     default:
       return null;
   }
