@@ -31,12 +31,20 @@ interface PhaseFilmstripProps {
  * the same base screenshot instead of re-scanning each one as if it
  * were new (04_Visual_Specification.md).
  *
- * Reuses the exact gallery card pattern already used elsewhere in this
- * portfolio's case studies (h-56/64/72, --radius-lg, --color-border,
- * flex-wrap), the same hover/focus scrim as ImageRow/CaseStudyImage, and
- * the same lightbox. Passing only this phase's own images to `open()`
- * keeps next/previous navigation scoped to the phase the reader opened
- * rather than silently crossing into an unrelated group
+ * Visual fix: originally used a fixed-height, `object-cover` tile (the
+ * h-56/64/72 gallery pattern used elsewhere on this site), but these
+ * screenshots don't share one aspect ratio the way that pattern assumes
+ * -- forcing them into a uniform box cropped real content off the top
+ * and bottom of several screens. Tiles are width-capped with auto
+ * height instead (the same no-crop approach CaseStudyImage already uses
+ * for single images), so every screenshot always shows in full; rows
+ * are no longer a uniform height as a result, which is the correct
+ * trade-off given the actual images.
+ *
+ * The same hover/focus scrim as ImageRow/CaseStudyImage, and the same
+ * lightbox. Passing only this phase's own images to `open()` keeps
+ * next/previous navigation scoped to the phase the reader opened rather
+ * than silently crossing into an unrelated group
  * (05_Interaction_and_Motion.md).
  */
 export function PhaseFilmstrip({ label, intro, images }: PhaseFilmstripProps) {
@@ -48,21 +56,21 @@ export function PhaseFilmstrip({ label, intro, images }: PhaseFilmstripProps) {
         {label}
       </h3>
       <p className="mt-1 text-sm text-[var(--color-text-muted)]">{intro}</p>
-      <div className="mt-5 flex flex-wrap justify-center gap-4">
+      <div className="mt-5 flex flex-wrap items-start justify-center gap-6">
         {images.map((image, index) => (
           <div key={image.src + index} className="w-40 sm:w-48 lg:w-56">
             <button
               type="button"
               onClick={() => open(images, index)}
               aria-label={`View larger: ${image.alt}`}
-              className="group relative block h-56 w-full cursor-zoom-in overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text)] sm:h-64 lg:h-72"
+              className="group relative block w-full cursor-zoom-in overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text)]"
             >
               <Image
                 src={image.src}
                 width={image.width}
                 height={image.height}
                 alt={image.alt}
-                className="h-full w-full object-cover transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:opacity-90"
+                className="h-auto w-full transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:opacity-90"
                 sizes="(min-width: 1024px) 224px, (min-width: 640px) 192px, 160px"
                 quality={90}
               />
