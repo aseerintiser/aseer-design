@@ -98,6 +98,17 @@ export const about = {
         height: 721,
         alt: "Aseer holding a camera",
       },
+      // A curated collage of stills from Aseer's own filmmaking work,
+      // placed beside the camera photo rather than as its own full-width
+      // block below: the two together read as one paired piece of
+      // evidence (here's Aseer with a camera, here's what the camera
+      // actually produced) instead of two separate, disconnected images.
+      wideImage: {
+        src: "/about/filmmaking-collage.png",
+        width: 1662,
+        height: 875,
+        alt: "A collage of stills from Aseer's short films and travel footage",
+      },
       quote: "I've filmed a sunset on three different continents and once edited a short film on a moving train.",
       externalLink: {
         text: "Watch my stories",

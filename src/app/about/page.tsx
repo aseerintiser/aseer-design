@@ -125,19 +125,41 @@ export default function AboutPage() {
               </a>
             </Text>
           )}
-          {/* Portrait-style photo (e.g. Aseer holding a camera): kept
-              small and inline, right after the paragraph it illustrates,
-              same treatment this field has always had. */}
+          {/* Portrait photo (Aseer holding a camera) paired with the
+              wide filmmaking collage: a tall portrait crop and a wide
+              landscape strip don't share an aspect ratio, so instead of
+              stacking them (which would just repeat the single-column
+              pattern used everywhere else on this page) they sit side
+              by side in a 4/8 grid split -- roughly proportional to
+              their own aspect ratios, so both tiles land at a similar
+              height instead of one towering over the other. Stacks back
+              to one column below lg, where there isn't room for two
+              meaningfully-sized images side by side. */}
           {"image" in section && section.image && (
-            <div className="mt-6 max-w-xs overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]">
-              <Image
-                src={section.image.src}
-                width={section.image.width}
-                height={section.image.height}
-                alt={section.image.alt}
-                className="h-auto w-full"
-              />
-            </div>
+            <Grid gap="md" className="mt-6 items-start">
+              <div className="col-span-4 md:col-span-3 lg:col-span-4 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]">
+                <Image
+                  src={section.image.src}
+                  width={section.image.width}
+                  height={section.image.height}
+                  alt={section.image.alt}
+                  className="h-auto w-full"
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 37vw, 100vw"
+                />
+              </div>
+              {"wideImage" in section && section.wideImage && (
+                <div className="col-span-4 md:col-span-5 lg:col-span-8 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]">
+                  <Image
+                    src={section.wideImage.src}
+                    width={section.wideImage.width}
+                    height={section.wideImage.height}
+                    alt={section.wideImage.alt}
+                    className="h-auto w-full"
+                    sizes="(min-width: 1024px) 66vw, (min-width: 768px) 62vw, 100vw"
+                  />
+                </div>
+              )}
+            </Grid>
           )}
           {"quote" in section && section.quote && (
             <div className="mt-6">
