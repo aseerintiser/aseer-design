@@ -115,3 +115,16 @@ export const wordItem = {
     transition: { duration: duration.slow * 1.6, ease: easing.entrance },
   },
 };
+
+/**
+ * Hero Craftsmanship milestone: timing for the homepage hero's editorial
+ * asset sequence (`HeroSequence.tsx`). Deliberately a different, much
+ * slower category than the snappy 150-250ms interaction timing above --
+ * this is meant to read as a held beat and a slow dissolve (cinematography),
+ * not as an interface transition, so it intentionally doesn't reuse
+ * `duration`'s fast tokens. Kept here, not inlined in the component, for
+ * the same "one source of truth for timing" reason every other value in
+ * this file exists.
+ */
+export const heroSequenceHoldMs = 4500;
+export const heroSequenceCrossfadeS = 1.1;
