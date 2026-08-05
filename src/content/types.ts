@@ -66,9 +66,27 @@ export interface CaseStudyMeta {
  */
 export type CaseStudyBlock =
   | { type: "heading"; level: 3 | 4; text: string }
-  | { type: "paragraph"; text: string }
+  | {
+      type: "paragraph";
+      text: string;
+      /** Convay Mobile App Revamp rebuild: "caption" renders small,
+       * muted, and centered, for the one-line caption under the hero
+       * visual (04_Visual_Specification.md). Omit for every ordinary
+       * paragraph, which keeps today's exact rendering. */
+      variant?: "caption";
+    }
   | { type: "list"; items: string[] }
-  | { type: "quote"; text: string; attribution?: string }
+  | {
+      type: "quote";
+      text: string;
+      attribution?: string;
+      /** Convay Mobile App Revamp rebuild: "large" gives a case study's
+       * one true closing line more visual weight than every other quote
+       * on the page, per 04_Visual_Specification.md ("the only place in
+       * the whole spec where a visual element should look deliberately
+       * different from its siblings"). Omit for every ordinary quote. */
+      size?: "default" | "large";
+    }
   | {
       type: "image";
       src: string;
@@ -112,6 +130,35 @@ export type CaseStudyBlock =
        * moment, not a decorative highlight used repeatedly. */
       type: "callout";
       text: string;
+    }
+  | {
+      /** Convay Mobile App Revamp rebuild: a compact, honest before/after
+       * comparison built entirely from labeled text steps, no images.
+       * Exists specifically so a claim like "five taps became three" is
+       * shown, not just stated. `oldSteps`/`newSteps` are plain labels,
+       * not screenshots -- see 06_Assets_Checklist.md's explicit rule
+       * against ever recreating a screenshot of a since-replaced flow to
+       * make a comparison look more dramatic than the real evidence
+       * supports. Generic enough for any future case study with a real,
+       * countable before/after change to reuse, not Convay-specific by
+       * construction. */
+      type: "beforeAfterFlow";
+      oldLabel: string;
+      oldSteps: string[];
+      newLabel: string;
+      newSteps: string[];
+    }
+  | {
+      /** Convay Mobile App Revamp rebuild: a small synthesized list of
+       * research pain points, each with a one-line note grounding it in
+       * what the surrounding case-study text already says. Exists to
+       * give a text-heavy research section one piece of visual evidence
+       * without inventing a chart or diagram the underlying research
+       * doesn't support -- see 06_Assets_Checklist.md's "research
+       * synthesis artifact" spec. Generic and content-agnostic, like
+       * revealGroup/timeline above. */
+      type: "painPointList";
+      items: { label: string; note: string }[];
     }
   | {
       /** A minimal visual break between two beats inside the same
@@ -206,5 +253,31 @@ export interface CaseStudy extends ProjectSummary {
     category: string[];
     role: string[];
     tools: string[];
+    /** Convay Mobile App Revamp rebuild: an optional 5th meta-row field
+     * stating a project's real ship status plainly, in the meta row,
+     * rather than disclosing it mid-paragraph deep in an outcome
+     * section (01_Audit.md's top-priority finding for this rebuild).
+     * Plain text, no badge/pill treatment, so it doesn't read as either
+     * an alarm or an achievement -- matching Role/Category/Duration/
+     * Tools' own plainness (05_Interaction_and_Motion.md). Optional and
+     * additive: every other case study's meta row is byte-for-byte
+     * unchanged without it. */
+    status?: string;
   };
+  /** Convay Mobile App Revamp rebuild: tightens the gap between the
+   * header and the first body section for this one case study, where
+   * the header and the hero visual are meant to read as one continuous
+   * hero moment rather than two independently-padded sections stacked
+   * back to back (01_Audit.md: "roughly 1,000px of empty vertical space
+   * between the meta row and the first hero visual"). Defaults to
+   * false/undefined everywhere else, so no other case study's spacing
+   * changes because of this field's existence. */
+  compactHero?: boolean;
+  /** Convay Mobile App Revamp rebuild: an optional "next case study"
+   * link rendered after the body, before the shared sitewide Footer, so
+   * a reader who reaches the end of one case study has somewhere to go
+   * next instead of the page dead-ending (01_Audit.md finding). Kept as
+   * a per-case-study field rather than a Footer change specifically so
+   * it doesn't touch the shared Footer component or any other page. */
+  nextCaseStudy?: { title: string; href: string };
 }

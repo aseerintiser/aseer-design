@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useLightbox } from "@/components/ui/Lightbox";
+import { ExpandIcon } from "@/components/ui/ExpandIcon";
 import { cn } from "@/lib/utils";
 
 interface ImageRowProps {
@@ -87,9 +88,32 @@ export function ImageRow({ images, enlargeable = true }: ImageRowProps) {
                 type="button"
                 onClick={() => open(images, index)}
                 aria-label={`View larger: ${image.alt}`}
-                className="group block h-full cursor-zoom-in"
+                // Convay Mobile App Revamp rebuild: `relative` so the
+                // scrim below can sit over the tile; an explicit focus
+                // ring in `--color-text` rather than the browser
+                // default, since that token is guaranteed to contrast
+                // against its own section's background in both light
+                // and dark tone (it has to, for body text to be
+                // legible at all), which a fixed accent-color ring
+                // isn't guaranteed to on every background.
+                className="group relative block h-full cursor-zoom-in focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text)]"
               >
                 {tile}
+                {/* Visible hover/focus affordance -- the existing
+                    `group-hover:opacity-90` dim on the image itself
+                    (still present, in `tile` above) was confirmed too
+                    subtle on its own to read as "this is clickable"
+                    (05_Interaction_and_Motion.md). A scrim plus a
+                    centered expand icon, on both hover and keyboard
+                    focus, fixes that without replacing the existing
+                    dim, using the same duration/easing tokens so it
+                    feels like one system, not two. */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/15 opacity-0 transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:opacity-100 group-focus-visible:opacity-100"
+                >
+                  <ExpandIcon className="h-5 w-5 text-white" />
+                </span>
               </button>
             ) : (
               tile

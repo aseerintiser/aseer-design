@@ -12,6 +12,8 @@ import { Timeline } from "./Timeline";
 import { LinkCard } from "./LinkCard";
 import { ControlledMedia } from "./ControlledMedia";
 import { TrustAsymmetryDemo } from "./TrustAsymmetryDemo";
+import { BeforeAfterFlow } from "./BeforeAfterFlow";
+import { PainPointList } from "./PainPointList";
 import { renderInlineMarkdown } from "@/lib/inline-markdown";
 
 /** Registry for the "interactive" block type's bespoke components (see
@@ -51,7 +53,12 @@ function renderBlock(block: CaseStudyBlock, key: number) {
       );
     case "paragraph":
       return (
-        <Text key={key} className="mt-4">
+        <Text
+          key={key}
+          size={block.variant === "caption" ? "small" : undefined}
+          muted={block.variant === "caption"}
+          className={block.variant === "caption" ? "mt-3 text-center" : "mt-4"}
+        >
           {renderInlineMarkdown(block.text)}
         </Text>
       );
@@ -68,7 +75,7 @@ function renderBlock(block: CaseStudyBlock, key: number) {
     case "quote":
       return (
         <div key={key} className="mt-6">
-          <PullQuote text={block.text} attribution={block.attribution} />
+          <PullQuote text={block.text} attribution={block.attribution} size={block.size} />
         </div>
       );
     case "image":
@@ -130,6 +137,18 @@ function renderBlock(block: CaseStudyBlock, key: number) {
       const InteractiveComponent = interactiveComponents[block.key];
       return <InteractiveComponent key={key} />;
     }
+    case "beforeAfterFlow":
+      return (
+        <BeforeAfterFlow
+          key={key}
+          oldLabel={block.oldLabel}
+          oldSteps={block.oldSteps}
+          newLabel={block.newLabel}
+          newSteps={block.newSteps}
+        />
+      );
+    case "painPointList":
+      return <PainPointList key={key} items={block.items} />;
     default:
       return null;
   }

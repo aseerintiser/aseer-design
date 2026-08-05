@@ -67,6 +67,8 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
   const triggerRef = useRef<HTMLElement | null>(null);
   const touchStartX = useRef<number | null>(null);
   const shouldReduceMotion = useReducedMotion();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const open = useCallback((images: LightboxImage[], startIndex = 0) => {
     // Remember whatever had focus (the thumbnail button just clicked)
@@ -92,21 +94,56 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
 
   // Escape closes; Left/Right move within a multi-image group (a single
   // CaseStudyImage opens a one-item group, so arrows are simply inert
-  // there rather than needing a separate code path).
+  // there rather than needing a separate code path); Tab/Shift+Tab trap
+  // focus inside the dialog rather than letting it escape into the page
+  // hidden behind the overlay (Convay Mobile App Revamp rebuild,
+  // 05_Interaction_and_Motion.md: "trap focus inside it while open").
   useEffect(() => {
     if (!group) return;
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         close();
-      } else if (event.key === "ArrowRight" && group && group.length > 1) {
+        return;
+      }
+      if (event.key === "ArrowRight" && group && group.length > 1) {
         showNext();
-      } else if (event.key === "ArrowLeft" && group && group.length > 1) {
+        return;
+      }
+      if (event.key === "ArrowLeft" && group && group.length > 1) {
         showPrev();
+        return;
+      }
+      if (event.key === "Tab") {
+        const dialog = dialogRef.current;
+        if (!dialog) return;
+        const focusable = dialog.querySelectorAll<HTMLElement>(
+          'button, [href], [tabindex]:not([tabindex="-1"])',
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0]!;
+        const last = focusable[focusable.length - 1]!;
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
       }
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [group, close, showNext, showPrev]);
+
+  // Move focus into the dialog the moment it opens (to the close
+  // button), so a keyboard user's focus doesn't stay on a thumbnail now
+  // hidden behind the overlay. Returning focus to that same trigger on
+  // close is already handled by `close()` above.
+  useEffect(() => {
+    if (group) {
+      closeButtonRef.current?.focus();
+    }
+  }, [group]);
 
   // A fullscreen viewer competing with an independently scrollable page
   // behind it is a common source of janky scroll-chaining on both
@@ -145,9 +182,20 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
       <AnimatePresence>
         {current && (
           <motion.div
+            ref={dialogRef}
             role="dialog"
             aria-modal="true"
-            aria-label={current.alt}
+            // Convay Mobile App Revamp rebuild: includes position in a
+            // multi-image group ("Onboarding flow, screen 1 of 8")
+            // rather than just the image's own alt text, per
+            // 05_Interaction_and_Motion.md, so a screen reader user
+            // knows where they are in the gallery, not just what's
+            // currently on screen.
+            aria-label={
+              group && group.length > 1
+                ? `${current.alt}, image ${index + 1} of ${group.length}`
+                : current.alt
+            }
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -158,6 +206,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
             onTouchEnd={onTouchEnd}
           >
             <button
+              ref={closeButtonRef}
               type="button"
               onClick={(event) => {
                 event.stopPropagation();

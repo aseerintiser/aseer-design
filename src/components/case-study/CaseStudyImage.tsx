@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useLightbox } from "@/components/ui/Lightbox";
+import { ExpandIcon } from "@/components/ui/ExpandIcon";
 import { cn } from "@/lib/utils";
 
 interface CaseStudyImageProps {
@@ -75,9 +76,17 @@ export function CaseStudyImage({
             type="button"
             onClick={() => open([{ src, width, height, alt }], 0)}
             aria-label={`View larger: ${alt}`}
-            className="group block w-full cursor-zoom-in"
+            className="group relative block w-full cursor-zoom-in focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text)]"
           >
             {image}
+            {/* See ImageRow.tsx for why this exists alongside the
+                existing opacity dim rather than replacing it. */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/15 opacity-0 transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:opacity-100 group-focus-visible:opacity-100"
+            >
+              <ExpandIcon className="h-5 w-5 text-white" />
+            </span>
           </button>
         ) : (
           image

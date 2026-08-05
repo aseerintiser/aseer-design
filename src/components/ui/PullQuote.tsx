@@ -1,8 +1,20 @@
 import { renderInlineMarkdown } from "@/lib/inline-markdown";
+import { cn } from "@/lib/utils";
 
 interface PullQuoteProps {
   text: string;
   attribution?: string;
+  /** Convay Mobile App Revamp rebuild: the standard treatment gives
+   * every pull quote on a page equal visual weight, which is correct
+   * almost everywhere, but 04_Visual_Specification.md calls out one
+   * specific exception -- a case study's single closing line, when it's
+   * doing more narrative work than any other quote around it, should
+   * look deliberately different, not just be one more instance of the
+   * same pattern. "large" centers the quote, drops the left rule (extra
+   * white space reads as weight here instead), and steps the size up
+   * one notch. Defaults to "default" so every existing call site is
+   * completely unaffected. */
+  size?: "default" | "large";
 }
 
 /**
@@ -12,10 +24,23 @@ interface PullQuoteProps {
  * italic treatment gives it real visual weight instead of rendering as
  * an anonymous indented paragraph.
  */
-export function PullQuote({ text, attribution }: PullQuoteProps) {
+export function PullQuote({ text, attribution, size = "default" }: PullQuoteProps) {
+  const isLarge = size === "large";
   return (
-    <blockquote className="border-l-2 border-[var(--color-accent)] py-1 pl-6">
-      <p className="font-[family-name:var(--font-display)] text-[length:var(--text-lead)] leading-snug text-[var(--color-text)] italic">
+    <blockquote
+      className={cn(
+        "py-1",
+        isLarge
+          ? "mx-auto max-w-2xl border-l-0 py-4 text-center"
+          : "border-l-2 border-[var(--color-accent)] pl-6",
+      )}
+    >
+      <p
+        className={cn(
+          "font-[family-name:var(--font-display)] leading-snug text-[var(--color-text)] italic",
+          isLarge ? "text-[length:var(--text-h3)]" : "text-[length:var(--text-lead)]",
+        )}
+      >
         {renderInlineMarkdown(text)}
       </p>
       {attribution && (
