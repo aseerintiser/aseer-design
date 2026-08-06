@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ControlledMedia } from "@/components/case-study/ControlledMedia";
+import { CaseStudyImage } from "@/components/case-study/CaseStudyImage";
+import { ConceptTile } from "@/components/design-showcase/ConceptTile";
 import {
   designShowcasePageHeading,
   designShowcasePageIntro,
@@ -30,11 +31,28 @@ export const metadata: Metadata = {
  * "this one is real" -- a visitor never has to hold both groups' very
  * different disclaimers in mind at once, because they're never on the
  * same colored band.
+ *
+ * Visual Consistency fix: all three sections now use the same, default
+ * (wide) Container measure -- matching Work and Research, the pages
+ * Aseer pointed to as the reference. An earlier version gave the
+ * page-level intro section `measure="narrow"`, which centers a much
+ * narrower column on the page (the same device Certifications
+ * deliberately uses for its own reasons) -- next to this page's other
+ * two sections, which were never narrowed, that read as an
+ * unintentional inconsistency, not a considered one.
+ *
+ * All images (the four concepts, and ZenType's screenshot) now open the
+ * shared sitewide Lightbox on click, matching every other image gallery
+ * on the site -- previously these were the one remaining set of
+ * non-enlargeable images left over from this page's original,
+ * lower-effort build.
  */
 export default function DesignShowcasePage() {
+  const conceptImages = designShowcaseItems.map((item) => item.image);
+
   return (
     <>
-      <Section density="open" measure="narrow">
+      <Section density="open">
         <Reveal>
           <Heading level={1}>{designShowcasePageHeading}</Heading>
           <Text size="lead" muted className="mt-4 max-w-[var(--measure)]">
@@ -50,23 +68,15 @@ export default function DesignShowcasePage() {
         <p className="mt-4 max-w-[60ch] text-[var(--color-text-muted)]">{designShowcaseIntro}</p>
 
         <div className="mt-12 grid grid-cols-1 items-start gap-x-6 gap-y-12 sm:grid-cols-2">
-          {designShowcaseItems.map((item) => (
-            <div key={item.id}>
-              <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)]">
-                <Image
-                  src={item.image.src}
-                  width={item.image.width}
-                  height={item.image.height}
-                  alt={item.image.alt}
-                  className="h-auto w-full"
-                  sizes="(min-width: 640px) 50vw, 100vw"
-                />
-              </div>
-              <Heading level={3} className="mt-4">
-                {item.title}
-              </Heading>
-              <p className="mt-1 text-[var(--color-text-muted)]">{item.description}</p>
-            </div>
+          {designShowcaseItems.map((item, index) => (
+            <ConceptTile
+              key={item.id}
+              title={item.title}
+              description={item.description}
+              image={item.image}
+              group={conceptImages}
+              index={index}
+            />
           ))}
         </div>
 
@@ -107,14 +117,12 @@ export default function DesignShowcasePage() {
               />
             </div>
 
-            <div className="mt-6 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]">
-              <Image
+            <div className="mt-6">
+              <CaseStudyImage
                 src={zentype.screenshot.src}
                 width={zentype.screenshot.width}
                 height={zentype.screenshot.height}
                 alt={zentype.screenshot.alt}
-                className="h-auto w-full"
-                sizes="(min-width: 1024px) 42rem, 100vw"
               />
             </div>
 

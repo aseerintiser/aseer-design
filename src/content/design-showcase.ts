@@ -101,7 +101,7 @@ export const designShowcaseBuildsIntro =
 export const zentype = {
   title: "ZenType",
   description:
-    "A calm, minimal typing practice tool built around flow and visual feedback: a distraction-free interface, a keyboard that lights up as you type, and typing insights after each session. I used Figma Make to rapidly generate and iterate on the interface, then refined it through several rounds of AI-assisted prompting. Design decisions came first, AI accelerated the implementation. Idea to working product in about two hours.",
+    "A calm, minimal typing practice tool with a keyboard that lights up as you type, built almost entirely through AI-assisted prompting in about two hours.",
   liveUrl: "https://dull-blog-69295856.figma.site",
   video: {
     src: "/design-showcase/zentype-demo.mp4",

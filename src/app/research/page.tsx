@@ -5,7 +5,6 @@ import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { getProjectsByTrack } from "@/content/projects";
-import { site } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Research",
@@ -26,25 +25,12 @@ export default function ResearchIndexPage() {
         directly into how I design.
       </Text>
       {/* Resume Strategy milestone (Resume-Strategy-Research.md, Option
-          D): the Academic CV's one placement on the whole site -- quiet,
-          inline, next to the content that actually makes it relevant
-          (this page), rather than a nav item or a button competing with
-          the Professional CV. Matches the one closely-analogous pattern
-          found in research (an academic's CV as a single quiet line
-          next to their other credential links, not a prominent call to
-          action). */}
-      <Text muted size="small" className="mt-3">
-        For a fuller academic record, you can{" "}
-        <a
-          href={site.academicCvUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="font-medium text-[var(--color-accent)] underline underline-offset-4"
-        >
-          view my academic CV
-        </a>
-        .
-      </Text>
+          D) originally placed a quiet "view my academic CV" line here,
+          next to the content that makes it relevant. Removed: the
+          /resume page already carries the same link ("Looking for a
+          fuller academic record instead? View my academic CV."), so
+          this was the same fact stated twice on the site for no added
+          reason -- one honest placement is enough. */}
       {/* Same reasoning as the Work index: the single flagship (Lumi)
           gets a full-width feature row instead of competing at equal
           size with the other two research entries.
