@@ -1,15 +1,35 @@
 /**
- * Design Showcase stopgap page (see Design-Showcase-Proposal.md for the
- * full reasoning behind this section and the plan for a proper "Craft"
- * page later). This is the low-effort version: four concept UI pieces
- * from before this rebuild, each captioned honestly as an exploration --
- * not a shipped product or a full case study -- with a link out to the
- * complete interactive Figma prototype for anyone who wants to click
- * through all four in order.
+ * Design Showcase page (see Design-Showcase-Proposal.md for the original
+ * stopgap reasoning). Two honestly-different groups now live here, kept
+ * deliberately separate rather than merged into one grid or one shared
+ * intro paragraph, because the thing that made the original four-concept
+ * intro accurate ("not to ship as real products, not case studies") is
+ * no longer true of everything on this page:
  *
- * Images are real exports from the Figma prototype (provided directly by
- * Aseer), cropped/resized for the web but otherwise unedited.
+ * 1. The four original concept UI pieces, unchanged -- Figma-only,
+ *    never shipped, captioned honestly as explorations.
+ * 2. "Builds" -- real, working things, starting with ZenType, a small
+ *    typing-practice product Aseer actually built (not just designed)
+ *    in roughly two hours using AI-assisted prompting. Deliberately not
+ *    folded into the concept grid above: doing so would either flatten
+ *    ZenType down to a static image (losing the actual story, which is
+ *    the workflow) or quietly make the concept section's own intro
+ *    paragraph inaccurate the moment a real product sat inside it.
+ *
+ * "Builds" was chosen over "Experiments" specifically to avoid reading
+ * as a research claim next to the site's actual Research nav item and
+ * track -- this page has no methodology, no participants, no findings,
+ * and shouldn't sound like it does.
+ *
+ * Images are real exports/screenshots (provided directly by Aseer),
+ * resized for the web but otherwise unedited. Fabricated assets are not
+ * used anywhere on this page.
  */
+
+export const designShowcasePageHeading = "Design Showcase";
+
+export const designShowcasePageIntro =
+  "A few smaller things, made outside any client work. Most are interface concepts that never left Figma. One of them did.";
 
 export const designShowcaseHeading = "A Few Concept Explorations";
 
@@ -69,3 +89,31 @@ export const designShowcaseItems = [
 
 export const designShowcasePrototypeUrl =
   "https://www.figma.com/proto/sbZqfwEyL25YeBvaWugK9B/Design-Showcase---Sample-Work";
+
+export const designShowcaseBuildsHeading = "Builds";
+
+export const designShowcaseBuildsIntro =
+  "Not a concept this time. A real, working product, and the process behind it is half the story.";
+
+// Grounded directly in Aseer's own LinkedIn post introducing ZenType --
+// description, feature list, workflow, and the two-hour timeframe are
+// all restated from that post, not invented or estimated here.
+export const zentype = {
+  title: "ZenType",
+  description:
+    "A calm, minimal typing practice tool built around flow and visual feedback: a distraction-free interface, a keyboard that lights up as you type, and typing insights after each session. I used Figma Make to rapidly generate and iterate on the interface, then refined it through several rounds of AI-assisted prompting. Design decisions came first, AI accelerated the implementation. Idea to working product in about two hours.",
+  liveUrl: "https://dull-blog-69295856.figma.site",
+  video: {
+    src: "/design-showcase/zentype-demo.mp4",
+    poster: "/design-showcase/zentype-2.jpg",
+    width: 1366,
+    height: 720,
+    alt: "ZenType in use, showing the glowing on-screen keyboard and live accuracy feedback as the words are typed.",
+  },
+  screenshot: {
+    src: "/design-showcase/zentype-1.jpg",
+    width: 1833,
+    height: 977,
+    alt: "A ZenType typing test in progress: words per minute and accuracy tracked live above the passage, the matching key lit up on the on-screen keyboard below.",
+  },
+} as const;
