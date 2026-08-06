@@ -40,7 +40,7 @@ export const testimonials = [
     height: 412,
     name: "Anupam Samodder",
     title: "UX Design Lead | Proficient in User Experience (UX), Solution Design, and Product Management",
-    context: "Managed Aseer directly · October 27, 2024",
+    context: "Managed Aseer directly (calls him by his nickname, Niloy) · October 27, 2024",
     text: [
       "I am pleased to recommend Niloy, with whom I had the privilege of working as his team manager in our Product Design team. Niloy has consistently demonstrated exceptional skills in UX design and has been instrumental in advancing our design system in Figma. His technical acumen, combined with a user-centric approach, made him an invaluable asset to our team.",
       "One of Niloy's standout contributions was his ability to identify and address critical design challenges. He proactively surfaced issues that impacted the product experience and user satisfaction, often bringing fresh insights into how we could optimize our designs. His attention to detail and keen understanding of user pain points greatly benefited our project outcomes and consistently enhanced our product quality.",
