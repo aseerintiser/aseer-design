@@ -118,14 +118,14 @@ const achievementImages = ["nJRfJP0bHyLPDRz4Sb18mdCRwV0.jpg", "WK3rULO361sC7LhzU
 
 export const certificationsIntro = {
   heading: "Certificates, and the Learning Behind Them",
-  body: "Most of what's below came from finishing something on my own time, not from a requirement. A few are proof I sat in a room, a webinar, or a workshop and actually paid attention. The screenshots are the record. What mattered more was getting through the material.",
+  body: "Most of what's below came from finishing something on my own time. A few are proof I sat in a room, a webinar, or a workshop and actually paid attention. The screenshots are the record. What mattered more was getting through the material.",
 };
 
 export const certificationCollections: CertificationCollection[] = [
   {
     number: "01",
     title: "Google UX Design Professional Certificate",
-    note: "A seven-course sequence built by Google's own design and research teams: UX research fundamentals, wireframing, prototyping, and usability testing, ending with a portfolio of real end-to-end projects instead of a single exam.",
+    note: "A seven-course sequence built by Google's own design and research teams: UX research fundamentals, wireframing, prototyping, and usability testing, ending in a portfolio of three real end-to-end projects.",
     groups: [
       {
         images: googleImages.map((id, index) =>
@@ -174,21 +174,21 @@ export const certificationCollections: CertificationCollection[] = [
   },
 ];
 
-export const certificationsArchiveHeading = "Everything Else Worth Keeping";
+export const certificationsArchiveHeading = "The Rest of the Record";
 export const certificationsArchiveIntro =
-  "Smaller records that didn't need their own section above, kept for the same reason as everything else on this page.";
+  "Webinars, smaller certificates, work records, and a couple of recognitions. Grouped here instead of getting a section each.";
 
 export const certificationsArchive: ArchiveCategory[] = [
   {
     label: "Webinars Attended",
-    note: "Sessions I sat in on live rather than watched back later.",
+    note: "Live sessions, attended in real time.",
     images: webinarImages.map((id, index) =>
       img(id, `Webinar attendance certificate, ${index + 1} of ${webinarImages.length}.`),
     ),
   },
   {
     label: "Other Certificates",
-    note: "Courses and workshops from smaller providers, kept here at a glance rather than each getting a full section.",
+    note: "Courses and workshops from smaller providers.",
     images: otherCertificateImages.map((id, index) =>
       img(id, `Certificate, ${index + 1} of ${otherCertificateImages.length}.`),
     ),
