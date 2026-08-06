@@ -18,7 +18,13 @@ import { CertificateTile } from "./CertificateTile";
  * Every certificate here still opens the same lightbox, at the same
  * quality, with the same keyboard and touch support -- being in the
  * archive changes how much visual weight a category gets, not how
- * seriously its evidence is treated.
+ * seriously its evidence is treated. That includes tile size: the
+ * hierarchy comes from heading size, spacing, and numbering, not from
+ * shrinking these thumbnails past the point of being readable on the
+ * page. An earlier version used a three-to-six column grid here, which
+ * rendered every certificate too small to read without opening the
+ * lightbox -- fixed to two-to-three columns, same as the collections
+ * above.
  */
 export function CertificationArchive({
   heading,
@@ -47,7 +53,7 @@ export function CertificationArchive({
             <Text muted size="small" className="mt-1">
               {category.note}
             </Text>
-            <div className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+            <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
               {category.images.map((image, index) => (
                 <CertificateTile
                   key={image.id + index}

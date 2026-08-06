@@ -188,7 +188,7 @@ export const certificationsArchive: ArchiveCategory[] = [
   },
   {
     label: "Other Certificates",
-    note: "Courses and workshops that didn't fit neatly under a single provider above.",
+    note: "Courses and workshops from smaller providers, kept here at a glance rather than each getting a full section.",
     images: otherCertificateImages.map((id, index) =>
       img(id, `Certificate, ${index + 1} of ${otherCertificateImages.length}.`),
     ),
@@ -202,7 +202,7 @@ export const certificationsArchive: ArchiveCategory[] = [
   },
   {
     label: "Achievements",
-    note: "A couple of recognitions that didn't belong anywhere else on this page.",
+    note: "Two recognitions worth having on record.",
     images: achievementImages.map((id, index) =>
       img(id, `Achievement record, ${index + 1} of ${achievementImages.length}.`),
     ),

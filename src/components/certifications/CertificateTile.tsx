@@ -32,6 +32,17 @@ interface CertificateTileProps {
  * full certificate always shows, never cropped, letterboxed instead
  * when its real proportions don't match the box.
  *
+ * Visual fix: an earlier version capped the default tile at 220px wide
+ * and let the grid it sat in run up to four columns, which meant a
+ * certificate, a document with real text on it, rendered too small to
+ * actually read without opening the lightbox. Confirmed from a
+ * rendered screenshot in chat. There's no width cap here anymore --
+ * the tile fills whatever column its parent grid gives it, and the two
+ * grids that use "default" size (CertificationCollection,
+ * CertificationArchive) were both widened to two-to-three columns
+ * instead of three-to-six, so that column is actually wide enough to
+ * read from.
+ *
  * The hover/focus affordance (scrim, expand icon, and a small lift on
  * hover) matches the pattern already established elsewhere on this
  * site (PhaseFilmstrip, ImageRow, CaseStudyImage): a real, deliberate
@@ -48,7 +59,7 @@ export function CertificateTile({ image, group, index, size = "default" }: Certi
       aria-label={`View larger: ${image.alt}`}
       className={cn(
         "group relative block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)] transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:-translate-y-1 hover:border-[var(--color-border-strong)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text)]",
-        isLarge ? "max-w-sm" : "max-w-[220px]",
+        isLarge && "max-w-md",
       )}
     >
       <Image
@@ -56,7 +67,7 @@ export function CertificateTile({ image, group, index, size = "default" }: Certi
         alt={image.alt}
         fill
         className="object-contain p-3 transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:opacity-85"
-        sizes={isLarge ? "(min-width: 640px) 384px, 90vw" : "(min-width: 1024px) 220px, (min-width: 640px) 180px, 45vw"}
+        sizes={isLarge ? "(min-width: 640px) 448px, 90vw" : "(min-width: 1024px) 320px, (min-width: 640px) 45vw, 90vw"}
         quality={90}
       />
       <span
