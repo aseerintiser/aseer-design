@@ -26,11 +26,6 @@
  * used anywhere on this page.
  */
 
-export const designShowcasePageHeading = "Design Showcase";
-
-export const designShowcasePageIntro =
-  "A few smaller things, made outside any client work. Most are interface concepts that never left Figma. One of them did.";
-
 export const designShowcaseHeading = "A Few Concept Explorations";
 
 export const designShowcaseIntro =

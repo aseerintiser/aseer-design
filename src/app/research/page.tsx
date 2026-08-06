@@ -9,7 +9,7 @@ import { getProjectsByTrack } from "@/content/projects";
 export const metadata: Metadata = {
   title: "Research",
   description:
-    "Research on trust, AI, and public-service technology, feeding directly into how I design.",
+    "HCI research spanning AI and trust, human-robot interaction, and player experience in games.",
 };
 
 export default function ResearchIndexPage() {
@@ -19,10 +19,17 @@ export default function ResearchIndexPage() {
 
   return (
     <Section density="open">
+      {/* Previously named only Lumi's own topic (trust, AI, public
+          services), which read as if it were the whole Research track
+          rather than one of three entries -- RoboCarnival (multimodal
+          human-robot interaction) and the game-difficulty study (player
+          experience research) were left out entirely. Rewritten to
+          name all three, honestly, without forcing them into one fake
+          unified topic. */}
       <Heading level={1}>Research</Heading>
       <Text muted className="mt-4 max-w-[var(--measure)]">
-        Research on trust, AI, and public-service technology, feeding
-        directly into how I design.
+        HCI research spanning AI and trust, human-robot interaction, and
+        player experience in games.
       </Text>
       {/* Resume Strategy milestone (Resume-Strategy-Research.md, Option
           D) originally placed a quiet "view my academic CV" line here,

@@ -9,7 +9,7 @@ import { getProjectsByTrack } from "@/content/projects";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Product and UX design case studies, mostly at Convay, an enterprise, government-adjacent platform.",
+    "Enterprise product design shaped around Convay, plus self-directed work in fitness, travel, and cultural experiences.",
 };
 
 export default function WorkIndexPage() {
@@ -21,10 +21,16 @@ export default function WorkIndexPage() {
 
   return (
     <Section density="open">
+      {/* Previously "mostly at Convay," which undersold the other three
+          entries (FitVibe, TravelMate AI, the Arenberg cultural festival
+          platform) as an afterthought rather than real range. Rewritten
+          to match the homepage's own "Design" track-split line
+          (page.tsx): Convay as the anchor, named specifically, plus
+          concrete domains for the rest instead of a vague "and more." */}
       <Heading level={1}>Work</Heading>
       <Text muted className="mt-4 max-w-[var(--measure)]">
-        Product and UX design work, mostly at Convay, an enterprise,
-        government-adjacent platform.
+        Enterprise product design shaped around Convay, plus self-directed
+        work in fitness, travel, and cultural experiences.
       </Text>
       {/* Every card was previously the same size regardless of weight,
           so a flagship project and a minor one competed for exactly the

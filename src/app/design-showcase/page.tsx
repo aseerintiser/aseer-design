@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
-import { Text } from "@/components/ui/Text";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ControlledMedia } from "@/components/case-study/ControlledMedia";
 import { CaseStudyImage } from "@/components/case-study/CaseStudyImage";
 import { ConceptTile } from "@/components/design-showcase/ConceptTile";
 import {
-  designShowcasePageHeading,
-  designShowcasePageIntro,
   designShowcaseHeading,
   designShowcaseIntro,
   designShowcaseItems,
@@ -27,25 +24,24 @@ export const metadata: Metadata = {
  * Design Showcase -- see content/design-showcase.ts for the full
  * reasoning behind the two-group structure below. Section-level
  * light/dark tone (the same pacing device used on the homepage and case
- * studies) does the work of separating "these are concept UIs" from
- * "this one is real" -- a visitor never has to hold both groups' very
- * different disclaimers in mind at once, because they're never on the
- * same colored band.
+ * studies) separates "these are concept UIs" from "this one is real."
  *
- * Visual Consistency fix: all three sections now use the same, default
- * (wide) Container measure -- matching Work and Research, the pages
- * Aseer pointed to as the reference. An earlier version gave the
- * page-level intro section `measure="narrow"`, which centers a much
- * narrower column on the page (the same device Certifications
- * deliberately uses for its own reasons) -- next to this page's other
- * two sections, which were never narrowed, that read as an
- * unintentional inconsistency, not a considered one.
+ * Space fix: an earlier version added a separate page-level H1 +
+ * intro Section above both groups. Removed as unnecessary weight --
+ * "A Few Concept Explorations" is back to being the page's own H1,
+ * same as before ZenType existed, and the page now opens directly
+ * instead of introducing itself twice.
  *
- * All images (the four concepts, and ZenType's screenshot) now open the
+ * All images (the four concepts, and ZenType's screenshot) open the
  * shared sitewide Lightbox on click, matching every other image gallery
- * on the site -- previously these were the one remaining set of
- * non-enlargeable images left over from this page's original,
- * lower-effort build.
+ * on the site.
+ *
+ * The "Builds" section is one centered column (not full section width)
+ * rather than flush left against a much wider dark band -- it's a
+ * single featured item, not a grid, so it reads better as a contained,
+ * balanced block than as content stranded at the left edge of empty
+ * space. Text inside that column still reads left-aligned, matching
+ * Work and Research; only the column's own position is centered.
  */
 export default function DesignShowcasePage() {
   const conceptImages = designShowcaseItems.map((item) => item.image);
@@ -53,18 +49,7 @@ export default function DesignShowcasePage() {
   return (
     <>
       <Section density="open">
-        <Reveal>
-          <Heading level={1}>{designShowcasePageHeading}</Heading>
-          <Text size="lead" muted className="mt-4 max-w-[var(--measure)]">
-            {designShowcasePageIntro}
-          </Text>
-        </Reveal>
-      </Section>
-
-      <Section density="default">
-        <Heading level={2} size={3}>
-          {designShowcaseHeading}
-        </Heading>
+        <Heading level={1}>{designShowcaseHeading}</Heading>
         <p className="mt-4 max-w-[60ch] text-[var(--color-text-muted)]">{designShowcaseIntro}</p>
 
         <div className="mt-12 grid grid-cols-1 items-start gap-x-6 gap-y-12 sm:grid-cols-2">
@@ -92,44 +77,43 @@ export default function DesignShowcasePage() {
         </p>
       </Section>
 
-      <Section density="default" tone="dark">
+      <Section density="open" tone="dark">
         <Reveal>
-          <Heading level={2} size={3}>
-            {designShowcaseBuildsHeading}
-          </Heading>
-          <p className="mt-4 max-w-[60ch] text-[var(--color-text-muted)]">
-            {designShowcaseBuildsIntro}
-          </p>
+          <div className="mx-auto max-w-2xl">
+            <Heading level={2} size={3}>
+              {designShowcaseBuildsHeading}
+            </Heading>
+            <p className="mt-4 text-[var(--color-text-muted)]">{designShowcaseBuildsIntro}</p>
 
-          <div className="mt-12 max-w-2xl">
-            <Heading level={3}>{zentype.title}</Heading>
-            <p className="mt-3 max-w-[60ch] text-[var(--color-text-muted)]">
-              {zentype.description}
-            </p>
+            <div className="mt-12">
+              <Heading level={3}>{zentype.title}</Heading>
+              <p className="mt-3 text-[var(--color-text-muted)]">{zentype.description}</p>
 
-            <div className="mt-8">
-              <ControlledMedia
-                src={zentype.video.src}
-                poster={zentype.video.poster}
-                width={zentype.video.width}
-                height={zentype.video.height}
-                alt={zentype.video.alt}
-              />
-            </div>
+              <div className="mt-8">
+                <ControlledMedia
+                  src={zentype.video.src}
+                  poster={zentype.video.poster}
+                  width={zentype.video.width}
+                  height={zentype.video.height}
+                  alt={zentype.video.alt}
+                  muted={false}
+                />
+              </div>
 
-            <div className="mt-6">
-              <CaseStudyImage
-                src={zentype.screenshot.src}
-                width={zentype.screenshot.width}
-                height={zentype.screenshot.height}
-                alt={zentype.screenshot.alt}
-              />
-            </div>
+              <div className="mt-6">
+                <CaseStudyImage
+                  src={zentype.screenshot.src}
+                  width={zentype.screenshot.width}
+                  height={zentype.screenshot.height}
+                  alt={zentype.screenshot.alt}
+                />
+              </div>
 
-            <div className="mt-8">
-              <Button href={zentype.liveUrl} target="_blank" rel="noreferrer">
-                Try the live demo
-              </Button>
+              <div className="mt-8">
+                <Button href={zentype.liveUrl} target="_blank" rel="noreferrer">
+                  Try the live demo
+                </Button>
+              </div>
             </div>
           </div>
         </Reveal>

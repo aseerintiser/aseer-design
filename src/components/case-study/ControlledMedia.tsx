@@ -9,6 +9,15 @@ interface ControlledMediaProps {
   height: number;
   alt: string;
   caption?: string;
+  /** Defaults to true, matching every case-study clip this component
+   * was originally built for (recorded UI interactions with no audio
+   * worth hearing). Set to false for a clip that actually has real
+   * sound -- playback only ever starts from an explicit click, never
+   * autoplay, so there's no browser autoplay-with-sound restriction to
+   * work around. When false, a mute toggle appears once playing;
+   * case-study clips (still the default) get no such control, since
+   * there's nothing to unmute. */
+  muted?: boolean;
 }
 
 function PlayIcon() {
@@ -41,12 +50,36 @@ function FullscreenIcon() {
   );
 }
 
+function SpeakerIcon() {
+  return (
+    <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M2 6v4h2.4L8 12.6V3.4L4.4 6H2Zm8.8-1.7-.9 1a2.6 2.6 0 0 1 0 3.4l.9 1a4 4 0 0 0 0-5.4Zm1.8-1.9-.9.9a5.3 5.3 0 0 1 0 7.4l.9.9a6.6 6.6 0 0 0 0-9.2Z"
+      />
+    </svg>
+  );
+}
+
+function MutedIcon() {
+  return (
+    <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M2 6v4h2.4L8 12.6V3.4L4.4 6H2Zm9.5-.7-1.2 1.2 1.2 1.2-.7.7-1.2-1.2-1.2 1.2-.7-.7L9 7.5 7.7 6.3l.7-.7L9.6 6.8l1.2-1.2Z"
+      />
+    </svg>
+  );
+}
+
 /**
  * Click-to-play media: a static poster until the reader deliberately
- * starts it, plays once through, no loop, muted (there's no audio to
- * begin with), with a replay affordance once it ends. Never autoplays,
- * on scroll or otherwise -- consistent with the site-wide rule that no
- * motion should delay access to real content, and with this asset's own
+ * starts it, plays once through, no loop, with a replay affordance once
+ * it ends. Muted by default (case-study clips are silent screen
+ * recordings); pass `muted={false}` for a clip with real audio, which
+ * also surfaces a mute toggle once playing. Never autoplays, on scroll
+ * or otherwise -- consistent with the site-wide rule that no motion
+ * should delay access to real content, and with this asset's own
  * decision that a reader opts in rather than has it played at them.
  *
  * A native <video> can't reliably announce its content to every screen
@@ -55,9 +88,18 @@ function FullscreenIcon() {
  * describes the interaction in words, this reinforces it rather than
  * being the only place the information lives.
  */
-export function ControlledMedia({ src, poster, width, height, alt, caption }: ControlledMediaProps) {
+export function ControlledMedia({
+  src,
+  poster,
+  width,
+  height,
+  alt,
+  caption,
+  muted = true,
+}: ControlledMediaProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [state, setState] = useState<"idle" | "playing" | "ended">("idle");
+  const [isMuted, setIsMuted] = useState(muted);
 
   function play() {
     videoRef.current?.play();
@@ -70,6 +112,10 @@ export function ControlledMedia({ src, poster, width, height, alt, caption }: Co
     video.currentTime = 0;
     video.play();
     setState("playing");
+  }
+
+  function toggleMute() {
+    setIsMuted((current) => !current);
   }
 
   // Media Experience milestone: the brief specifically calls out
@@ -92,7 +138,7 @@ export function ControlledMedia({ src, poster, width, height, alt, caption }: Co
           ref={videoRef}
           src={src}
           poster={poster}
-          muted
+          muted={isMuted}
           playsInline
           preload="none"
           loop={false}
@@ -113,14 +159,26 @@ export function ControlledMedia({ src, poster, width, height, alt, caption }: Co
           </button>
         )}
         {state === "playing" && (
-          <button
-            type="button"
-            onClick={goFullscreen}
-            aria-label="View fullscreen"
-            className="absolute right-3 bottom-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 text-white transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-black/60"
-          >
-            <FullscreenIcon />
-          </button>
+          <div className="absolute right-3 bottom-3 flex items-center gap-2">
+            {muted === false && (
+              <button
+                type="button"
+                onClick={toggleMute}
+                aria-label={isMuted ? "Unmute" : "Mute"}
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-black/40 text-white transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-black/60"
+              >
+                {isMuted ? <MutedIcon /> : <SpeakerIcon />}
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={goFullscreen}
+              aria-label="View fullscreen"
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-black/40 text-white transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-black/60"
+            >
+              <FullscreenIcon />
+            </button>
+          </div>
         )}
       </div>
       <figcaption className="mt-2 text-center text-sm text-[var(--color-text-muted)]">
