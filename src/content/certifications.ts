@@ -176,7 +176,7 @@ export const certificationCollections: CertificationCollection[] = [
 
 export const certificationsArchiveHeading = "The Rest of the Record";
 export const certificationsArchiveIntro =
-  "Webinars, smaller certificates, work records, and a couple of recognitions. Grouped here instead of getting a section each.";
+  "Webinars, individual certificates, work records, and a couple of recognitions.";
 
 export const certificationsArchive: ArchiveCategory[] = [
   {
@@ -188,7 +188,7 @@ export const certificationsArchive: ArchiveCategory[] = [
   },
   {
     label: "Other Certificates",
-    note: "Courses and workshops from smaller providers.",
+    note: "Courses and workshops from other providers, taken along the way.",
     images: otherCertificateImages.map((id, index) =>
       img(id, `Certificate, ${index + 1} of ${otherCertificateImages.length}.`),
     ),
