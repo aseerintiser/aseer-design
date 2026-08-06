@@ -183,7 +183,7 @@ export const site = {
   // identity split right at the moment a visitor is evaluating
   // credentials.
   resumeUrl:
-    "https://drive.google.com/file/d/14UctoOJTXeNWzWLhRxxFcBzXCO2jEnNM/view?usp=drive_link",
+    "https://drive.google.com/file/d/1SxD46r-ErMQowoDBCHaNQ8XOPfsWZSYd/view?usp=drive_link",
   academicCvUrl:
     "https://drive.google.com/file/d/15Z0_jcPJy7dOHw2uERxdm3mpMJ8TRQ1D/view?usp=drive_link",
   // Homepage Finalization milestone: rewritten from two terse,
