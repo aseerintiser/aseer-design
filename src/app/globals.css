@@ -224,42 +224,4 @@
       display: none;
     }
   }
-
-  /*
-   * Homepage hero, right column -- Hero Right-Column Exploration branch.
-   * A slow orbit for the six practice-area words in IdentitySculpture.tsx.
-   * Each word's start angle is set per-instance via the --start-angle
-   * custom property; the keyframe rotates the word around the center
-   * while an equal, opposite rotation keeps the word itself upright, so
-   * it reads as a label traveling around a circle, not a spinning wheel
-   * of sideways text. One full loop is 54s -- inside the brief's
-   * 45-60s "should almost appear static" range.
-   *
-   * The global `prefers-reduced-motion: reduce` rule above already
-   * forces every animation site-wide to a single, ~instant iteration
-   * (see the @media block earlier in this layer), which is enough on
-   * its own to satisfy "no continuous rotation, static composition":
-   * since a full rotation ends at the same visual position it started
-   * from, an instant single pass renders the ring in its normal,
-   * evenly-spaced resting layout with no visible jump.
-   */
-  .identity-sculpture .orbit-driver {
-    animation: orbit-spin 54s linear infinite;
-  }
-
-  .identity-sculpture:hover .orbit-driver {
-    animation-play-state: paused;
-  }
-
-  @keyframes orbit-spin {
-    from {
-      transform: rotate(var(--start-angle, 0deg))
-        translateX(clamp(105px, 9.5vw, 148px)) rotate(calc(var(--start-angle, 0deg) * -1));
-    }
-    to {
-      transform: rotate(calc(var(--start-angle, 0deg) + 360deg))
-        translateX(clamp(105px, 9.5vw, 148px))
-        rotate(calc((var(--start-angle, 0deg) + 360deg) * -1));
-    }
-  }
 }
