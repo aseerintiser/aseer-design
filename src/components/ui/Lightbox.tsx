@@ -290,11 +290,22 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
               )}
             </motion.div>
 
-            {group && group.length > 1 && (
-              <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-white/70">
-                {index + 1} / {group.length}
-              </p>
-            )}
+            {/* Certifications Rebuild milestone: a visible caption, not
+                just the aria-label a sighted user never sees. Every
+                image on the site already carries a real, specific alt
+                string (not decoration), so showing it here is free --
+                and it matters more on this page than most, where two
+                sentences of on-screen provider/credential context is
+                the difference between "a screenshot" and "a screenshot
+                of the second course in a seven-part Google program." */}
+            <div className="absolute inset-x-0 bottom-4 flex flex-col items-center gap-1 px-4 text-center">
+              <p className="max-w-lg text-sm text-white/90">{current.alt}</p>
+              {group && group.length > 1 && (
+                <p className="text-xs text-white/60">
+                  {index + 1} / {group.length}
+                </p>
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

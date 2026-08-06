@@ -1,86 +1,79 @@
-"use client";
-
-import Image from "next/image";
 import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
-import { useLightbox } from "@/components/ui/Lightbox";
-import { certificationSections, certificationImageUrl } from "@/content/certifications";
+import { Text } from "@/components/ui/Text";
+import { Reveal } from "@/components/ui/Reveal";
+import { CertificationCollection } from "@/components/certifications/CertificationCollection";
+import { CertificationArchive } from "@/components/certifications/CertificationArchive";
+import {
+  certificationsIntro,
+  certificationCollections,
+  certificationsArchiveHeading,
+  certificationsArchiveIntro,
+  certificationsArchive,
+} from "@/content/certifications";
 
 /**
- * Milestone 2: new page, migrated from the live aseer.design
- * /certifications page (didn't exist in this project before). Almost
- * entirely images -- see content/certifications.ts for why they're
- * rendered with `fill` + object-contain rather than fixed dimensions.
+ * Certifications Rebuild milestone: a full rethink of this page, not a
+ * layout polish. The old version was a flat stack of headings and
+ * small thumbnail grids with no real writing and no hierarchy beyond
+ * document order -- functional, but reading as "a list of certificates"
+ * rather than a curated record of continuous learning.
  *
- * Media Experience milestone: these tiles are small (144-192px) and
- * several certificates have real, meaningful detail (issuer, date,
- * course name) that's genuinely illegible at that size -- exactly the
- * kind of "small preview, real content worth inspecting" case worth
- * wiring into the shared Lightbox, same as case-study screenshots.
- * Each section opens as its own browsable group (Left/Right or swipe
- * moves between certificates in that section, not the whole page's
- * worth at once). No known width/height for these images (see
- * content/certifications.ts), so the Lightbox's fill-based fallback
- * mode renders them -- consistent with this page's own existing
- * "don't invent dimensions" reasoning, not a new guess.
+ * The direction chosen after weighing a few concepts (a literal
+ * bookshelf, a generic premium card grid, an expandable accordion
+ * archive, and this one): reuse this portfolio's own case-study
+ * chapter structure -- a ghost numeral, a numbered heading, alternating
+ * light/dark tone, a narrow reading measure, real writing above the
+ * evidence -- for the three named-provider credentials (Google, Meta,
+ * Interaction Design Foundation), and move everything else into a
+ * quieter, denser archive that doesn't compete with them for
+ * attention. A literal bookshelf was ruled out for being exactly the
+ * skeuomorphic gimmick the brief asked to avoid; a uniform premium
+ * grid was ruled out for treating a seven-course professional
+ * certificate and a single webinar attendance record as visually
+ * equal, which is the "collected badges" impression this rebuild is
+ * meant to fix; an accordion that hides certificates behind a click was
+ * ruled out because the screenshots are here for credibility, and
+ * credibility works best in view, not one tap away. Reusing the
+ * case-study chapter pattern won on every count: it creates real
+ * hierarchy (Google's collection is visibly larger and comes first;
+ * Meta and IxDF follow at equal typographic weight but with less
+ * material; the archive is smaller type, tighter spacing, no
+ * numbering), it's provably consistent with the rest of the site since
+ * it's literally the same components, and it required building nothing
+ * that doesn't already have a clear second use elsewhere in this
+ * portfolio.
+ *
+ * Every certificate from the old page is still here, in the same
+ * order, none removed, none re-sequenced.
  */
 export default function CertificationsPage() {
-  const { open } = useLightbox();
-
   return (
-    <Section density="open">
-      <Heading level={1}>Certifications that shape my UX journey</Heading>
+    <>
+      <Section density="open" measure="narrow">
+        <Reveal>
+          <Heading level={1}>{certificationsIntro.heading}</Heading>
+          <Text size="lead" muted className="mt-4 max-w-[var(--measure)]">
+            {certificationsIntro.body}
+          </Text>
+        </Reveal>
+      </Section>
 
-      <div className="mt-12 space-y-16">
-        {certificationSections.map((section) => {
-          const images = section.images.map((imageId) => ({
-            src: certificationImageUrl(imageId),
-            alt: section.heading,
-          }));
+      {certificationCollections.map((collection, index) => (
+        <CertificationCollection
+          key={collection.number}
+          {...collection}
+          tone={index % 2 === 0 ? "dark" : undefined}
+        />
+      ))}
 
-          return (
-            <div key={section.heading}>
-              <Heading level={3}>{section.heading}</Heading>
-              {/* Visual Polish milestone: several groups here have as few
-                  as 1-2 images (Meta Certificate, IDF Membership, IDF
-                  Courses, Achievements). The first attempt at this fix
-                  kept percentage-based tile widths matching the old
-                  grid's column fractions (e.g. 25% at lg) -- but that
-                  just reproduces the exact same problem under flex-wrap:
-                  a single tile still consumes 25% of the row and leaves
-                  the other 75% blank, because the container itself still
-                  spans the full available width either way. A *fixed*
-                  pixel width is what actually fixes it -- a lone tile now
-                  only takes up its own fixed size, so the row is exactly
-                  as wide as its content, with no implied empty track
-                  beside it. Multi-image groups still wrap into a clean
-                  multi-column flow at roughly the same density as
-                  before, just governed by "how many fixed-width tiles
-                  fit" rather than a rigid, always-N-per-row grid. */}
-              <div className="mt-6 flex flex-wrap gap-4">
-                {section.images.map((imageId, index) => (
-                  <button
-                    key={imageId}
-                    type="button"
-                    onClick={() => open(images, index)}
-                    aria-label={`View larger: ${section.heading}, item ${index + 1}`}
-                    className="group relative aspect-[4/3] w-36 cursor-zoom-in overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)] sm:w-40 lg:w-48"
-                  >
-                    <Image
-                      src={certificationImageUrl(imageId)}
-                      alt={`${section.heading}, item ${index + 1}`}
-                      fill
-                      className="object-contain p-2 transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:opacity-80"
-                      sizes="(min-width: 1024px) 192px, (min-width: 640px) 160px, 144px"
-                      quality={90}
-                    />
-                  </button>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </Section>
+      <Section density="dense" measure="narrow">
+        <CertificationArchive
+          heading={certificationsArchiveHeading}
+          intro={certificationsArchiveIntro}
+          categories={certificationsArchive}
+        />
+      </Section>
+    </>
   );
 }

@@ -18,6 +18,7 @@ import { ComparisonDiagram } from "./ComparisonDiagram";
 import { VariantComparison } from "./VariantComparison";
 import { PhaseFilmstrip } from "./PhaseFilmstrip";
 import { ReducedMotionHero } from "./ReducedMotionHero";
+import { GhostNumeral } from "@/components/ui/GhostNumeral";
 import { renderInlineMarkdown } from "@/lib/inline-markdown";
 import { cn } from "@/lib/utils";
 
@@ -27,20 +28,6 @@ import { cn } from "@/lib/utils";
 const interactiveComponents = {
   "lumi-trust-asymmetry": TrustAsymmetryDemo,
 } as const;
-
-/** Ghost numeral matching the one used for placeholder/research case
- * studies, reused here so migrated and not-yet-written case studies
- * share the same chapter-marker device. */
-function SectionNumber({ n }: { n: number }) {
-  return (
-    <span
-      aria-hidden="true"
-      className="mb-2 block font-[family-name:var(--font-display)] text-sm text-[var(--color-text-muted)]/70 select-none"
-    >
-      {String(n).padStart(2, "0")}
-    </span>
-  );
-}
 
 function renderBlock(
   block: CaseStudyBlock,
@@ -287,7 +274,7 @@ export function CaseStudyBody({
             tone={index % 2 === 1 ? "dark" : undefined}
             measure="narrow"
           >
-            {section.heading.text && <SectionNumber n={titledSectionNumber} />}
+            {section.heading.text && <GhostNumeral n={titledSectionNumber} />}
             {section.heading.text && <Heading level={2}>{section.heading.text}</Heading>}
             {section.body.map((block, blockIndex) => renderBlock(block, blockIndex, referenceMarks))}
           </Section>
