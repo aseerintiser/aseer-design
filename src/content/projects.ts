@@ -3060,6 +3060,20 @@ export const caseStudies: CaseStudy[] = [
       role: ["UX / UI Designer"],
       tools: ["Figma"],
     },
+    // Consistency pass: "next case study" navigation previously existed
+    // on only 2 of 10 case studies (the two that had been through their
+    // own dedicated rebuild). Every case study otherwise dead-ended with
+    // no forward link, contradicting CaseStudyLayout.tsx's own stated
+    // reasoning for this feature ("dead-ends fixed... keep exploring
+    // reads before get in touch"). Completed the chain across all ten,
+    // following each track's own index-page order (flagships first, then
+    // file order), so the whole site now reads as one continuous "keep
+    // exploring" path: Work track in full, then a bridge into Research,
+    // through to the end, looping back to the flagship that opened it.
+    nextCaseStudy: {
+      title: "FitVibe: A Comprehensive Fitness App",
+      href: "/work/fitvibe",
+    },
     body: convayDesignSystemBody,
   },
   {
@@ -3086,6 +3100,10 @@ export const caseStudies: CaseStudy[] = [
       category: ["Mobile Design"],
       role: ["UX Designer", "UI Designer", "UX Researcher"],
       tools: ["Figma"],
+    },
+    nextCaseStudy: {
+      title: "TravelMate AI",
+      href: "/work/travelmate-ai",
     },
     body: fitvibeBody,
   },
@@ -3121,6 +3139,10 @@ export const caseStudies: CaseStudy[] = [
       role: ["UX Designer", "UI Designer", "UX Researcher"],
       tools: ["Figma"],
     },
+    nextCaseStudy: {
+      title: "Convay Notifications",
+      href: "/work/convay-notifications",
+    },
     body: travelMateBody,
   },
   {
@@ -3147,6 +3169,10 @@ export const caseStudies: CaseStudy[] = [
       category: ["Web Design", "Product Design"],
       role: ["UX Designer", "UI Designer"],
       tools: ["Figma"],
+    },
+    nextCaseStudy: {
+      title: "Cultural Festival Platform, Arenberg UNESCO Site",
+      href: "/work/cultural-festival-platform",
     },
     body: convayNotificationsBody,
   },
@@ -3195,6 +3221,10 @@ export const caseStudies: CaseStudy[] = [
       height: 542,
       alt: "Lumi in use: the chat widget opening, topic buttons, and a live conversation answering a student's question about healthcare in Finland.",
     },
+    nextCaseStudy: {
+      title: "Multimodal Robot Interaction (RoboCarnival)",
+      href: "/research/robocarnival",
+    },
     body: lumiBody,
   },
   {
@@ -3237,6 +3267,14 @@ export const caseStudies: CaseStudy[] = [
       height: 826,
       alt: "The aRENEWberg app: splash screen, a scavenger-hunt clue, and the festival's live activity list.",
     },
+    // Last entry in the Work track's own index order -- bridges into
+    // Research instead of dead-ending or looping back to the start of
+    // the same track, matching the dual-track "Design / Research"
+    // framing already established on the homepage.
+    nextCaseStudy: {
+      title: "Lumi: Conversational AI for Public Services",
+      href: "/research/lumi",
+    },
     body: arenewbergBody,
   },
   {
@@ -3269,6 +3307,10 @@ export const caseStudies: CaseStudy[] = [
       width: 1915,
       height: 1072,
       alt: "Aseer sitting between Misty, a Joy for All companion cat, and QT.",
+    },
+    nextCaseStudy: {
+      title: "Tailoring Game Difficulty to Player Types",
+      href: "/research/game-difficulty-player-types",
     },
     body: robocarnivalBody,
   },
@@ -3322,6 +3364,13 @@ export const caseStudies: CaseStudy[] = [
       width: 2000,
       height: 1500,
       alt: "Editorial illustration: a game controller silhouette beside an ascending bar chart with player-type markers, over a dark gradient with a scattered field of 28 dots representing survey respondents.",
+    },
+    // Last case study in the chain -- closes the loop back to the
+    // flagship that opened it, rather than dead-ending, so there's
+    // always a "next" no matter where a visitor entered the site.
+    nextCaseStudy: {
+      title: "Convay Mobile App Revamp",
+      href: "/work/convay-mobile-app-revamp",
     },
     body: gameDifficultyBody,
   },

@@ -29,7 +29,7 @@ export const featuredIn: ArticleEntry[] = [
       width: 920,
       height: 519,
     },
-    heading: "It was a dark, stormy night..",
+    heading: "It was a dark, stormy night...",
     body: "For my course on Psychology in Human-Technology Interaction, I created a digital story blending cinematography and HCI concepts. This work was selected among the top 8 out of 120 stories for publication.",
     href: "https://blogs.tuni.fi/cs/teaching/it-was-a-dark-stormy-night/",
   },
