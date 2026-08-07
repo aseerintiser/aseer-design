@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ControlledMedia } from "@/components/case-study/ControlledMedia";
@@ -35,12 +36,27 @@ export const metadata: Metadata = {
  * shared sitewide Lightbox on click, matching every other image gallery
  * on the site.
  *
- * The "Builds" section is one centered column (not full section width)
- * rather than flush left against a much wider dark band -- it's a
- * single featured item, not a grid, so it reads better as a contained,
- * balanced block than as content stranded at the left edge of empty
- * space. Text inside that column still reads left-aligned, matching
- * Work and Research; only the column's own position is centered.
+ * The "Builds" section uses the Section's own `measure="narrow"` (same
+ * mechanism as the "case study in progress" panel in CaseStudyLayout
+ * and the "Current status" panel on About) instead of a one-off
+ * `mx-auto max-w-2xl` div -- same 42rem centered column, reached the
+ * established way. Text inside still reads left-aligned, matching Work
+ * and Research; only the column's own position is centered.
+ *
+ * "Builds" is an Eyebrow tightly coupled to the ZenType heading below
+ * it (mt-2), not a standalone Heading with its own mt-8 gap. As a full
+ * H2 the same visual size as ZenType's own H3, the two read as two
+ * separate, equally-weighted headings with an awkward gap between them
+ * -- more like a second page title floating alone in a mostly-empty
+ * dark band than a label sitting on top of the one thing it's labeling.
+ * Eyebrow -> Heading is the same pairing (and the same tight spacing)
+ * used above every other title on the site: the homepage role line and
+ * every case-study header. ZenType's heading also moves to level 2 to
+ * keep the heading order correct now that nothing above it is an H2,
+ * which as a side effect gives it the same serif weight as the
+ * "in progress" panel's own H2 -- appropriate here, since "Builds" is
+ * the one moment on this page meant to feel like a real, complete thing
+ * rather than a quick exploration.
  *
  * Copy fix: dropped the "Builds" group's own intro sentence ("Not a
  * concept this time...") -- it restated a contrast the two adjacent
@@ -87,43 +103,38 @@ export default function DesignShowcasePage() {
         </p>
       </Section>
 
-      <Section density="open" tone="dark">
+      <Section density="open" tone="dark" measure="narrow">
         <Reveal>
-          <div className="mx-auto max-w-2xl">
-            <Heading level={2} size={3}>
-              {designShowcaseBuildsHeading}
-            </Heading>
+          <Eyebrow>{designShowcaseBuildsHeading}</Eyebrow>
+          <Heading level={2} className="mt-2">
+            {zentype.title}
+          </Heading>
+          <p className="mt-3 text-[var(--color-text-muted)]">{zentype.description}</p>
 
-            <div className="mt-8">
-              <Heading level={3}>{zentype.title}</Heading>
-              <p className="mt-3 text-[var(--color-text-muted)]">{zentype.description}</p>
+          <div className="mt-8">
+            <ControlledMedia
+              src={zentype.video.src}
+              poster={zentype.video.poster}
+              width={zentype.video.width}
+              height={zentype.video.height}
+              alt={zentype.video.alt}
+              muted={false}
+            />
+          </div>
 
-              <div className="mt-8">
-                <ControlledMedia
-                  src={zentype.video.src}
-                  poster={zentype.video.poster}
-                  width={zentype.video.width}
-                  height={zentype.video.height}
-                  alt={zentype.video.alt}
-                  muted={false}
-                />
-              </div>
+          <div className="mt-6">
+            <CaseStudyImage
+              src={zentype.screenshot.src}
+              width={zentype.screenshot.width}
+              height={zentype.screenshot.height}
+              alt={zentype.screenshot.alt}
+            />
+          </div>
 
-              <div className="mt-6">
-                <CaseStudyImage
-                  src={zentype.screenshot.src}
-                  width={zentype.screenshot.width}
-                  height={zentype.screenshot.height}
-                  alt={zentype.screenshot.alt}
-                />
-              </div>
-
-              <div className="mt-8">
-                <Button href={zentype.liveUrl} target="_blank" rel="noreferrer">
-                  Try the live demo
-                </Button>
-              </div>
-            </div>
+          <div className="mt-8">
+            <Button href={zentype.liveUrl} target="_blank" rel="noreferrer">
+              Try the live demo
+            </Button>
           </div>
         </Reveal>
       </Section>
