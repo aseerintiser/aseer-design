@@ -87,9 +87,6 @@ export const designShowcasePrototypeUrl =
 
 export const designShowcaseBuildsHeading = "Builds";
 
-export const designShowcaseBuildsIntro =
-  "Not a concept this time. A real, working product, and the process behind it is half the story.";
-
 // Grounded directly in Aseer's own LinkedIn post introducing ZenType --
 // description, feature list, workflow, and the two-hour timeframe are
 // all restated from that post, not invented or estimated here.

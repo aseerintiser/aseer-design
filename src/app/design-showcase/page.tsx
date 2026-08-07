@@ -12,7 +12,6 @@ import {
   designShowcaseItems,
   designShowcasePrototypeUrl,
   designShowcaseBuildsHeading,
-  designShowcaseBuildsIntro,
   zentype,
 } from "@/content/design-showcase";
 
@@ -42,6 +41,17 @@ export const metadata: Metadata = {
  * balanced block than as content stranded at the left edge of empty
  * space. Text inside that column still reads left-aligned, matching
  * Work and Research; only the column's own position is centered.
+ *
+ * Copy fix: dropped the "Builds" group's own intro sentence ("Not a
+ * concept this time...") -- it restated a contrast the two adjacent
+ * section headings ("A Few Concept Explorations" right above "Builds")
+ * already make on their own, and its one new claim ("the process
+ * behind it is half the story") was a promise the very next line
+ * fulfills anyway. With one item in this group, ZenType's own heading
+ * and description already carry everything a group intro would have
+ * said. "A Few Concept Explorations" keeps its intro because that one
+ * is load-bearing: it's the actual disclosure that those four pieces
+ * aren't real products, not just scene-setting.
  */
 export default function DesignShowcasePage() {
   const conceptImages = designShowcaseItems.map((item) => item.image);
@@ -83,9 +93,8 @@ export default function DesignShowcasePage() {
             <Heading level={2} size={3}>
               {designShowcaseBuildsHeading}
             </Heading>
-            <p className="mt-4 text-[var(--color-text-muted)]">{designShowcaseBuildsIntro}</p>
 
-            <div className="mt-12">
+            <div className="mt-8">
               <Heading level={3}>{zentype.title}</Heading>
               <p className="mt-3 text-[var(--color-text-muted)]">{zentype.description}</p>
 

@@ -9,7 +9,7 @@ import { getProjectsByTrack } from "@/content/projects";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Enterprise product design shaped around Convay, plus self-directed work in fitness, travel, and cultural experiences.",
+    "Product and UX design work, mostly at Convay, an enterprise, government-adjacent platform. Other work spans fitness, travel, and cultural experiences.",
 };
 
 export default function WorkIndexPage() {
@@ -21,16 +21,18 @@ export default function WorkIndexPage() {
 
   return (
     <Section density="open">
-      {/* Previously "mostly at Convay," which undersold the other three
-          entries (FitVibe, TravelMate AI, the Arenberg cultural festival
-          platform) as an afterthought rather than real range. Rewritten
-          to match the homepage's own "Design" track-split line
-          (page.tsx): Convay as the anchor, named specifically, plus
-          concrete domains for the rest instead of a vague "and more." */}
+      {/* Back to the original line ("mostly at Convay"), which Aseer
+          preferred over an in-between rewrite that leaned on the
+          homepage's own phrasing. The undersell that line originally
+          drew flags for (the other three entries -- FitVibe, TravelMate
+          AI, the Arenberg cultural festival platform -- read as an
+          afterthought) is fixed with a second, plain sentence instead
+          of restructuring the first one. */}
       <Heading level={1}>Work</Heading>
       <Text muted className="mt-4 max-w-[var(--measure)]">
-        Enterprise product design shaped around Convay, plus self-directed
-        work in fitness, travel, and cultural experiences.
+        Product and UX design work, mostly at Convay, an enterprise,
+        government-adjacent platform. Other work spans fitness, travel,
+        and cultural experiences.
       </Text>
       {/* Every card was previously the same size regardless of weight,
           so a flagship project and a minor one competed for exactly the
