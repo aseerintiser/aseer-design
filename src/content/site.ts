@@ -124,11 +124,10 @@ export const site = {
   // page. (2) Paragraph two's Convay description didn't match the
   // Convay case study's own language ("SaaS platform" vs. the case
   // study's "video conferencing platform... trusted by governments") --
-  // reworded to match. Country count confirmed by Aseer as 45+ (the case
-  // study body in content/projects.ts says "46+" in a couple of places;
-  // that's a separate, not-yet-fixed inconsistency to correct in a
-  // future projects.ts content pass, out of scope for this
-  // homepage-only milestone).
+  // reworded to match. Country count confirmed by Aseer as 45+; the
+  // Convay case study body in content/projects.ts said "46+" in three
+  // places, flagged here as a known inconsistency and later corrected
+  // to 45+ to match.
   bio: [
     "**I start by understanding how people think and behave**, then shape that into the interface itself. Lately, that's pulled me toward trust and human-AI interaction.",
     "With a background in **Software Engineering** and a **Master's in Human-Technology Interaction**, I've designed for **Convay**, a video conferencing platform trusted by governments and global teams in **45+ countries**.",

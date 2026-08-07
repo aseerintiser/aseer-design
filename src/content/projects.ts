@@ -63,7 +63,7 @@ const convayAtAGlance: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "Designed with scalability in mind, Convay now supports **meetings of up to 10,000 participants** and is trusted by governments and international organizations in **46+ countries**, with **10,000+ public installs** on mobile platforms. At **SIDSSA 2025**, Convay was selected **over Zoom and Google Meet** as the official conferencing platform, hosting **ICT ministers from 30+ African nations**.",
+    text: "Designed with scalability in mind, Convay now supports **meetings of up to 10,000 participants** and is trusted by governments and international organizations in **45+ countries**, with **10,000+ public installs** on mobile platforms. At **SIDSSA 2025**, Convay was selected **over Zoom and Google Meet** as the official conferencing platform, hosting **ICT ministers from 30+ African nations**.",
   },
   {
     type: "list",
@@ -579,7 +579,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "These results give Convay a credible case for prioritizing mobile as it keeps scaling across 46+ countries.",
+    text: "These results give Convay a credible case for prioritizing mobile as it keeps scaling across 45+ countries.",
   },
 
   // 06. Takeaways -- unchanged position and content. The closing quote
@@ -3158,7 +3158,7 @@ export const caseStudies: CaseStudy[] = [
       "Convay notifications walkthrough",
     ),
     oneLineScope:
-      "In a platform used across 46+ countries, including by government agencies, missing a critical update can break workflows. I helped design a centralized, categorized notification system for Convay, ensuring users could easily stay on top of meetings, messages, and file updates. This feature was a small yet strategic step toward making Convay a seamless, scalable collaboration tool.",
+      "In a platform used across 45+ countries, including by government agencies, missing a critical update can break workflows. I helped design a centralized, categorized notification system for Convay, ensuring users could easily stay on top of meetings, messages, and file updates. This feature was a small yet strategic step toward making Convay a seamless, scalable collaboration tool.",
     meta: {
       role: "UX Designer",
       team: "Product managers + engineering (team size to be confirmed)",
