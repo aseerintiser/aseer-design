@@ -28,8 +28,16 @@
 
 export const designShowcaseHeading = "A Few Concept Explorations";
 
+// "Before this rebuild" (an earlier draft) referenced the portfolio
+// site's own production history -- meaningful to Aseer and me, not to
+// a visitor who has no idea a "rebuild" happened. Dropped as an
+// unexplained, unnecessary reference. The two disclaimers that followed
+// it ("not to ship as real products" / "not case studies, just quick
+// explorations") also said the same thing twice in the same "not X,
+// just Y" shape; tightened to one line each instead of two overlapping
+// ones.
 export const designShowcaseIntro =
-  "Before this rebuild, I designed a handful of interface concepts to explore specific ideas, not to ship as real products. They're not case studies, just quick explorations of a problem. The full interactive prototype covers all four, linked at the bottom.";
+  "A handful of interface concepts, each built to explore one specific idea, not to ship as a real product. They're quick explorations, not case studies. The full interactive prototype covers all four, linked at the bottom.";
 
 export const designShowcaseItems = [
   {
