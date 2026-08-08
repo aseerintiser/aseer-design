@@ -44,44 +44,62 @@ import { site } from "./site";
  * the four call sites can't quietly drift from each other, rather than
  * pasted four times.
  *
- * TODO(verification-ledger): the figures below (93% transcription
- * accuracy, 10,000-participant capacity, the SIDSSA 2025 framing, and
- * the €5M government-projects figure) are already live on aseer.design
- * today and are migrated verbatim per this milestone's "don't rewrite,
- * flag instead" rule. But per the internal verification ledger these
- * sit at "Tier 3" sourcing (self-reported / not independently
- * confirmed) and, per that ledger, shouldn't be reused without a
- * caveat or softened framing. This is a real conflict between what's
- * already public and what the ledger recommends -- left unresolved
- * here intentionally; a future content milestone should either source
- * these properly, add an explicit caveat, or soften the claims. */
+ * Content refresh: replaced with the approved "Convay at a Glance"
+ * content (convay-at-a-glance.md), supplied by Aseer as the canonical
+ * source of truth for this shared section. Wording is copied exactly,
+ * not paraphrased -- the only liberty taken is structural: the source
+ * doc's own "## Description / ## Metrics / ## Capabilities /
+ * ## References" headings are implemented as real level-4 sub-headings
+ * (see CaseStudyBlock in content/types.ts) rather than flattened into
+ * one undifferentiated block of prose, since that grouping is part of
+ * what was approved, not an invented addition. This also resolves the
+ * previous version's unresolved verification-ledger conflict (self-
+ * reported figures reused without a caveat) by construction: this is
+ * now the approved text itself, not a migrated, flagged-as-uncertain
+ * claim.
+ *
+ * The source doc's Description paragraphs have no bold emphasis in the
+ * original markdown, so none was added here -- only the Capabilities
+ * list carries the bold lead-ins the source itself uses. Choosing which
+ * words to emphasize wasn't part of "exact wording," so nothing beyond
+ * what the source already marked up was touched. */
 const convayAtAGlance: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Convay at a Glance" },
+  { type: "heading", level: 4, text: "Description" },
   {
     type: "paragraph",
-    text: "Convay is a government- and enterprise-grade SaaS video conferencing platform built for modern collaboration. Unlike traditional tools, it supports the full meeting lifecycle, from scheduling and hosting to **AI-powered transcription, multilingual support, file storage, and post-meeting follow-ups**.",
+    text: "Convay is a video conferencing and collaboration platform built for governments, enterprises, and institutions that need to keep control of their own data. Used in more than 45 countries, it covers a meeting from start to finish, from scheduling and live video to AI transcription, file storage, and follow-up, all inside a system that can run entirely on a client's own servers.",
   },
   {
     type: "paragraph",
-    text: "Designed with scalability in mind, Convay now supports **meetings of up to 10,000 participants** and is trusted by governments and international organizations in **45+ countries**, with **10,000+ public installs** on mobile platforms. At **SIDSSA 2025**, Convay was selected **over Zoom and Google Meet** as the official conferencing platform, hosting **ICT ministers from 30+ African nations**.",
+    text: "Convay is the platform behind Bangladesh's national government communications system, built for the Bangladesh Computer Council and designed to scale to 200,000 users. In 2025, it was also selected over Zoom and Google Meet as the official platform for the Sustainable Infrastructure Development Symposium (SIDSSA), a G20-linked summit hosted in South Africa, supporting government officials and policymakers from 27 countries.",
   },
+  {
+    type: "paragraph",
+    text: "At Evercare Hospital Dhaka, a 425-bed hospital and the first in Bangladesh to receive JCI accreditation, Convay has run telehealth appointments and meetings for two and a half years, according to the hospital's head of IT.",
+  },
+  { type: "heading", level: 4, text: "Metrics" },
+  {
+    type: "metricGrid",
+    items: [
+      { value: "45+", label: "Countries" },
+      { value: "200,000", label: "Government platform capacity" },
+      { value: "10,000", label: "Participants supported in a single meeting" },
+    ],
+  },
+  { type: "heading", level: 4, text: "Capabilities" },
   {
     type: "list",
     items: [
-      "High-quality video and audio conferencing",
-      "AI-based transcription and summaries (93% accuracy, multilingual: Bangla, English, French, Portuguese, Spanish)",
-      "Cloud storage for meeting files and chat logs",
-      "Real-time whiteboard, chat, and screen sharing",
-      "Enterprise-grade security with on-premise and cloud options",
-      "Cross-platform availability (Web, iOS, Android)",
+      "**Enterprise-grade security**: sovereign deployment on cloud, on-premises, or hybrid, with data kept in the client's jurisdiction",
+      "**High-quality video and audio**: built for low-bandwidth and unstable network conditions",
+      "**AI transcription and meeting summaries**: around 93% accuracy, in five languages: English, Bangla, French, Portuguese, Spanish",
+      "**Real-time whiteboard, chat, and screen sharing**: with cloud storage for meeting files and chat logs",
+      "**Cross-platform**: web, iOS, and Android, with 10,000+ mobile installs",
     ],
   },
-  {
-    type: "paragraph",
-    text: "Convay brings everything into one platform to simplify meetings, improve productivity, and support high-stakes collaboration at scale. Its scalability and reliability have powered **€5M government projects** and enterprise deployments worldwide.",
-  },
-  { type: "link", text: "convay.com", href: "https://www.convay.com" },
-  { type: "paragraph", text: "**References & Mentions:**" },
+  { type: "heading", level: 4, text: "References" },
+  { type: "link", text: "Convay", href: "https://www.convay.com/" },
   {
     type: "link",
     text: "The Daily Star",
@@ -91,11 +109,6 @@ const convayAtAGlance: CaseStudyBlock[] = [
     type: "link",
     text: "The Financial Express",
     href: "https://today.thefinancialexpress.com.bd/trade-market/convay-chosen-over-zoom-google-meet-for-g20-sidssa-2025-1748537594",
-  },
-  {
-    type: "link",
-    text: "The Daily Observer",
-    href: "https://www.observerbd.com/news/281280",
   },
   {
     type: "link",
@@ -203,8 +216,9 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
     text: "The redesigned Convay mobile app: onboarding, dashboard, and meeting tools rebuilt for phone-sized screens.",
   },
 
-  // 01. Convay at a Glance -- unchanged position and content
-  // (02_Information_Architecture.md), so this keeps reusing the shared
+  // 01. Convay at a Glance -- unchanged position (02_Information_
+  // Architecture.md); content now the approved refresh, sourced from
+  // the shared block itself, so this keeps reusing the shared
   // block rather than forking it.
   ...convayAtAGlance,
 
@@ -710,8 +724,9 @@ const convayAiBody: CaseStudyBlock[] = [
     text: "A first look at Convay AI for Physical Meetings, from the meeting dashboard to a finished, shareable summary.",
   },
 
-  // 01. Convay at a Glance -- unchanged position and content
-  // (02_Information_Architecture.md), so this keeps reusing the shared
+  // 01. Convay at a Glance -- unchanged position (02_Information_
+  // Architecture.md); content now the approved refresh, sourced from
+  // the shared block itself, so this keeps reusing the shared
   // block rather than forking it. Publication marks for References &
   // Mentions are added via the `referenceMarks` field on this case
   // study's entry below, not by editing this shared block, since three
@@ -2987,10 +3002,15 @@ export const caseStudies: CaseStudy[] = [
     // logos: no authentic wordmark files exist anywhere in this
     // project's assets, and downloading third-party brand marks from
     // the web isn't something this pass does.
+    //
+    // Convay at a Glance content refresh: "The Daily Observer" entry
+    // dropped -- the approved reference list no longer includes that
+    // link, so its mark here would be dead/unused. The new "Convay"
+    // link (the platform's own site, not third-party coverage) doesn't
+    // get a mark, same as the old "convay.com" link never had one.
     referenceMarks: {
       "The Daily Star": "TDS",
       "The Financial Express": "TFE",
-      "The Daily Observer": "TDO",
       "SIDSSA 2025 Official Post": "SID",
     },
     // Points to the next Convay project in the existing Work-track

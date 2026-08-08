@@ -77,6 +77,22 @@ export type CaseStudyBlock =
     }
   | { type: "list"; items: string[] }
   | {
+      /** "Convay at a Glance" content refresh: a small set of prominent
+       * numeric stats (e.g. "45+ Countries"), meant to be scannable at a
+       * glance rather than read as prose. No dedicated "strong metric"
+       * treatment existed in this block schema before -- SourcedMetric/
+       * MetaRow are both built for the case-study meta row's small,
+       * quiet label/value pairs (role, duration, tools), not a
+       * headline-style number. This reuses that exact same dt/dd,
+       * label-above-value, font-mono tabular-nums pattern rather than
+       * inventing new visual language, just at a size that reads as a
+       * genuine stat rather than metadata. Generic and content-agnostic,
+       * like the other structural block types above -- not
+       * Convay-specific by construction. */
+      type: "metricGrid";
+      items: { value: string; label: string }[];
+    }
+  | {
       type: "quote";
       text: string;
       attribution?: string;

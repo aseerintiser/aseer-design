@@ -68,6 +68,27 @@ function renderBlock(
           ))}
         </ul>
       );
+    case "metricGrid":
+      // Same dt-above/dd-below, font-mono tabular-nums pattern as
+      // MetaRow's case-study meta row, just at stat scale (--text-h3)
+      // instead of metadata scale -- reused deliberately rather than a
+      // new visual treatment. grid-cols-1 on mobile stacks every metric
+      // full width (no horizontal overflow risk even for the longer
+      // label), sm:grid-cols-3 lines all three up once there's room.
+      return (
+        <dl key={key} className="mt-6 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-3">
+          {block.items.map((item) => (
+            <div key={item.label}>
+              <dt className="text-xs uppercase tracking-wide text-[var(--color-text-muted)]">
+                {item.label}
+              </dt>
+              <dd className="mt-1 font-mono text-[length:var(--text-h3)] font-medium tabular-nums text-[var(--color-text)]">
+                {item.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      );
     case "quote":
       return (
         <div key={key} className="mt-6">
