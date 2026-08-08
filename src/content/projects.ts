@@ -1156,143 +1156,209 @@ const convayAiBody: CaseStudyBlock[] = [
 // ---------------------------------------------------------------------
 // 3. Convay Design System
 // ---------------------------------------------------------------------
+// Convay Design System rebuild (implementation package: CASE_STUDY_
+// FINAL.md, IMPLEMENTATION_SPEC.md, VISUAL_LAYOUT_SPEC.md, ASSET_
+// MANIFEST.md, MOTION_SPEC.md). Copy below is exact, migrated verbatim
+// from CASE_STUDY_FINAL.md -- not rewritten, shortened, or reworded.
+// Structure follows IMPLEMENTATION_SPEC.md's section order exactly:
+// Hero (below) -> 01 Convay at a Glance (shared, unchanged) -> 02 The
+// Problem -> 03 Approach -> 04 Foundations -> 05 Styles & Patterns ->
+// 06 From Tokens to Components -> 07 Outcome & Impact -> 08 Reflection.
+//
+// Hero image grid: VISUAL_LAYOUT_SPEC asks for an asymmetric editorial
+// grid ("two larger images... three smaller... grid-styles panel as a
+// small closing tile") rather than one uniform row, but also says exact
+// arrangement can flex to match how the existing ImageRow component
+// actually behaves (fixed-height, auto-width tiles per row). Mixing all
+// 3 "smaller" images (a wide banner, a landscape panel, and a tall
+// narrow panel) in one row produced extremely lopsided tile widths in
+// practice, not the deliberate variety the spec asks for. Grouped by
+// compatible aspect ratio instead, in 3 rows of 2: the color pair
+// (both tall portrait, the featured moment) first, then the two
+// landscape-ish panels (spacing + stroke width), then the two narrow
+// portrait panels (text styles + grid styles) as the quieter close --
+// same intent (color pair featured, grid panel ends the grid on a
+// small, quiet note, not a spreadsheet-uniform 6-up), reached through
+// the grouping that actually renders well with the existing component.
 const convayDesignSystemBody: CaseStudyBlock[] = [
   {
     type: "imageRow",
-    images: [
-      img("wM8AKcML8xyCnuWF75Zo6IkA18.png", 647, 245),
-      img("SR7Ty4Rtj9VnaJoe9zZ7wA2yFJI.png", 709, 561),
-      img("PCl7JbO66ST97AOthwGOw9zmTs.png", 177, 302),
-      img("l9VJURbZM2vInRtmkGKwhfNrP0.png", 222, 904),
-      img("RFIwMbzOBq1i3CiHl7feTRCmbc.png", 839, 1063),
-      img("Pz3gr4au6hAzTaXAeWRxckpYxW4.png", 839, 1067),
-    ],
+    images: [img("Pz3gr4au6hAzTaXAeWRxckpYxW4.png", 839, 1067), img("RFIwMbzOBq1i3CiHl7feTRCmbc.png", 839, 1063)],
+  },
+  {
+    type: "imageRow",
+    images: [img("SR7Ty4Rtj9VnaJoe9zZ7wA2yFJI.png", 709, 561), img("wM8AKcML8xyCnuWF75Zo6IkA18.png", 647, 245)],
+  },
+  {
+    type: "imageRow",
+    images: [img("l9VJURbZM2vInRtmkGKwhfNrP0.png", 222, 904), img("PCl7JbO66ST97AOthwGOw9zmTs.png", 177, 302)],
   },
   ...convayAtAGlance,
-  { type: "heading", level: 3, text: "Overview" },
+
+  { type: "heading", level: 3, text: "The Problem" },
   {
     type: "paragraph",
-    text: "When I joined Convay, the platform already had a range of features live, but each had been designed in isolation, without shared styles or reusable components. This lack of consistency created visual misalignment, slowed down development, and made scalability difficult.",
+    text: "When I joined Convay, the product already had a full set of features live: scheduling, live video, transcription, file storage, chat. But each one had been designed on its own, without shared styles or reusable components. Buttons looked different depending on which feature they were in. Spacing was inconsistent from screen to screen. Colors were picked case by case instead of pulled from a shared palette.",
   },
   {
     type: "paragraph",
-    text: "I was tasked with bringing order to this growing system. I began by auditing the existing UI and identifying inconsistencies across layouts, colors, typography, and spacing. From there, I built a flexible design system in Figma, introducing a unified visual language that could scale across teams, features, and devices.",
+    text: "This wasn't only a visual problem. Every new feature meant redesigning basic elements from scratch, and every small inconsistency made the product harder for developers to build and harder for users to trust. As Convay kept adding features and expanding into new markets, that lack of a shared foundation was only going to slow the team down more.",
+  },
+
+  { type: "heading", level: 3, text: "Approach" },
+  {
+    type: "paragraph",
+    text: "I started by auditing Convay's existing interface, screen by screen: cataloging the colors, spacing values, corner radii, and type styles already in use across every feature. The audit turned an abstract problem into a concrete one. Elements that should have matched didn't, and there was no shared reference to check anything against.",
   },
   {
     type: "paragraph",
-    text: "This system became the single source of truth for Convay's product design, enabling the team to maintain consistency across light and dark themes, support rapid iteration, and future-proof upcoming features.",
-  },
-  { type: "heading", level: 3, text: "Defining Global Variables" },
-  {
-    type: "paragraph",
-    text: "To build a scalable design system, I started by defining global variables for Convay. These variables include foundational elements like colors, spacing, stroke widths, and corner radii, which create a consistent look and feel across the platform. By centralizing these core design properties, we can quickly make updates or adjustments across the entire platform without manually editing individual components.",
+    text: "Rather than starting with components, I built the system bottom-up: global variables first, then reusable styles, then components on top of both. Getting the order right mattered. Variables like color and spacing needed to be settled before anything was built on top of them, since every component would inherit from them, and getting that sequence wrong would have meant reworking components every time a foundational value changed.",
   },
   {
     type: "paragraph",
-    text: "**Color Variables**: I defined a palette of brand colors and content colors, with different shades for light and dark modes. Each color has specific uses, such as distinguishing primary actions from secondary ones, ensuring clarity and consistency throughout the interface.",
+    text: "I worked closely with the product team, who set direction on priorities, and with developers, who needed the system to map cleanly onto how they'd actually implement it in code. Variable names, states, and structure were shaped as much by what was implementable as by what looked right in Figma.",
+  },
+
+  { type: "heading", level: 3, text: "Foundations" },
+  {
+    type: "paragraph",
+    text: "I started with the smallest, most foundational decisions: the variables everything else would be built from. Centralizing these meant a single update to a variable could ripple across the entire platform, instead of requiring a manual pass through every component that used it.",
+  },
+  { type: "heading", level: 4, text: "Color" },
+  {
+    type: "paragraph",
+    text: "I defined a palette of brand and content colors, each with light and dark mode variants. Every color was assigned a specific role, primary actions, secondary actions, status, content, rather than existing as a generic swatch, so a designer or developer reaches for the right color by what it means, not by picking the closest match visually. Building color as roles rather than one-off values also meant light and dark themes could both be supported without redesigning each screen twice, useful for anyone working in a bright office, a dark room, or anywhere in between.",
+  },
+  // MOTION_SPEC.md Motion 1: replaces the static light/dark pair with a
+  // real toggle here (only here -- the hero grid above keeps both as
+  // plain static tiles). Caption text is rendered inside the component
+  // itself, matching CaseStudyImage's figcaption styling exactly.
+  { type: "interactive", key: "convay-ds-color-crossfade" },
+  { type: "heading", level: 4, text: "Spacing" },
+  {
+    type: "paragraph",
+    text: "Padding and layout spacing were reduced to a defined scale, from None up through XXS, XS, S, M, L, XL, and beyond. Every component pulls from this scale rather than arbitrary pixel values, so spacing stays consistent whether it's inside a button or between two page sections.",
+  },
+  {
+    type: "image",
+    ...img("SR7Ty4Rtj9VnaJoe9zZ7wA2yFJI.png", 709, 561),
+    alt: "Convay's spacing scale defined as Figma variables, from None to XXXL.",
+    caption: "Convay's spacing scale in Figma, from None to XXXL.",
+  },
+  { type: "heading", level: 4, text: "Stroke width and corner radius" },
+  {
+    type: "paragraph",
+    text: "Border and outline weights were standardized into four values, Thin, Thick, Thicker, and Thickest, so a divider and a focused input border use a deliberate weight instead of whatever felt right in the moment. Corner radius follows the same logic, from None for sharp-edged elements up to Circular for avatars and icon buttons, with defined steps in between. The radius applied to an element now signals its role: sharper corners read as structural, rounder corners read as interactive.",
   },
   {
     type: "imageRow",
     images: [
-      img("Pz3gr4au6hAzTaXAeWRxckpYxW4.png", 839, 1067),
-      img("RFIwMbzOBq1i3CiHl7feTRCmbc.png", 839, 1063),
+      { ...img("wM8AKcML8xyCnuWF75Zo6IkA18.png", 647, 245), alt: "Convay's stroke width variables: Thin, Thick, Thicker, Thickest." },
+      { ...img("eklLqLjKkIanx3IlAAvezPLZlk.png", 646, 377), alt: "Convay's corner radius variables, from None to Circular." },
     ],
   },
   {
     type: "paragraph",
-    text: "**Spacing**: To maintain uniformity in layout and padding, I established a range of spacing variables (e.g., XXS, XS, M, L, XL). This spacing structure supports flexibility across different screen sizes while keeping the design cohesive.",
+    variant: "caption",
+    text: "Stroke width and corner radius variables. Every border and rounded corner in the product traces back to one of these values.",
   },
-  { type: "image", ...img("SR7Ty4Rtj9VnaJoe9zZ7wA2yFJI.png", 709, 561), alt: "Spacing variables" },
+
+  { type: "heading", level: 3, text: "Styles & Patterns" },
   {
     type: "paragraph",
-    text: "**Stroke Width**: Stroke widths were standardized with variables like \"Thin,\" \"Thick,\" and \"Thickest\" for borders and outlines, ensuring that lines maintain a consistent weight throughout the platform.",
+    text: "With the variables in place, I built the styles that reference them: type, elevation, and layout grids. This is the layer between raw variables and finished components, the set of rules that determines how a screen actually looks and reads.",
   },
-  { type: "image", ...img("wM8AKcML8xyCnuWF75Zo6IkA18.png", 647, 245), alt: "Stroke width variables" },
+  { type: "heading", level: 4, text: "Type" },
   {
     type: "paragraph",
-    text: "**Corner Radius**: For rounded elements, I defined corner radius variables ranging from \"None\" (sharp corners) to \"XX-Large\" and \"Circular,\" adding visual balance and hierarchy depending on the element's function.",
-  },
-  { type: "image", ...img("eklLqLjKkIanx3IlAAvezPLZlk.png", 646, 377), alt: "Corner radius variables" },
-  {
-    type: "paragraph",
-    text: "These global variables form the backbone of Convay's design system, allowing the team to apply consistent styling across multiple features quickly and effortlessly.",
-  },
-  { type: "heading", level: 3, text: "Establishing Styles for Text, Effects, and Grid Layouts" },
-  {
-    type: "paragraph",
-    text: "After defining the global variables, I moved on to setting up Figma styles for text, effects, and grid layouts. These styles are essential for ensuring a unified appearance across the platform and enhancing readability, visual hierarchy, and accessibility.",
+    text: "Titles, subtitles, body copy, and captions were each defined down to font size, weight, and line height, with separate specifications for web and mobile. That meant a designer or developer picking \"Body 2\" got the same result every time, regardless of which screen they were working on.",
   },
   {
-    type: "paragraph",
-    text: "**Text Styles**: I created a comprehensive set of text styles to cover various use cases, including titles, subtitles, body text, and captions. Each style was carefully defined with font size, weight, and line height for both web and mobile. This typographic system ensures consistency in text presentation across different screens and enhances the readability of content.",
+    type: "image",
+    ...img("l9VJURbZM2vInRtmkGKwhfNrP0.png", 222, 904),
+    alt: "Convay's text style system, showing web and mobile type scales.",
+    caption: "The web and mobile type scale, defined once and referenced everywhere.",
   },
-  { type: "image", ...img("l9VJURbZM2vInRtmkGKwhfNrP0.png", 222, 904), alt: "Text styles" },
+  { type: "heading", level: 4, text: "Elevation" },
   {
     type: "paragraph",
-    text: "**Effect Styles**: To add depth and focus to elements, I developed elevation (shadow) styles in both light and dark modes. The shadows range from subtle (Shadow 02) to more pronounced (Shadow 64), allowing us to highlight elements based on their importance. For example, higher shadow values are applied to modals and pop-up elements to help them stand out against the background.",
+    text: "Elevation is handled through a defined set of shadow styles, in both light and dark mode, ranging from a subtle lift (Shadow 02) to a pronounced one (Shadow 64). Modals and pop-up elements use the higher end of that range, so their prominence on screen is a deliberate choice rather than an accident of whatever shadow got applied.",
   },
-  { type: "image", ...img("ldkkedVjXV5kjrW3geEq2xRrM.png", 195, 492), alt: "Effect / shadow styles" },
+  {
+    type: "image",
+    ...img("ldkkedVjXV5kjrW3geEq2xRrM.png", 195, 492),
+    alt: "Convay's shadow and elevation styles, from Shadow 02 to Shadow 64, in light and dark mode.",
+    caption: "Shadow styles in light and dark mode, used to signal elevation from subtle to prominent.",
+  },
+  { type: "heading", level: 4, text: "Grid" },
   {
     type: "paragraph",
-    text: "**Grid Styles**: For a structured layout, I established grid styles for different devices and layouts, including desktop, tablet, and mobile views. These grids, such as the 12-column layout for dashboards and adaptive columns for various sections, support a flexible and responsive design. By using a standardized grid, we ensure that components are evenly aligned and that the platform scales smoothly across different screen sizes.",
+    text: "Layout is governed by a defined set of grid styles, desktop, tablet, and mobile, including a 12-column dashboard grid with defined auto-column variants down to 6, 5, 3, and 2 columns for narrower layouts.",
   },
-  { type: "image", ...img("PCl7JbO66ST97AOthwGOw9zmTs.png", 177, 302), alt: "Grid styles" },
+  {
+    type: "image",
+    ...img("PCl7JbO66ST97AOthwGOw9zmTs.png", 177, 302),
+    alt: "Convay's named grid styles, from a 12-column desktop dashboard grid to 2-column narrow layouts.",
+    caption: "Convay's named grid styles, from a 12-column desktop dashboard grid down to 2-column layouts for narrow viewports.",
+  },
+
+  { type: "heading", level: 3, text: "From Tokens to Components" },
   {
     type: "paragraph",
-    text: "These style definitions add structure to Convay's design, ensuring that text, effects, and layout grids remain consistent and visually appealing across various components.",
+    text: "With the variables and styles in place, I built out Convay's core components on top of them: buttons, form fields, icons, badges, modals, so every piece of UI in the product traced back to the same foundation instead of being redrawn from scratch each time.",
   },
-  { type: "heading", level: 3, text: "Applying the Design System to Components and UI Elements" },
   {
     type: "paragraph",
-    text: "With the foundational variables and styles established, I applied these elements to create a cohesive, scalable design system for Convay's UI components. This step involved building out reusable components using the defined colors, text styles, spacing, stroke widths, and effects, ensuring each part of the UI adheres to the new design standards.",
+    text: "Buttons carry states, primary, secondary, hover, active, pressed, built entirely from the shared color and spacing variables, so a button behaves and looks the same no matter which feature it appears in. Form fields (text inputs, dropdowns, checkboxes, radio buttons) follow the same type and spacing rules as the rest of the product, which matters more than it sounds: forms are where users spend the most deliberate attention, and inconsistency there creates friction fastest. Icons and badges use the same accent colors as the rest of the system, reserved for alerts and status rather than decoration. Modals and dialogs use the elevation styles defined earlier, so their prominence on screen follows the same logic as everywhere else, instead of being a one-off treatment.",
+  },
+  {
+    type: "paragraph",
+    text: "None of these components were designed in isolation. Each one is a direct application of the variables and styles defined earlier, which is what makes the system a system: change a variable, and every component built on it updates with it.",
+  },
+  // ASSET_MANIFEST.md's `convay-ds-component-evidence` (a tight crop of
+  // the color-variables table's status-indicator chips) is not
+  // implemented: it required cropping the existing color-light/dark
+  // screenshots, and framerusercontent.com is not reachable from this
+  // sandbox (confirmed via direct fetch, same limitation the package's
+  // own README already flags for sourcing the other eight assets).
+  // Guessing crop coordinates on an image I can't see isn't an option
+  // (README/ASSET_MANIFEST: "do not invent... a replacement for any
+  // asset"). This section already ships correctly as text-only per the
+  // package's own fallback for exactly this situation -- see the final
+  // implementation report for the flag.
+
+  { type: "heading", level: 3, text: "Outcome & Impact" },
+  {
+    type: "paragraph",
+    text: "The design system has been in active use since 2024. What follows reflects my experience working with it day to day and building on top of it as new features shipped, not a formal usage audit or a quantitative study.",
   },
   {
     type: "list",
     items: [
-      "**Buttons**: I used the global color variables and spacing options to design different button states, such as primary, secondary, active, hover, and pressed. Each button is visually consistent with the brand colors and provides clear feedback to users during interactions, enhancing usability.",
-      "**Icons and Badges**: The icons and badges across Convay were updated to align with the new color scheme, using accent colors for alerts and notifications. Each icon's stroke width and corner radius were adjusted based on the defined variables, ensuring they are visually harmonious across all screens.",
-      "**Forms and Input Fields**: The design system also covers form components, including text fields, dropdowns, checkboxes, and radio buttons. Using standardized text styles, colors, and spacing ensures that all forms look consistent and feel intuitive, reducing cognitive load on users.",
-      "**Modals and Dialogs**: Modals were designed with proper elevation styles to give them prominence on the screen. The standardized corner radius and shadow effects make dialogs visually distinct, helping users recognize important messages or actions.",
+      "Every feature built on Convay since has drawn from this system instead of starting its visual design from zero.",
+      "Both light and dark themes are covered by the same components, not maintained as separate design efforts.",
+      "Handoff to developers changed shape: instead of redlining every screen individually, developers could reference named variables and components directly in Figma.",
+      "The system is still what Convay's core platform and new features are built on today, across web and mobile.",
     ],
   },
+
+  { type: "heading", level: 3, text: "Reflection" },
   {
     type: "paragraph",
-    text: "By applying these styles across various components, we achieved a unified look and feel for Convay. This structured approach improves user experience, making interactions more predictable and intuitive, while also making it easier for developers to implement consistent designs.",
-  },
-  { type: "heading", level: 3, text: "Enhancing Scalability and Future-Proofing Convay" },
-  {
-    type: "paragraph",
-    text: "Creating a design system for Convay not only unified the visual and interactive aspects of the platform but also improved scalability and future-proofing. Before my work, Convay's design elements were not standardized, making it challenging to maintain visual consistency across new and existing features. Now, with a well-documented design system, Convay's design and development teams can easily introduce new components and features that align with the established look and feel.",
-  },
-  {
-    type: "list",
-    items: [
-      "**Easier Development Process**: With predefined styles and components in Figma, developers now have a clear guide for implementing UI elements. This reduces the need for design adjustments in each iteration, speeding up the development cycle and reducing the risk of inconsistencies.",
-      "**Scalability Across Platforms**: The design system supports Convay's expansion plans, allowing it to scale seamlessly across web, tablet, and mobile platforms. With predefined grid and layout styles for various screen sizes, the design system ensures that the platform remains visually consistent and responsive, regardless of the device.",
-      "**Efficient Updates and Maintenance**: Whenever Convay's branding or style needs to be updated, changes can be made within the design system. This approach eliminates the need to adjust individual components manually, as updating a global style or variable automatically applies the change across all relevant components. This flexibility allows Convay to adapt to new branding or design trends without extensive rework.",
-      "**Future Enhancements**: With a solid design foundation, Convay is well-positioned to add new features and user interactions. The design system provides a structured framework that allows for modular additions, enabling the design team to focus on user-centered enhancements without disrupting the core look and feel.",
-    ],
+    text: "Building Convay's design system from scratch was one of the most formative projects of my early career. It taught me that consistency isn't a limitation, it's what makes speed and trust possible at the same time.",
   },
   {
     type: "paragraph",
-    text: "Overall, the design system I built has streamlined Convay's design and development workflow, creating a sustainable framework that supports the platform's current needs and future growth. It serves as a long-term asset, ensuring that Convay's design remains consistent, user-friendly, and adaptable to new challenges and opportunities.",
-  },
-  { type: "heading", level: 3, text: "Takeaways" },
-  {
-    type: "paragraph",
-    text: "Building Convay's design system from scratch was one of the most formative parts of my UX journey. It taught me that consistency doesn't mean limitation, it creates clarity, speeds up decisions, and gives users a more trustworthy experience.",
+    text: "I learned to think beyond individual screens and design for systems that scale, and how much a well-documented decision, a corner radius, a shadow value, can reduce confusion for the people building on top of it.",
   },
   {
     type: "paragraph",
-    text: "I learned how important it is to think beyond just individual screens and start designing systems that scale. I also saw firsthand how even small, well-documented choices, like setting a corner radius or shadow style, can reduce confusion for developers and improve long-term product quality.",
-  },
-  {
-    type: "paragraph",
-    text: "Most importantly, this project reminded me that great UX isn't just about clean visuals or polished components, it's about creating a foundation that helps people work faster, build smarter, and grow with confidence.",
+    text: "Most of all, this project reminded me that a design system isn't really about visuals. It's about building a foundation that lets a team move faster and build with more confidence, together.",
   },
   {
     type: "quote",
-    text: "Good design systems don't just guide designs,\nthey unlock better collaboration.",
+    text: "Good design systems don't just guide designs. They unlock better collaboration.",
+    size: "large",
   },
 ];
 
@@ -3071,8 +3137,19 @@ export const caseStudies: CaseStudy[] = [
       alt: "Scrolling through Convay's design system: color tokens, spacing scale, and shadow values in Figma.",
     },
     contentStatus: "complete",
+    // Convay Design System rebuild: hero paragraph replaced verbatim
+    // with CASE_STUDY_FINAL.md's "Hero -> Supporting paragraph." This
+    // field also feeds the page's SEO meta description (see
+    // app/work/[slug]/page.tsx's generateMetadata, which every case
+    // study reuses this same way) -- the package separately specifies a
+    // shorter, distinct meta-description string, but IMPLEMENTATION_
+    // SPEC.md is explicit that per-page metadata handling isn't
+    // something to special-case for this one page ("that's a site-wide
+    // decision"), so this follows the same single-field convention
+    // every other case study already uses rather than introducing a
+    // second, page-specific metadata field.
     oneLineScope:
-      "Convay's fast growth created a need for consistency and scalability, but the platform had no design system in place. As the only UX designer assigned to the task, I took the initiative to create Convay's first design system from scratch. With guidance from the product team and close collaboration with developers, I built a scalable foundation defining colors, typography, spacing, components, and patterns. This design system unified the platform's visual language across light and dark themes and improved team workflows: making handoffs easier, updates faster, and new features more consistent. Today, it supports Convay's core platform and upcoming features across web and mobile, enabling the product to scale with confidence.",
+      "When I joined Convay, its interface had grown feature by feature, each one designed on its own, with no shared colors, type, or components holding it together. As the only UX designer on the team, I built Convay's first design system from the ground up: a single Figma source of truth for color, typography, spacing, and components, developed in close collaboration with the product and engineering teams. It's now the foundation every new Convay feature is built on, across web and mobile.",
     meta: {
       role: "UX Designer",
       team: "Product managers + engineering (team size to be confirmed)",

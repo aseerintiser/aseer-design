@@ -12,6 +12,7 @@ import { Timeline } from "./Timeline";
 import { LinkCard } from "./LinkCard";
 import { ControlledMedia } from "./ControlledMedia";
 import { TrustAsymmetryDemo } from "./TrustAsymmetryDemo";
+import { ColorThemeCrossfade } from "./ColorThemeCrossfade";
 import { BeforeAfterFlow } from "./BeforeAfterFlow";
 import { PainPointList } from "./PainPointList";
 import { ComparisonDiagram } from "./ComparisonDiagram";
@@ -27,6 +28,7 @@ import { cn } from "@/lib/utils";
  * rather than a generic data-driven block like revealGroup/timeline). */
 const interactiveComponents = {
   "lumi-trust-asymmetry": TrustAsymmetryDemo,
+  "convay-ds-color-crossfade": ColorThemeCrossfade,
 } as const;
 
 function renderBlock(

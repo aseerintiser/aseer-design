@@ -302,7 +302,7 @@ export type CaseStudyBlock =
        * into. Use sparingly, one real, well-earned moment, not a
        * pattern to reach for often. */
       type: "interactive";
-      key: "lumi-trust-asymmetry";
+      key: "lumi-trust-asymmetry" | "convay-ds-color-crossfade";
     };
 
 /**
