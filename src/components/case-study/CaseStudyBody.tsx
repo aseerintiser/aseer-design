@@ -75,11 +75,20 @@ function renderBlock(
       // new visual treatment. grid-cols-1 on mobile stacks every metric
       // full width (no horizontal overflow risk even for the longer
       // label), sm:grid-cols-3 lines all three up once there's room.
+      //
+      // min-h-8 on every label reserves the same two-line height
+      // regardless of whether a given label actually wraps ("Countries"
+      // is one line, "Government platform capacity" is two) -- without
+      // it the three numbers below started at different heights, since
+      // a grid row's items each begin flush after their own label's
+      // real height. Reserving a shared label height keeps all three
+      // numbers on one visual baseline, which is the whole point of a
+      // scannable stat row.
       return (
         <dl key={key} className="mt-6 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-3">
           {block.items.map((item) => (
             <div key={item.label}>
-              <dt className="text-xs uppercase tracking-wide text-[var(--color-text-muted)]">
+              <dt className="min-h-8 text-xs uppercase tracking-wide text-[var(--color-text-muted)]">
                 {item.label}
               </dt>
               <dd className="mt-1 font-mono text-[length:var(--text-h3)] font-medium tabular-nums text-[var(--color-text)]">

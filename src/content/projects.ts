@@ -47,38 +47,48 @@ import { site } from "./site";
  * Content refresh: replaced with the approved "Convay at a Glance"
  * content (convay-at-a-glance.md), supplied by Aseer as the canonical
  * source of truth for this shared section. Wording is copied exactly,
- * not paraphrased -- the only liberty taken is structural: the source
- * doc's own "## Description / ## Metrics / ## Capabilities /
- * ## References" headings are implemented as real level-4 sub-headings
- * (see CaseStudyBlock in content/types.ts) rather than flattened into
- * one undifferentiated block of prose, since that grouping is part of
- * what was approved, not an invented addition. This also resolves the
- * previous version's unresolved verification-ledger conflict (self-
- * reported figures reused without a caveat) by construction: this is
- * now the approved text itself, not a migrated, flagged-as-uncertain
- * claim.
+ * not paraphrased. This also resolves the previous version's unresolved
+ * verification-ledger conflict (self-reported figures reused without a
+ * caveat) by construction: this is now the approved text itself, not a
+ * migrated, flagged-as-uncertain claim.
  *
- * The source doc's Description paragraphs have no bold emphasis in the
- * original markdown, so none was added here -- only the Capabilities
- * list carries the bold lead-ins the source itself uses. Choosing which
- * words to emphasize wasn't part of "exact wording," so nothing beyond
- * what the source already marked up was touched. */
+ * Follow-up polish pass (Aseer's own screenshot review):
+ * (1) The source doc's "## Description" and "## Metrics" headings were
+ * dropped -- rendered as actual sub-headings they read as label-the-
+ * obvious noise (a heading announcing "this is the description" right
+ * above plain prose; a heading announcing "these are metrics" right
+ * above a block of numbers that already visually reads as metrics).
+ * "## Capabilities" and "## References" are kept as real sub-headings:
+ * unlike the first two, a bullet list or a stack of bare links doesn't
+ * announce its own category the way prose or a numbers-grid already
+ * does, so the label is doing real work there, not restating what the
+ * content already shows.
+ * (2) Aseer authorized adding bold emphasis to the three Description
+ * paragraphs for skimmability (the source doc's own markdown had none).
+ * Wording is untouched; only ** markers were added, at roughly the
+ * same density the rest of this page's bio-style prose already uses
+ * (compare site.ts's homepage bio).
+ * (3) The official Convay link moves out of the References list into
+ * its own LinkCard ("closing invitation" treatment, same component
+ * design-showcase's prototype-link neighbor pattern conceptually
+ * mirrors) at the very end of the section -- a primary-source link and
+ * three press mentions were sitting in the same plain list with no
+ * visual distinction between "the company's own site" and "coverage
+ * about it." References now holds only the three press mentions. */
 const convayAtAGlance: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Convay at a Glance" },
-  { type: "heading", level: 4, text: "Description" },
   {
     type: "paragraph",
-    text: "Convay is a video conferencing and collaboration platform built for governments, enterprises, and institutions that need to keep control of their own data. Used in more than 45 countries, it covers a meeting from start to finish, from scheduling and live video to AI transcription, file storage, and follow-up, all inside a system that can run entirely on a client's own servers.",
+    text: "Convay is a video conferencing and collaboration platform built for governments, enterprises, and institutions that need to keep control of their own data. Used in more than **45 countries**, it covers a meeting from start to finish, from scheduling and live video to AI transcription, file storage, and follow-up, all inside a system that can **run entirely on a client's own servers**.",
   },
   {
     type: "paragraph",
-    text: "Convay is the platform behind Bangladesh's national government communications system, built for the Bangladesh Computer Council and designed to scale to 200,000 users. In 2025, it was also selected over Zoom and Google Meet as the official platform for the Sustainable Infrastructure Development Symposium (SIDSSA), a G20-linked summit hosted in South Africa, supporting government officials and policymakers from 27 countries.",
+    text: "Convay is the platform behind **Bangladesh's national government communications system**, built for the Bangladesh Computer Council and designed to scale to **200,000 users**. In 2025, it was also **selected over Zoom and Google Meet** as the official platform for the Sustainable Infrastructure Development Symposium (SIDSSA), a G20-linked summit hosted in South Africa, supporting government officials and policymakers from **27 countries**.",
   },
   {
     type: "paragraph",
-    text: "At Evercare Hospital Dhaka, a 425-bed hospital and the first in Bangladesh to receive JCI accreditation, Convay has run telehealth appointments and meetings for two and a half years, according to the hospital's head of IT.",
+    text: "At **Evercare Hospital Dhaka**, a 425-bed hospital and the **first in Bangladesh to receive JCI accreditation**, Convay has run telehealth appointments and meetings for **two and a half years**, according to the hospital's head of IT.",
   },
-  { type: "heading", level: 4, text: "Metrics" },
   {
     type: "metricGrid",
     items: [
@@ -99,7 +109,6 @@ const convayAtAGlance: CaseStudyBlock[] = [
     ],
   },
   { type: "heading", level: 4, text: "References" },
-  { type: "link", text: "Convay", href: "https://www.convay.com/" },
   {
     type: "link",
     text: "The Daily Star",
@@ -115,6 +124,7 @@ const convayAtAGlance: CaseStudyBlock[] = [
     text: "SIDSSA 2025 Official Post",
     href: "https://www.linkedin.com/posts/infrastructuresa_sidssa25-infrastructuresa-infrastructuredevelopment-activity-7330574469981270019-ujhF",
   },
+  { type: "linkCard", text: "Explore Convay", href: "https://www.convay.com/" },
 ];
 
 const img = (id: string, width: number, height: number, alt = "") => ({
