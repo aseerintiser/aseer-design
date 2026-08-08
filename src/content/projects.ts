@@ -1239,20 +1239,34 @@ const convayDesignSystemBody: CaseStudyBlock[] = [
   // different, broader set of named variables (brand, button, primary,
   // secondary, accent, radio button, etc.) with their values. Reverted
   // to a static side-by-side pair (VISUAL_LAYOUT_SPEC.md's original
-  // baseline for this subsection) with neutral alt text/caption that
-  // doesn't repeat the "same interface" claim -- exact accurate wording
-  // still needs Aseer's confirmation, flagged in chat.
+  // baseline for this subsection). Also switched from `imageRow` to
+  // `variantComparison`: imageRow fixes every tile to a small shared
+  // height (built for a row of preview thumbnails), which rendered
+  // these two dense, text-heavy documentation panels small enough to
+  // be illegible (confirmed from Aseer's own screenshot of the live
+  // render). variantComparison renders each image up to 448px wide
+  // with its own caption, matching VISUAL_LAYOUT_SPEC's "~48% of
+  // container width" intent and giving each panel a caption that
+  // actually describes what it shows, now that Aseer has confirmed
+  // what's in each: the left image is a token reference table with
+  // light and dark values listed side by side per token; the right
+  // image is the full variable set grouped by role (brand, button
+  // states, accent, radio button, etc.), not a themed re-render of the
+  // same table.
   {
-    type: "imageRow",
-    images: [
-      { ...img("Pz3gr4au6hAzTaXAeWRxckpYxW4.png", 839, 1067), alt: "Convay's color variables reference table, showing light and dark values." },
-      { ...img("RFIwMbzOBq1i3CiHl7feTRCmbc.png", 839, 1063), alt: "Convay's named color variables in dark mode: brand, button, primary, secondary, accent, and other roles, with their values." },
+    type: "variantComparison",
+    variants: [
+      {
+        ...img("Pz3gr4au6hAzTaXAeWRxckpYxW4.png", 839, 1067),
+        alt: "Convay's color token reference table in Figma, listing each token's light-mode and dark-mode value side by side.",
+        caption: "Each color token's light and dark value, defined side by side.",
+      },
+      {
+        ...img("RFIwMbzOBq1i3CiHl7feTRCmbc.png", 839, 1063),
+        alt: "Convay's full set of color variables in Figma, grouped by role: brand, button states, accent, radio button, and more.",
+        caption: "The full variable set, grouped by role rather than by raw color.",
+      },
     ],
-  },
-  {
-    type: "paragraph",
-    variant: "caption",
-    text: "Convay's color variables in Figma, defined once and applied across light and dark modes.",
   },
   { type: "heading", level: 4, text: "Spacing" },
   {
@@ -1270,17 +1284,28 @@ const convayDesignSystemBody: CaseStudyBlock[] = [
     type: "paragraph",
     text: "Border and outline weights were standardized into four values, Thin, Thick, Thicker, and Thickest, so a divider and a focused input border use a deliberate weight instead of whatever felt right in the moment. Corner radius follows the same logic, from None for sharp-edged elements up to Circular for avatars and icon buttons, with defined steps in between. The radius applied to an element now signals its role: sharper corners read as structural, rounder corners read as interactive.",
   },
+  // Same imageRow -> variantComparison fix as the Color pair above:
+  // these are documentation panels, not gallery preview tiles, and
+  // imageRow's fixed small tile height rendered them too small to
+  // read. CASE_STUDY_FINAL.md's single shared caption for this pair
+  // ("Stroke width and corner radius variables. Every border and
+  // rounded corner in the product traces back to one of these
+  // values.") is split across the two per-image captions
+  // variantComparison requires, not reworded or added to.
   {
-    type: "imageRow",
-    images: [
-      { ...img("wM8AKcML8xyCnuWF75Zo6IkA18.png", 647, 245), alt: "Convay's stroke width variables: Thin, Thick, Thicker, Thickest." },
-      { ...img("eklLqLjKkIanx3IlAAvezPLZlk.png", 646, 377), alt: "Convay's corner radius variables, from None to Circular." },
+    type: "variantComparison",
+    variants: [
+      {
+        ...img("wM8AKcML8xyCnuWF75Zo6IkA18.png", 647, 245),
+        alt: "Convay's stroke width variables: Thin, Thick, Thicker, Thickest.",
+        caption: "Stroke width variables: Thin, Thick, Thicker, Thickest.",
+      },
+      {
+        ...img("eklLqLjKkIanx3IlAAvezPLZlk.png", 646, 377),
+        alt: "Convay's corner radius variables, from None to Circular.",
+        caption: "Corner radius variables, from None to Circular.",
+      },
     ],
-  },
-  {
-    type: "paragraph",
-    variant: "caption",
-    text: "Stroke width and corner radius variables. Every border and rounded corner in the product traces back to one of these values.",
   },
 
   { type: "heading", level: 3, text: "Styles & Patterns" },
