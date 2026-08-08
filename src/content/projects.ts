@@ -1229,11 +1229,31 @@ const convayDesignSystemBody: CaseStudyBlock[] = [
     type: "paragraph",
     text: "I defined a palette of brand and content colors, each with light and dark mode variants. Every color was assigned a specific role, primary actions, secondary actions, status, content, rather than existing as a generic swatch, so a designer or developer reaches for the right color by what it means, not by picking the closest match visually. Building color as roles rather than one-off values also meant light and dark themes could both be supported without redesigning each screen twice, useful for anyone working in a bright office, a dark room, or anywhere in between.",
   },
-  // MOTION_SPEC.md Motion 1: replaces the static light/dark pair with a
-  // real toggle here (only here -- the hero grid above keeps both as
-  // plain static tiles). Caption text is rendered inside the component
-  // itself, matching CaseStudyImage's figcaption styling exactly.
-  { type: "interactive", key: "convay-ds-color-crossfade" },
+  // MOTION_SPEC.md's Motion 1 (a light/dark crossfade toggle) was built
+  // here, then pulled per Aseer's review: the toggle's premise, and the
+  // approved package's own caption/alt text for these two images
+  // ("the same interface... not redesigned twice"), assumed both
+  // images show one UI with only colors swapped. Per Aseer, that's not
+  // accurate -- the light-mode image is a reference table listing both
+  // light and dark values together, while the dark-mode image shows a
+  // different, broader set of named variables (brand, button, primary,
+  // secondary, accent, radio button, etc.) with their values. Reverted
+  // to a static side-by-side pair (VISUAL_LAYOUT_SPEC.md's original
+  // baseline for this subsection) with neutral alt text/caption that
+  // doesn't repeat the "same interface" claim -- exact accurate wording
+  // still needs Aseer's confirmation, flagged in chat.
+  {
+    type: "imageRow",
+    images: [
+      { ...img("Pz3gr4au6hAzTaXAeWRxckpYxW4.png", 839, 1067), alt: "Convay's color variables reference table, showing light and dark values." },
+      { ...img("RFIwMbzOBq1i3CiHl7feTRCmbc.png", 839, 1063), alt: "Convay's named color variables in dark mode: brand, button, primary, secondary, accent, and other roles, with their values." },
+    ],
+  },
+  {
+    type: "paragraph",
+    variant: "caption",
+    text: "Convay's color variables in Figma, defined once and applied across light and dark modes.",
+  },
   { type: "heading", level: 4, text: "Spacing" },
   {
     type: "paragraph",
