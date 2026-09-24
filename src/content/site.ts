@@ -190,7 +190,7 @@ export const site = {
   // relocation.") into one sentence a person would actually say, same
   // facts (degree, university, year, relocation).
   currentStatus:
-    "I'm finishing my M.Sc. in Human-Technology Interaction at Tampere University in 2026, and I'm open to relocating for the right opportunity.",
+    "I finished my M.Sc. in Human-Technology Interaction at Tampere University in 2026, graduating with Distinction, and I'm open to relocating for the right opportunity.",
   email: "md.aseerintiser@gmail.com",
   // Homepage Finalization milestone: footer CTA rewritten. "Let's design
   // together" and "UX / Product design opportunities" only spoke to design,
