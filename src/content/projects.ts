@@ -1723,20 +1723,38 @@ const fitvibeBody: CaseStudyBlock[] = [
 // ---------------------------------------------------------------------
 // 5. TravelMate AI
 // ---------------------------------------------------------------------
+// TravelMate AI rebuild (see the "TravelMate AI" package: 01_Audit.md
+// through 09_Claude_Code_Prompt.md, Case Studies/travelmate-ai/). This
+// resolves the project's long-open keep/cut/reframe question
+// (Master_Portfolio_Knowledge_Base.md Section 3) as a full reframe, not
+// a cut: TravelMate is real, well-scoped interface work, but the old
+// copy borrowed the register of tested, shipped work ("in peer testing,
+// 80% completing key tasks", "demonstrating end-to-end UX design
+// skills") it couldn't back up. This version states plainly, in a new
+// opening section, that it's a solo, self-directed concept project, and
+// replaces the unsourced statistic and self-referential framing with an
+// honest, specific account (roughly fifteen informal walkthroughs,
+// no formal method) confirmed directly by Aseer rather than invented.
+//
+// Structural changes from the old version (02_Information_
+// Architecture.md): the nine-image, unlabeled hero grid that opened the
+// page is removed entirely rather than relocated -- five of its nine
+// images were pixel-identical duplicates of screens already shown,
+// captioned, in the "Key Features" section below (06_Assets_
+// Checklist.md), so removing it both fixes the duplication and gives
+// the page a new first section: Context and Scope, stated before any
+// imagery so every image that follows is read in the right register.
+// Every image below now appears exactly once, with real, descriptive
+// alt text (previously empty on all but three of twenty images).
 const travelMateBody: CaseStudyBlock[] = [
+  { type: "heading", level: 3, text: "Context & Scope" },
   {
-    type: "imageRow",
-    images: [
-      img("gltG0cxn5SXfakeqUdUin2pbW8E.gif", 1600, 1200),
-      img("DZJYuPCcyd7AzT9GRHMe0nWQv8.png", 804, 1748),
-      img("8XZQgRm6eKPbeOmSl6md6bxac.png", 804, 1748),
-      img("PmPjZhHVKdGGrYgByALqkJ7ht6Q.png", 804, 1748),
-      img("j5uJwrQlFKN05Uhl8UuR8amZaM.png", 804, 1748),
-      img("QhudtyTffIupolQVFV8goLYXmk.png", 804, 1748),
-      img("f5G1ucfeb9Quzcs3e9jFVBiGeY.png", 804, 1748),
-      img("4ypYjbGyt1AejHjGJoEO781eWE.png", 804, 1800),
-      img("Ru1ELrSz4yJIxgXfL6L6s98uEc.png", 804, 1800),
-    ],
+    type: "paragraph",
+    text: "TravelMate AI is a self-directed project. There was no client, no company brief, and no research participants beyond informal feedback from people I showed the prototype to. I built it over five months to explore a question I kept running into as a traveler myself: why does getting around a new city require five different apps, each solving one small piece of the same problem?",
+  },
+  {
+    type: "paragraph",
+    text: "Everything in this case study, the problem framing, the feature decisions, the interface, and the prototype, is my own work, reasoned through without a team or a client to weigh in. That makes it smaller in scope than Convay or my thesis research. It also means every decision on this page is mine to explain and stand behind directly.",
   },
   { type: "heading", level: 3, text: "Problem & Solution Overview" },
   {
@@ -1751,55 +1769,109 @@ const travelMateBody: CaseStudyBlock[] = [
     type: "paragraph",
     text: "The aim was to design an assistant that feels **natural, context-aware, and always ready**, so tourists don't need five apps when one intelligent companion can do it all.",
   },
-  { type: "heading", level: 3, text: "Key Features & UI Showcase" },
+  { type: "heading", level: 3, text: "The Idea, One Screen at a Time" },
+  {
+    type: "paragraph",
+    text: "Five features, each solving one piece of the app-juggling problem. Here's how each one works, and what I was trying to get right.",
+  },
   {
     type: "paragraph",
     text: "**Splash & Onboarding**\nThe first screen welcomes users with TravelMate branding and a **\"Get Started\"** call-to-action. It sets a clean, inviting tone while keeping friction low.",
   },
-  { type: "image", ...img("DZJYuPCcyd7AzT9GRHMe0nWQv8.png", 804, 1748), alt: "Splash and onboarding screen" },
+  {
+    type: "image",
+    ...img("DZJYuPCcyd7AzT9GRHMe0nWQv8.png", 804, 1748),
+    alt: "TravelMate splash screen showing the app logo over an illustrated hillside scene, with a Get Started button.",
+  },
   {
     type: "paragraph",
-    text: "**Conversational Chat & Voice**\nUsers can ask questions through text or voice, receiving real-time responses with maps and suggestions. This multimodal flow reduces friction for travelers who may not always be able to type, especially when navigating on the go.",
+    text: "**Conversational Chat & Voice**\nUsers can ask questions through text or voice and get real-time responses with maps and suggestions attached. I designed a text-chat view, a map view for directions, and a dedicated voice mode with a waveform indicator and example prompts, so switching between typing and speaking feels like one continuous conversation rather than two separate modes bolted together.",
   },
   {
     type: "imageRow",
     images: [
-      img("8XZQgRm6eKPbeOmSl6md6bxac.png", 804, 1748),
-      img("QhudtyTffIupolQVFV8goLYXmk.png", 804, 1748),
-      img("oQBTps7BwjTNtyBIf0SEPI1vTFA.png", 804, 1748),
-      img("9aTNoTA1X3EMFN9Uuhx1WKGDJY.png", 804, 1748),
-      img("tarT09Fi4L4yDA5pM3yXyU1sic.png", 804, 1748),
-      img("f5G1ucfeb9Quzcs3e9jFVBiGeY.png", 804, 1748),
+      img(
+        "8XZQgRm6eKPbeOmSl6md6bxac.png",
+        804,
+        1748,
+        "TravelMate chat screen showing a text conversation with suggested prompts like nearby restaurants and metro stations.",
+      ),
+      img(
+        "QhudtyTffIupolQVFV8goLYXmk.png",
+        804,
+        1748,
+        "TravelMate chat screen showing a map view with walking directions to a nearby museum.",
+      ),
+      img(
+        "oQBTps7BwjTNtyBIf0SEPI1vTFA.png",
+        804,
+        1748,
+        "TravelMate voice screen showing an active waveform while listening for a spoken question.",
+      ),
+      img(
+        "9aTNoTA1X3EMFN9Uuhx1WKGDJY.png",
+        804,
+        1748,
+        "TravelMate voice screen showing a second waveform state mid-response.",
+      ),
+      img(
+        "tarT09Fi4L4yDA5pM3yXyU1sic.png",
+        804,
+        1748,
+        "TravelMate voice screen showing the microphone control ready to start listening.",
+      ),
+      img(
+        "f5G1ucfeb9Quzcs3e9jFVBiGeY.png",
+        804,
+        1748,
+        "TravelMate voice screen showing an example spoken command with its translated response.",
+      ),
     ],
   },
   {
     type: "paragraph",
     text: "**Itinerary Planner**\nA simple calendar view lets users add activities or view suggestions. This keeps trip planning in one place instead of scattered across apps, reducing planning time and improving confidence in their schedule.",
   },
-  { type: "image", ...img("nOM36AUEzLOD673zi9osVUO6xw.png", 804, 2160), alt: "Itinerary planner" },
+  {
+    type: "image",
+    ...img("nOM36AUEzLOD673zi9osVUO6xw.png", 804, 2160),
+    alt: "TravelMate itinerary screen showing a weekly calendar view with a scheduled museum visit and an option to add new activities.",
+  },
   {
     type: "paragraph",
     text: "**Transport Hub**\nShows options for walking, metro, and taxis with cost and time estimates. This direct comparison helps travelers make faster, more informed choices, a key need in unfamiliar cities.",
   },
-  { type: "image", ...img("j5uJwrQlFKN05Uhl8UuR8amZaM.png", 804, 1748), alt: "Transport hub" },
+  {
+    type: "image",
+    ...img("j5uJwrQlFKN05Uhl8UuR8amZaM.png", 804, 1748),
+    alt: "TravelMate transport hub screen showing walking, metro, and taxi options with estimated cost and time for each.",
+  },
   {
     type: "paragraph",
     text: "**Travel Journal**\nAllows users to document their trip with photos and notes. Beyond memory-keeping, it strengthens emotional connection to the app, increasing return usage.",
   },
-  { type: "image", ...img("4ypYjbGyt1AejHjGJoEO781eWE.png", 804, 1800), alt: "Travel journal" },
+  {
+    type: "image",
+    ...img("4ypYjbGyt1AejHjGJoEO781eWE.png", 804, 1800),
+    alt: "TravelMate travel journal screen showing dated entries with photos and short notes from a Paris and Rome trip.",
+  },
   {
     type: "paragraph",
     text: "**Weather & Emergency Info**\nDisplays forecasts and location-based emergency resources. Providing this context directly in the app reduces dependency on multiple tools and builds user trust in TravelMate as a reliable companion.",
   },
-  { type: "image", ...img("gmEHNYW9VL5FJQEYRWcuVl32jZo.png", 804, 2804), alt: "Weather and emergency info" },
-  { type: "heading", level: 3, text: "Challenges and Solutions" },
+  {
+    type: "image",
+    ...img("gmEHNYW9VL5FJQEYRWcuVl32jZo.png", 804, 2804),
+    alt: "TravelMate weather screen showing the current temperature, a five-day forecast, and a 24-hour temperature graph.",
+  },
+  { type: "heading", level: 3, text: "Challenges and Decisions" },
   {
     type: "paragraph",
     text: "**Challenge 1: Balancing Conversational Flow with Structure**\nTourists needed the flexibility of free chat but also quick access to structured actions like \"Book Taxi\" or \"Nearest Hospital.\"",
   },
   {
     type: "paragraph",
-    text: "**Solution:** Combined conversational AI with **shortcut buttons** on the home screen, reducing reliance on typing while keeping the experience fluid.",
+    text: "**Decision:** Combined conversational AI with **shortcut buttons** on the home screen, reducing reliance on typing while keeping the experience fluid.",
   },
   {
     type: "paragraph",
@@ -1807,7 +1879,7 @@ const travelMateBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "**Solution:** Made **emergency help one-tap accessible** from the main navigation, ensuring quick response when time is critical.",
+    text: "**Decision:** Made **emergency help one-tap accessible** from the main navigation, ensuring quick response when time is critical.",
   },
   {
     type: "paragraph",
@@ -1815,7 +1887,7 @@ const travelMateBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "**Solution:** Grouped content into **five clear tabs** (Home, Itinerary, Transport Hub, Journal, Weather) to simplify navigation and reduce cognitive load.",
+    text: "**Decision:** Grouped content into **five clear tabs** (Home, Itinerary, Transport Hub, Journal, Weather) to simplify navigation and reduce cognitive load.",
   },
   {
     type: "paragraph",
@@ -1823,16 +1895,20 @@ const travelMateBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "**Solution:** Added **voice input** alongside text, tested for seamless switching between modes.",
+    text: "**Decision:** Added **voice input** alongside text, tested for seamless switching between modes.",
   },
-  { type: "heading", level: 3, text: "Outcome and Impact" },
   {
-    type: "list",
-    items: [
-      "**Prototype validated usability** – In peer testing, most users found the flows intuitive, with **80% completing key tasks (navigation, translation, itinerary)** without guidance.",
-      "**Bridged multiple tools** – Instead of juggling maps, translators, and local guides, TravelMate unified them into a single conversational interface.",
-      "**Portfolio-ready prototype** – Delivered as an interactive **Figma prototype**, demonstrating end-to-end UX design skills in AI-driven, multi-modal contexts.",
-    ],
+    type: "callout",
+    text: "**What I'd still want to solve.** Working alone meant every flow shipped on my own judgment, with no one else in the room to push back on a decision before I moved on to the next screen. A longer version of this project would start with someone else involved from day one, ideally before the interface was already fully formed, so decisions could be questioned while they were still cheap to change.",
+  },
+  { type: "heading", level: 3, text: "What This Project Showed Me" },
+  {
+    type: "paragraph",
+    text: "Once the prototype was built, I walked about fifteen people, mostly friends and classmates, through it and watched how they used it. It was not formal usability testing: no structured tasks, no recorded sessions, no scripted questions, just enough to see whether the flows made sense to someone seeing them for the first time. That informal round is also why this case study does not carry a completion percentage or a formal finding: nothing here was measured rigorously enough to report as one.",
+  },
+  {
+    type: "paragraph",
+    text: "Working without a client or a team meant every decision, from the problem framing to the smallest interaction detail, was mine to make and mine to defend. TravelMate is a small project, but it's a complete one: a real problem, a reasoned set of trade-offs, and a working prototype I can walk someone through screen by screen.",
   },
   {
     type: "link",
@@ -3281,15 +3357,32 @@ export const caseStudies: CaseStudy[] = [
     oneLineScope:
       "TravelMate AI is a mobile-based conversational assistant designed to make traveling simpler and stress-free. It helps tourists navigate new cities, get instant recommendations, translate on the go, and access emergency info in real time. By combining chat, voice, and travel utilities in one app, TravelMate brings together tools that are usually scattered across multiple platforms, giving users a single, reliable travel companion.",
     meta: {
-      role: "To be confirmed",
-      team: "To be confirmed",
+      // TravelMate AI rebuild: replaces "To be confirmed" -- this was a
+      // solo, self-directed project with no team, so "team" states that
+      // plainly rather than leaving an unresolved placeholder live on
+      // the page (it doesn't render when liveMeta is present, but the
+      // underlying data should still be accurate, not a stale TODO).
+      role: "UX Designer, UI Designer, UX Researcher (solo)",
+      team: "None (self-directed, solo project)",
       duration: "Jan 2025 – May 2025",
-      tools: "To be confirmed",
+      tools: "Figma",
     },
     liveMeta: {
       category: ["Mobile Design", "Product Design"],
-      role: ["UX Designer", "UI Designer", "UX Researcher"],
+      // TravelMate AI rebuild: "(solo)" resolves the framing gap
+      // 01_Audit.md flagged -- the live meta row previously listed
+      // three roles exactly like a job description, with nothing
+      // signaling all three were the same unsupervised person.
+      role: ["UX Designer", "UI Designer", "UX Researcher (solo)"],
       tools: ["Figma"],
+      // TravelMate AI rebuild: fifth meta-row field, same mechanism
+      // Convay Mobile App Revamp introduced (01_Audit.md there: "state
+      // the pre-launch status plainly, early, and once"). Here it
+      // states scope rather than ship status, since the new Context &
+      // Scope section right below covers the same ground in prose --
+      // together they mean a reader can't reach any screenshot without
+      // first knowing this is a solo concept project, not client work.
+      status: "Self-directed concept project",
     },
     nextCaseStudy: {
       title: "Convay Notifications",
