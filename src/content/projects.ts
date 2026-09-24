@@ -1830,72 +1830,62 @@ const travelMateBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "**Itinerary Planner**\nA simple calendar view lets users add activities or view suggestions. This keeps trip planning in one place instead of scattered across apps, reducing planning time and improving confidence in their schedule.",
+    text: "**Itinerary, transport, journal, and weather**\nThe rest of the app is built around the moments a trip actually moves through: planning a day, getting somewhere, remembering it afterward, and checking the conditions around all of it. A calendar view for adding activities and seeing the day at a glance. A transport hub comparing walking, metro, and taxi by cost and time. A travel journal for photos and notes from each stop. Weather and emergency info surfaced directly in the app, so none of it requires switching to something else.",
   },
   {
-    type: "image",
-    ...img("nOM36AUEzLOD673zi9osVUO6xw.png", 804, 2160),
-    alt: "TravelMate itinerary screen showing a weekly calendar view with a scheduled museum visit and an option to add new activities.",
-  },
-  {
-    type: "paragraph",
-    text: "**Transport Hub**\nShows options for walking, metro, and taxis with cost and time estimates. This direct comparison helps travelers make faster, more informed choices, a key need in unfamiliar cities.",
-  },
-  {
-    type: "image",
-    ...img("j5uJwrQlFKN05Uhl8UuR8amZaM.png", 804, 1748),
-    alt: "TravelMate transport hub screen showing walking, metro, and taxi options with estimated cost and time for each.",
-  },
-  {
-    type: "paragraph",
-    text: "**Travel Journal**\nAllows users to document their trip with photos and notes. Beyond memory-keeping, it strengthens emotional connection to the app, increasing return usage.",
-  },
-  {
-    type: "image",
-    ...img("4ypYjbGyt1AejHjGJoEO781eWE.png", 804, 1800),
-    alt: "TravelMate travel journal screen showing dated entries with photos and short notes from a Paris and Rome trip.",
-  },
-  {
-    type: "paragraph",
-    text: "**Weather & Emergency Info**\nDisplays forecasts and location-based emergency resources. Providing this context directly in the app reduces dependency on multiple tools and builds user trust in TravelMate as a reliable companion.",
-  },
-  {
-    type: "image",
-    ...img("gmEHNYW9VL5FJQEYRWcuVl32jZo.png", 804, 2804),
-    alt: "TravelMate weather screen showing the current temperature, a five-day forecast, and a 24-hour temperature graph.",
+    type: "imageRow",
+    images: [
+      img(
+        "nOM36AUEzLOD673zi9osVUO6xw.png",
+        804,
+        2160,
+        "TravelMate itinerary screen showing a weekly calendar view with a scheduled museum visit and an option to add new activities.",
+      ),
+      img(
+        "j5uJwrQlFKN05Uhl8UuR8amZaM.png",
+        804,
+        1748,
+        "TravelMate transport hub screen showing walking, metro, and taxi options with estimated cost and time for each.",
+      ),
+      img(
+        "4ypYjbGyt1AejHjGJoEO781eWE.png",
+        804,
+        1800,
+        "TravelMate travel journal screen showing dated entries with photos and short notes from a Paris and Rome trip.",
+      ),
+      img(
+        "gmEHNYW9VL5FJQEYRWcuVl32jZo.png",
+        804,
+        2804,
+        "TravelMate weather screen showing the current temperature, a five-day forecast, and a 24-hour temperature graph.",
+      ),
+    ],
   },
   { type: "heading", level: 3, text: "Challenges and Decisions" },
   {
     type: "paragraph",
-    text: "**Challenge 1: Balancing Conversational Flow with Structure**\nTourists needed the flexibility of free chat but also quick access to structured actions like \"Book Taxi\" or \"Nearest Hospital.\"",
+    text: "Four decisions came out of watching where the concept could break under real conditions.",
   },
   {
-    type: "paragraph",
-    text: "**Decision:** Combined conversational AI with **shortcut buttons** on the home screen, reducing reliance on typing while keeping the experience fluid.",
-  },
-  {
-    type: "paragraph",
-    text: "**Challenge 2: Designing for Tourists in Stressful Situations**\nIn emergencies, users can't afford to dig through menus.",
-  },
-  {
-    type: "paragraph",
-    text: "**Decision:** Made **emergency help one-tap accessible** from the main navigation, ensuring quick response when time is critical.",
-  },
-  {
-    type: "paragraph",
-    text: "**Challenge 3: Information Overload**\nTravel apps often overwhelm users with too many features.",
-  },
-  {
-    type: "paragraph",
-    text: "**Decision:** Grouped content into **five clear tabs** (Home, Itinerary, Transport Hub, Journal, Weather) to simplify navigation and reduce cognitive load.",
-  },
-  {
-    type: "paragraph",
-    text: "**Challenge 4: Supporting Multimodal Inputs**\nNot all users type easily while traveling (walking, carrying luggage, or in noisy streets).",
-  },
-  {
-    type: "paragraph",
-    text: "**Decision:** Added **voice input** alongside text, tested for seamless switching between modes.",
+    type: "timeline",
+    steps: [
+      {
+        label: "Conversational flow vs. structure",
+        detail: "Shortcut buttons on the home screen for actions like \"Book Taxi,\" so typing stayed optional",
+      },
+      {
+        label: "Designing for stressful moments",
+        detail: "Emergency help made one-tap accessible from the main navigation",
+      },
+      {
+        label: "Avoiding information overload",
+        detail: "Content grouped into five tabs: Home, Itinerary, Transport Hub, Journal, Weather",
+      },
+      {
+        label: "Supporting multimodal input",
+        detail: "Voice added alongside text, for hands full or streets too noisy to type",
+      },
+    ],
   },
   {
     type: "callout",
