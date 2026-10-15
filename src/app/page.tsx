@@ -1,259 +1,334 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import { Section } from "@/components/layout/Section";
-import { Grid } from "@/components/layout/Grid";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { Button } from "@/components/ui/Button";
-import { Eyebrow } from "@/components/ui/Eyebrow";
-import { ProjectCard } from "@/components/ui/ProjectCard";
-import { KineticHeadline } from "@/components/ui/KineticHeadline";
+import { ArrowIcon } from "@/components/ui/ArrowIcon";
+import { EvidenceChip } from "@/components/ui/EvidenceChip";
+import { LocalTime } from "@/components/ui/LocalTime";
 import { Reveal } from "@/components/ui/Reveal";
-import { StaggerContainer, StaggerItem } from "@/components/ui/Stagger";
+import { HeroStory } from "@/components/home/HeroStory";
+import { HoverStage } from "@/components/home/HoverStage";
+import { Voices } from "@/components/home/Voices";
 import { renderInlineMarkdown } from "@/lib/inline-markdown";
 import { site } from "@/content/site";
+import { about } from "@/content/about";
 import { projectSummaries } from "@/content/projects";
+import { chapterFor } from "@/content/chapters";
+import {
+  bridgeToConvay,
+  bridgeToFitvibe,
+  convayChapter,
+  fitvibeFeature,
+  lumiFeature,
+  moreResearch,
+  person,
+} from "@/content/home";
 
 export const metadata: Metadata = {
-  // Middle dot, matching layout.tsx's default title and the Eyebrow /
-  // resume-page name/title separator convention already used on-site.
   title: `${site.name} · ${site.title}`,
 };
 
+function thumbnailOf(slug: string) {
+  const project = projectSummaries.find((p) => p.slug === slug);
+  if (!project?.thumbnail) throw new Error(`Missing thumbnail for ${slug}`);
+  return project.thumbnail;
+}
+
+/** Mono label used for section and project indexes. */
+function Label({ children, className }: { children: React.ReactNode; className?: string }) {
+  return (
+    <p
+      className={`font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase ${className ?? ""}`}
+    >
+      {children}
+    </p>
+  );
+}
+
+/** A true one-line handover between projects (see content/home.ts). */
+function Bridge({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="my-16 flex items-center gap-5 md:my-24">
+      <span aria-hidden="true" className="h-px flex-1 bg-[var(--color-border)]" />
+      <p className="max-w-[34ch] text-center font-[family-name:var(--font-display)] text-lg italic text-[var(--color-text-muted)] md:text-xl">
+        {children}
+      </p>
+      <span aria-hidden="true" className="h-px flex-1 bg-[var(--color-border)]" />
+    </div>
+  );
+}
+
+function CaseLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link href={href} className="group mt-6 inline-flex items-center gap-2 text-sm font-medium">
+      <span className="link-ink">{children}</span>
+      <ArrowIcon className="h-3.5 w-3.5 transition-transform duration-[var(--duration-base)] group-hover:translate-x-0.5" />
+    </Link>
+  );
+}
+
+/**
+ * Homepage (Phase 2): one story in four acts.
+ *
+ * 1. The hook: who Aseer is, the promise, and his real path, with the
+ *    work playing along it.
+ * 2. The work: the featured five, newest first, each led by its outcome
+ *    and one evidence chip, with a true one-line bridge between them.
+ * 3. The depth: more research, then three voices from people he worked
+ *    with.
+ * 4. The person: how he got here and what he is looking for. The
+ *    contact block in the footer closes the page.
+ *
+ * The first two acts are the screening room (night); the last two move
+ * to paper for calmer reading.
+ */
 export default function HomePage() {
-  const flagshipWork = projectSummaries.find(
-    (project) => project.track === "work" && project.isFlagship,
-  );
-  const flagshipResearch = projectSummaries.find(
-    (project) => project.track === "research" && project.isFlagship,
-  );
+  const lumiChapter = chapterFor("lumi");
 
   return (
     <>
-      {/* Hero. Homepage Finalization milestone: replaced the two-column
-          7/5 split (text + large square portrait) with a single
-          typographic column -- a photo the size of the headline competed
-          with the work itself, and benchmarked poorly against personal
-          sites from designers at Linear/Stripe/Vercel/Notion, which
-          rarely give a face equal visual weight to the headline. The
-          portrait still exists on the About page; this only restrains
-          the one page where restraint matters more. The eyebrow states
-          name + title directly, and the headline is still the one
-          kinetic-motion moment on the page (plays once, on load); the
-          bio/skills/CTAs render via the same 0.35s-delayed Reveal as
-          before so the whole hero reads as one coordinated entrance.
+      {/* Act 1 · the hook */}
+      <Section tone="dark" density="dense" className="pt-8 pb-14 md:pt-10 md:pb-16">
+        <HeroStory
+          intro={
+            <div>
+              <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.12em] text-[var(--color-text-muted)] uppercase">
+                <span aria-hidden="true" className="h-2 w-2 rounded-full bg-[var(--color-signal)]" />
+                <span>Open to roles</span>
+                <span aria-hidden="true">·</span>
+                <span>{site.title}</span>
+                <span aria-hidden="true">·</span>
+                <span>
+                  Tampere <LocalTime />
+                </span>
+              </p>
+              <Heading level={1} size="display" className="mt-5">
+                Designing digital products people <mark className="italic">trust</mark>, grounded in
+                research.
+              </Heading>
+              <Text size="lead" className="mt-6 max-w-[36rem] text-[var(--color-text-muted)]">
+                {renderInlineMarkdown(site.bio[0])}
+              </Text>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button href="#work">See the work</Button>
+                <Button href="/research" variant="secondary">
+                  Read the research
+                </Button>
+              </div>
+            </div>
+          }
+        />
+      </Section>
 
-          Hero Composition & First Impression milestone briefly replaced
-          this max-w wrapper with a Grid + explicit col-span (see
-          Hero-Composition-Review.md, Option C) to lock the margin to the
-          page's 12-column grid instead of leaving it as leftover space
-          after a headline of a given length. Reverted after seeing it
-          live: at real desktop widths the grid-locked column left an
-          even larger, more static gap on the right than the previous
-          max-w-6xl wrapper did, which read as more unbalanced, not less.
-          Back to the simpler max-w-6xl cap, the better-performing of the
-          two in practice. The bio and skill-line rows still cap at
-          max-w-[var(--measure)] inside that column -- unrelated problem,
-          unrelated fix: that cap is about paragraph line length staying
-          readable, not about where the column itself sits. */}
-      <Section density="open" as="section" className="overflow-visible">
-        <div className="max-w-6xl">
-          <Eyebrow>
-            {site.name} · {site.title}
-          </Eyebrow>
-          <Heading level={1} size="display" className="mt-3">
-            <KineticHeadline text={site.tagline} />
+      {/* Act 2 · the work */}
+      <Section tone="dark" density="default" id="work" className="scroll-mt-16 border-t border-[var(--color-border)]">
+        <div className="max-w-3xl">
+          <Label>Selected work · newest first</Label>
+          <Heading level={2} className="mt-3">
+            Five projects, from a thesis on trust back to my first client app.
           </Heading>
-          {/* The headline's word-stagger runs roughly 0.05-0.55s after
-              mount (see wordContainer/wordItem in lib/motion). Without a
-              delay here, the bio and CTAs would render instantly and sit
-              still for half a second next to a headline still animating
-              -- two disconnected timings in one hero. A single Reveal at
-              0.35s brings them in while the last word or two is still
-              settling, so the whole hero reads as one coordinated
-              entrance instead of "headline animation, then everything
-              else." */}
-          <Reveal delay={0.35}>
-            <div className="mt-6 max-w-[var(--measure)] space-y-4">
-              {site.bio.map((paragraph, index) => (
-                <Text key={index} size={index === 0 ? "lead" : "body"} muted={index > 0}>
-                  {renderInlineMarkdown(paragraph)}
-                </Text>
-              ))}
+        </div>
+
+        {/* Lumi, large */}
+        <Reveal>
+          <article className="mt-14 grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
+            <HoverStage
+              href={lumiFeature.href}
+              label={`Open the ${lumiFeature.title} case study`}
+              chapter={lumiChapter}
+              media={thumbnailOf("lumi")}
+              sizes="(min-width: 1024px) 58vw, 92vw"
+              className="lg:col-span-7"
+            />
+            <div className="lg:col-span-5">
+              <Label>{lumiFeature.index}</Label>
+              <h3 className="mt-3 font-[family-name:var(--font-display)] text-[length:var(--text-h1)] leading-none tracking-[-0.02em]">
+                {lumiFeature.title}
+              </h3>
+              <p className="mt-5 text-[length:var(--text-lead)] leading-relaxed">{lumiFeature.outcome}</p>
+              <p className="mt-3 text-sm text-[var(--color-text-muted)]">{lumiFeature.role}</p>
+              <EvidenceChip evidence={lumiFeature.evidence} className="mt-5" />
+              <div>
+                <CaseLink href={lumiFeature.href}>{lumiFeature.cta}</CaseLink>
+              </div>
             </div>
-            {/* Milestone 3: previously two bare paragraphs, visually
-                indistinguishable from any other muted text on the page --
-                easy to read as leftover copy rather than a considered
-                accent. A thin top rule sets this apart as its own quiet
-                strip, and uppercase/tracked type (the same treatment
-                Eyebrow uses elsewhere) reads as a deliberate label row
-                instead of two stray sentences. */}
-            <div className="mt-6 max-w-[var(--measure)] space-y-1.5 border-t border-[var(--color-border)] pt-4">
-              {site.skillLines.map((line) => (
-                <p
-                  key={line}
-                  className="text-xs font-medium tracking-wide text-[var(--color-text-muted)] uppercase"
-                >
-                  {line}
-                </p>
-              ))}
+          </article>
+        </Reveal>
+
+        <Bridge>{bridgeToConvay}</Bridge>
+
+        {/* The Convay chapter: one header, three cases */}
+        <section aria-labelledby="convay-chapter">
+          <div className="grid gap-6 lg:grid-cols-12 lg:gap-12">
+            <div className="lg:col-span-5">
+              <Label>{convayChapter.label}</Label>
+              <h3 id="convay-chapter" className="mt-3 font-[family-name:var(--font-display)] text-[length:var(--text-h2)] leading-[1.1]">
+                Convay
+              </h3>
             </div>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Button href="/work">View Work</Button>
-              <Button href="/research" variant="secondary">
-                View Research
-              </Button>
+            <p className="text-[var(--color-text-muted)] lg:col-span-7 lg:pt-7">{convayChapter.context}</p>
+          </div>
+          <div className="mt-10 grid gap-10 md:grid-cols-3 md:gap-6">
+            {convayChapter.projects.map((project) => (
+              <Reveal key={project.slug}>
+                <article>
+                  <HoverStage
+                    href={project.href}
+                    label={`Open the Convay ${project.title} case study`}
+                    chapter={chapterFor(project.slug)}
+                    media={thumbnailOf(project.slug)}
+                    sizes="(min-width: 768px) 30vw, 92vw"
+                  />
+                  <h4 className="mt-5 font-[family-name:var(--font-display)] text-2xl leading-tight">
+                    <Link href={project.href} className="link-ink no-underline">
+                      {project.title}
+                    </Link>
+                  </h4>
+                  <p className="mt-2 leading-relaxed">{project.outcome}</p>
+                  <EvidenceChip evidence={project.evidence} className="mt-4" />
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        <Bridge>{bridgeToFitvibe}</Bridge>
+
+        {/* FitVibe, compact: the origin */}
+        <Reveal>
+          <article className="grid items-center gap-8 md:grid-cols-12 md:gap-10">
+            <HoverStage
+              href={fitvibeFeature.href}
+              label={`Open the ${fitvibeFeature.title} case study`}
+              chapter={chapterFor("fitvibe")}
+              media={thumbnailOf("fitvibe")}
+              sizes="(min-width: 768px) 34vw, 92vw"
+              className="md:col-span-5 lg:col-span-4"
+            />
+            <div className="md:col-span-7 lg:col-span-6">
+              <Label>{fitvibeFeature.index}</Label>
+              <h3 className="mt-3 font-[family-name:var(--font-display)] text-[length:var(--text-h2)] leading-[1.1]">
+                {fitvibeFeature.title}
+              </h3>
+              <p className="mt-4 leading-relaxed">{fitvibeFeature.outcome}</p>
+              <p className="mt-2 text-sm text-[var(--color-text-muted)]">{fitvibeFeature.role}</p>
+              <EvidenceChip evidence={fitvibeFeature.evidence} className="mt-4" />
+              <div>
+                <CaseLink href={fitvibeFeature.href}>Open the case study</CaseLink>
+              </div>
             </div>
-          </Reveal>
+          </article>
+        </Reveal>
+
+        <Link
+          href="/work"
+          className="group mt-20 flex items-center justify-between gap-6 border-y border-[var(--color-border)] py-6"
+        >
+          <span className="text-[var(--color-text-muted)] transition-colors duration-[var(--duration-base)] group-hover:text-[var(--color-text)]">
+            All work, including Convay Notifications, TravelMate AI and the aRENEWberg festival app
+          </span>
+          <span className="flex items-center gap-2 font-[family-name:var(--font-mono)] text-xs tracking-[0.14em] uppercase">
+            Index
+            <ArrowIcon className="h-3.5 w-3.5 transition-transform duration-[var(--duration-base)] group-hover:translate-x-0.5" />
+          </span>
+        </Link>
+      </Section>
+
+      {/* Act 3 · the depth */}
+      <Section density="default" id="research" className="scroll-mt-16">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-4">
+            <Label>More research</Label>
+            <Heading level={2} className="mt-3">
+              More studies, from social robots to game difficulty.
+            </Heading>
+            <div>
+              <CaseLink href="/research">All research</CaseLink>
+            </div>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-2 lg:col-span-8">
+            {moreResearch.map((item) => {
+              const media = thumbnailOf(item.slug);
+              return (
+                <Link key={item.slug} href={item.href} className="group block">
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-bg-subtle)]">
+                    <Image
+                      src={media.src}
+                      width={media.width}
+                      height={media.height}
+                      alt={media.alt}
+                      sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
+                      className={`h-full w-full object-cover transition-transform duration-[var(--duration-slow)] ease-[var(--ease-entrance)] group-hover:scale-[1.03] ${chapterFor(item.slug).medium === "photo" ? "stage-photo-grade" : ""}`}
+                    />
+                  </div>
+                  <Label className="mt-4">{item.label}</Label>
+                  <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl leading-tight">
+                    <span className="link-ink no-underline">{item.title}</span>
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-muted)]">{item.line}</p>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-24">
+          <Label>In their words · LinkedIn recommendations</Label>
+          <Heading level={2} size={3} className="mt-3 max-w-2xl" display>
+            What managers and clients wrote, with the originals one click away.
+          </Heading>
+          <div className="mt-10">
+            <Voices />
+          </div>
+          <div>
+            <CaseLink href="/testimonials">All recommendations</CaseLink>
+          </div>
         </div>
       </Section>
 
-      {/* Track split. Blueprint Part 3: "not just two nav links but a
-          visual or textual bridge explaining how the two connect."
-          Phase 0 (visual upgrade): the oversized 01/02 ghost numerals
-          that used to sit behind these headings at 10% opacity were
-          removed -- at that strength they read as a rendering glitch
-          rather than a chapter marker. Their smaller echoes next to
-          "Featured work"/"Featured research" went with them.
-
-          density="open" (was "default" + an untracked one-off
-          pt-32/md:pt-40 override): the override wasn't wrong visually,
-          but it was an arbitrary number instead of a value traceable to
-          the 8-point spacing scale everything else on the page uses --
-          "open" gives the same generous, hero-adjacent breathing room
-          from the actual token system instead. The two columns now
-          enter as one coordinated stagger (StaggerContainer/Item, the
-          same pattern used for grouped content elsewhere on the site)
-          instead of appearing instantly -- previously this was the
-          first of three sections below the hero with no entrance motion
-          at all, a real gap against the rest of the site's "considered
-          motion throughout" standard. */}
-      <Section density="open" tone="dark">
-        {/* Standardized on the shared Grid component (was a raw ad hoc
-            `grid md:grid-cols-2`) so every section on the page places
-            content with the same 4/8/12-column system instead of two
-            slightly different grid implementations living side by side.
-            gap="md" is overridden to a flat gap-8, reproducing the
-            original's asymmetric gap-12→gap-8 stepdown at md and up. */}
-        <StaggerContainer>
-          <Grid gap="md" className="gap-12 md:gap-8">
-            <StaggerItem className="relative col-span-4 md:col-span-4 lg:col-span-6">
-              {/* level=2 (was 3): this is the first heading below the
-                  hero's h1, so it must be an h2 to avoid skipping a
-                  level in the document outline. size=3 keeps the
-                  original, smaller visual treatment -- level and size
-                  are independent on this component for exactly this
-                  reason. */}
-              <Heading level={2} size={3} className="relative">
-                Design
-              </Heading>
-              {/* Homepage Finalization milestone: "mostly at Convay" read
-                  as a hedge ("mostly" implying there isn't much else),
-                  and undersold the Work track's actual range (Convay's
-                  four projects, plus FitVibe, TravelMate AI, and the
-                  Cultural Festival Platform). Convay is still named --
-                  it's the strongest, most concrete credibility signal
-                  this line can make -- but as the flagship example of a
-                  broader practice, not the whole of it.
-
-                  Homepage Writing Finalization milestone
-                  (Homepage-Copy-Review.md Section 2.6): this line
-                  previously said "including four years shaping Convay"
-                  in an earlier draft of that review -- Aseer caught that
-                  this was simply wrong (Convay was Sep 2023-Jul 2024, per
-                  his CV and the meta.duration field on the Convay case
-                  studies in content/projects.ts, well under a year), so
-                  no duration claim is made here at all now. It also
-                  previously repeated bio[1]'s "government-adjacent video
-                  platform used in 45+ countries" claim verbatim-ish one
-                  screen down, with a different, softer descriptor
-                  ("adjacent") and a different country count (45 vs. the
-                  case study's own 46) than bio[1] used. Rather than just
-                  copy bio[1]'s now-corrected phrasing here too (which
-                  would make these two lines nearly word-for-word
-                  duplicates), this line now does a different job --
-                  breadth of practice -- and leaves the specific
-                  governments/45+ countries proof to bio[1], where it's
-                  said once, clearly, and only once. */}
-              <Text muted className="relative mt-2">
-                Enterprise product design shaped around Convay, plus
-                self-directed concept work exploring new interface ideas.
-              </Text>
-            </StaggerItem>
-            <StaggerItem className="relative col-span-4 md:col-span-4 lg:col-span-6">
-              <Heading level={2} size={3} className="relative">
-                Research
-              </Heading>
-              <Text muted className="relative mt-2">
-                Research into trust, AI, and public-service technology,
-                feeding directly into how I design.
-              </Text>
-            </StaggerItem>
-          </Grid>
-        </StaggerContainer>
-      </Section>
-
-      {/* Featured previews. Same standardization: was a raw
-          `grid md:grid-cols-2`. (The "01"/"02" prefixes these labels
-          had in Milestone 3 were removed in Phase 0 along with the
-          ghost numerals above.) showFlagshipBadge={false}
-          because that pill would otherwise repeat "Featured work" as
-          "Flagship" a second time in the same glance; the Work/Research
-          index grids, which have no label above each card, still show
-          it. Also now a coordinated stagger entrance, matching the
-          Track split section instead of appearing with no motion at
-          all. */}
-      <Section density="default">
-        <StaggerContainer>
-          <Grid gap="md" className="gap-8">
-            {flagshipWork && (
-              <StaggerItem className="col-span-4 md:col-span-4 lg:col-span-6">
-                <p className="mb-3 flex items-baseline gap-2 text-sm font-medium text-[var(--color-text-muted)]">
-                  Featured work
-                </p>
-                <ProjectCard project={flagshipWork} showFlagshipBadge={false} />
-              </StaggerItem>
-            )}
-            {flagshipResearch && (
-              <StaggerItem className="col-span-4 md:col-span-4 lg:col-span-6">
-                <p className="mb-3 flex items-baseline gap-2 text-sm font-medium text-[var(--color-text-muted)]">
-                  Featured research
-                </p>
-                <ProjectCard project={flagshipResearch} showFlagshipBadge={false} />
-              </StaggerItem>
-            )}
-          </Grid>
-        </StaggerContainer>
-      </Section>
-
-      {/* Current status. Blueprint Part 3: closes the logistics gap
-          before it becomes a reason to hesitate.
-
-          Milestone 3: tone="dark" (was the default light tone). Every
-          section above already alternates dark/light/dark; this last
-          one was light too, so the page actually read as
-          light-dark-light-light -- the "section-level light/dark
-          alternation as a pacing device" the design system is built
-          around wasn't really in effect on its own homepage. This
-          closes the page on the same quiet dark note the Track split
-          opened with, and gives the page a real light→dark→light→dark
-          rhythm on the way to the (light) footer. Reveal wraps it since
-          it was the last remaining section with no entrance motion.
-
-          Visual QA milestone: confirmed live at a real 1920px viewport --
-          `density="default"` gave one short status line the same
-          vertical padding as a full content section, and with no width
-          constraint of its own the line just sat pinned to the left of
-          the full-width dark band, reading as an empty, unfinished-
-          looking section rather than a deliberate closing beat. `dense`
-          matches the tighter rhythm this line's actual weight calls for,
-          and centering it turns a stray leftover line into a considered,
-          quiet closing statement. */}
-      <Section density="dense" tone="dark">
-        <Reveal>
-          <Text muted className="text-center">
-            {site.currentStatus}
-          </Text>
-        </Reveal>
+      {/* Act 4 · the person */}
+      <Section density="default" id="about" className="scroll-mt-16 border-t border-[var(--color-border)] bg-[var(--color-bg-subtle)]">
+        <div className="grid items-start gap-10 md:grid-cols-12 md:gap-12">
+          <div className="md:col-span-4">
+            <div className="overflow-hidden rounded-[var(--radius-lg)]">
+              <Image
+                src={about.portrait.src}
+                width={about.portrait.width}
+                height={about.portrait.height}
+                alt={about.portrait.alt}
+                sizes="(min-width: 768px) 30vw, 92vw"
+                className="stage-photo-grade h-auto w-full"
+              />
+            </div>
+          </div>
+          <div className="md:col-span-8 lg:col-span-7">
+            <Label>About</Label>
+            <Heading level={2} className="mt-3">
+              {person.heading}
+            </Heading>
+            <div className="mt-6 space-y-4">
+              {person.lines.map((line) => (
+                <Text key={line} className="max-w-[var(--measure)]">
+                  {line}
+                </Text>
+              ))}
+            </div>
+            <p className="mt-8 max-w-[var(--measure)] border-l-2 border-[var(--color-text)] pl-5 text-[var(--color-text)]">
+              {person.lookingFor}
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button href="/about" variant="secondary">
+                More about me
+              </Button>
+              <Button href="#contact" withArrow={false}>
+                Get in touch
+              </Button>
+            </div>
+          </div>
+        </div>
       </Section>
     </>
   );

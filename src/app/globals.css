@@ -274,6 +274,30 @@
   }
 }
 
+/* Registered so a stage can fade from one chapter color to the next (the
+   homepage trailer) instead of jumping. */
+@property --stage-tint {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #5b584f;
+}
+
+.stage-animated {
+  transition: --stage-tint var(--duration-rise) var(--ease-rise);
+}
+
+/* The career line under the hero: progress and marker move at story
+   speed, because they carry the story. */
+.career-progress {
+  transition: stroke-dashoffset var(--duration-rise) var(--ease-rise);
+}
+
+.career-marker {
+  transition:
+    left var(--duration-rise) var(--ease-rise),
+    top var(--duration-rise) var(--ease-rise);
+}
+
 /*
  * The stage (Stage.tsx). The ground is night, lit from above by the
  * project's chapter tint (--stage-tint, set inline per project), so every
