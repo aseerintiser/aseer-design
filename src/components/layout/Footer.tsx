@@ -1,81 +1,93 @@
 import Link from "next/link";
-import { site } from "@/content/site";
+import { footerPages, site } from "@/content/site";
 import { Container } from "./Container";
+import { CopyEmail } from "@/components/ui/CopyEmail";
+import { LocalTime } from "@/components/ui/LocalTime";
+import { TrustMark } from "@/components/ui/TrustMark";
 
 /**
- * Persistent footer Contact CTA, per Blueprint Part 1: "Recommend keeping
- * this as the persistent footer CTA the live site already uses, not a
- * separate page... a contact action shouldn't require a dedicated
- * click-through."
- *
- * Milestone 2: copy migrated verbatim from the live footer (site.footer
- * in content/site.ts). The live version renders "Let's / design /
- * together" as three separately stacked, oversized lines (a kinetic-text
- * effect); rendered here as one heading line instead, since that's a
- * component-level formatting difference the migration brief explicitly
- * allows, not a content change -- the words themselves are unchanged.
+ * The contact block that closes every page (Phase 2). It is the target
+ * of the Contact button in the navigation, so reaching Aseer is one
+ * click from anywhere: the address, a copy button that confirms in
+ * place, his local time in Tampere, both CVs, and the secondary pages
+ * that left the main navigation.
  */
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--color-border)]">
-      <Container className="py-16">
-        <p className="font-[family-name:var(--font-display)] text-[length:var(--text-h2)] font-[420] leading-[1.05] tracking-[-0.015em]">
-          {site.footer.heading.join(" ")}
+    <footer id="contact" data-tone="dark" className="scroll-mt-16 bg-[var(--color-bg)] text-[var(--color-text)]">
+      <Container className="pt-20 pb-10 md:pt-28">
+        <p className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
+          Contact
         </p>
-        <a
-          href={`mailto:${site.email}`}
-          className="link-ink mt-3 inline-block text-lg"
-        >
-          {site.email}
-        </a>
+        <h2 className="mt-4 max-w-4xl font-[family-name:var(--font-display)] text-[length:var(--text-h1)] leading-[1.05] font-[420] tracking-[-0.02em]">
+          Let&apos;s build something worth <mark className="italic">trusting</mark>.
+        </h2>
 
-        <div className="mt-10 flex flex-col gap-6 border-t border-[var(--color-border)] pt-8 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="font-medium text-[var(--color-text)]">
-              {site.footer.openTo}
-              <br />
-              {site.footer.openToLine2}
+        <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <a href={`mailto:${site.email}`} className="link-ink text-lg md:text-xl">
+            {site.email}
+          </a>
+          <CopyEmail email={site.email} />
+        </div>
+
+        <div className="mt-16 grid gap-10 border-t border-[var(--color-border)] pt-10 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <p className="text-[var(--color-text)]">
+              {site.footer.openTo} {site.footer.openToLine2}
             </p>
-            <p className="mt-2 max-w-md text-sm text-[var(--color-text-muted)]">
-              {site.footer.body}
+            <p className="mt-3 font-[family-name:var(--font-mono)] text-xs tracking-[0.06em] text-[var(--color-text-muted)]">
+              Tampere, Finland · <LocalTime /> local time
             </p>
           </div>
 
-          <div className="flex flex-col items-start gap-4 md:items-end">
-            <ul className="flex gap-6">
-              {/* Resume Strategy milestone (Resume-Strategy-Research.md,
-                  Option D): the Professional CV's one other prominent,
-                  generally-discoverable placement besides the About
-                  page -- a footer link, not a primary-nav item, matching
-                  the one closely-analogous real example found in
-                  research (a UX designer's footer nav row). Internal
-                  link to /resume rather than straight to the Google
-                  Drive file, so the page's own status line and Academic
-                  CV cross-link (see app/resume/page.tsx) are part of
-                  the path, not skipped. */}
+          <nav aria-label="CV and profiles" className="md:col-span-3 md:col-start-7">
+            <p className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
+              CV and profiles
+            </p>
+            <ul className="mt-4 space-y-2 text-sm">
               <li>
-                <Link
-                  href="/resume"
-                  className="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
-                >
-                  Resume
-                </Link>
+                <a href={site.resumeUrl} target="_blank" rel="noreferrer" className="link-ink no-underline">
+                  Design CV<span className="sr-only"> (PDF, opens in a new tab)</span>
+                </a>
+              </li>
+              <li>
+                <a href={site.academicCvUrl} target="_blank" rel="noreferrer" className="link-ink no-underline">
+                  Academic CV<span className="sr-only"> (PDF, opens in a new tab)</span>
+                </a>
               </li>
               {site.socials.map((social) => (
                 <li key={social.href}>
-                  <a
-                    href={social.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
-                  >
-                    {social.label}
+                  <a href={social.href} target="_blank" rel="noreferrer" className="link-ink no-underline">
+                    {social.label === "Linkedin" ? "LinkedIn" : social.label}
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 </li>
               ))}
             </ul>
-            <p className="text-xs text-[var(--color-text-muted)]">{site.footer.copyright}</p>
-          </div>
+          </nav>
+
+          <nav aria-label="More from the site" className="md:col-span-3">
+            <p className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
+              More
+            </p>
+            <ul className="mt-4 space-y-2 text-sm">
+              {footerPages.map((page) => (
+                <li key={page.href}>
+                  <Link href={page.href} className="link-ink no-underline">
+                    {page.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+
+        <div className="mt-16 flex flex-wrap items-center justify-between gap-4 text-xs text-[var(--color-text-muted)]">
+          <span className="flex items-center gap-2">
+            <TrustMark className="w-5" />
+            {site.footer.copyright}
+          </span>
+          <span>Designed and built by Aseer</span>
         </div>
       </Container>
     </footer>

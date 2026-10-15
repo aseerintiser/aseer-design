@@ -24,6 +24,8 @@ interface SectionProps {
   measure?: "default" | "narrow" | "wide";
   /** Skip the Container wrapper for full-bleed hero/section-break media. */
   fullBleed?: boolean;
+  /** Anchor target, e.g. "work" for the homepage's "See the work". */
+  id?: string;
 }
 
 // Wired directly to the 8-point spacing tokens defined in globals.css,
@@ -44,9 +46,11 @@ export function Section({
   density = "default",
   measure = "default",
   fullBleed = false,
+  id,
 }: SectionProps) {
   return (
     <Component
+      id={id}
       data-tone={tone === "dark" ? "dark" : undefined}
       className={cn(
         "w-full",
