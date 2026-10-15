@@ -53,7 +53,7 @@ export default function ResearchIndexPage() {
       <Grid className="mt-12" gap="lg">
         {flagship.map((project) => (
           <div key={project.slug} className="col-span-4 md:col-span-8 lg:col-span-12">
-            <ProjectCard project={project} />
+            <ProjectCard project={project} wide />
           </div>
         ))}
         {rest.map((project) => (

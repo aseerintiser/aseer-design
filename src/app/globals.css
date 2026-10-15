@@ -274,6 +274,41 @@
   }
 }
 
+/*
+ * The stage (Stage.tsx). The ground is night, lit from above by the
+ * project's chapter tint (--stage-tint, set inline per project), so every
+ * stage reads as one family while each project keeps its own light. The
+ * window carries the one radius and the one shadow used for all work.
+ */
+.stage {
+  background-color: #0e0e0c;
+  background-image: radial-gradient(
+    115% 85% at 50% 6%,
+    color-mix(in oklab, var(--stage-tint) 66%, #0e0e0c) 0%,
+    color-mix(in oklab, var(--stage-tint) 28%, #0e0e0c) 52%,
+    #0e0e0c 100%
+  );
+}
+
+.stage-window {
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.09),
+    0 28px 60px -14px rgb(0 0 0 / 0.6);
+}
+
+.stage-grain {
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* One grade for every photograph: slightly warm, slightly lower
+   saturation, a touch more contrast, so photos from different phones and
+   rooms sit together like stills from the same film. */
+.stage-photo-grade {
+  filter: contrast(1.04) saturate(0.88) sepia(0.06);
+}
+
 @layer utilities {
   /*
    * Inline text links: ink with a quiet underline at rest, and a

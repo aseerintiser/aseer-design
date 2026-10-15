@@ -10,6 +10,8 @@ import { TrustMark } from "@/components/ui/TrustMark";
 import { MarkReplay } from "@/components/identity/MarkReplay";
 import { SpeedDemo } from "@/components/identity/SpeedDemo";
 import { site } from "@/content/site";
+import { ProjectCard } from "@/components/ui/ProjectCard";
+import { projectSummaries } from "@/content/projects";
 
 /**
  * Phase 1 review page: the identity system in one place, so it can be
@@ -47,8 +49,8 @@ export default function IdentityPage() {
           The identity, in one place
         </Heading>
         <Text size="lead" muted className="mt-6 max-w-[var(--measure)]">
-          Type, color, the mark and the two motion speeds that every page will be rebuilt on.
-          Project stages and loops arrive in the next step.
+          Type, color, the mark, the two motion speeds and the project stages that every page
+          will be rebuilt on.
         </Text>
       </Section>
 
@@ -88,8 +90,8 @@ export default function IdentityPage() {
         <div className="mt-10 flex flex-wrap items-end gap-6">
           {[16, 32, 64].map((size) => (
             <figure key={size} className="flex flex-col items-center gap-2">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <span className="flex h-24 w-24 items-center justify-center rounded-[var(--radius-md)] bg-[#e4e1d8]">
+                {/* eslint-disable-next-line @next/next/no-img-element -- shows the raw favicon file at true pixel size */}
                 <img src="/icon.svg" width={size} height={size} alt="" />
               </span>
               <figcaption className="font-[family-name:var(--font-mono)] text-xs text-[var(--color-text-muted)]">
@@ -98,8 +100,8 @@ export default function IdentityPage() {
             </figure>
           ))}
           <figure className="flex flex-col items-center gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <span className="flex h-24 w-24 items-center justify-center rounded-[var(--radius-md)] bg-[#e4e1d8]">
+              {/* eslint-disable-next-line @next/next/no-img-element -- shows the raw icon file at true pixel size */}
               <img src="/apple-icon.png" width={64} height={64} alt="" className="rounded-[14px]" />
             </span>
             <figcaption className="font-[family-name:var(--font-mono)] text-xs text-[var(--color-text-muted)]">
@@ -173,6 +175,19 @@ export default function IdentityPage() {
             </li>
           ))}
         </ul>
+      </Section>
+
+      <Section density="default" className="border-t border-[var(--color-border)]">
+        <Label>Stages · every project, one family</Label>
+        <Text muted className="mt-3 max-w-[var(--measure)]">
+          Hover a card (or tab to it) to play its loop. On a phone, a card plays while it sits in
+          the middle of the screen.
+        </Text>
+        <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {projectSummaries.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
+          ))}
+        </div>
       </Section>
 
       <Section density="default" className="border-t border-[var(--color-border)]">

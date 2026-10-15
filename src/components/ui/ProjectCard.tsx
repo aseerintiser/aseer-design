@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
 import type { ProjectSummary } from "@/content/types";
 import { ProjectVisual } from "./ProjectVisual";
+import { Stage } from "./Stage";
+import { chapterFor } from "@/content/chapters";
 import { ArrowIcon } from "./ArrowIcon";
 import { renderInlineMarkdown } from "@/lib/inline-markdown";
 import { cn } from "@/lib/utils";
@@ -26,34 +27,32 @@ interface ProjectCardProps {
    * twice in the same glance. Index grids (Work/Research pages), which
    * have no such label above each card, keep the pill by default. */
   showFlagshipBadge?: boolean;
+  /** For a card that spans a full row (see Stage's "wide" shape). */
+  wide?: boolean;
 }
 
 /**
  * Shared card for the Work and Research index grids (and the homepage's
  * two featured previews).
  *
- * Redesigned per the Creative Direction's explicit Avoid: "the generic
- * bordered-box-with-drop-shadow card... let the image and a considered
- * hover state carry the visual weight." There is no border and no
- * whole-card translate here; instead the media block itself scales
- * gently on hover, a cursor-tracked "View case study" label appears
- * (the Nice-to-Have this brief calls out for exactly this use), and
- * elevation is a soft, real shadow rather than a jump.
- *
- * Milestone 2 migrated real screenshots/GIFs for most case studies, so
- * (Milestone 3) the media block now prefers `project.thumbnail` -- the
- * case study's own opening shot -- and only falls back to the generated
- * ProjectVisual placeholder for projects that don't have one yet
- * (research track, still unwritten) or where the real assets don't crop
- * cleanly into a 4:3 card (see content/projects.ts per-project notes).
+ * Phase 1: the media sits on the shared Stage (see Stage.tsx), so every
+ * project is framed the same way whatever its original treatment. There
+ * is no border and no whole-card translate; on hover or focus the
+ * stage's window lifts slightly and its loop plays, a cursor-tracked
+ * "View case study" label appears, and elevation is a soft, real shadow.
+ * Projects without a thumbnail fall back to the generated ProjectVisual.
  */
-export function ProjectCard({ project, className, showFlagshipBadge = true }: ProjectCardProps) {
+export function ProjectCard({
+  project,
+  className,
+  showFlagshipBadge = true,
+  wide = false,
+}: ProjectCardProps) {
   const isContingent = project.status === "contingent";
   const href = `/${project.track === "work" ? "work" : "research"}/${project.slug}`;
   const shouldReduceMotion = useReducedMotion();
 
   const cardRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [hovering, setHovering] = useState(false);
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
@@ -80,29 +79,35 @@ export function ProjectCard({ project, className, showFlagshipBadge = true }: Pr
   // own logic. Also respects prefers-reduced-motion: a reader who's
   // asked for less motion gets the static first frame instead of
   // several autoplaying videos in a row.
+  // Phase 1: the loop plays only while someone is looking at this card:
+  // on hover or keyboard focus with a mouse, or while the card sits in
+  // the middle band of the screen on a touch device (no hover there).
+  // It stops as soon as attention moves on, so a grid of cards never
+  // has several clips running at once.
+  const [focused, setFocused] = useState(false);
+  const [centred, setCentred] = useState(false);
+
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video || shouldReduceMotion) return;
+    const card = cardRef.current;
+    if (!card || !window.matchMedia("(hover: none)").matches) return;
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          video.play().catch(() => {
-            // Autoplay can still be rejected by the browser in rare
-            // cases (e.g. data-saver mode) -- the poster/first frame is
-            // a perfectly fine fallback, so there's nothing to recover.
-          });
-        } else {
-          video.pause();
-        }
-      },
-      { threshold: 0.25 },
+      ([entry]) => setCentred(Boolean(entry?.isIntersecting)),
+      { rootMargin: "-35% 0px -35% 0px" },
     );
-    observer.observe(video);
+    observer.observe(card);
     return () => observer.disconnect();
-  }, [shouldReduceMotion]);
+  }, []);
+
+  const playing = hovering || focused || centred;
+  const chapter = chapterFor(project.slug);
 
   return (
-    <Link href={href} className={cn("group block", className)}>
+    <Link
+      href={href}
+      className={cn("group block", className)}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+    >
       <div
         ref={cardRef}
         onMouseEnter={() => setHovering(true)}
@@ -110,58 +115,23 @@ export function ProjectCard({ project, className, showFlagshipBadge = true }: Pr
         onMouseMove={handleMouseMove}
         className="relative overflow-hidden rounded-[var(--radius-lg)] shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-shadow duration-[var(--duration-slow)] ease-[var(--ease-standard)] group-hover:shadow-[0_20px_40px_-16px_rgba(0,0,0,0.28)]"
       >
-        <div className="aspect-[4/3] w-full overflow-hidden">
-          {project.thumbnail ? (
-            project.thumbnail.src.endsWith(".mp4") ? (
-              // Thumbnail Refresh milestone: a few case studies' opening
-              // shots are screen recordings, not static screenshots --
-              // motion (a scrolling design-token panel, a chat widget
-              // cycling through prompts) is the whole point of the asset.
-              // A native looping .gif could show the same motion, but at
-              // these resolutions/durations a GIF is a genuinely
-              // enormous file (the raw source clips were 24-48MB each)
-              // for zero visual benefit over video; muted/autoplay/loop
-              // video is visually indistinguishable from a looping GIF
-              // to anyone looking at the card, at roughly 1-3MB instead
-              // of tens of MB. Same object-cover/hover-scale treatment as
-              // the Image branch below so it's indistinguishable from a
-              // static or GIF thumbnail in layout, radius, and hover
-              // behavior -- only the underlying element differs.
-              <video
-                ref={videoRef}
-                src={project.thumbnail.src}
-                poster={project.thumbnail.poster}
-                loop
-                muted
-                playsInline
-                // metadata, not auto: play() (triggered by the
-                // IntersectionObserver above once a card is actually on
-                // screen) starts buffering real playback data on
-                // demand, instead of every off-screen card's thumbnail
-                // proactively downloading in full on page load.
-                preload="metadata"
-                aria-label={project.thumbnail.alt}
-                className="h-full w-full object-cover transition-transform duration-[600ms] ease-[var(--ease-standard)] group-hover:scale-[1.06]"
-              />
-            ) : (
-              <Image
-                src={project.thumbnail.src}
-                width={project.thumbnail.width}
-                height={project.thumbnail.height}
-                alt={project.thumbnail.alt}
-                unoptimized={project.thumbnail.src.endsWith(".gif")}
-                className="h-full w-full object-cover transition-transform duration-[600ms] ease-[var(--ease-standard)] group-hover:scale-[1.06]"
-                sizes="(min-width: 1024px) 45vw, 90vw"
-              />
-            )
-          ) : (
+        {project.thumbnail ? (
+          <Stage
+            chapter={chapter}
+            media={project.thumbnail}
+            playing={playing}
+            shape={wide ? "wide" : "standard"}
+            sizes={wide ? "(min-width: 1024px) 60vw, 90vw" : undefined}
+          />
+        ) : (
+          <div className="aspect-[4/3] w-full overflow-hidden">
             <ProjectVisual
               seed={project.slug}
               monogram={project.title.charAt(0)}
-              className="h-full w-full transition-transform duration-[600ms] ease-[var(--ease-standard)] group-hover:scale-[1.06]"
+              className="h-full w-full"
             />
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Cursor-tracked wayfinding label. One of the two narrow, named
             uses for a custom cursor treatment in the Creative Direction
@@ -187,7 +157,7 @@ export function ProjectCard({ project, className, showFlagshipBadge = true }: Pr
 
         <div className="space-y-2 bg-[var(--color-bg)] p-5">
           <div className="flex items-center justify-between gap-2">
-            <h3 className="font-[family-name:var(--font-display)] text-lg">
+            <h3 className="font-[family-name:var(--font-display)] text-xl leading-snug">
               {project.title}
             </h3>
             {project.isFlagship && showFlagshipBadge && (
@@ -196,7 +166,7 @@ export function ProjectCard({ project, className, showFlagshipBadge = true }: Pr
               </span>
             )}
           </div>
-          <p className="text-sm text-[var(--color-text-muted)]">
+          <p className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.12em] text-[var(--color-text-muted)] uppercase">
             {scaleLabel[project.scale]}
             {isContingent ? " · Decision pending" : ""}
           </p>
