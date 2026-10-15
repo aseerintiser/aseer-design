@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useLightbox } from "@/components/ui/Lightbox";
 import { ExpandIcon } from "@/components/ui/ExpandIcon";
 import { cn } from "@/lib/utils";
+import { isVideo } from "@/lib/media";
+import { LoopVideo } from "@/components/ui/LoopVideo";
 
 interface CaseStudyImageProps {
   src: string;
@@ -44,6 +46,27 @@ export function CaseStudyImage({
   const isPortrait = width / height < 0.75;
   const cappedWidth = Math.min(width, isPortrait ? PORTRAIT_MAX : LANDSCAPE_MAX);
 
+  // Loops (Phase 1, replacing the migrated GIFs) play in place with their
+  // own pause button instead of opening the lightbox, since a button
+  // cannot sit inside another button.
+  if (isVideo(src)) {
+    return (
+      <figure className="mx-auto max-w-full">
+        <div
+          className="mx-auto overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]"
+          style={{ maxWidth: cappedWidth, aspectRatio: `${width} / ${height}` }}
+        >
+          <LoopVideo src={src} alt={alt} width={width} height={height} className="h-full w-full" />
+        </div>
+        {caption && (
+          <figcaption className="mt-2 text-center text-sm text-[var(--color-text-muted)]">
+            {caption}
+          </figcaption>
+        )}
+      </figure>
+    );
+  }
+
   const image = (
     <Image
       src={src}
@@ -60,7 +83,6 @@ export function CaseStudyImage({
           ? `${cappedWidth}px`
           : `(min-width: 1024px) ${cappedWidth}px, 100vw`
       }
-      unoptimized={src.endsWith(".gif")}
       quality={90}
     />
   );

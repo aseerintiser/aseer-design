@@ -271,7 +271,6 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
                   alt={current.alt}
                   sizes="90vw"
                   className="h-auto max-h-[85vh] w-auto max-w-[90vw] rounded-[var(--radius-md)] object-contain"
-                  unoptimized={current.src.endsWith(".gif")}
                 />
               ) : (
                 // No known source dimensions (e.g. certifications.ts) --

@@ -150,7 +150,7 @@ export function TrustAsymmetryDemo() {
           withArrow={false}
           onClick={handleNegative}
         >
-          A housing provider that doesn't exist
+          A housing provider that doesn&apos;t exist
         </Button>
       </div>
     </div>

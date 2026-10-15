@@ -136,6 +136,26 @@ const img = (id: string, width: number, height: number, alt = "") => ({
   alt,
 });
 
+// Phase 1: the five walkthrough animations that came over from Framer as
+// 35-47 MB GIFs are now MP4 loops in public/loops/ (same frames, same
+// timing, about 2-3.5 MB each). `loop` is the full-size version for case
+// study pages; `cardLoop` is the lighter 960 px version for project
+// cards. Each has a same-named .jpg poster frame next to it.
+const loop = (slug: string, alt = "") => ({
+  src: `/loops/${slug}.mp4`,
+  width: 1600,
+  height: 1200,
+  alt,
+});
+
+const cardLoop = (slug: string, alt: string) => ({
+  src: `/loops/${slug}-card.mp4`,
+  poster: `/loops/${slug}-card.jpg`,
+  width: 960,
+  height: 720,
+  alt,
+});
+
 // ---------------------------------------------------------------------
 // 1. Convay Mobile App Revamp
 // ---------------------------------------------------------------------
@@ -176,7 +196,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
   // closes the gap between this and the header above it.
   {
     type: "image",
-    src: img("TIUlfB8AWBViTdf78QjQ3hKq2o.gif", 1600, 1200).src,
+    src: loop("convay-mobile-app-revamp").src,
     width: 1600,
     height: 1200,
     alt: "Three angled screens from the redesigned Convay mobile app, showing the meeting dashboard and calendar view.",
@@ -680,11 +700,11 @@ const convayAiBody: CaseStudyBlock[] = [
   // 03_Content_Final.md.
   {
     type: "reducedMotionHero",
-    gifSrc: img("7mhLYobFRspDQYe7igyV2dg5zqQ.gif", 1600, 1200).src,
+    loopSrc: loop("convay-ai-for-physical-meetings").src,
     fallbackSrc: img("1Xrqe0NuG8d4DN8vwSWL99pzRPk.png", 1600, 1200).src,
     width: 1600,
     height: 1200,
-    gifAlt:
+    loopAlt:
       "Looping preview of Convay AI for Physical Meetings, cycling through the meeting panel, transcript, and summary screens.",
     fallbackAlt:
       "Convay AI for Physical Meetings, Main Meeting Panel screen, a single still from the hero animation shown when motion is reduced.",
@@ -1424,7 +1444,7 @@ const fitvibeBody: CaseStudyBlock[] = [
   {
     type: "imageRow",
     images: [
-      img("szd3CmjkaLoDxcVmwh26M4KGcA.gif", 1600, 1200),
+      loop("fitvibe", "FitVibe app walkthrough"),
       img("dflAECgSKcfG0tKG8f3RwEzRTs.png", 375, 1175),
       img("MQRWfkzhmnpVKADq7BwBifnpCE.png", 375, 1527),
       img("PS5uD7vNAXNBESTYvyYhIKZ6YmE.png", 375, 812),
@@ -1936,7 +1956,7 @@ const convayNotificationsBody: CaseStudyBlock[] = [
   {
     type: "imageRow",
     images: [
-      img("VlxHzd93ClWznE7PstrL1EmwKY.gif", 1600, 1200),
+      loop("convay-notifications", "Convay notifications walkthrough"),
       img("EDYS5PEjuQKLCjvzA8zuZC9H3F8.png", 2048, 1280),
       img("5oVV6lx4Zwx4EMP4m3IY9FC2Vo.png", 720, 2384),
       img("V1cOAEB1e56ZJZLhxfQTzKimHA.png", 2048, 1280),
@@ -3124,12 +3144,7 @@ export const caseStudies: CaseStudy[] = [
     // projects get one. This is the same GIF that opens the full case
     // study, already sized 1600x1200 (4:3), matching ProjectCard's media
     // aspect ratio exactly, so it renders here uncropped.
-    thumbnail: img(
-      "TIUlfB8AWBViTdf78QjQ3hKq2o.gif",
-      1600,
-      1200,
-      "Convay mobile app walkthrough",
-    ),
+    thumbnail: cardLoop("convay-mobile-app-revamp", "Convay mobile app walkthrough"),
     // Convay Mobile App Revamp rebuild: replaces the old hook paragraph,
     // which 01_Audit.md flagged as the one place the writing voice broke
     // on the whole page ("The goal? Make sure users could rely on
@@ -3170,12 +3185,7 @@ export const caseStudies: CaseStudy[] = [
     scale: "product",
     isFlagship: true,
     contentStatus: "complete",
-    thumbnail: img(
-      "7mhLYobFRspDQYe7igyV2dg5zqQ.gif",
-      1600,
-      1200,
-      "Convay AI meeting transcription walkthrough",
-    ),
+    thumbnail: cardLoop("convay-ai-for-physical-meetings", "Convay AI meeting transcription walkthrough"),
     oneLineScope:
       "Convay AI for Physical Meetings started with a simple question: *Why should only online meetings be easy to document?* In high-stakes rooms, whether it's a government briefing or an internal sync, people still scramble to take notes or forget key points entirely. This feature was our answer: **record audio, let AI handle the rest.** Transcripts, summaries, multilingual support, all packaged into a simple, intuitive flow that turns real-world conversations into shareable outcomes.",
     meta: {
@@ -3251,8 +3261,8 @@ export const caseStudies: CaseStudy[] = [
     // than a bad crop of a real asset -- until this real screen
     // recording became available.
     thumbnail: {
-      src: "/convay-design-system/thumbnail.mp4",
-      poster: "/convay-design-system/poster.jpg",
+      src: "/loops/convay-design-system-card.mp4",
+      poster: "/loops/convay-design-system-card.jpg",
       width: 1100,
       height: 826,
       alt: "Scrolling through Convay's design system: color tokens, spacing scale, and shadow values in Figma.",
@@ -3310,12 +3320,7 @@ export const caseStudies: CaseStudy[] = [
     track: "work",
     scale: "product",
     contentStatus: "complete",
-    thumbnail: img(
-      "szd3CmjkaLoDxcVmwh26M4KGcA.gif",
-      1600,
-      1200,
-      "FitVibe app walkthrough",
-    ),
+    thumbnail: cardLoop("fitvibe", "FitVibe app walkthrough"),
     oneLineScope:
       "FitVibe is a comprehensive fitness app designed for fitness enthusiasts and individuals pursuing a healthy lifestyle. It offers a range of features including workout and diet planners, progress tracking, social interaction, gamified challenges, and an e-commerce shop. With a focus on personalized guidance and community support, FitVibe caters to passionate fitness enthusiasts and those seeking to improve their well-being. I worked on it as a UI design intern at Kaz Software, alongside a senior designer, on a client product whose real name is under NDA.",
     meta: {
@@ -3352,12 +3357,7 @@ export const caseStudies: CaseStudy[] = [
     // confirmed duration -- it's finished content now, not a project
     // still waiting on a decision.
     contentStatus: "complete",
-    thumbnail: img(
-      "gltG0cxn5SXfakeqUdUin2pbW8E.gif",
-      1600,
-      1200,
-      "TravelMate AI app walkthrough",
-    ),
+    thumbnail: cardLoop("travelmate-ai", "TravelMate AI app walkthrough"),
     oneLineScope:
       "TravelMate AI is a mobile-based conversational assistant designed to make traveling simpler and stress-free. It helps tourists navigate new cities, get instant recommendations, translate on the go, and access emergency info in real time. By combining chat, voice, and travel utilities in one app, TravelMate brings together tools that are usually scattered across multiple platforms, giving users a single, reliable travel companion.",
     meta: {
@@ -3400,12 +3400,7 @@ export const caseStudies: CaseStudy[] = [
     track: "work",
     scale: "feature",
     contentStatus: "complete",
-    thumbnail: img(
-      "VlxHzd93ClWznE7PstrL1EmwKY.gif",
-      1600,
-      1200,
-      "Convay notifications walkthrough",
-    ),
+    thumbnail: cardLoop("convay-notifications", "Convay notifications walkthrough"),
     oneLineScope:
       "In a platform used across 45+ countries, including by government agencies, missing a critical update can break workflows. I helped design a centralized, categorized notification system for Convay, ensuring users could easily stay on top of meetings, messages, and file updates. This feature was a small yet strategic step toward making Convay a seamless, scalable collaboration tool.",
     meta: {
@@ -3465,8 +3460,8 @@ export const caseStudies: CaseStudy[] = [
     // aspect; ProjectCard only reads these for the aspect-ratio math, not
     // for actually sizing a <video> element).
     thumbnail: {
-      src: "/lumi/thumbnail.mp4",
-      poster: "/lumi/poster.jpg",
+      src: "/loops/lumi-card.mp4",
+      poster: "/loops/lumi-card.jpg",
       width: 723,
       height: 542,
       alt: "Lumi in use: the chat widget opening, topic buttons, and a live conversation answering a student's question about healthcare in Finland.",
@@ -3512,8 +3507,8 @@ export const caseStudies: CaseStudy[] = [
     // (a fade to/from black) and re-encoded to 1100px-wide H.264, same
     // treatment as Lumi and Convay Design System (see ProjectCard.tsx).
     thumbnail: {
-      src: "/arenewberg/thumbnail.mp4",
-      poster: "/arenewberg/poster.jpg",
+      src: "/loops/arenewberg-card.mp4",
+      poster: "/loops/arenewberg-card.jpg",
       width: 1100,
       height: 826,
       alt: "The aRENEWberg app: splash screen, a scavenger-hunt clue, and the festival's live activity list.",

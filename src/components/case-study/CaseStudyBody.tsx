@@ -221,11 +221,11 @@ function renderBlock(
       return (
         <div key={key} className="mt-6">
           <ReducedMotionHero
-            gifSrc={block.gifSrc}
+            loopSrc={block.loopSrc}
             fallbackSrc={block.fallbackSrc}
             width={block.width}
             height={block.height}
-            gifAlt={block.gifAlt}
+            loopAlt={block.loopAlt}
             fallbackAlt={block.fallbackAlt}
           />
         </div>

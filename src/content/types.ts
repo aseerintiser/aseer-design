@@ -252,15 +252,15 @@ export type CaseStudyBlock =
        * whole image via `<picture><source media="(prefers-reduced-
        * motion: reduce)">` (05_Interaction_and_Motion.md: "a hard
        * requirement, not a nice-to-have"). Renders via ReducedMotionHero.
-       * `gifAlt`/`fallbackAlt` are separate since the fallback is a
+       * `loopAlt`/`fallbackAlt` are separate since the fallback is a
        * single still frame, not a looping mosaic, and deserves its own
        * accurate description. */
       type: "reducedMotionHero";
-      gifSrc: string;
+      loopSrc: string;
       fallbackSrc: string;
       width: number;
       height: number;
-      gifAlt: string;
+      loopAlt: string;
       fallbackAlt: string;
     }
   | {

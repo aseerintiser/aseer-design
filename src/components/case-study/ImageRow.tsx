@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useLightbox } from "@/components/ui/Lightbox";
 import { ExpandIcon } from "@/components/ui/ExpandIcon";
 import { cn } from "@/lib/utils";
+import { isVideo } from "@/lib/media";
+import { LoopVideo } from "@/components/ui/LoopVideo";
 
 interface ImageRowProps {
   images: { src: string; width: number; height: number; alt: string }[];
@@ -47,10 +49,32 @@ interface ImageRowProps {
  */
 export function ImageRow({ images, enlargeable = true }: ImageRowProps) {
   const { open } = useLightbox();
+  // The lightbox only steps through stills; loops play in place.
+  const stills = images.filter((image) => !isVideo(image.src));
 
   return (
     <div className="flex flex-wrap justify-center gap-4">
       {images.map((image, index) => {
+        // Loops play in place with their own pause button (see
+        // CaseStudyImage), so they skip the lightbox trigger.
+        if (isVideo(image.src)) {
+          return (
+            <div
+              key={`${image.src}-${index}`}
+              className="h-56 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] sm:h-64 lg:h-72"
+              style={{ aspectRatio: `${image.width} / ${image.height}` }}
+            >
+              <LoopVideo
+                src={image.src}
+                alt={image.alt}
+                width={image.width}
+                height={image.height}
+                className="h-full w-full"
+              />
+            </div>
+          );
+        }
+
         const tile = (
           <Image
             src={image.src}
@@ -73,7 +97,6 @@ export function ImageRow({ images, enlargeable = true }: ImageRowProps) {
             // undersizes the rare wide tile while not over-fetching for
             // the common narrow ones.
             sizes="(min-width: 1024px) 400px, (min-width: 640px) 340px, 300px"
-            unoptimized={image.src.endsWith(".gif")}
             quality={90}
           />
         );
@@ -86,7 +109,7 @@ export function ImageRow({ images, enlargeable = true }: ImageRowProps) {
             {enlargeable ? (
               <button
                 type="button"
-                onClick={() => open(images, index)}
+                onClick={() => open(stills, stills.indexOf(image))}
                 aria-label={`View larger: ${image.alt}`}
                 // Convay Mobile App Revamp rebuild: `relative` so the
                 // scrim below can sit over the tile; an explicit focus
