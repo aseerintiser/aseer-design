@@ -1668,19 +1668,59 @@ const fitvibeBody: CaseStudyBlock[] = [
       "Participants appreciated personalized workout and diet planners, progress tracking, and social media features.",
       "Areas for improvement identified, such as clearer labels and instructions for certain features and a more intuitive e-commerce shop interface.",
       "Some participants reported difficulties with entering and tracking progress, particularly in the nutrition tracking feature.",
+      "A System Usability Scale (SUS) score of **63.3** out of 100: usable, but just below the commonly cited average of 68, with clear room to improve.",
       "Overall, valuable feedback obtained to enhance user experience and make improvements to the app's design.",
     ],
   },
-  // Phase 0 fix: this section used to show a SUS score of 75.21 with
-  // its working, but the working did not hold up: Question 1's sum was
-  // printed as 37 when (3x5)+(4x6)+(5x1) is 44; the ten item totals add
-  // to 312, and 312 x 2.5 is 780, not 902.5; and the standard SUS item
-  // conversion (odd items minus 1, even items 5 minus the answer) was
-  // skipped. The score and the calculation are removed until it can be
-  // recomputed from the original response sheets with standard scoring.
+  // Phase 0 correction (Aseer asked to keep the SUS analysis, fixed):
+  // the original working printed Question 1 as 37 when (3x5)+(4x6)+(5x1)
+  // is 44, summed the ten totals to 902.5 / 2.5 = 361 when they add to
+  // 312, and skipped SUS's item conversion, which produced 75.21. Below,
+  // the same recorded item totals are re-scored with the standard method
+  // (Brooke, 1996): 63.3. The Question 1 mismatch is disclosed on the
+  // page; using 44 instead of 37 gives 64.8, so the conclusion holds.
+  { type: "heading", level: 3, text: "Research Insights: System Usability Scale (SUS)" },
   {
     type: "paragraph",
-    text: "Participants also completed the System Usability Scale (SUS), a standard ten-question usability questionnaire.",
+    text: "Twelve participants also completed the System Usability Scale (SUS), a standard ten-question questionnaire answered on a 1 to 5 scale. Odd-numbered questions are worded positively and even-numbered ones negatively, so each answer is converted before scoring: odd items count as the answer minus 1, even items as 5 minus the answer. Each person's converted answers add up to a 0 to 40 total, which is multiplied by 2.5 to give a score out of 100.",
+  },
+  { type: "heading", level: 4, text: "SUS Questionnaire" },
+  {
+    type: "list",
+    items: [
+      "I think that I would like to use this system frequently.",
+      "I found the system unnecessarily complex.",
+      "I thought the system was easy to use.",
+      "I think that I would need the support of a technical person to be able to use this system.",
+      "I found the various functions in this system were well integrated.",
+      "I thought there was too much inconsistency in this system.",
+      "I would imagine that most people would learn to use this system very quickly.",
+      "I found the system very cumbersome to use.",
+      "I felt very confident using the system.",
+      "I needed to learn a lot of things before I could get going with this system.",
+    ],
+  },
+  { type: "heading", level: 4, text: "SUS Analysis" },
+  {
+    type: "paragraph",
+    text: "*Step 1: Add up each question's answers across all 12 respondents.* Recorded totals, Questions 1 to 10: 37, 29, 43, 21, 38, 24, 34, 29, 36, 21.",
+  },
+  {
+    type: "paragraph",
+    text: "*Step 2: Convert the totals.* Positive questions (1, 3, 5, 7, 9) contribute their total minus 12, one point per participant: 25 + 31 + 26 + 22 + 24 = 128. Negative questions (2, 4, 6, 8, 10) contribute 60 minus their total: 31 + 39 + 36 + 31 + 39 = 176. Together: 304.",
+  },
+  {
+    type: "paragraph",
+    text: "*Step 3: Scale to 100 and average.* 304 x 2.5 = 760, and 760 / 12 participants = **63.3**.",
+  },
+  { type: "heading", level: 4, text: "SUS Result" },
+  {
+    type: "paragraph",
+    text: "The overall SUS score is **63.3** out of 100. The commonly cited average across SUS studies is 68, so FitVibe sat just below average: people could use it, and the study shows where it fell short. That matches the findings above, where navigation was praised but progress and nutrition tracking caused trouble, and it is exactly the kind of score that tells a team what to fix next.",
+  },
+  {
+    type: "callout",
+    text: "A note on this calculation: an earlier version of this page reported 75.21. That figure came from adding raw answers without the SUS conversion step, so I re-scored the same recorded totals with the standard method. My notes also list Question 1's answers as five 3s, six 4s and one 5, which add up to 44 rather than the recorded 37; using 44 gives 64.8, so the conclusion is the same either way.",
   },
   { type: "heading", level: 3, text: "Takeaways" },
   {
