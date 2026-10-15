@@ -75,6 +75,35 @@ export interface CaseStudyMeta {
  */
 export type CaseStudyBlock =
   | {
+      /** A numbered research figure (Phase 4). Research pages number
+       * their figures and captioned images in reading order, the way an
+       * academic reader expects. Renders either a registered figure
+       * component (`key`) or ordinary blocks (`blocks`). */
+      type: "figure";
+      title: string;
+      caption?: string;
+      /** For a figure drawn to explain an idea rather than plotted from
+       * measured values: a short note saying what is real and what is
+       * not, shown under the caption so nobody mistakes it for data. */
+      illustrative?: string;
+      key?: "lumi-participants" | "lumi-study-design" | "lumi-trust-asymmetry";
+      blocks?: CaseStudyBlock[];
+    }
+  | {
+      /** A short labeled box of plain points, e.g. a study's limitations,
+       * so an academic reader finds them without hunting. */
+      type: "aside";
+      label: string;
+      items: string[];
+    }
+  | {
+      /** A formatted reference with a copy button. */
+      type: "citation";
+      label: string;
+      text: string;
+      note?: string;
+    }
+  | {
       /** Supporting detail that most readers can skip (Phase 3 length
        * budget): shown as a closed disclosure, so nothing is removed and
        * everything stays one click away and readable by screen readers. */

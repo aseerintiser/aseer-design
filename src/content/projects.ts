@@ -2231,6 +2231,12 @@ const lumiBody: CaseStudyBlock[] = [
     type: "paragraph",
     text: "14 of the 15 people I studied described some version of the same thing: they wished something like Lumi had existed when they arrived.",
   },
+  {
+    type: "figure",
+    key: "lumi-participants",
+    title: "14 of 15 participants wished Lumi had existed when they arrived",
+    caption: "Each mark is one of the 15 participants; filled marks are the 14 who described it.",
+  },
 
   { type: "heading", level: 3, text: "The study" },
   {
@@ -2255,13 +2261,12 @@ const lumiBody: CaseStudyBlock[] = [
   // copy's own requested "compact pilot-to-final iteration timeline"
   // shape.
   {
-    type: "timeline",
-    steps: [
-      { label: "Pilot session 1" },
-      { label: "Pilot session 2" },
-      { label: "Main study", detail: "15 participants, single sessions, ~35 minutes each" },
-    ],
+    type: "figure",
+    key: "lumi-study-design",
+    title: "Study design",
+    caption: "Two pilot sessions changed the prototype before the main study, its sessions and the analysis.",
   },
+
 
   { type: "heading", level: 3, text: "Building Lumi" },
   {
@@ -2321,7 +2326,13 @@ const lumiBody: CaseStudyBlock[] = [
   // conversation that followed), and kept for the one place it actually
   // belongs: right here, immediately after the finding it demonstrates,
   // built entirely from facts already stated in this case study.
-  { type: "interactive", key: "lumi-trust-asymmetry" },
+  {
+    type: "figure",
+    key: "lumi-trust-asymmetry",
+    title: "Trust forms slowly and breaks fast",
+    caption: "Add the moments that built trust in the study, then the broken link that reset it.",
+    illustrative: "the events happened in the study; the heights are not measured",
+  },
   { type: "divider" },
   {
     type: "paragraph",
@@ -2361,54 +2372,62 @@ const lumiBody: CaseStudyBlock[] = [
   // "What we found" deliberately does not, see the file-level comment
   // above for why.
   {
-    type: "revealGroup",
-    groups: [
+    type: "figure",
+    title: "Seven design principles for trustworthy conversational AI",
+    caption: "Grouped by what made trust possible, what kept it honest, and where it needs protecting. Select a principle to read it.",
+    blocks: [
       {
-        heading: "What made trust possible",
-        items: [
+        type: "revealGroup",
+        groups: [
           {
-            label: "Source-anchored",
-            detail: "Every claim traceable to a real, named authority.",
+            heading: "What made trust possible",
+            items: [
+              {
+                label: "Source-anchored",
+                detail: "Every claim traceable to a real, named authority.",
+              },
+              {
+                label: "Structurally minimal",
+                detail: "Calm and scannable, never overwhelming.",
+              },
+            ],
           },
           {
-            label: "Structurally minimal",
-            detail: "Calm and scannable, never overwhelming.",
-          },
-        ],
-      },
-      {
-        heading: "What kept trust honest",
-        items: [
-          {
-            label: "Scope-stated",
-            detail: "Honest about what it does and doesn't cover.",
-          },
-          {
-            label: "Verification-supporting",
-            detail: "Designed for people who will double-check it, not against them.",
-          },
-        ],
-      },
-      {
-        heading: "Where trust needs protecting",
-        items: [
-          {
-            label: "Hallucination-conservative",
-            detail:
-              "Built to fail safely, not confidently, the direct lesson from the one moment trust broke in this study.",
+            heading: "What kept trust honest",
+            items: [
+              {
+                label: "Scope-stated",
+                detail: "Honest about what it does and doesn't cover.",
+              },
+              {
+                label: "Verification-supporting",
+                detail: "Designed for people who will double-check it, not against them.",
+              },
+            ],
           },
           {
-            label: "Vulnerability-aware",
-            detail: "Sensitive to who's asking and why.",
-          },
-          {
-            label: "Action-closing",
-            detail: "Orientation isn't enough. It should help people actually act.",
+            heading: "Where trust needs protecting",
+            items: [
+              {
+                label: "Hallucination-conservative",
+                detail:
+                  "Built to fail safely, not confidently, the direct lesson from the one moment trust broke in this study.",
+              },
+              {
+                label: "Vulnerability-aware",
+                detail: "Sensitive to who's asking and why.",
+              },
+              {
+                label: "Action-closing",
+                detail: "Orientation isn't enough. It should help people actually act.",
+              },
+            ],
           },
         ],
       },
     ],
   },
+
   {
     type: "paragraph",
     text: "This research also contributes to how trust itself is understood in human-AI interaction, extending an existing academic framework in ways I'm continuing to develop toward publication. The seven principles are what I'd build from that understanding today. The next test is building them into something people rely on before they ever have a reason to doubt it.",
@@ -2416,12 +2435,12 @@ const lumiBody: CaseStudyBlock[] = [
 
   { type: "heading", level: 3, text: "Reflection" },
   {
-    type: "paragraph",
-    text: "This was a small study: 15 people, one university, one prototype. It doesn't describe how everyone experiences trust in AI, only how these 15 people did, in real depth.",
-  },
-  {
-    type: "paragraph",
-    text: "I was also both the designer of Lumi and the researcher studying it, a position I stayed conscious of throughout, especially once the prototype's own mistakes became some of the most important data in the study.",
+    type: "aside",
+    label: "Limitations",
+    items: [
+      "**A small sample.** 15 people, one university, one prototype. It doesn't describe how everyone experiences trust in AI, only how these 15 people did, in real depth.",
+      "**Designer and researcher.** I designed Lumi and studied it, a position I stayed conscious of throughout, especially once the prototype's own mistakes became some of the most important data in the study.",
+    ],
   },
   {
     type: "paragraph",
@@ -2440,6 +2459,12 @@ const lumiBody: CaseStudyBlock[] = [
   {
     type: "paragraph",
     text: "The full thesis and a working demo of the prototype are available on request.",
+  },
+  {
+    type: "citation",
+    label: "Cite this thesis",
+    text: "Intiser, M. A. (2026). *Affective dimensions of trust in conversational AI: A qualitative study of international students navigating public services in Finland* [Master's thesis, Tampere University].",
+    note: "M.Sc. in Human-Technology Interaction · June 2026 · graded 5/5",
   },
   // Milestone C: a real, working action (a mailto: link reusing the
   // site's own contact email, not a fabricated URL) instead of a bare

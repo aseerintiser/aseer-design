@@ -183,6 +183,7 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
           blocks={caseStudy.body}
           referenceMarks={caseStudy.referenceMarks}
           heroSrcs={hero ? [hero.src] : []}
+          numberFigures={caseStudy.track === "research"}
         />
       ) : (
         <Section density="open" measure="narrow">

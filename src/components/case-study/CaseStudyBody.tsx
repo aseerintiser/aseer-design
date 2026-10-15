@@ -18,6 +18,9 @@ import { VariantComparison } from "./VariantComparison";
 import { PhaseFilmstrip } from "./PhaseFilmstrip";
 import { ReducedMotionHero } from "./ReducedMotionHero";
 import { ChapterNav, type Chapter } from "./ChapterNav";
+import { ParticipantsFigure } from "@/components/research/ParticipantsFigure";
+import { StudyDesignFigure } from "@/components/research/StudyDesignFigure";
+import { CopyText } from "@/components/ui/CopyText";
 import { renderInlineMarkdown } from "@/lib/inline-markdown";
 import { cn } from "@/lib/utils";
 
@@ -28,10 +31,29 @@ const interactiveComponents = {
   "lumi-trust-asymmetry": TrustAsymmetryDemo,
 } as const;
 
+/** Registered research figures (Phase 4), drawn from each study's own
+ * content. See the "figure" block in content/types.ts. */
+const figureComponents = {
+  "lumi-participants": ParticipantsFigure,
+  "lumi-study-design": StudyDesignFigure,
+  "lumi-trust-asymmetry": TrustAsymmetryDemo,
+} as const;
+
+/** "Figure 3." before a caption, on research pages. */
+function FigureLabel({ n }: { n?: number }) {
+  if (!n) return null;
+  return (
+    <span className="mr-1.5 font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.1em] text-[var(--color-text)] uppercase">
+      Figure {n}.
+    </span>
+  );
+}
+
 function renderBlock(
   block: CaseStudyBlock,
   key: number,
   referenceMarks?: Record<string, string>,
+  figureNumbers?: Map<CaseStudyBlock, number>,
 ) {
   switch (block.type) {
     case "heading":
@@ -112,6 +134,7 @@ function renderBlock(
             height={block.height}
             alt={block.alt}
             caption={block.caption}
+            figureNumber={figureNumbers?.get(block)}
             enlargeable={block.enlargeable}
           />
         </div>
@@ -245,9 +268,64 @@ function renderBlock(
             </span>
           </summary>
           <div className="border-t border-[var(--color-border)] px-5 pt-2 pb-6">
-            {block.blocks.map((child, index) => renderBlock(child, index, referenceMarks))}
+            {block.blocks.map((child, index) => renderBlock(child, index, referenceMarks, figureNumbers))}
           </div>
         </details>
+      );
+    case "figure": {
+      const FigureComponent = block.key ? figureComponents[block.key] : null;
+      return (
+        <figure key={key} className="mt-8">
+          {FigureComponent && <FigureComponent />}
+          {block.blocks?.map((child, index) => renderBlock(child, index, referenceMarks, figureNumbers))}
+          <figcaption className="mt-3 max-w-[var(--measure)] text-sm text-[var(--color-text-muted)]">
+            <FigureLabel n={figureNumbers?.get(block)} />
+            <span className="font-medium text-[var(--color-text)]">{block.title}.</span>
+            {block.caption ? ` ${block.caption}` : ""}
+            {block.illustrative && (
+              <span className="mt-2 flex items-center gap-2 font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.08em] uppercase">
+                <span aria-hidden="true" className="inline-block h-px w-4 bg-[var(--color-text-muted)]" />
+                Illustrative · {block.illustrative}
+              </span>
+            )}
+          </figcaption>
+        </figure>
+      );
+    }
+    case "aside":
+      return (
+        <aside
+          key={key}
+          aria-label={block.label}
+          className="mt-6 rounded-[var(--radius-lg)] border border-[var(--color-border-strong)] px-5 py-5 sm:px-6"
+        >
+          <p className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
+            {block.label}
+          </p>
+          <ul className="mt-3 space-y-2">
+            {block.items.map((item) => (
+              <li key={item} className="flex gap-3 text-sm leading-relaxed">
+                <span aria-hidden="true" className="mt-2 h-1 w-3 shrink-0 bg-[var(--color-text)]" />
+                <span>{renderInlineMarkdown(item)}</span>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      );
+    case "citation":
+      return (
+        <div key={key} className="mt-6 rounded-[var(--radius-lg)] bg-[var(--color-bg-subtle)] px-5 py-5 sm:px-6">
+          <p className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
+            {block.label}
+          </p>
+          <p className="mt-3 font-[family-name:var(--font-display)] text-lg leading-relaxed">
+            {renderInlineMarkdown(block.text)}
+          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <CopyText text={block.text.replace(/\*/g, "")} label="Copy citation" />
+            {block.note && <span className="text-sm text-[var(--color-text-muted)]">{block.note}</span>}
+          </div>
+        </div>
       );
     default:
       return null;
@@ -270,6 +348,7 @@ const WIDE_BLOCKS = new Set<CaseStudyBlock["type"]>([
   "timeline",
   "flowSteps",
   "metricGrid",
+  "figure",
 ]);
 
 function slugify(text: string) {
@@ -323,6 +402,7 @@ export function CaseStudyBody({
   blocks,
   referenceMarks,
   heroSrcs = [],
+  numberFigures = false,
 }: {
   blocks: CaseStudyBlock[];
   /** Convay AI for Physical Meetings rebuild: see the `referenceMarks`
@@ -331,6 +411,8 @@ export function CaseStudyBody({
   referenceMarks?: Record<string, string>;
   /** Sources already playing in the case hero, removed from the body. */
   heroSrcs?: string[];
+  /** Research pages number figures and captioned images in reading order. */
+  numberFigures?: boolean;
 }) {
   const sections: { heading: CaseStudyBlock & { type: "heading" }; body: CaseStudyBlock[] }[] = [];
   for (const block of withoutHeroDuplicates(blocks, heroSrcs)) {
@@ -343,6 +425,19 @@ export function CaseStudyBody({
       sections.push({ heading: { type: "heading", level: 3, text: "" }, body: [] });
     }
     sections[sections.length - 1]!.body.push(block);
+  }
+
+  // Figure numbers in reading order: figure blocks and captioned images.
+  const figureNumbers = new Map<CaseStudyBlock, number>();
+  if (numberFigures) {
+    let figure = 0;
+    const visit = (block: CaseStudyBlock) => {
+      if (block.type === "figure" || (block.type === "image" && block.caption)) {
+        figureNumbers.set(block, ++figure);
+      }
+      if (block.type === "details") block.blocks.forEach(visit);
+    };
+    sections.forEach((section) => section.body.forEach(visit));
   }
 
   let n = 0;
@@ -386,7 +481,7 @@ export function CaseStudyBody({
                   blockIndex === 0 && "[&>h3]:mt-4",
                 )}
               >
-                {renderBlock(block, blockIndex, referenceMarks)}
+                {renderBlock(block, blockIndex, referenceMarks, figureNumbers)}
               </div>
             ))}
           </section>

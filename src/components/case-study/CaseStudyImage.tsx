@@ -13,6 +13,8 @@ interface CaseStudyImageProps {
   height: number;
   alt: string;
   caption?: string;
+  /** Research pages: "Figure N." ahead of the caption. */
+  figureNumber?: number;
   /** Defaults to true -- see the `enlargeable` note on the "image" block
    * in content/types.ts. */
   enlargeable?: boolean;
@@ -40,8 +42,19 @@ export function CaseStudyImage({
   height,
   alt,
   caption,
+  figureNumber,
   enlargeable = true,
 }: CaseStudyImageProps) {
+  const captionNode = caption && (
+    <>
+      {figureNumber && (
+        <span className="mr-1.5 font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.1em] text-[var(--color-text)] uppercase">
+          Figure {figureNumber}.
+        </span>
+      )}
+      {caption}
+    </>
+  );
   const { open } = useLightbox();
   const isPortrait = width / height < 0.75;
   const cappedWidth = Math.min(width, isPortrait ? PORTRAIT_MAX : LANDSCAPE_MAX);
@@ -60,7 +73,7 @@ export function CaseStudyImage({
         </div>
         {caption && (
           <figcaption className="mt-3 text-sm text-[var(--color-text-muted)]">
-            {caption}
+            {captionNode}
           </figcaption>
         )}
       </figure>
@@ -116,7 +129,7 @@ export function CaseStudyImage({
       </div>
       {caption && (
         <figcaption className="mt-3 text-sm text-[var(--color-text-muted)]">
-          {caption}
+          {captionNode}
         </figcaption>
       )}
     </figure>
