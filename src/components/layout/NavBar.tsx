@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 import { nav, site } from "@/content/site";
 import { cn } from "@/lib/utils";
+import { TrustMark } from "@/components/ui/TrustMark";
 
 /**
  * Persistent top navigation.
@@ -81,11 +82,16 @@ export function NavBar() {
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        {/* Phase 1 identity: the trust-line mark beside "Aseer", the
+            approved wordmark. The mark draws once per page load (CSS only)
+            and is decorative here, since the visible name already labels
+            the link. */}
         <Link
           href="/"
-          className="font-[family-name:var(--font-display)] text-lg font-medium"
+          className="group flex items-center gap-2.5 font-[family-name:var(--font-display)] text-[1.375rem] leading-none tracking-[-0.01em]"
         >
-          {site.shortName}
+          <TrustMark draw className="w-7 translate-y-[1px]" />
+          <span>{site.shortName}</span>
         </Link>
 
         <nav aria-label="Primary" className="hidden lg:block">
@@ -101,7 +107,7 @@ export function NavBar() {
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
                     className={cn(
-                      "relative block px-3 py-2 text-sm font-medium transition-colors duration-[var(--duration-fast)]",
+                      "relative isolate block px-3 py-2 text-sm font-medium transition-colors duration-[var(--duration-fast)]",
                       isActive
                         ? "text-[var(--color-text)]"
                         : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]",
@@ -121,10 +127,15 @@ export function NavBar() {
                         ↗
                       </span>
                     )}
+                    {/* Active page: a highlighter stroke under the label
+                        (behind ink text, never yellow text on paper). The
+                        label also turns from muted to full ink, so the
+                        color is never the only cue. */}
                     {isActive && (
                       <motion.span
                         layoutId="nav-underline"
-                        className="absolute inset-x-3 -bottom-[1px] h-[2px] rounded-full bg-[var(--color-accent)]"
+                        aria-hidden="true"
+                        className="absolute inset-x-2 bottom-[0.55rem] -z-10 h-[0.45em] rounded-[2px] bg-[var(--color-signal)]"
                         transition={
                           shouldReduceMotion
                             ? { duration: 0 }

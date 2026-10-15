@@ -119,7 +119,7 @@ export default function AboutPage() {
                 href={site.resumeUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="font-medium text-[var(--color-accent)] underline underline-offset-4"
+                className="font-medium link-ink"
               >
                 {section.linkText}
               </a>

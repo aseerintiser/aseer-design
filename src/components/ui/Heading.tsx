@@ -13,7 +13,7 @@ interface HeadingProps {
    * visually small h1 above a large decorative sub-line).
    */
   size?: HeadingLevel | "display";
-  /** Use the expressive display face (Fraunces). Defaults to true for
+  /** Use the display face (Newsreader). Defaults to true for
    * display/1/2, false for smaller sizes, matching the Creative
    * Direction's "one loud, considered moment, everything else quiet"
    * rule. */
@@ -29,18 +29,17 @@ interface HeadingProps {
 // larger sizes, a standard optical adjustment for display type that the
 // previous flat `tracking-tight` on every size ignored.
 //
-// Explicit font-weight per size: Fraunces is a variable font, so with no
-// weight declared it renders at the browser default (400) everywhere,
-// including the homepage hero at up to 5.5rem. The Design Brief calls
-// for "an immediately confident type moment" in the first five seconds;
-// a regular-weight serif at that scale reads as tentative, not
-// confident, however good the typeface choice is. Weight steps down as
-// size steps down, so the effect is "considered," not "everything bold."
+// Explicit font-weight per size. Phase 1 identity: Newsreader replaces
+// Fraunces. Its optical-size axis already sharpens and tightens the
+// letterforms at headline sizes, so it reads as confident at a near-
+// regular weight (420) where Fraunces needed 560. Heavier weights at
+// that scale turn Newsreader dark and newsy-loud rather than credible.
+// Weight steps up slightly as size steps down so h2s hold their own.
 const sizeClass: Record<HeadingLevel | "display", string> = {
   display:
-    "text-[length:var(--text-display)] font-[560] leading-[1.03] tracking-[-0.03em]",
-  1: "text-[length:var(--text-h1)] font-[560] leading-[1.08] tracking-[-0.025em]",
-  2: "text-[length:var(--text-h2)] font-[540] leading-[1.15] tracking-[-0.015em]",
+    "text-[length:var(--text-display)] font-[420] leading-[1.02] tracking-[-0.025em]",
+  1: "text-[length:var(--text-h1)] font-[420] leading-[1.06] tracking-[-0.02em]",
+  2: "text-[length:var(--text-h2)] font-[450] leading-[1.12] tracking-[-0.012em]",
   3: "text-[length:var(--text-h3)] font-[520] leading-snug tracking-[-0.01em]",
   4: "text-[length:var(--text-h4)] leading-snug",
 };

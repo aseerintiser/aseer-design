@@ -63,7 +63,7 @@ export default function ResumePage() {
           href={site.academicCvUrl}
           target="_blank"
           rel="noreferrer"
-          className="font-medium text-[var(--color-accent)] underline underline-offset-4"
+          className="font-medium link-ink"
         >
           View my academic CV
         </a>

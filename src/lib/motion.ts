@@ -12,11 +12,27 @@
  * arbitrary per-component durations.
  */
 
-/** Durations in seconds, for use with the `motion` library. */
+/**
+ * Two speeds, mirrored from the tokens in globals.css (Phase 1).
+ *
+ * `duration` is the interface speed: hover, press, menus and reveals,
+ * 150 to 300 ms, so nothing ever reads as lag.
+ *
+ * `story` is only for moments that carry the research finding (the
+ * trust line, the Lumi meter, the trailer): trust rises slowly and
+ * breaks fast, so a rise takes about 1.2 s and a break 140 ms. Never use
+ * `story` for ordinary interface feedback.
+ */
 export const duration = {
   fast: 0.15,
   base: 0.2,
-  slow: 0.25,
+  slow: 0.3,
+} as const;
+
+/** Story-moment timing in seconds. See the note above. */
+export const story = {
+  rise: 1.2,
+  break: 0.14,
 } as const;
 
 /** Cubic-bezier easing curves, matched to the tokens in globals.css. */
@@ -24,6 +40,8 @@ export const easing = {
   standard: [0.4, 0, 0.2, 1],
   entrance: [0.16, 1, 0.3, 1],
   exit: [0.7, 0, 0.84, 0],
+  /** For story rises: a patient start that settles gently. */
+  rise: [0.45, 0, 0.2, 1],
 } as const;
 
 /**

@@ -15,14 +15,18 @@
  * can change effective contrast.
  */
 @theme {
-  /* Fonts: placeholder pairing pending final type selection (see
-     Portfolio_Creative_Direction_Premium.md, "Typography philosophy").
-     Fraunces = expressive editorial display face, reserved for hero and
-     section-break moments. Inter = quiet, highly legible body face. Both
-     are self-hosted variable fonts via @fontsource-variable (imported in
-     layout.tsx), not fetched from Google Fonts at build or runtime. */
-  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  /* Fonts (Phase 1 identity, settled October 15, 2026):
+     Newsreader = display face, journalistic and credible, with italics
+     for emphasis. Its optical-size axis keeps it crisp from headlines
+     down to captions. Schibsted Grotesk = text and interface face, built
+     for news interfaces. IBM Plex Mono = the evidence voice: data,
+     sources, dates and labels, identical on every machine (it replaces
+     whatever system monospace the visitor happened to have). All three
+     are free, open source and self-hosted via @fontsource (imported in
+     layout.tsx), never fetched from Google Fonts. */
+  --font-display: "Newsreader Variable", ui-serif, Georgia, serif;
+  --font-sans: "Schibsted Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   /* 8-point spacing scale. Tailwind's default --spacing unit (0.25rem/4px)
      already divides evenly into 8px steps; these named tokens exist so
@@ -86,32 +90,47 @@
   --radius-lg: 0.875rem;
   --radius-full: 999px;
 
-  /* Motion durations and easings, tuned per Creative Direction's Motion
-     Philosophy (150-250ms, real easing curves, never default browser
-     timing). Exposed as tokens here so both CSS transitions and the
-     Motion (Framer Motion) layer in src/lib/motion.ts read from the same
-     source. */
+  /* Motion: two speeds, never one in between.
+     Interface responses (hover, press, menus, reveals) stay quick, 150 to
+     300 ms, so the site never feels slow. Story moments (the trust line,
+     the Lumi meter, the trailer) follow the research finding instead:
+     trust rises slowly and breaks fast, so a rise eases in over about
+     1.2 s and a break snaps in 140 ms. src/lib/motion.ts mirrors these
+     values for JS-driven animation. */
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-rise: cubic-bezier(0.45, 0, 0.2, 1);
   --duration-fast: 150ms;
   --duration-base: 200ms;
-  --duration-slow: 250ms;
+  --duration-slow: 300ms;
+  --duration-rise: 1200ms;
+  --duration-break: 140ms;
 
-  /* Color tokens: light mode (default). A warm-tinted neutral scale
-     rather than pure gray, per Creative Direction's color philosophy,
-     paired with a single accent used only on interactive/emphasis
-     elements, never as decorative fill. */
-  --color-bg: #fbfaf8;
-  --color-bg-subtle: #f3f1ec;
-  --color-surface: #ffffff;
-  --color-border: #e4e0d8;
-  --color-border-strong: #8f8878;
-  --color-text: #1a1815;
-  --color-text-muted: #5b564c;
-  --color-accent: #3652e3;
-  --color-accent-contrast: #ffffff;
-  --color-focus-ring: #3652e3;
+  /* Color tokens. Paper (default): calm reading pages. Ink is the
+     interactive color on paper, so links and buttons read as editorial
+     rather than as default link-blue. Contrast on paper, measured with
+     the WCAG 2.1 formula: text 16.4:1, muted 6.7:1 (6.2:1 on bg-subtle),
+     border-strong 3.3:1 (non-text minimum is 3:1). */
+  --color-bg: #f3f2ee;
+  --color-bg-subtle: #eae8e1;
+  --color-surface: #fbfaf7;
+  --color-border: #dad7cd;
+  --color-border-strong: #8a8578;
+  --color-text: #16140f;
+  --color-text-muted: #58544a;
+  --color-accent: #16140f;
+  --color-accent-contrast: #f3f2ee;
+  --color-focus-ring: #16140f;
+
+  /* The signal: highlighter yellow, the researcher's marker. It is
+     always a background behind dark ink (13.5:1), never text on paper
+     (where it would be 1.2:1), and never the only carrier of meaning. */
+  --color-signal: #ffd84a;
+  --color-signal-ink: #14120a;
+
+  /* The trust-line mark: ink on paper, the signal on night. */
+  --color-mark: #16140f;
 
   /* Evidence-status tag colors (Design Brief non-negotiable: an
      evidence-status tag attached to every metric, never using color as
@@ -131,22 +150,26 @@
    palette; AA contrast is checked independently for this set, not
    inherited from the light-mode numbers above. */
 [data-tone="dark"] {
-  --color-bg: #14130f;
-  --color-bg-subtle: #1c1b16;
-  --color-surface: #201f1a;
-  --color-border: #34322b;
-  --color-border-strong: #66614f;
-  --color-text: #f5f3ee;
-  --color-text-muted: #aba69b;
-  --color-accent: #8fa3ff;
-  --color-accent-contrast: #0b0b0b;
-  --color-focus-ring: #8fa3ff;
+  /* Night: the screening room. Contrast on night: text 17:1, muted
+     8.2:1 (7.1:1 on surface), border-strong 3.6:1, and the yellow
+     accent 14:1 against the ground. */
+  --color-bg: #0e0e0c;
+  --color-bg-subtle: #171714;
+  --color-surface: #1e1e1a;
+  --color-border: #2f2e29;
+  --color-border-strong: #6e6a60;
+  --color-text: #f2f0ea;
+  --color-text-muted: #ada99e;
+  --color-accent: #ffd84a;
+  --color-accent-contrast: #14120a;
+  --color-focus-ring: #ffd84a;
+  --color-mark: #ffd84a;
 
-  --color-status-verified-bg: #163524;
+  --color-status-verified-bg: #143021;
   --color-status-verified-text: #8fe0ac;
-  --color-status-internal-bg: #202556;
+  --color-status-internal-bg: #1d2150;
   --color-status-internal-text: #b7c0ff;
-  --color-status-directional-bg: #3a2c10;
+  --color-status-directional-bg: #352810;
   --color-status-directional-text: #f0c887;
 }
 
@@ -192,13 +215,94 @@
     }
   }
 
+  /* Schibsted Grotesk's bold (700) is heavy at body size; 600 keeps
+     emphasis clear without darkening whole lines. */
+  strong,
+  b {
+    font-weight: 600;
+  }
+
+  /* Selecting text marks it like a highlighter, on paper and night. */
   ::selection {
-    background-color: var(--color-accent);
-    color: var(--color-accent-contrast);
+    background-color: var(--color-signal);
+    color: var(--color-signal-ink);
+  }
+
+  mark {
+    background-color: var(--color-signal);
+    color: var(--color-signal-ink);
+    padding: 0 0.12em;
+    border-radius: 0.08em;
+  }
+}
+
+/*
+ * The trust line draws in its own rhythm (see TrustMark.tsx): the climb
+ * eases in over 60% of the time, the fall snaps in about 140 ms, and the
+ * recovery settles. Offsets are fractions of the path length (the climb
+ * is 54% of the stroke, the fall ends at 85%). Reduced motion collapses
+ * the duration to nothing via the backstop above, so the mark appears
+ * complete.
+ */
+@keyframes trust-line-draw {
+  0% {
+    stroke-dashoffset: 1;
+    animation-timing-function: var(--ease-rise);
+  }
+  60% {
+    stroke-dashoffset: 0.46;
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 1);
+  }
+  69% {
+    stroke-dashoffset: 0.15;
+    animation-timing-function: var(--ease-entrance);
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.trust-line-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: trust-line-draw 1500ms 250ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trust-line-draw {
+    animation: none;
   }
 }
 
 @layer utilities {
+  /*
+   * Inline text links: ink with a quiet underline at rest, and a
+   * highlighter sweep on hover or focus, the same yellow-behind-ink mark
+   * used everywhere else. The underline carries "this is a link" on its
+   * own, so the color change is never the only cue.
+   */
+  .link-ink {
+    color: var(--color-text);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--color-border-strong);
+    text-underline-offset: 0.22em;
+    background-image: linear-gradient(var(--color-signal), var(--color-signal));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 100% 0;
+    transition:
+      background-size var(--duration-base) var(--ease-standard),
+      color var(--duration-base) var(--ease-standard);
+  }
+
+  .link-ink:hover,
+  .link-ink:focus-visible {
+    color: var(--color-signal-ink);
+    background-size: 100% 100%;
+    text-decoration-color: currentColor;
+  }
+
   /*
    * Grain overlay: a barely-perceptible noise texture over large flat
    * color fields, per Portfolio_Creative_Direction_Premium.md ("Texture"

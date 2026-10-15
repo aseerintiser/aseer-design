@@ -30,7 +30,7 @@ export function MetaRow({ items, className }: MetaRowProps) {
         // /resume) used to widen its grid column past a 375px screen and
         // make the whole page scroll sideways.
         <div key={item.label} className="min-w-0">
-          <dt className="text-xs uppercase tracking-wide text-[var(--color-text-muted)]">
+          <dt className="font-[family-name:var(--font-mono)] text-[0.6875rem] uppercase tracking-[0.12em] text-[var(--color-text-muted)]">
             {item.label}
           </dt>
           <dd className="mt-1 [overflow-wrap:anywhere] font-mono text-sm font-medium tabular-nums text-[var(--color-text)]">

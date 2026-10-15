@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { ImageResponse } from "next/og";
+import { TRUST_LINE_PATH } from "@/components/ui/TrustMark";
 
 /**
  * Link preview images (the picture LinkedIn, Slack and iMessage show when
@@ -29,7 +30,7 @@ function TrustLine({ width }: { width: number }) {
   return (
     <svg width={width} height={(width * 20) / 32} viewBox="0 0 32 20">
       <path
-        d="M3 16.5 C10 16.2 15.6 12 21 3.5 L24 16.5 C26.2 15.6 28 14.8 30 14.2"
+        d={TRUST_LINE_PATH}
         fill="none"
         stroke={SIGNAL}
         strokeWidth={2.3}

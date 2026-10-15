@@ -144,7 +144,7 @@ function renderBlock(
             href={block.href}
             target="_blank"
             rel="noreferrer"
-            className="text-sm font-medium text-[var(--color-accent)] underline underline-offset-4"
+            className="text-sm font-medium link-ink"
           >
             {block.text}
           </a>

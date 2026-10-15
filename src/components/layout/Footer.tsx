@@ -19,12 +19,12 @@ export function Footer() {
   return (
     <footer className="border-t border-[var(--color-border)]">
       <Container className="py-16">
-        <p className="font-[family-name:var(--font-display)] text-[length:var(--text-h2)] font-[560] leading-[1.05]">
+        <p className="font-[family-name:var(--font-display)] text-[length:var(--text-h2)] font-[420] leading-[1.05] tracking-[-0.015em]">
           {site.footer.heading.join(" ")}
         </p>
         <a
           href={`mailto:${site.email}`}
-          className="mt-3 inline-block text-lg text-[var(--color-text-muted)] underline-offset-4 hover:text-[var(--color-text)] hover:underline"
+          className="link-ink mt-3 inline-block text-lg"
         >
           {site.email}
         </a>

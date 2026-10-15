@@ -18,7 +18,7 @@ const sizeClass = {
 } as const;
 
 /**
- * Quiet, highly legible body copy in the Inter (sans) face throughout,
+ * Quiet, highly legible body copy in the Schibsted Grotesk (sans) face throughout,
  * per the Creative Direction's typography philosophy: the display face
  * is reserved for headings, body text stays deliberately undramatic so
  * long-form reading never fights the eye.
