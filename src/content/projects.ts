@@ -3245,6 +3245,7 @@ export const caseStudies: CaseStudy[] = [
     // recording became available.
     thumbnail: {
       src: "/convay-design-system/thumbnail.mp4",
+      poster: "/convay-design-system/poster.jpg",
       width: 1100,
       height: 826,
       alt: "Scrolling through Convay's design system: color tokens, spacing scale, and shadow values in Figma.",
@@ -3454,6 +3455,7 @@ export const caseStudies: CaseStudy[] = [
     // for actually sizing a <video> element).
     thumbnail: {
       src: "/lumi/thumbnail.mp4",
+      poster: "/lumi/poster.jpg",
       width: 723,
       height: 542,
       alt: "Lumi in use: the chat widget opening, topic buttons, and a live conversation answering a student's question about healthcare in Finland.",
@@ -3500,6 +3502,7 @@ export const caseStudies: CaseStudy[] = [
     // treatment as Lumi and Convay Design System (see ProjectCard.tsx).
     thumbnail: {
       src: "/arenewberg/thumbnail.mp4",
+      poster: "/arenewberg/poster.jpg",
       width: 1100,
       height: 826,
       alt: "The aRENEWberg app: splash screen, a scavenger-hunt clue, and the festival's live activity list.",

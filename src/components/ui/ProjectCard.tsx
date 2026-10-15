@@ -130,6 +130,7 @@ export function ProjectCard({ project, className, showFlagshipBadge = true }: Pr
               <video
                 ref={videoRef}
                 src={project.thumbnail.src}
+                poster={project.thumbnail.poster}
                 loop
                 muted
                 playsInline

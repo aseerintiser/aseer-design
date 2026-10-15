@@ -26,11 +26,14 @@ export function MetaRow({ items, className }: MetaRowProps) {
   return (
     <dl className={cn("grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4", className)}>
       {items.map((item) => (
-        <div key={item.label}>
+        // min-w-0 + overflow-wrap: a long unbroken value (the email on
+        // /resume) used to widen its grid column past a 375px screen and
+        // make the whole page scroll sideways.
+        <div key={item.label} className="min-w-0">
           <dt className="text-xs uppercase tracking-wide text-[var(--color-text-muted)]">
             {item.label}
           </dt>
-          <dd className="mt-1 font-mono text-sm font-medium tabular-nums text-[var(--color-text)]">
+          <dd className="mt-1 [overflow-wrap:anywhere] font-mono text-sm font-medium tabular-nums text-[var(--color-text)]">
             {item.value}
           </dd>
         </div>

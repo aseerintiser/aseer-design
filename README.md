@@ -50,7 +50,7 @@ src/
 - WCAG AA contrast, checked for every color pair in both the light and dark (section-alternation) tone sets.
 - Semantic HTML, one `<h1>` per page, visible focus states on every interactive element.
 - `prefers-reduced-motion` respected globally, with no exceptions for signature motion moments.
-- Every metric on the site carries an evidence-status tag (verified / internal / directional) rather than being stated as fact by default.
+- Every public metric is checked against the Verification Ledger (verified / internal / directional) before it goes on the site. The evidence-status tag component (`EvidenceStatusTag`) exists but is not rendered on any page yet; showing those statuses on the site is planned for the case study rebuild.
 
 ## License
 

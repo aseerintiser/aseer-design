@@ -109,11 +109,11 @@ export default function HomePage() {
 
       {/* Track split. Blueprint Part 3: "not just two nav links but a
           visual or textual bridge explaining how the two connect."
-          Oversized ghost numerals are the one deliberate editorial
-          "chapter marker" device (Design Brief Nice-to-Have), echoed at
-          a smaller scale next to "Featured work"/"Featured research"
-          below so the two sections read as one continuous thread rather
-          than two unrelated blocks (Milestone 3).
+          Phase 0 (visual upgrade): the oversized 01/02 ghost numerals
+          that used to sit behind these headings at 10% opacity were
+          removed -- at that strength they read as a rendering glitch
+          rather than a chapter marker. Their smaller echoes next to
+          "Featured work"/"Featured research" went with them.
 
           density="open" (was "default" + an untracked one-off
           pt-32/md:pt-40 override): the override wasn't wrong visually,
@@ -137,12 +137,6 @@ export default function HomePage() {
         <StaggerContainer>
           <Grid gap="md" className="gap-12 md:gap-8">
             <StaggerItem className="relative col-span-4 md:col-span-4 lg:col-span-6">
-              <span
-                aria-hidden="true"
-                className="absolute -top-10 -left-1 font-[family-name:var(--font-display)] text-7xl text-[var(--color-text)]/10 select-none"
-              >
-                01
-              </span>
               {/* level=2 (was 3): this is the first heading below the
                   hero's h1, so it must be an h2 to avoid skipping a
                   level in the document outline. size=3 keeps the
@@ -186,12 +180,6 @@ export default function HomePage() {
               </Text>
             </StaggerItem>
             <StaggerItem className="relative col-span-4 md:col-span-4 lg:col-span-6">
-              <span
-                aria-hidden="true"
-                className="absolute -top-10 -left-1 font-[family-name:var(--font-display)] text-7xl text-[var(--color-text)]/10 select-none"
-              >
-                02
-              </span>
               <Heading level={2} size={3} className="relative">
                 Research
               </Heading>
@@ -205,12 +193,9 @@ export default function HomePage() {
       </Section>
 
       {/* Featured previews. Same standardization: was a raw
-          `grid md:grid-cols-2`. Milestone 3: each label is now prefixed
-          with the same "01"/"02" numeral used in the Track split section
-          just above (at a much quieter scale), so this reads as that
-          section's direct continuation -- "01 Design" pays off as
-          "01 Featured work" -- rather than two disconnected blocks that
-          happen to sit next to each other. showFlagshipBadge={false}
+          `grid md:grid-cols-2`. (The "01"/"02" prefixes these labels
+          had in Milestone 3 were removed in Phase 0 along with the
+          ghost numerals above.) showFlagshipBadge={false}
           because that pill would otherwise repeat "Featured work" as
           "Flagship" a second time in the same glance; the Work/Research
           index grids, which have no label above each card, still show
@@ -223,12 +208,6 @@ export default function HomePage() {
             {flagshipWork && (
               <StaggerItem className="col-span-4 md:col-span-4 lg:col-span-6">
                 <p className="mb-3 flex items-baseline gap-2 text-sm font-medium text-[var(--color-text-muted)]">
-                  <span
-                    aria-hidden="true"
-                    className="font-[family-name:var(--font-display)] text-[var(--color-text)]/25"
-                  >
-                    01
-                  </span>
                   Featured work
                 </p>
                 <ProjectCard project={flagshipWork} showFlagshipBadge={false} />
@@ -237,12 +216,6 @@ export default function HomePage() {
             {flagshipResearch && (
               <StaggerItem className="col-span-4 md:col-span-4 lg:col-span-6">
                 <p className="mb-3 flex items-baseline gap-2 text-sm font-medium text-[var(--color-text-muted)]">
-                  <span
-                    aria-hidden="true"
-                    className="font-[family-name:var(--font-display)] text-[var(--color-text)]/25"
-                  >
-                    02
-                  </span>
                   Featured research
                 </p>
                 <ProjectCard project={flagshipResearch} showFlagshipBadge={false} />

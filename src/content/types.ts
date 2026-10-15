@@ -38,7 +38,16 @@ export interface ProjectSummary {
    * projects intentionally keep the honest generated placeholder rather
    * than a bad crop of a real asset. See content/projects.ts for the
    * per-project reasoning. */
-  thumbnail?: { src: string; width: number; height: number; alt: string };
+  thumbnail?: {
+    src: string;
+    width: number;
+    height: number;
+    alt: string;
+    /** First frame of a video thumbnail, shown until the video plays.
+     * Without it, Low Power Mode, reduced motion or a slow connection
+     * leaves the card blank. */
+    poster?: string;
+  };
 }
 
 export interface CaseStudyMeta {
