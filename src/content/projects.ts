@@ -17,10 +17,10 @@ import { site } from "./site";
  * copy) -- those are collapsed to one instance each, which is a
  * formatting fix, not a content change.
  *
- * Images/GIFs are referenced directly from framerusercontent.com rather
- * than downloaded and self-hosted -- see next.config.ts remotePatterns
- * and the Milestone 2 report for why (this build environment can't
- * fetch binaries from that domain).
+ * Images/GIFs were first referenced straight from framerusercontent.com
+ * (Milestone 2). They are now self-hosted in public/media/framer/ under
+ * their original file names -- see content/media.ts and
+ * scripts/self-host-framer-images.mjs.
  *
  * Lumi, RoboCarnival, Cultural Festival Platform, and Tailoring Game
  * Difficulty to Player Types don't exist on the live site at all --
@@ -38,6 +38,8 @@ import { site } from "./site";
  * keep/cut/reframe question is resolved (kept), so it no longer renders
  * the "Decision pending" badge -- see the note on that entry.
  */
+
+import { framerAsset } from "./media";
 
 /** Shared "Convay at a Glance" block, byte-identical across all four
  * Convay case studies on the live site -- kept as one constant here so
@@ -128,7 +130,7 @@ const convayAtAGlance: CaseStudyBlock[] = [
 ];
 
 const img = (id: string, width: number, height: number, alt = "") => ({
-  src: `https://framerusercontent.com/images/${id}`,
+  src: framerAsset(id),
   width,
   height,
   alt,

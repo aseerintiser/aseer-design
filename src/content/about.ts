@@ -28,6 +28,8 @@
  * wrong one.
  */
 
+import { framerAsset } from "./media";
+
 export const about = {
   heading: "I'm Aseer. I came to design from software engineering, not the other way around.",
   intro:
@@ -36,7 +38,7 @@ export const about = {
   // deliberately kept off the homepage so it wouldn't compete with the
   // work there, but reserved for exactly this page instead.
   portrait: {
-    src: "https://framerusercontent.com/images/2bZSUdqkPs4VGBtGfwyuSAZLP4.png",
+    src: framerAsset("2bZSUdqkPs4VGBtGfwyuSAZLP4.png"),
     width: 1563,
     height: 1563,
     alt: "Portrait of Md Aseer Intiser",
@@ -93,7 +95,7 @@ export const about = {
       // About Page Rebuild milestone by mistake). Sits right after the
       // paragraph, before the quote, same position it always had.
       image: {
-        src: "https://framerusercontent.com/images/wU56WDpraknSWD3JVfLhEmFXQI.png",
+        src: framerAsset("wU56WDpraknSWD3JVfLhEmFXQI.png"),
         width: 613,
         height: 721,
         alt: "Aseer holding a camera",

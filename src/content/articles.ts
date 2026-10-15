@@ -5,6 +5,8 @@
  * Strategy"), each card linking out to the original source.
  */
 
+import { framerAsset } from "./media";
+
 interface ArticleEntry {
   image: { src: string; width: number; height: number };
   heading: string;
@@ -15,7 +17,7 @@ interface ArticleEntry {
 export const featuredIn: ArticleEntry[] = [
   {
     image: {
-      src: "https://framerusercontent.com/images/92RQm766DzyRAks136DuTA0w.png",
+      src: framerAsset("92RQm766DzyRAks136DuTA0w.png"),
       width: 1600,
       height: 1043,
     },
@@ -25,7 +27,7 @@ export const featuredIn: ArticleEntry[] = [
   },
   {
     image: {
-      src: "https://framerusercontent.com/images/MdNNl9bI9gHoaIv4tFqjhDbAoc.png",
+      src: framerAsset("MdNNl9bI9gHoaIv4tFqjhDbAoc.png"),
       width: 920,
       height: 519,
     },
@@ -38,7 +40,7 @@ export const featuredIn: ArticleEntry[] = [
 export const myWritings: ArticleEntry[] = [
   {
     image: {
-      src: "https://framerusercontent.com/images/nYwoS1qeMcETU1UELNY4I5GmlE.png",
+      src: framerAsset("nYwoS1qeMcETU1UELNY4I5GmlE.png"),
       width: 1400,
       height: 733,
     },
@@ -49,7 +51,7 @@ export const myWritings: ArticleEntry[] = [
   },
   {
     image: {
-      src: "https://framerusercontent.com/images/znnfQ6rxgyAv5ergkkBVH63OI.png",
+      src: framerAsset("znnfQ6rxgyAv5ergkkBVH63OI.png"),
       width: 512,
       height: 512,
     },
@@ -59,7 +61,7 @@ export const myWritings: ArticleEntry[] = [
   },
   {
     image: {
-      src: "https://framerusercontent.com/images/etYdKbPNjKCskGODtPhSgo5E.png",
+      src: framerAsset("etYdKbPNjKCskGODtPhSgo5E.png"),
       width: 875,
       height: 492,
     },

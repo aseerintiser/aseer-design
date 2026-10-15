@@ -44,6 +44,8 @@
  * guess this file's own standard doesn't allow.
  */
 
+import { framerAsset } from "./media";
+
 const img = (id: string, alt: string) => ({ id, alt });
 
 export interface CertificateImage {
@@ -211,5 +213,5 @@ export const certificationsArchive: ArchiveCategory[] = [
 
 export function certificationImageUrl(id: string) {
   const hasExtension = id.includes(".");
-  return `https://framerusercontent.com/images/${hasExtension ? id : `${id}.png`}`;
+  return framerAsset(hasExtension ? id : `${id}.png`);
 }

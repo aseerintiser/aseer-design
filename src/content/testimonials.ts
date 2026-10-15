@@ -31,6 +31,8 @@
  * correct.
  */
 
+import { framerAsset } from "./media";
+
 export const testimonialsHeading = "Words from People I've Worked With";
 
 export const testimonials = [
@@ -95,5 +97,5 @@ export const testimonials = [
 ] as const;
 
 export function testimonialImageUrl(id: string) {
-  return `https://framerusercontent.com/images/${id}.png`;
+  return framerAsset(`${id}.png`);
 }

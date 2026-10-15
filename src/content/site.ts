@@ -10,6 +10,8 @@
  * noted inline below.
  */
 
+import { framerAsset } from "./media";
+
 // Two deliberate departures from the live nav's exact items, both
 // "structural improvement while preserving content" calls the migration
 // brief allows:
@@ -150,7 +152,7 @@ export const site = {
   // work should be doing the talking. Left here, unused, in case a future
   // page wants it rather than deleting a real asset reference outright.
   portrait: {
-    src: "https://framerusercontent.com/images/2bZSUdqkPs4VGBtGfwyuSAZLP4.png",
+    src: framerAsset("2bZSUdqkPs4VGBtGfwyuSAZLP4.png"),
     width: 1563,
     height: 1563,
     alt: "A portrait of a young man smiling",
