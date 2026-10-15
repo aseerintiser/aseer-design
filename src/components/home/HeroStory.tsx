@@ -125,7 +125,7 @@ export function HeroStory({ intro }: { intro: ReactNode }) {
                 <video
                   ref={videoRef}
                   src="/loops/trailer.mp4"
-                  poster="/loops/trailer.jpg"
+                  poster="/loops/trailer.webp"
                   muted
                   loop
                   playsInline

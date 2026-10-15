@@ -7,7 +7,7 @@ import { posterFor } from "@/lib/media";
 
 interface LoopVideoProps {
   src: string;
-  /** Defaults to the same-named .jpg next to the loop (public/loops/). */
+  /** Defaults to the same-named .webp next to the loop (public/loops/). */
   poster?: string;
   alt: string;
   width: number;

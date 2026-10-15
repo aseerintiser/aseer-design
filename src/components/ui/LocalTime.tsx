@@ -9,7 +9,7 @@ const format = new Intl.DateTimeFormat("en-GB", {
 });
 
 /**
- * Aseer's local time in Tampere (Finland runs on Helsinki time). Rendered
+ * Aseer's local time in Tampere (Finland runs on Helsinki time). Filled in
  * only after mount, so the static HTML never shows a stale build-time
  * clock, and refreshed every half minute.
  */
@@ -23,7 +23,15 @@ export function LocalTime({ className }: { className?: string }) {
     return () => window.clearInterval(timer);
   }, []);
 
-  if (!time) return null;
+  // Until the clock is known, an invisible placeholder of the same width
+  // holds its place, so nothing shifts when the time appears.
+  if (!time) {
+    return (
+      <span aria-hidden="true" className={className} style={{ visibility: "hidden" }}>
+        00:00
+      </span>
+    );
+  }
   return (
     <time className={className} aria-label={`Local time in Tampere: ${time}`}>
       {time}

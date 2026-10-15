@@ -61,6 +61,7 @@ export default function ResearchIndexPage() {
           its own row with two empty column-tracks beside it at lg.
           col-span-6 gives these two entries an even, two-up row that
           fills the full 12 columns instead. */}
+      <h2 className="sr-only">Studies</h2>
       <Grid className="mt-12" gap="lg">
         {flagship.map((project) => (
           <div key={project.slug} className="col-span-4 md:col-span-8 lg:col-span-12">

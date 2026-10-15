@@ -14,8 +14,8 @@ export function isVideo(src: string) {
 }
 
 /** Every loop in public/loops/ ships with a first-frame poster that
- * shares its file name, so the poster can be derived instead of
+ * shares its file name (WebP), so the poster can be derived instead of
  * repeated in every content entry. */
 export function posterFor(src: string) {
-  return src.replace(/\.mp4$/, ".jpg");
+  return src.replace(/\.mp4$/, ".webp");
 }

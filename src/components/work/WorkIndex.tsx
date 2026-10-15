@@ -104,6 +104,9 @@ export function WorkIndex({ items }: { items: WorkItem[] }) {
         </div>
       </div>
 
+      {/* Keeps the outline in order: page h1, then this h2, then each
+          card's h3. */}
+      <h2 className="sr-only">Projects</h2>
       <p className="sr-only" aria-live="polite">
         Showing {visible.length} projects
       </p>

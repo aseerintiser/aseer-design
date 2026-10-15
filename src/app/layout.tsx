@@ -16,6 +16,7 @@ import "@fontsource-variable/schibsted-grotesk";
 import "@fontsource/ibm-plex-mono/latin-400.css";
 import "@fontsource/ibm-plex-mono/latin-500.css";
 import "./globals.css";
+import { newsreader, schibsted, plexMono } from "@/lib/fonts";
 
 const siteUrl = "https://aseer.design";
 
@@ -69,7 +70,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${newsreader.variable} ${schibsted.variable} ${plexMono.variable}`}>
       <body>
         {/* Functional grain, not decorative -- see globals.css .grain-overlay
             for the full rationale (prevents banding on flat color fields). */}

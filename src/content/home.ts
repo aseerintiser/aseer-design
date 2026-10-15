@@ -152,11 +152,14 @@ export const convayChapter = {
       slug: "convay-ai-for-physical-meetings",
       href: "/work/convay-ai-for-physical-meetings",
       title: "AI for Physical Meetings",
-      // Case study intro and Outcome and Impact.
+      // Case study intro; evidence from Design Process (the light/dark
+      // test). The chip shows a design result rather than the 93%
+      // transcription figure, which describes the speech model, not the
+      // design, and is marked unverified in the career archive's ledger.
       outcome: "Record the room, then get a transcript and a summary people can share.",
       evidence: {
         status: "own",
-        text: "93% transcription accuracy in quiet rooms · internal testing",
+        text: "82% of internal testers preferred the dark meeting panel",
       } as Evidence,
     },
     {

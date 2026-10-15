@@ -24,9 +24,9 @@
      whatever system monospace the visitor happened to have). All three
      are free, open source and self-hosted via @fontsource (imported in
      layout.tsx), never fetched from Google Fonts. */
-  --font-display: "Newsreader Variable", ui-serif, Georgia, serif;
-  --font-sans: "Schibsted Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: var(--font-newsreader), "Newsreader Variable", ui-serif, Georgia, serif;
+  --font-sans: var(--font-schibsted), "Schibsted Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   /* 8-point spacing scale. Tailwind's default --spacing unit (0.25rem/4px)
      already divides evenly into 8px steps; these named tokens exist so
@@ -171,6 +171,21 @@
   --color-status-internal-text: #b7c0ff;
   --color-status-directional-bg: #352810;
   --color-status-directional-text: #f0c887;
+}
+
+/*
+ * Fallback for Newsreader while it loads (see src/lib/fonts.ts). Times
+ * New Roman (Liberation Serif is metric-identical) scaled to Newsreader's
+ * width at headline sizes, where its optical sizing makes it widest, so
+ * headlines wrap the same before and after the font arrives.
+ */
+@font-face {
+  font-family: "Newsreader Fallback";
+  src: local("Times New Roman"), local("TimesNewRomanPSMT"), local("Liberation Serif"), local("Times");
+  size-adjust: 108.4%;
+  ascent-override: 67.8%;
+  descent-override: 24.4%;
+  line-gap-override: 0%;
 }
 
 @layer base {

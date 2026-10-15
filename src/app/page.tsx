@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { preload } from "react-dom";
 import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
@@ -86,6 +87,10 @@ function CaseLink({ href, children }: { href: string; children: React.ReactNode 
  * to paper for calmer reading.
  */
 export default function HomePage() {
+  // The trailer's poster is the largest thing on the first screen, so the
+  // browser fetches it first instead of after the card posters below.
+  preload("/loops/trailer.webp", { as: "image", fetchPriority: "high" });
+
   const lumiChapter = chapterFor("lumi");
 
   return (
@@ -95,12 +100,17 @@ export default function HomePage() {
         <HeroStory
           intro={
             <div>
-              <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.12em] text-[var(--color-text-muted)] uppercase">
-                <span aria-hidden="true" className="h-2 w-2 rounded-full bg-[var(--color-signal)]" />
-                <span>Open to roles</span>
-                <span aria-hidden="true">·</span>
+              {/* One item per line on phones, one row from sm up: the
+                  line count never depends on how wide the mono font is,
+                  so nothing below shifts when the font arrives. */}
+              <p className="flex flex-col gap-1 font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.12em] text-[var(--color-text-muted)] uppercase sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-2">
+                <span className="flex items-center gap-2">
+                  <span aria-hidden="true" className="h-2 w-2 rounded-full bg-[var(--color-signal)]" />
+                  <span>Open to roles</span>
+                </span>
+                <span aria-hidden="true" className="hidden sm:inline">·</span>
                 <span>{site.title}</span>
-                <span aria-hidden="true">·</span>
+                <span aria-hidden="true" className="hidden sm:inline">·</span>
                 <span>
                   Tampere <LocalTime />
                 </span>

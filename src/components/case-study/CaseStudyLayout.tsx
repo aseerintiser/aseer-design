@@ -28,7 +28,7 @@ function heroMediaFor(caseStudy: CaseStudy): StageMedia | null {
   if (FULL_LOOPS.has(caseStudy.slug)) {
     return {
       src: `/loops/${caseStudy.slug}.mp4`,
-      poster: `/loops/${caseStudy.slug}.jpg`,
+      poster: `/loops/${caseStudy.slug}.webp`,
       width: 1600,
       height: 1200,
       alt: caseStudy.thumbnail?.alt ?? caseStudy.title,

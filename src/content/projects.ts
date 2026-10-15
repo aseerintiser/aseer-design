@@ -149,7 +149,7 @@ const img = (id: string, width: number, height: number, alt = "") => ({
 // 35-47 MB GIFs are now MP4 loops in public/loops/ (same frames, same
 // timing, about 2-3.5 MB each). `loop` is the full-size version for case
 // study pages; `cardLoop` is the lighter 960 px version for project
-// cards. Each has a same-named .jpg poster frame next to it.
+// cards. Each has a same-named .webp poster frame next to it.
 const loop = (slug: string, alt = "") => ({
   src: `/loops/${slug}.mp4`,
   width: 1600,
@@ -159,7 +159,7 @@ const loop = (slug: string, alt = "") => ({
 
 const cardLoop = (slug: string, alt: string) => ({
   src: `/loops/${slug}-card.mp4`,
-  poster: `/loops/${slug}-card.jpg`,
+  poster: `/loops/${slug}-card.webp`,
   width: 960,
   height: 720,
   alt,
@@ -3296,7 +3296,7 @@ export const caseStudies: CaseStudy[] = [
     // recording became available.
     thumbnail: {
       src: "/loops/convay-design-system-card.mp4",
-      poster: "/loops/convay-design-system-card.jpg",
+      poster: "/loops/convay-design-system-card.webp",
       width: 1100,
       height: 826,
       alt: "Scrolling through Convay's design system: color tokens, spacing scale, and shadow values in Figma.",
@@ -3495,7 +3495,7 @@ export const caseStudies: CaseStudy[] = [
     // for actually sizing a <video> element).
     thumbnail: {
       src: "/loops/lumi-card.mp4",
-      poster: "/loops/lumi-card.jpg",
+      poster: "/loops/lumi-card.webp",
       width: 723,
       height: 542,
       alt: "Lumi in use: the chat widget opening, topic buttons, and a live conversation answering a student's question about healthcare in Finland.",
@@ -3542,7 +3542,7 @@ export const caseStudies: CaseStudy[] = [
     // treatment as Lumi and Convay Design System (see ProjectCard.tsx).
     thumbnail: {
       src: "/loops/arenewberg-card.mp4",
-      poster: "/loops/arenewberg-card.jpg",
+      poster: "/loops/arenewberg-card.webp",
       width: 1100,
       height: 826,
       alt: "The aRENEWberg app: splash screen, a scavenger-hunt clue, and the festival's live activity list.",
