@@ -1668,52 +1668,19 @@ const fitvibeBody: CaseStudyBlock[] = [
       "Participants appreciated personalized workout and diet planners, progress tracking, and social media features.",
       "Areas for improvement identified, such as clearer labels and instructions for certain features and a more intuitive e-commerce shop interface.",
       "Some participants reported difficulties with entering and tracking progress, particularly in the nutrition tracking feature.",
-      "Usability score (SUS) of **75.21** out of 100, indicating **above-average usability**.",
       "Overall, valuable feedback obtained to enhance user experience and make improvements to the app's design.",
     ],
   },
-  { type: "heading", level: 3, text: "Research Insights: System Usability Scale (SUS)" },
+  // Phase 0 fix: this section used to show a SUS score of 75.21 with
+  // its working, but the working did not hold up: Question 1's sum was
+  // printed as 37 when (3x5)+(4x6)+(5x1) is 44; the ten item totals add
+  // to 312, and 312 x 2.5 is 780, not 902.5; and the standard SUS item
+  // conversion (odd items minus 1, even items 5 minus the answer) was
+  // skipped. The score and the calculation are removed until it can be
+  // recomputed from the original response sheets with standard scoring.
   {
     type: "paragraph",
-    text: "The SUS is a widely used and validated questionnaire that measures the perceived usability of a system. The questionnaire consists of 10 questions, each rated on a 5-point Likert scale (1 = strongly disagree, 5 = strongly agree). The scores from each question are then summed and multiplied by 2.5 to get a score out of 100.",
-  },
-  { type: "heading", level: 4, text: "SUS Questionnaire" },
-  {
-    type: "list",
-    items: [
-      "I think that I would like to use this system frequently.",
-      "I found the system unnecessarily complex.",
-      "I thought the system was easy to use.",
-      "I think that I would need the support of a technical person to be able to use this system.",
-      "I found the various functions in this system were well integrated.",
-      "I thought there was too much inconsistency in this system.",
-      "I would imagine that most people would learn to use this system very quickly.",
-      "I found the system very cumbersome to use.",
-      "I felt very confident using the system.",
-      "I needed to learn a lot of things before I could get going with this system.",
-    ],
-  },
-  { type: "heading", level: 4, text: "SUS Analysis" },
-  {
-    type: "paragraph",
-    text: "For Question 1: 5 respondents gave 3 in likert-scale, 6 respondents gave 4 in likert-scale, 1 respondent gave 5 in likert-scale.",
-  },
-  {
-    type: "paragraph",
-    text: "*Step 1: Add up the score contribution from each question:*\nFor Question 1: (3 x 5) + (4 x 6) + (5 x 1) = 37. Similarly done the calculation for each question.",
-  },
-  {
-    type: "paragraph",
-    text: "*Step 2: Multiply the total by 2.5:*\nSUS score = (37+29+43+21+38+24+34+29+36+21) x 2.5 = 902.5",
-  },
-  {
-    type: "paragraph",
-    text: "*Step 3: Divide the SUS score by the number of respondents:*\n902.5 / 12 = **75.21**",
-  },
-  { type: "heading", level: 4, text: "SUS Result" },
-  {
-    type: "paragraph",
-    text: "The overall SUS score is **75.21** out of 100. This indicates that the usability of our product is **above average**, but there is still room for improvement. We can use this score to compare the usability of our product with other products or to track changes in usability over time.",
+    text: "Participants also completed the System Usability Scale (SUS), a standard ten-question usability questionnaire.",
   },
   { type: "heading", level: 3, text: "Takeaways" },
   {
@@ -3310,7 +3277,7 @@ export const caseStudies: CaseStudy[] = [
       "FitVibe app walkthrough",
     ),
     oneLineScope:
-      "FitVibe is a comprehensive fitness app designed for fitness enthusiasts and individuals pursuing a healthy lifestyle. It offers a range of features including workout and diet planners, progress tracking, social interaction, gamified challenges, and an e-commerce shop. With a focus on personalized guidance and community support, FitVibe caters to passionate fitness enthusiasts and those seeking to improve their well-being.",
+      "FitVibe is a comprehensive fitness app designed for fitness enthusiasts and individuals pursuing a healthy lifestyle. It offers a range of features including workout and diet planners, progress tracking, social interaction, gamified challenges, and an e-commerce shop. With a focus on personalized guidance and community support, FitVibe caters to passionate fitness enthusiasts and those seeking to improve their well-being. I worked on it as a UI design intern at Kaz Software, alongside a senior designer, on a client product whose real name is under NDA.",
     meta: {
       role: "UI Design Intern (under senior designer guidance)",
       team: "Senior designer + client team",
@@ -3319,7 +3286,11 @@ export const caseStudies: CaseStudy[] = [
     },
     liveMeta: {
       category: ["Mobile Design"],
-      role: ["UX Designer", "UI Designer", "UX Researcher"],
+      // Phase 0 fix: the header used to list "UX Designer, UI Designer,
+      // UX Researcher" for what was a four-month internship under a
+      // senior designer. The meta.role above already said so; this is
+      // the field the header actually shows.
+      role: ["UI Design Intern, Kaz Software (with a senior designer)"],
       tools: ["Figma"],
     },
     nextCaseStudy: {
