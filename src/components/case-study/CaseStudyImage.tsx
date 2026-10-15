@@ -51,15 +51,15 @@ export function CaseStudyImage({
   // cannot sit inside another button.
   if (isVideo(src)) {
     return (
-      <figure className="mx-auto max-w-full">
+      <figure className="max-w-full">
         <div
-          className="mx-auto overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]"
+          className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]"
           style={{ maxWidth: cappedWidth, aspectRatio: `${width} / ${height}` }}
         >
           <LoopVideo src={src} alt={alt} width={width} height={height} className="h-full w-full" />
         </div>
         {caption && (
-          <figcaption className="mt-2 text-center text-sm text-[var(--color-text-muted)]">
+          <figcaption className="mt-3 text-sm text-[var(--color-text-muted)]">
             {caption}
           </figcaption>
         )}
@@ -88,9 +88,9 @@ export function CaseStudyImage({
   );
 
   return (
-    <figure className="mx-auto max-w-full">
+    <figure className="max-w-full">
       <div
-        className="mx-auto overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]"
+        className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)]"
         style={{ maxWidth: cappedWidth }}
       >
         {enlargeable ? (
@@ -115,7 +115,7 @@ export function CaseStudyImage({
         )}
       </div>
       {caption && (
-        <figcaption className="mt-2 text-center text-sm text-[var(--color-text-muted)]">
+        <figcaption className="mt-3 text-sm text-[var(--color-text-muted)]">
           {caption}
         </figcaption>
       )}

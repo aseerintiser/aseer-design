@@ -74,6 +74,14 @@ export interface CaseStudyMeta {
  * not stripped, since that emphasis is part of the original voice.
  */
 export type CaseStudyBlock =
+  | {
+      /** Supporting detail that most readers can skip (Phase 3 length
+       * budget): shown as a closed disclosure, so nothing is removed and
+       * everything stays one click away and readable by screen readers. */
+      type: "details";
+      summary: string;
+      blocks: CaseStudyBlock[];
+    }
   | { type: "heading"; level: 3 | 4; text: string }
   | {
       type: "paragraph";

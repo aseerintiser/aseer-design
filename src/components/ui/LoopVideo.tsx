@@ -23,6 +23,9 @@ interface LoopVideoProps {
    */
   mode?: "auto" | "controlled";
   playing?: boolean;
+  /** Where the pause button sits; "top-right" for loops whose bottom
+   * edge is cropped (a stage window rising from the bottom). */
+  controlsPosition?: "bottom-left" | "top-right";
 }
 
 /**
@@ -40,6 +43,7 @@ export function LoopVideo({
   className,
   mode = "auto",
   playing = false,
+  controlsPosition = "bottom-left",
 }: LoopVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -110,7 +114,10 @@ export function LoopVideo({
             }
           }}
           aria-label={isPlaying ? "Pause animation" : "Play animation"}
-          className="absolute bottom-3 left-3 flex h-9 w-9 items-center justify-center rounded-[var(--radius-full)] bg-black/60 text-white backdrop-blur-sm transition-colors duration-[var(--duration-fast)] hover:bg-black/80"
+          className={cn(
+            "absolute flex h-9 w-9 items-center justify-center rounded-[var(--radius-full)] bg-black/60 text-white backdrop-blur-sm transition-colors duration-[var(--duration-fast)] hover:bg-black/80",
+            controlsPosition === "top-right" ? "top-3 right-3" : "bottom-3 left-3",
+          )}
         >
           {isPlaying ? (
             <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" aria-hidden="true">

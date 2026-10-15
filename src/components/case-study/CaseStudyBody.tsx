@@ -1,5 +1,4 @@
 import type { CaseStudyBlock } from "@/content/types";
-import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { PullQuote } from "@/components/ui/PullQuote";
@@ -18,7 +17,7 @@ import { ComparisonDiagram } from "./ComparisonDiagram";
 import { VariantComparison } from "./VariantComparison";
 import { PhaseFilmstrip } from "./PhaseFilmstrip";
 import { ReducedMotionHero } from "./ReducedMotionHero";
-import { GhostNumeral } from "@/components/ui/GhostNumeral";
+import { ChapterNav, type Chapter } from "./ChapterNav";
 import { renderInlineMarkdown } from "@/lib/inline-markdown";
 import { cn } from "@/lib/utils";
 
@@ -43,7 +42,7 @@ function renderBlock(
       // semantic level and visual size are independent on this
       // component precisely so accessibility and design don't conflict.
       return (
-        <Heading key={key} level={3} size={4} display={false} className="mt-8 first:mt-0">
+        <Heading key={key} level={3} size={4} display={false} className="mt-10">
           {block.text}
         </Heading>
       );
@@ -230,86 +229,169 @@ function renderBlock(
           />
         </div>
       );
+    case "details":
+      return (
+        <details
+          key={key}
+          className="group/details mt-6 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)]"
+        >
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-[var(--radius-lg)] px-5 py-4 text-sm font-medium [&::-webkit-details-marker]:hidden">
+            <span>{block.summary}</span>
+            <span
+              aria-hidden="true"
+              className="font-[family-name:var(--font-mono)] text-base leading-none text-[var(--color-text-muted)] transition-transform duration-[var(--duration-base)] group-open/details:rotate-45"
+            >
+              +
+            </span>
+          </summary>
+          <div className="border-t border-[var(--color-border)] px-5 pt-2 pb-6">
+            {block.blocks.map((child, index) => renderBlock(child, index, referenceMarks))}
+          </div>
+        </details>
+      );
     default:
       return null;
   }
 }
 
+/** Blocks that carry visuals or interactions get the wider measure;
+ * running text keeps the reading measure (about 68 characters). */
+const WIDE_BLOCKS = new Set<CaseStudyBlock["type"]>([
+  "image",
+  "imageRow",
+  "video",
+  "reducedMotionHero",
+  "phaseGroup",
+  "variantComparison",
+  "twoColumnCompare",
+  "beforeAfterFlow",
+  "interactive",
+  "revealGroup",
+  "timeline",
+  "flowSteps",
+  "metricGrid",
+]);
+
+function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+/** Drops media that duplicates the case hero (Phase 3): the header stage
+ * already plays the project's loop, so the same loop opening the body
+ * would show it twice in a row. A single image that opens the body, ahead
+ * of every chapter, was the old page's hero shot, so the stage replaces
+ * it too (Lumi and aRENEWberg open with a still of the same screen the
+ * stage is already playing). */
+function withoutHeroDuplicates(blocks: CaseStudyBlock[], heroSrcs: string[]) {
+  if (!heroSrcs.length) return blocks;
+  const isHero = (src: string) => heroSrcs.includes(src);
+  const result: CaseStudyBlock[] = [];
+  let beforeFirstHeading = true;
+  for (const [index, block] of blocks.entries()) {
+    if (index === 0 && block.type === "image" && !block.caption) continue;
+    if (block.type === "heading" && block.level === 3) beforeFirstHeading = false;
+    if (beforeFirstHeading) {
+      if (block.type === "image" && isHero(block.src)) continue;
+      if (block.type === "reducedMotionHero" && isHero(block.loopSrc)) continue;
+      if (block.type === "imageRow") {
+        const images = block.images.filter((image) => !isHero(image.src));
+        if (!images.length) continue;
+        result.push({ ...block, images });
+        continue;
+      }
+    }
+    result.push(block);
+  }
+  return result;
+}
+
 /**
- * Renders a migrated case study's real body content (Milestone 2).
- * Unlike the seven-section framework used for not-yet-written case
- * studies, live content is split into Sections at each top-level
- * ("heading", level 3) block, preserving each project's own organic
- * structure (e.g. "Convay at a Glance", "The Problem", "Design Process
- * & Reasoning") exactly as it exists on the live site, rather than
- * force-fitting it into Context/Decisions/Evidence/Outcome/Reflection.
- * Section tone alternates light/dark for scroll rhythm, same as
- * everywhere else on the site.
+ * The case study body (Phase 3 template).
+ *
+ * One calm paper page instead of alternating dark and light bands: past
+ * two, the alternation stopped reading as pacing and started reading as
+ * stripes. Each level-3 heading starts a numbered chapter. On wide
+ * screens a chapter rail sits beside the reading column; on smaller
+ * screens a slim bar under the navigation does the same job. Text keeps
+ * the reading measure; visuals and interactive moments get a wider one.
  */
 export function CaseStudyBody({
   blocks,
   referenceMarks,
+  heroSrcs = [],
 }: {
   blocks: CaseStudyBlock[];
   /** Convay AI for Physical Meetings rebuild: see the `referenceMarks`
    * note on CaseStudy in content/types.ts. Undefined for every other
    * case study, which keeps every "link" block's markup unchanged. */
   referenceMarks?: Record<string, string>;
+  /** Sources already playing in the case hero, removed from the body. */
+  heroSrcs?: string[];
 }) {
   const sections: { heading: CaseStudyBlock & { type: "heading" }; body: CaseStudyBlock[] }[] = [];
-
-  for (const block of blocks) {
+  for (const block of withoutHeroDuplicates(blocks, heroSrcs)) {
     if (block.type === "heading" && block.level === 3) {
       sections.push({ heading: block, body: [] });
       continue;
     }
     if (sections.length === 0) {
-      // Content appearing before the first level-3 heading (rare) --
-      // start an implicit untitled section rather than dropping it.
+      // Content before the first chapter heading: an untitled opening.
       sections.push({ heading: { type: "heading", level: 3, text: "" }, body: [] });
     }
     sections[sections.length - 1]!.body.push(block);
   }
 
-  // Convay AI for Physical Meetings rebuild (01_Audit.md: "Numbering
-  // starts at 02, with no visible '01'"): that bug was real, and lives
-  // here, not in any per-project content. `n={index + 1}` numbered every
-  // section by its raw position in `sections`, including the untitled
-  // hero section a leading image/imageRow/caption gets bucketed into
-  // above -- so the first real, titled section (e.g. "Convay at a
-  // Glance") sat at array index 1 and rendered "02," with no section
-  // ever showing "01." A running counter that only advances on titled
-  // sections fixes this for every case study built this way (this one,
-  // and the Mobile App Revamp rebuild before it), not just this page.
-  let titledSectionNumber = 0;
+  let n = 0;
+  const chapters: Chapter[] = [];
+  const numbered = sections.map((section) => {
+    if (!section.heading.text) return { ...section, id: undefined, n: 0 };
+    n += 1;
+    const id = `ch-${slugify(section.heading.text)}`;
+    chapters.push({ id, n, title: section.heading.text });
+    return { ...section, id, n };
+  });
 
   return (
-    <>
-      {sections.map((section, index) => {
-        if (section.heading.text) titledSectionNumber += 1;
-        return (
-          // Visual QA milestone: this Section previously used the default
-          // (1280px) container width, while the paragraph/list text inside
-          // it was separately capped to the narrower reading measure with
-          // no auto-centering -- on real wide viewports that left the text
-          // hugging the container's left edge with 500-700px of dead,
-          // unbalanced space to its right. Narrowing the container itself
-          // to the reading measure means every block in a section (heading,
-          // paragraph, list, quote, callout, timeline, image) shares one
-          // centered column with equal margins on both sides, which reads
-          // as an intentional editorial layout instead of a rendering bug.
-          <Section
+    <div id="case-body" className="mx-auto w-full max-w-7xl px-4 pt-12 pb-24 sm:px-6 md:pt-16 lg:grid lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:gap-14 lg:px-8 lg:pt-20">
+      <ChapterNav chapters={chapters} containerId="case-body" />
+      <div className="min-w-0">
+        {numbered.map((section, index) => (
+          <section
             key={index}
-            density={index === sections.length - 1 ? "open" : "default"}
-            tone={index % 2 === 1 ? "dark" : undefined}
-            measure="narrow"
+            id={section.id}
+            aria-labelledby={section.id ? `${section.id}-title` : undefined}
+            className={cn("scroll-mt-32 lg:scroll-mt-24", index > 0 && "mt-16 md:mt-24")}
           >
-            {section.heading.text && <GhostNumeral n={titledSectionNumber} />}
-            {section.heading.text && <Heading level={2}>{section.heading.text}</Heading>}
-            {section.body.map((block, blockIndex) => renderBlock(block, blockIndex, referenceMarks))}
-          </Section>
-        );
-      })}
-    </>
+            {section.id && (
+              <header className="mb-2 max-w-[var(--measure)]">
+                <p className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
+                  Chapter {String(section.n).padStart(2, "0")}
+                </p>
+                <Heading level={2} id={`${section.id}-title`} className="mt-2">
+                  {section.heading.text}
+                </Heading>
+              </header>
+            )}
+            {section.body.map((block, blockIndex) => (
+              <div
+                key={blockIndex}
+                className={cn(
+                  WIDE_BLOCKS.has(block.type) ? "max-w-[var(--measure-wide)]" : "max-w-[var(--measure)]",
+                  // Each block sits in its own wrapper, so `first:` cannot
+                  // see a sub-heading that opens a chapter; trim it here.
+                  blockIndex === 0 && "[&>h3]:mt-4",
+                )}
+              >
+                {renderBlock(block, blockIndex, referenceMarks)}
+              </div>
+            ))}
+          </section>
+        ))}
+      </div>
+    </div>
   );
 }

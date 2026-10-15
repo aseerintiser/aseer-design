@@ -79,7 +79,7 @@ export function PhaseFilmstrip({ label, intro, images }: PhaseFilmstripProps) {
                 height={image.height}
                 alt={image.alt}
                 className="h-auto w-full transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:opacity-90"
-                sizes="(min-width: 640px) 320px, 100vw"
+                sizes="(min-width: 640px) 440px, 100vw"
                 quality={90}
               />
               <span
@@ -89,7 +89,7 @@ export function PhaseFilmstrip({ label, intro, images }: PhaseFilmstripProps) {
                 <ExpandIcon className="h-5 w-5 text-white" />
               </span>
             </button>
-            <p className="mt-2 text-center text-xs text-[var(--color-text-muted)]">{image.caption}</p>
+            <p className="mt-2 text-xs text-[var(--color-text-muted)]">{image.caption}</p>
           </div>
         ))}
       </div>

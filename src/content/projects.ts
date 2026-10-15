@@ -84,14 +84,6 @@ const convayAtAGlance: CaseStudyBlock[] = [
     text: "Convay is a video conferencing and collaboration platform built for governments, enterprises, and institutions that need to keep control of their own data. Used in more than **45 countries**, it covers a meeting from start to finish, from scheduling and live video to AI transcription, file storage, and follow-up, all inside a system that can **run entirely on a client's own servers**.",
   },
   {
-    type: "paragraph",
-    text: "Convay is the platform behind **Bangladesh's national government communications system**, built for the Bangladesh Computer Council and designed to scale to **200,000 users**. In 2025, it was also **selected over Zoom and Google Meet** as the official platform for the Sustainable Infrastructure Development Symposium (SIDSSA), a G20-linked summit hosted in South Africa, supporting government officials and policymakers from **27 countries**.",
-  },
-  {
-    type: "paragraph",
-    text: "At **Evercare Hospital Dhaka**, a 425-bed hospital and the **first in Bangladesh to receive JCI accreditation**, Convay has run telehealth appointments and meetings for **two and a half years**, according to the hospital's head of IT.",
-  },
-  {
     type: "metricGrid",
     items: [
       { value: "45+", label: "Countries" },
@@ -99,34 +91,51 @@ const convayAtAGlance: CaseStudyBlock[] = [
       { value: "10,000", label: "Participants supported in a single meeting" },
     ],
   },
-  { type: "heading", level: 4, text: "Capabilities" },
+  // Phase 3 length budget: this chapter repeats on every Convay case, so
+  // after the opening paragraph and the three numbers, the rest sits in a
+  // closed disclosure. Nothing is cut; it is one click away.
   {
-    type: "list",
-    items: [
-      "**Enterprise-grade security**: sovereign deployment on cloud, on-premises, or hybrid, with data kept in the client's jurisdiction",
-      "**High-quality video and audio**: built for low-bandwidth and unstable network conditions",
-      "**AI transcription and meeting summaries**: around 93% accuracy, in five languages: English, Bangla, French, Portuguese, Spanish",
-      "**Real-time whiteboard, chat, and screen sharing**: with cloud storage for meeting files and chat logs",
-      "**Cross-platform**: web, iOS, and Android, with 10,000+ mobile installs",
+    type: "details",
+    summary: "Who relies on Convay, its capabilities and press coverage",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Convay is the platform behind **Bangladesh's national government communications system**, built for the Bangladesh Computer Council and designed to scale to **200,000 users**. In 2025, it was also **selected over Zoom and Google Meet** as the official platform for the Sustainable Infrastructure Development Symposium (SIDSSA), a G20-linked summit hosted in South Africa, supporting government officials and policymakers from **27 countries**.",
+      },
+      {
+        type: "paragraph",
+        text: "At **Evercare Hospital Dhaka**, a 425-bed hospital and the **first in Bangladesh to receive JCI accreditation**, Convay has run telehealth appointments and meetings for **two and a half years**, according to the hospital's head of IT.",
+      },
+      { type: "heading", level: 4, text: "Capabilities" },
+      {
+        type: "list",
+        items: [
+          "**Enterprise-grade security**: sovereign deployment on cloud, on-premises, or hybrid, with data kept in the client's jurisdiction",
+          "**High-quality video and audio**: built for low-bandwidth and unstable network conditions",
+          "**AI transcription and meeting summaries**: around 93% accuracy, in five languages: English, Bangla, French, Portuguese, Spanish",
+          "**Real-time whiteboard, chat, and screen sharing**: with cloud storage for meeting files and chat logs",
+          "**Cross-platform**: web, iOS, and Android, with 10,000+ mobile installs",
+        ],
+      },
+      { type: "heading", level: 4, text: "References" },
+      {
+        type: "link",
+        text: "The Daily Star",
+        href: "https://www.thedailystar.net/tech-startup/news/dhaka-the-world-convays-multilingual-options-shines-global-stage-3906601",
+      },
+      {
+        type: "link",
+        text: "The Financial Express",
+        href: "https://today.thefinancialexpress.com.bd/trade-market/convay-chosen-over-zoom-google-meet-for-g20-sidssa-2025-1748537594",
+      },
+      {
+        type: "link",
+        text: "SIDSSA 2025 Official Post",
+        href: "https://www.linkedin.com/posts/infrastructuresa_sidssa25-infrastructuresa-infrastructuredevelopment-activity-7330574469981270019-ujhF",
+      },
+      { type: "linkCard", text: "Explore Convay", href: "https://www.convay.com/" },
     ],
   },
-  { type: "heading", level: 4, text: "References" },
-  {
-    type: "link",
-    text: "The Daily Star",
-    href: "https://www.thedailystar.net/tech-startup/news/dhaka-the-world-convays-multilingual-options-shines-global-stage-3906601",
-  },
-  {
-    type: "link",
-    text: "The Financial Express",
-    href: "https://today.thefinancialexpress.com.bd/trade-market/convay-chosen-over-zoom-google-meet-for-g20-sidssa-2025-1748537594",
-  },
-  {
-    type: "link",
-    text: "SIDSSA 2025 Official Post",
-    href: "https://www.linkedin.com/posts/infrastructuresa_sidssa25-infrastructuresa-infrastructuredevelopment-activity-7330574469981270019-ujhF",
-  },
-  { type: "linkCard", text: "Explore Convay", href: "https://www.convay.com/" },
 ];
 
 const img = (id: string, width: number, height: number, alt = "") => ({

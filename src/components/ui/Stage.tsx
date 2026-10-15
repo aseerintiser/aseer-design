@@ -25,6 +25,9 @@ interface StageProps {
    * a cinema-shaped stage on large screens, with the window kept to a
    * readable width in the middle instead of stretching edge to edge. */
   shape?: "standard" | "wide";
+  /** Play the loop whenever it is visible, with a pause button (case
+   * study heroes), instead of on hover. */
+  autoplay?: boolean;
   sizes?: string;
   priority?: boolean;
   className?: string;
@@ -49,6 +52,7 @@ export function Stage({
   playing = false,
   showLabel = true,
   shape = "standard",
+  autoplay = false,
   sizes = "(min-width: 1024px) 45vw, 90vw",
   priority = false,
   className,
@@ -91,8 +95,9 @@ export function Stage({
             alt={media.alt}
             width={media.width}
             height={media.height}
-            mode="controlled"
+            mode={autoplay ? "auto" : "controlled"}
             playing={playing}
+            controlsPosition="top-right"
             className="h-full w-full"
           />
         ) : (
