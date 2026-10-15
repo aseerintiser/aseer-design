@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { NavBar } from "@/components/layout/NavBar";
 import { Footer } from "@/components/layout/Footer";
@@ -15,6 +16,11 @@ import "@fontsource-variable/fraunces/full.css";
 import "./globals.css";
 
 const siteUrl = "https://aseer.design";
+
+// Cookie-free visit counts (Umami's free tier), so there is a baseline
+// before the redesign ships and no cookie banner is needed. Inert until
+// NEXT_PUBLIC_UMAMI_WEBSITE_ID is set in the Vercel project settings.
+const umamiWebsiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -82,6 +88,13 @@ export default function RootLayout({
           <main id="main-content">{children}</main>
         </LightboxProvider>
         <Footer />
+        {umamiWebsiteId && (
+          <Script
+            src="https://cloud.umami.is/script.js"
+            data-website-id={umamiWebsiteId}
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   );
