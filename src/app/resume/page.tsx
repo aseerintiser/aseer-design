@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
-import { Button } from "@/components/ui/Button";
+import { ArrowIcon } from "@/components/ui/ArrowIcon";
 import { MetaRow } from "@/components/ui/MetaRow";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Resume",
+  title: "CV",
+  description: "The design CV and the academic CV of Md Aseer Intiser, Product Designer & HCI Researcher.",
 };
 
 /**
@@ -27,26 +28,61 @@ export const metadata: Metadata = {
  * lands here specifically looking for that instead.
  */
 export default function ResumePage() {
+  const cvs = [
+    {
+      label: "Design CV",
+      title: "Product design and UX roles",
+      body: "Design experience at Convay and Kaz Software, with selected projects.",
+      href: site.resumeUrl,
+    },
+    {
+      label: "Academic CV",
+      title: "Research roles and PhD applications",
+      body: "Education, the M.Sc. thesis and research projects.",
+      href: site.academicCvUrl,
+    },
+  ];
+
   return (
-    // Visual QA milestone: this page has no rich grid or cards to fill
-    // the rest of the width the way Work/Research do below their own
-    // intro line, so a heading + one sentence + button + meta row inside
-    // the default 1280px container left a whole page reading as mostly
-    // blank on wide viewports. Narrowing the Section to the reading
-    // measure centers the entire page's content instead.
-    <Section density="open" measure="narrow">
-      <Heading level={1}>Resume</Heading>
-      <Text muted className="mt-4">
+    <Section density="open">
+      <p className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
+        CV
+      </p>
+      <Heading level={1} className="mt-3">
+        Two versions, one record
+      </Heading>
+      <Text muted className="mt-4 max-w-[var(--measure)]">
         {site.title} · {site.currentStatus}
       </Text>
 
-      <div className="mt-8">
-        <Button href={site.resumeUrl} target="_blank" rel="noreferrer">
-          Download Resume (PDF)
-        </Button>
-      </div>
+      <ul className="mt-10 grid gap-4 md:grid-cols-2">
+        {cvs.map((cv) => (
+          <li key={cv.label}>
+            <a
+              href={cv.href}
+              target="_blank"
+              rel="noreferrer"
+              className="group flex h-full flex-col justify-between gap-8 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-colors duration-[var(--duration-fast)] hover:border-[var(--color-text)] sm:p-8"
+            >
+              <span>
+                <span className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
+                  {cv.label} · PDF
+                </span>
+                <span className="mt-3 block font-[family-name:var(--font-display)] text-[length:var(--text-h3)] leading-snug">
+                  {cv.title}
+                </span>
+                <span className="mt-2 block text-sm text-[var(--color-text-muted)]">{cv.body}</span>
+              </span>
+              <span className="inline-flex items-center gap-2 text-sm font-medium">
+                <span className="link-ink">Open the {cv.label.toLowerCase()}</span>
+                <ArrowIcon className="h-3.5 w-3.5 transition-transform duration-[var(--duration-base)] group-hover:translate-x-0.5" />
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
 
-      <div className="mt-12">
+      <div className="mt-12 max-w-4xl">
         <MetaRow
           items={[
             { label: "Based in", value: "Tampere, Finland" },
@@ -56,19 +92,6 @@ export default function ResumePage() {
           ]}
         />
       </div>
-
-      <Text muted size="small" className="mt-8">
-        Looking for a fuller academic record instead?{" "}
-        <a
-          href={site.academicCvUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="font-medium link-ink"
-        >
-          View my academic CV
-        </a>
-        .
-      </Text>
     </Section>
   );
 }

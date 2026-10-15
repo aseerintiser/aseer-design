@@ -59,11 +59,13 @@ export default function CertificationsPage() {
         </Reveal>
       </Section>
 
-      {certificationCollections.map((collection, index) => (
+      {/* One paper page: the collections used to alternate dark and
+          light bands, which past two reads as stripes, not pacing. Each
+          collection now opens with a rule and its number instead. */}
+      {certificationCollections.map((collection) => (
         <CertificationCollection
           key={collection.number}
           {...collection}
-          tone={index % 2 === 0 ? "dark" : undefined}
         />
       ))}
 

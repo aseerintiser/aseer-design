@@ -38,7 +38,7 @@ export function CertificationCollection({
   tone,
 }: CertificationCollectionData & { tone?: "dark" }) {
   return (
-    <Section tone={tone} measure="narrow">
+    <Section tone={tone} measure="narrow" className="border-t border-[var(--color-border)]">
       <Reveal>
         <GhostNumeral n={number} />
         <Heading level={2}>{title}</Heading>
