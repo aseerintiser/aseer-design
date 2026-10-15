@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { site } from "@/content/site";
 import { notFound } from "next/navigation";
 import { CaseStudyLayout } from "@/components/case-study/CaseStudyLayout";
 import { caseStudies, getCaseStudy } from "@/content/projects";
@@ -17,9 +18,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getCaseStudy(slug);
   if (!project) return {};
+  // Phase 0: own og:title/url per page. Without these, every shared
+  // case study inherited the homepage's title and URL from layout.tsx.
+  const description = project.oneLineScope.replace(/\*+/g, "");
   return {
     title: project.title,
-    description: project.oneLineScope,
+    description,
+    openGraph: {
+      type: "article",
+      siteName: site.name,
+      title: project.title,
+      description,
+      url: `/work/${project.slug}`,
+    },
   };
 }
 
