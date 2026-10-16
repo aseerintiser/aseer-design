@@ -25,10 +25,12 @@ export const nav = [
 
 /** Secondary pages, linked from the footer on every page. */
 export const footerPages = [
+  { label: "Ask the portfolio", href: "/ask" },
   { label: "Design showcase", href: "/design-showcase" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "Certifications", href: "/certifications" },
   { label: "Writing", href: "/articles" },
+  { label: "Design notes", href: "/design-notes" },
 ] as const;
 
 export const site = {

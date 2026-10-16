@@ -5,6 +5,7 @@ import { Text } from "@/components/ui/Text";
 import { ArrowIcon } from "@/components/ui/ArrowIcon";
 import { MetaRow } from "@/components/ui/MetaRow";
 import { site } from "@/content/site";
+import { cvSummary, cvVersions } from "@/content/cv";
 
 export const metadata: Metadata = {
   title: "CV",
@@ -28,20 +29,7 @@ export const metadata: Metadata = {
  * lands here specifically looking for that instead.
  */
 export default function ResumePage() {
-  const cvs = [
-    {
-      label: "Design CV",
-      title: "Product design and UX roles",
-      body: "Design experience at Convay and Kaz Software, with selected projects.",
-      href: site.resumeUrl,
-    },
-    {
-      label: "Academic CV",
-      title: "Research roles and PhD applications",
-      body: "Education, the M.Sc. thesis and research projects.",
-      href: site.academicCvUrl,
-    },
-  ];
+  const cvs = cvVersions;
 
   return (
     <Section density="open">
@@ -83,14 +71,7 @@ export default function ResumePage() {
       </ul>
 
       <div className="mt-12 max-w-4xl">
-        <MetaRow
-          items={[
-            { label: "Based in", value: "Tampere, Finland" },
-            { label: "Education", value: "M.Sc. Human-Technology Interaction" },
-            { label: "Status", value: "Open to relocation" },
-            { label: "Contact", value: site.email },
-          ]}
-        />
+        <MetaRow items={[...cvSummary]} />
       </div>
     </Section>
   );

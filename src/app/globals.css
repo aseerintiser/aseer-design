@@ -324,6 +324,17 @@ html[data-vision="tritanopia"] {
   filter: url(#vision-tritanopia);
 }
 
+/* Ask the portfolio: the words that answered the question, marked with
+   the same highlighter band as claims in the case studies. */
+mark.ask-hit {
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+  background: linear-gradient(transparent 62%, rgb(255 216 74 / 0.6) 62%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
 /* Registered so a stage can fade from one chapter color to the next (the
    homepage trailer) instead of jumping. */
 @property --stage-tint {

@@ -14,6 +14,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/testimonials",
     "/certifications",
     "/articles",
+    "/ask",
+    "/design-notes",
   ].map(
     (path) => ({
       url: `${siteUrl}${path}`,

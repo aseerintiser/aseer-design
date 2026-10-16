@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { setMotionPreference, useAmbientMotion } from "@/lib/motion-preference";
 import { setVision, useVision, visions, type Vision } from "@/lib/vision-preference";
 import { printWhenReady } from "@/components/ui/PrintPrep";
+import { handOffQuestion } from "@/lib/ask/handoff";
 import { cn } from "@/lib/utils";
 
 export interface CommandLink {
@@ -26,6 +27,7 @@ type Action =
   | { kind: "file"; href: string }
   | { kind: "copy" }
   | { kind: "print" }
+  | { kind: "ask"; question: string }
   | { kind: "motion" }
   | { kind: "vision"; vision: Vision };
 
@@ -35,7 +37,7 @@ interface Command {
   label: string;
   hint: string;
   keywords?: string;
-  icon: "go" | "copy" | "file" | "print" | "motion" | "vision";
+  icon: "go" | "copy" | "file" | "print" | "motion" | "vision" | "ask";
   action: Action;
 }
 
@@ -48,6 +50,7 @@ const ICONS: Record<Command["icon"], string> = {
   copy: "M9 9h10v10H9zM5 15V5h10",
   file: "M12 4v12M6 12l6 6 6-6M5 20h14",
   print: "M7 9V4h10v5M7 17H5v-7h14v7h-2M7 14h10v6H7z",
+  ask: "M5 5h14v10H10l-5 4z",
   motion: "M5 4.5h4v15H5zM15 4.5h4v15h-4z",
   vision: "M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16zM12 4v16",
 };
@@ -199,6 +202,9 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
           window.setTimeout(close, 1100);
         })
         .catch(() => setStatus(`Couldn't copy. The address is ${email}`));
+    } else if (action.kind === "ask") {
+      close();
+      handOffQuestion(action.question, (href) => router.push(href));
     } else if (action.kind === "print") {
       close();
       void printWhenReady();
@@ -215,10 +221,21 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
     const q = query.trim().toLowerCase();
     if (!q) return commands;
     const words = q.split(/\s+/);
-    return commands.filter((command) => {
+    const matches = commands.filter((command) => {
       const haystack = `${command.label} ${command.hint} ${command.group} ${command.keywords ?? ""}`.toLowerCase();
       return words.every((word) => haystack.includes(word));
     });
+    // Anything typed can also go to Ask the portfolio, which answers
+    // from the site's own text.
+    const askCommand: Command = {
+      id: "ask",
+      group: "Actions",
+      label: `Ask the portfolio: “${query.trim()}”`,
+      hint: "Answers from the site",
+      icon: "ask",
+      action: { kind: "ask", question: query.trim() },
+    };
+    return [...matches, askCommand];
   }, [commands, query]);
 
   const current = Math.min(active, Math.max(0, results.length - 1));
