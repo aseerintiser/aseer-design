@@ -7,7 +7,6 @@ import { ProjectCard } from "@/components/ui/ProjectCard";
 import Link from "next/link";
 import { getProjectsByTrack } from "@/content/projects";
 import { sortedPublications, researchProfiles } from "@/content/publications";
-import { site } from "@/content/site";
 import { renderInlineMarkdown } from "@/lib/inline-markdown";
 import { CopyText } from "@/components/ui/CopyText";
 import { ArrowIcon } from "@/components/ui/ArrowIcon";
@@ -42,13 +41,9 @@ export default function ResearchIndexPage() {
         HCI research spanning AI and trust, human-robot interaction, and
         player experience in games.
       </Text>
-      {/* Resume Strategy milestone (Resume-Strategy-Research.md, Option
-          D) originally placed a quiet "view my academic CV" line here,
-          next to the content that makes it relevant. Removed: the
-          /resume page already carries the same link ("Looking for a
-          fuller academic record instead? View my academic CV."), so
-          this was the same fact stated twice on the site for no added
-          reason -- one honest placement is enough. */}
+      {/* No academic CV on the public site: it lives on the unlisted
+          research profile (app/research-profile), the page shared in
+          research applications. See content/cv.ts. */}
       {/* Same reasoning as the Work index: the single flagship (Lumi)
           gets a full-width feature row instead of competing at equal
           size with the other two research entries.
@@ -95,11 +90,6 @@ export default function ResearchIndexPage() {
                   </a>
                 </li>
               ))}
-              <li>
-                <a href={site.academicCvUrl} target="_blank" rel="noreferrer" className="link-ink font-medium">
-                  Academic CV
-                </a>
-              </li>
             </ul>
           </div>
           <ol className="lg:col-span-8">

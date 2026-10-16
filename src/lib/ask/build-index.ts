@@ -6,7 +6,7 @@ import { site } from "@/content/site";
 import { careerSteps, convayChapter, fitvibeFeature, lumiFeature, moreResearch, person } from "@/content/home";
 import { certificationCollections } from "@/content/certifications";
 import { publications, researchProfiles } from "@/content/publications";
-import { cvSummary, cvVersions } from "@/content/cv";
+import { cvSummary, publicCv } from "@/content/cv";
 import { slugify } from "@/lib/utils";
 import type { Passage, PassageKind } from "./types";
 
@@ -267,9 +267,13 @@ export function buildAskIndex(): Passage[] {
   add({ text: `Email: ${site.email}`, page: "Contact", section: "Footer", href: "#contact", kind: "contact", prior: 1.2 });
 
   // CV.
-  for (const cv of cvVersions) {
-    add({ text: `${cv.label}: ${cv.title}. ${cv.body}`, page: "CV", section: "Two versions", href: "/resume", kind: "details" });
-  }
+  add({
+    text: `${publicCv.label}: ${publicCv.title}. ${publicCv.body}`,
+    page: "CV",
+    section: "The full record",
+    href: "/resume",
+    kind: "details",
+  });
   add({
     text: cvSummary.map((item) => `${item.label}: ${item.value}`).join(" · "),
     page: "CV",

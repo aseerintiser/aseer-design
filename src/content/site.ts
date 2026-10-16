@@ -113,21 +113,12 @@ export const site = {
   // the same fact and needed to match the other three.
   heroProofPoint:
     "Convay, a video conferencing platform trusted by governments and global teams in 45+ countries.",
-  // Resume Strategy milestone (Resume-Strategy-Research.md, Option D):
-  // two separate documents for two separate audiences, confirmed
-  // directly by Aseer (replacing the two *conflicting* live-site links
-  // for the same document that this project could never resolve on its
-  // own -- see the removed TODO(resume-link) note that used to sit on
-  // the nav array above). resumeUrl is the one surfaced prominently
-  // (Footer.tsx, the About page's "View my resume" line, and the
-  // /resume page's download button) since Aseer's stated primary
-  // audience is industry. academicCvUrl is surfaced once, quietly, on
-  // the Research index page -- near the content that makes it relevant,
-  // not given equal top-level billing -- per the research finding that
-  // no real personal site showing both documents with equal prominence
-  // could be found, and that doing so risked reading as an unresolved
-  // identity split right at the moment a visitor is evaluating
-  // credentials.
+  // One CV on the public site (resumeUrl: navigation, footer, About, the
+  // CV page and the command bar). The academic CV (academicCvUrl) is
+  // linked only from the unlisted research profile, the page shared in
+  // research and doctoral applications, so neither audience meets a
+  // second CV aimed at someone else (decided with Aseer, October 17,
+  // 2026; see content/cv.ts and content/research-profile.ts).
   resumeUrl:
     "https://drive.google.com/file/d/1-GzNklvbYyCw_aB3ZEpRCYf41Y3pscNY/view?usp=drive_link",
   academicCvUrl:
@@ -149,7 +140,7 @@ export const site = {
   // building for them) rather than enumerating six role titles as a list.
   footer: {
     heading: ["Let's", "build", "something", "worth", "trusting"],
-    openTo: "Open to roles across design, research, and AI,",
+    openTo: "Open to new roles,",
     openToLine2: "wherever the work means understanding people and building for them.",
     body: "If your team is designing or researching something people need to trust, I'd love to talk.",
     // Homepage Writing Finalization milestone: kept in sync with the

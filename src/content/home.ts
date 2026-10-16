@@ -111,9 +111,9 @@ export const careerSteps = [
   {
     id: "now",
     years: "Now",
-    title: "Open to roles",
-    place: "Product design and HCI research",
-    card: "Open to roles across design, research and AI, wherever the work means understanding people and building for them.",
+    title: "Open to new roles",
+    place: "Tampere, open to relocating",
+    card: "Open to new roles, wherever the work means understanding people and building for them.",
   },
 ] as const;
 
@@ -263,5 +263,5 @@ export const person = {
     "Lumi turned it into the question I want to keep pulling on: how much should people trust an AI system, and how can design help them calibrate it?",
   ],
   lookingFor:
-    "I finished my M.Sc. at Tampere University in July 2026 with Distinction, and I'm open to roles in product design and HCI research, including relocating for the right one.",
+    "I finished my M.Sc. at Tampere University in July 2026 with Distinction, and I'm open to new roles, including relocating for the right one.",
 };

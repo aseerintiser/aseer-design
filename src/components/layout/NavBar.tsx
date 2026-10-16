@@ -11,19 +11,14 @@ import { OPEN_COMMAND_BAR } from "@/components/ui/CommandBar";
 
 const noSubscribe = () => () => {};
 
-const cvLinks = [
-  { label: "Design CV", note: "Product and UX roles", href: site.resumeUrl },
-  { label: "Academic CV", note: "Research and PhD roles", href: site.academicCvUrl },
-];
-
 /**
  * Persistent top navigation (Phase 2).
  *
  * Four destinations, in the order a visitor needs them: Work, Research,
  * About, and the CV, which recruiters look for first and which used to
- * live only in the footer. The CV is a small menu with the design and
- * academic versions. Contact is a button rather than a page: it jumps to
- * the contact block that closes every page.
+ * live only in the footer. The CV opens the one public CV directly.
+ * Contact is a button rather than a page: it jumps to the contact block
+ * that closes every page.
  *
  * The bar is transparent at the top and picks up a blurred ground once
  * the page scrolls. On the homepage it sits on night, matching the
@@ -31,14 +26,11 @@ const cvLinks = [
  */
 export function NavBar() {
   const [open, setOpen] = useState(false);
-  const [cvOpen, setCvOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
-  const cvRef = useRef<HTMLLIElement>(null);
-  const cvButtonRef = useRef<HTMLButtonElement>(null);
   const onHome = pathname === "/";
   // "⌘K" on Apple devices, "Ctrl K" elsewhere; the key cap keeps one
   // width either way, so the bar never shifts when this settles.
@@ -70,27 +62,6 @@ export function NavBar() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
-
-  // CV menu: closes on Escape (focus back to its button) or a click
-  // anywhere outside it.
-  useEffect(() => {
-    if (!cvOpen) return;
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setCvOpen(false);
-        cvButtonRef.current?.focus();
-      }
-    }
-    function onPointerDown(event: PointerEvent) {
-      if (!cvRef.current?.contains(event.target as Node)) setCvOpen(false);
-    }
-    window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("pointerdown", onPointerDown);
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      window.removeEventListener("pointerdown", onPointerDown);
-    };
-  }, [cvOpen]);
 
   function isActiveHref(href: string) {
     return href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -148,51 +119,19 @@ export function NavBar() {
                 </li>
               );
             })}
-            <li className="relative" ref={cvRef}>
-              <button
-                ref={cvButtonRef}
-                type="button"
-                aria-expanded={cvOpen}
-                aria-controls="cv-menu"
-                onClick={() => setCvOpen((value) => !value)}
+            <li>
+              <a
+                href={site.resumeUrl}
+                target="_blank"
+                rel="noreferrer"
                 className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-[var(--color-text-muted)] transition-colors duration-[var(--duration-fast)] hover:text-[var(--color-text)]"
               >
                 CV
-                <svg
-                  viewBox="0 0 16 16"
-                  aria-hidden="true"
-                  className={cn("h-3 w-3 transition-transform duration-[var(--duration-fast)]", cvOpen && "rotate-180")}
-                >
-                  <path fill="currentColor" d="M3.3 5.8 8 10.4l4.7-4.6 1 1L8 12.4 2.3 6.8z" />
-                </svg>
-              </button>
-              {cvOpen && (
-                <ul
-                  id="cv-menu"
-                  className="absolute top-full right-0 mt-2 w-64 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-1.5 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.35)]"
-                >
-                  {cvLinks.map((link) => (
-                    <li key={link.label}>
-                      <a
-                        href={link.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={() => setCvOpen(false)}
-                        className="flex items-start justify-between gap-3 rounded-[var(--radius-md)] px-3 py-2.5 transition-colors duration-[var(--duration-fast)] hover:bg-[var(--color-bg-subtle)]"
-                      >
-                        <span>
-                          <span className="block text-sm font-medium">{link.label}</span>
-                          <span className="block text-xs text-[var(--color-text-muted)]">{link.note}</span>
-                        </span>
-                        <span aria-hidden="true" className="font-[family-name:var(--font-mono)] text-[0.625rem] tracking-[0.12em] text-[var(--color-text-muted)] uppercase">
-                          PDF ↗
-                        </span>
-                        <span className="sr-only">(PDF, opens in a new tab)</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
+                <span aria-hidden="true" className="text-[0.75em]">
+                  ↗
+                </span>
+                <span className="sr-only"> (PDF, opens in a new tab)</span>
+              </a>
             </li>
             <li>
               <button
@@ -273,21 +212,19 @@ export function NavBar() {
                 </li>
               );
             })}
-            {cvLinks.map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-baseline justify-between rounded-[var(--radius-md)] px-3 py-3 font-[family-name:var(--font-display)] text-2xl hover:bg-[var(--color-bg-subtle)]"
-                >
-                  {link.label}
-                  <span className="font-[family-name:var(--font-mono)] text-[0.625rem] tracking-[0.12em] text-[var(--color-text-muted)] uppercase">
-                    PDF ↗<span className="sr-only"> (opens in a new tab)</span>
-                  </span>
-                </a>
-              </li>
-            ))}
+            <li>
+              <a
+                href={site.resumeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-baseline justify-between rounded-[var(--radius-md)] px-3 py-3 font-[family-name:var(--font-display)] text-2xl hover:bg-[var(--color-bg-subtle)]"
+              >
+                CV
+                <span className="font-[family-name:var(--font-mono)] text-[0.625rem] tracking-[0.12em] text-[var(--color-text-muted)] uppercase">
+                  PDF ↗<span className="sr-only"> (opens in a new tab)</span>
+                </span>
+              </a>
+            </li>
           </ul>
           <button
             type="button"

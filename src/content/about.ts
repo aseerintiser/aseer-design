@@ -82,7 +82,7 @@ export const about = {
     {
       heading: "What I'm Exploring Now",
       paragraphs: [
-        "Right now I'm interested in a fairly specific question: how much people should trust an AI system, and how design can help them calibrate that instead of defaulting to blind trust or blanket suspicion. That question came out of Lumi, a conversational AI project I researched and designed for public services, and it's the thread I want to keep pulling on: in a PhD program eventually, or in an industry research role that takes it just as seriously.",
+        "Right now I'm interested in a fairly specific question: how much people should trust an AI system, and how design can help them calibrate that instead of defaulting to blind trust or blanket suspicion. That question came out of Lumi, a conversational AI project I researched and designed for public services, and it's the thread I want to keep pulling on.",
       ],
     },
     {

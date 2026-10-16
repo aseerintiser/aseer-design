@@ -110,7 +110,6 @@ export default function RootLayout({
           pages={commandPages}
           email={site.email}
           resumeUrl={site.resumeUrl}
-          academicCvUrl={site.academicCvUrl}
         />
         <VisionNotice />
         <PrintPrep />

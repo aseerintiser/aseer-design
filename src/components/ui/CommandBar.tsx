@@ -19,7 +19,6 @@ interface CommandBarProps {
   pages: CommandLink[];
   email: string;
   resumeUrl: string;
-  academicCvUrl: string;
 }
 
 type Action =
@@ -59,7 +58,7 @@ const ICONS: Record<Command["icon"], string> = {
 
 /**
  * ⌘K (Ctrl K on Windows and Linux): jump to any case study or page, copy
- * the email address, open either CV, print the page, pause the site's
+ * the email address, open the CV, print the page, pause the site's
  * looping films, or
  * see the site in grayscale or as people with color-vision deficiencies
  * might.
@@ -68,7 +67,7 @@ const ICONS: Record<Command["icon"], string> = {
  * and Escape closes it. The search field follows the ARIA combobox
  * pattern: arrow keys move through the results, Enter runs one.
  */
-export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: CommandBarProps) {
+export function CommandBar({ cases, pages, email, resumeUrl }: CommandBarProps) {
   const router = useRouter();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -139,20 +138,11 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
       {
         id: "design-cv",
         group: "Actions",
-        label: "Open the design CV (PDF)",
-        hint: "Product and UX roles",
+        label: "Open the CV (PDF)",
+        hint: "Opens in a new tab",
         keywords: "resume cv download",
         icon: "file",
         action: { kind: "file", href: resumeUrl },
-      },
-      {
-        id: "academic-cv",
-        group: "Actions",
-        label: "Open the academic CV (PDF)",
-        hint: "Research and PhD roles",
-        keywords: "resume cv download phd",
-        icon: "file",
-        action: { kind: "file", href: academicCvUrl },
       },
       {
         id: "print",
@@ -184,7 +174,7 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
           action: { kind: "vision" as const, vision: option.id },
         })),
     ],
-    [cases, pages, email, resumeUrl, academicCvUrl, motion, vision],
+    [cases, pages, email, resumeUrl, motion, vision],
   );
 
   function run(command: Command | undefined) {

@@ -11,7 +11,7 @@ import { VisionSelect } from "@/components/ui/VisionView";
  * The contact block that closes every page (Phase 2). It is the target
  * of the Contact button in the navigation, so reaching Aseer is one
  * click from anywhere: the address, a copy button that confirms in
- * place, his local time in Tampere, both CVs, the secondary pages that
+ * place, his local time in Tampere, the CV, the secondary pages that
  * left the main navigation, the switch that pauses every looping film
  * on the site, and the color-vision view.
  */
@@ -50,12 +50,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <a href={site.resumeUrl} target="_blank" rel="noreferrer" className="link-ink no-underline">
-                  Design CV<span className="sr-only"> (PDF, opens in a new tab)</span>
-                </a>
-              </li>
-              <li>
-                <a href={site.academicCvUrl} target="_blank" rel="noreferrer" className="link-ink no-underline">
-                  Academic CV<span className="sr-only"> (PDF, opens in a new tab)</span>
+                  CV<span className="sr-only"> (PDF, opens in a new tab)</span>
                 </a>
               </li>
               {site.socials.map((social) => (
