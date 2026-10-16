@@ -11,95 +11,55 @@ export interface StageMedia {
   height: number;
   alt: string;
   poster?: string;
+  wide?: { src: string; poster: string; width: number; height: number };
 }
 
 interface StageProps {
   chapter: Chapter;
   media: StageMedia;
-  /** For loops: play now (the card decides, on hover, focus or when
-   * centred on a phone). Ignored for stills. */
-  playing?: boolean;
-  /** Show the chapter name in the stage's top band. */
-  showLabel?: boolean;
-  /** "wide" is for a card that spans the full row (a lone flagship):
-   * a cinema-shaped stage on large screens, with the window kept to a
-   * readable width in the middle instead of stretching edge to edge. */
+  /** "standard" is 4:3 (cards). "wide" is 16:9 from large screens up, for
+   * a card that spans a full row or a case hero without a trailer. */
   shape?: "standard" | "wide";
-  /** Play the loop whenever it is visible, with a pause button (case
-   * study heroes), instead of on hover. */
-  autoplay?: boolean;
   sizes?: string;
   priority?: boolean;
   className?: string;
 }
 
 /**
- * The stage: one presentation system for every project (Phase 1).
+ * Where a project's media sits on a card or a hero: full bleed, edge to
+ * edge, the way the old GIFs filled their section.
  *
- * The work arrived in at least five treatments (tilted phones on white,
- * pale UI on pale blue, a dark app, a photo, an illustration). Instead of
- * repainting the work, every project now sits the same way: a dark
- * ground lit from above in the project's own chapter color, light grain,
- * and the work in one window that rises from the bottom edge, with one
- * radius and one shadow. The work changes; the framing does not.
- *
- * Inside a link with the `group` class, the window lifts slightly on
- * hover or keyboard focus, at interface speed.
+ * The project films already carry their own chapter-lit ground, so the
+ * frame adds nothing on top of them. The same night ground, lit in the
+ * chapter's color, sits behind stills and shows while a film loads. In a
+ * link with the `group` class the media drifts in a touch on hover or
+ * keyboard focus.
  */
 export function Stage({
   chapter,
   media,
-  playing = false,
-  showLabel = true,
   shape = "standard",
-  autoplay = false,
   sizes = "(min-width: 1024px) 45vw, 90vw",
   priority = false,
   className,
 }: StageProps) {
   const style = { "--stage-tint": chapter.tint } as CSSProperties;
+  // A full-row card plays the film's 16:9 cut when it has one, at every
+  // width, instead of cropping the 4:3 card film.
+  const film = shape === "wide" && media.wide ? { ...media, ...media.wide } : media;
 
   return (
     <div
       className={cn(
         "stage relative isolate aspect-[4/3] w-full overflow-hidden",
-        shape === "wide" && "lg:aspect-[2/1]",
+        shape === "wide" && (media.wide ? "aspect-video" : "lg:aspect-video"),
         className,
       )}
       style={style}
     >
-      {showLabel && (
-        <span
-          aria-hidden="true"
-          className={cn(
-            "absolute top-[4.2%] left-[9%] font-[family-name:var(--font-mono)] text-[0.625rem] tracking-[0.16em] text-white/65 uppercase",
-            shape === "wide" && "lg:left-[24%]",
-          )}
-        >
-          {chapter.name}
-        </span>
-      )}
-
-      <div
-        className={cn(
-          "stage-window absolute inset-x-[9%] top-[12%] -bottom-[4%] overflow-hidden rounded-t-[10px] bg-[#0e0e0c]",
-          shape === "wide" && "lg:inset-x-[24%]",
-          "transition-transform duration-[var(--duration-slow)] ease-[var(--ease-entrance)]",
-          "group-hover:-translate-y-[2.5%] group-focus-visible:-translate-y-[2.5%]",
-        )}
-      >
-        {isVideo(media.src) ? (
-          <LoopVideo
-            src={media.src}
-            poster={media.poster}
-            alt={media.alt}
-            width={media.width}
-            height={media.height}
-            mode={autoplay ? "auto" : "controlled"}
-            playing={playing}
-            controlsPosition="top-right"
-            className="h-full w-full"
-          />
+      <div className="absolute inset-0 transition-transform duration-[var(--duration-slow)] ease-[var(--ease-entrance)] group-hover:scale-[1.025] group-focus-visible:scale-[1.025]">
+        {isVideo(film.src) ? (
+          <LoopVideo src={film.src} poster={film.poster} alt={film.alt} width={film.width} height={film.height} />
         ) : (
           <Image
             src={media.src}
@@ -109,14 +69,12 @@ export function Stage({
             sizes={sizes}
             priority={priority}
             className={cn(
-              "h-full w-full object-cover object-top",
-              chapter.medium === "photo" && "stage-photo-grade object-center",
+              "h-full w-full object-cover",
+              chapter.medium === "photo" ? "stage-photo-grade object-center" : "object-top",
             )}
           />
         )}
       </div>
-
-      <div aria-hidden="true" className="stage-grain pointer-events-none absolute inset-0" />
     </div>
   );
 }

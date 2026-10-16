@@ -4,13 +4,15 @@ import { Container } from "./Container";
 import { CopyEmail } from "@/components/ui/CopyEmail";
 import { LocalTime } from "@/components/ui/LocalTime";
 import { TrustMark } from "@/components/ui/TrustMark";
+import { MotionToggle } from "@/components/ui/MotionToggle";
 
 /**
  * The contact block that closes every page (Phase 2). It is the target
  * of the Contact button in the navigation, so reaching Aseer is one
  * click from anywhere: the address, a copy button that confirms in
- * place, his local time in Tampere, both CVs, and the secondary pages
- * that left the main navigation.
+ * place, his local time in Tampere, both CVs, the secondary pages that
+ * left the main navigation, and the switch that pauses every looping
+ * film on the site.
  */
 export function Footer() {
   return (
@@ -87,7 +89,10 @@ export function Footer() {
             <TrustMark className="w-5" />
             {site.footer.copyright}
           </span>
-          <span>Designed and built by Aseer</span>
+          <span className="flex flex-wrap items-center gap-4">
+            <MotionToggle />
+            Designed and built by Aseer
+          </span>
         </div>
       </Container>
     </footer>

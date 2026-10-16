@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import Link from "next/link";
-import { useReducedMotion } from "motion/react";
+import { useAmbientMotion } from "@/lib/motion-preference";
 import { careerSteps, trailerClips, type CareerStepId } from "@/content/home";
 import { chapterFor } from "@/content/chapters";
 import { cn } from "@/lib/utils";
@@ -18,11 +18,10 @@ import { ArrowIcon } from "@/components/ui/ArrowIcon";
  * trailer there; the first and last steps (the degree that started it,
  * and now) show a short card instead, since there is no footage of them.
  *
- * Considerate by default: the video loads nothing until it plays, plays
- * only while the hero is visible, has a pause button (WCAG 2.2.2), and
- * with reduced motion on it waits on its poster until the visitor
- * presses play. On a phone the line becomes a row of years under the
- * trailer.
+ * The trailer plays on its own, like a GIF, but only while the hero is
+ * visible, and the site-wide motion switch in the footer (or the
+ * system's reduced-motion setting) keeps it on its poster (WCAG 2.2.2).
+ * On a phone the line becomes a row of years under the trailer.
  */
 
 // Node centers match the five equal columns of the step list below.
@@ -43,13 +42,11 @@ function clipIndexAt(time: number) {
 export function HeroStory({ intro }: { intro: ReactNode }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const motion = useAmbientMotion();
 
   const [clipIndex, setClipIndex] = useState(0);
   const [card, setCard] = useState<CareerStepId | null>(null);
   const [inView, setInView] = useState(true);
-  const [userWantsPlay, setUserWantsPlay] = useState<boolean | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
 
   const clip = trailerClips[clipIndex] ?? trailerClips[0];
   const activeStep: CareerStepId = card ?? clip.step;
@@ -66,7 +63,7 @@ export function HeroStory({ intro }: { intro: ReactNode }) {
     return () => observer.disconnect();
   }, []);
 
-  const shouldPlay = inView && card === null && (userWantsPlay ?? !shouldReduceMotion);
+  const shouldPlay = inView && card === null && motion;
 
   useEffect(() => {
     const video = videoRef.current;
@@ -88,18 +85,7 @@ export function HeroStory({ intro }: { intro: ReactNode }) {
     if (target >= 0 && video) {
       video.currentTime = (trailerClips[target]?.start ?? 0) + 0.05;
       setClipIndex(target);
-      if (userWantsPlay ?? !shouldReduceMotion) video.play().catch(() => {});
-    }
-  }
-
-  function togglePlay() {
-    const video = videoRef.current;
-    if (isPlaying) {
-      setUserWantsPlay(false);
-    } else {
-      setCard(null);
-      setUserWantsPlay(true);
-      video?.play().catch(() => {});
+      if (motion) video.play().catch(() => {});
     }
   }
 
@@ -114,14 +100,7 @@ export function HeroStory({ intro }: { intro: ReactNode }) {
         <div className="lg:col-span-5">
           <figure className="m-0">
             <div className="stage stage-animated relative isolate aspect-[4/3] w-full overflow-hidden rounded-[var(--radius-lg)]" style={stageStyle}>
-              <span
-                aria-hidden="true"
-                className="absolute top-[4.2%] left-[8%] font-[family-name:var(--font-mono)] text-[0.625rem] tracking-[0.16em] text-white/65 uppercase"
-              >
-                {cardStep ? cardStep.years : chapterFor(clip.chapter).name}
-              </span>
-
-              <div className="stage-window absolute inset-x-[8%] top-[11%] -bottom-[4%] overflow-hidden rounded-t-[10px] bg-[#0e0e0c]">
+              <div className="absolute inset-0">
                 <video
                   ref={videoRef}
                   src="/loops/trailer.mp4"
@@ -131,13 +110,11 @@ export function HeroStory({ intro }: { intro: ReactNode }) {
                   playsInline
                   preload="metadata"
                   aria-label="A short trailer of Aseer's work in time order: FitVibe, then Convay's design system, mobile app and AI meeting tools, then Lumi."
-                  onPlay={() => setIsPlaying(true)}
-                  onPause={() => setIsPlaying(false)}
                   onTimeUpdate={(event) => {
                     const next = clipIndexAt(event.currentTarget.currentTime);
                     setClipIndex((current) => (current === next ? current : next));
                   }}
-                  className="block h-full w-full object-cover object-top"
+                  className="block h-full w-full object-cover"
                 />
 
                 {cardStep && (
@@ -168,7 +145,6 @@ export function HeroStory({ intro }: { intro: ReactNode }) {
                   </div>
                 )}
               </div>
-              <div aria-hidden="true" className="stage-grain pointer-events-none absolute inset-0" />
             </div>
 
             <figcaption className="mt-4 flex items-start justify-between gap-4">
@@ -188,22 +164,6 @@ export function HeroStory({ intro }: { intro: ReactNode }) {
                   {cardStep ? cardStep.place : clip.meta}
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={togglePlay}
-                aria-label={isPlaying ? "Pause the trailer" : "Play the trailer"}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-full)] border border-[var(--color-border-strong)] transition-colors duration-[var(--duration-fast)] hover:border-[var(--color-text)]"
-              >
-                {isPlaying ? (
-                  <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" aria-hidden="true">
-                    <path fill="currentColor" d="M4 2.5h2.6v11H4zM9.4 2.5H12v11H9.4z" />
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 16 16" className="ml-0.5 h-3.5 w-3.5" aria-hidden="true">
-                    <path fill="currentColor" d="M4 2.5a1 1 0 0 1 1.53-.85l8 5.5a1 1 0 0 1 0 1.7l-8 5.5A1 1 0 0 1 4 13.5v-11Z" />
-                  </svg>
-                )}
-              </button>
             </figcaption>
 
             {/* Phone: the line becomes a row of years you can tap. */}

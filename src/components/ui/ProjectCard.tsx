@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
 import type { ProjectSummary } from "@/content/types";
@@ -35,12 +35,12 @@ interface ProjectCardProps {
  * Shared card for the Work and Research index grids (and the homepage's
  * two featured previews).
  *
- * Phase 1: the media sits on the shared Stage (see Stage.tsx), so every
- * project is framed the same way whatever its original treatment. There
- * is no border and no whole-card translate; on hover or focus the
- * stage's window lifts slightly and its loop plays, a cursor-tracked
- * "View case study" label appears, and elevation is a soft, real shadow.
- * Projects without a thumbnail fall back to the generated ProjectVisual.
+ * The media fills the top of the card edge to edge (see Stage.tsx), and
+ * project films play on their own while the card is on screen, like
+ * GIFs, so a grid can be taken in at a glance. On hover the media drifts
+ * in slightly, a cursor-tracked "View case study" label appears, and
+ * elevation is a soft, real shadow. Projects without a thumbnail fall
+ * back to the generated ProjectVisual.
  */
 export function ProjectCard({
   project,
@@ -66,48 +66,10 @@ export function ProjectCard({
     cursorY.set(event.clientY - bounds.top);
   }
 
-  // Media Experience milestone: Work/Research index pages and the
-  // homepage's featured row can easily have half a dozen of these video
-  // thumbnails mounted at once. `autoPlay` on every one of them meant
-  // every video thumbnail decoded and played continuously the instant
-  // the page loaded, on/off screen alike -- real, needless CPU/battery
-  // cost, especially on mobile, for thumbnails nobody is currently
-  // looking at. An IntersectionObserver instead plays only the ones
-  // actually on screen and pauses the rest, so the "one improvement,
-  // whole-portfolio benefit" this milestone asks for applies to every
-  // current and future video thumbnail without each page needing its
-  // own logic. Also respects prefers-reduced-motion: a reader who's
-  // asked for less motion gets the static first frame instead of
-  // several autoplaying videos in a row.
-  // Phase 1: the loop plays only while someone is looking at this card:
-  // on hover or keyboard focus with a mouse, or while the card sits in
-  // the middle band of the screen on a touch device (no hover there).
-  // It stops as soon as attention moves on, so a grid of cards never
-  // has several clips running at once.
-  const [focused, setFocused] = useState(false);
-  const [centred, setCentred] = useState(false);
-
-  useEffect(() => {
-    const card = cardRef.current;
-    if (!card || !window.matchMedia("(hover: none)").matches) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setCentred(Boolean(entry?.isIntersecting)),
-      { rootMargin: "-35% 0px -35% 0px" },
-    );
-    observer.observe(card);
-    return () => observer.disconnect();
-  }, []);
-
-  const playing = hovering || focused || centred;
   const chapter = chapterFor(project.slug);
 
   return (
-    <Link
-      href={href}
-      className={cn("group block", className)}
-      onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
-    >
+    <Link href={href} className={cn("group block", className)}>
       <div
         ref={cardRef}
         onMouseEnter={() => setHovering(true)}
@@ -119,7 +81,6 @@ export function ProjectCard({
           <Stage
             chapter={chapter}
             media={project.thumbnail}
-            playing={playing}
             shape={wide ? "wide" : "standard"}
             sizes={wide ? "(min-width: 1024px) 60vw, 90vw" : undefined}
           />

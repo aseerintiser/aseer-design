@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 import { nav, site } from "@/content/site";
 import { cn } from "@/lib/utils";
 import { TrustMark } from "@/components/ui/TrustMark";
+import { OPEN_COMMAND_BAR } from "@/components/ui/CommandBar";
+
+const noSubscribe = () => () => {};
 
 const cvLinks = [
   { label: "Design CV", note: "Product and UX roles", href: site.resumeUrl },
@@ -37,6 +40,13 @@ export function NavBar() {
   const cvRef = useRef<HTMLLIElement>(null);
   const cvButtonRef = useRef<HTMLButtonElement>(null);
   const onHome = pathname === "/";
+  // "⌘K" on Apple devices, "Ctrl K" elsewhere; the key cap keeps one
+  // width either way, so the bar never shifts when this settles.
+  const shortcut = useSyncExternalStore(
+    noSubscribe,
+    () => (/Mac|iPhone|iPad/i.test(navigator.userAgent) ? "⌘K" : "Ctrl K"),
+    () => "⌘K",
+  );
 
   useEffect(() => {
     function onScroll() {
@@ -184,6 +194,23 @@ export function NavBar() {
                 </ul>
               )}
             </li>
+            <li>
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event(OPEN_COMMAND_BAR))}
+                aria-label="Search the site"
+                aria-keyshortcuts="Meta+K Control+K"
+                className="ml-1 flex items-center gap-2 rounded-[var(--radius-md)] border border-[var(--color-border)] py-1.5 pr-1.5 pl-2.5 text-[var(--color-text-muted)] transition-colors duration-[var(--duration-fast)] hover:border-[var(--color-border-strong)] hover:text-[var(--color-text)]"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="m20 20-3.5-3.5" />
+                </svg>
+                <kbd aria-hidden="true" className="inline-block w-[4.6em] rounded-[5px] bg-[var(--color-bg-subtle)] py-0.5 text-center font-[family-name:var(--font-mono)] text-[0.625rem] whitespace-nowrap">
+                  {shortcut}
+                </kbd>
+              </button>
+            </li>
             <li className="ml-2">
               <Link
                 href="#contact"
@@ -259,10 +286,24 @@ export function NavBar() {
               </li>
             ))}
           </ul>
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              window.dispatchEvent(new Event(OPEN_COMMAND_BAR));
+            }}
+            className="mt-4 flex w-full items-center justify-center gap-2 rounded-[var(--radius-md)] border border-[var(--color-border-strong)] px-4 py-3 text-base font-medium"
+          >
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-3.5-3.5" />
+            </svg>
+            Search the site
+          </button>
           <Link
             href="#contact"
             onClick={() => setOpen(false)}
-            className="mt-4 flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent)] px-4 py-3 text-base font-medium text-[var(--color-accent-contrast)]"
+            className="mt-3 flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent)] px-4 py-3 text-base font-medium text-[var(--color-accent-contrast)]"
           >
             Contact
           </Link>

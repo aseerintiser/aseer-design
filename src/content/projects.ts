@@ -145,18 +145,9 @@ const img = (id: string, width: number, height: number, alt = "") => ({
   alt,
 });
 
-// Phase 1: the five walkthrough animations that came over from Framer as
-// 35-47 MB GIFs are now MP4 loops in public/loops/ (same frames, same
-// timing, about 2-3.5 MB each). `loop` is the full-size version for case
-// study pages; `cardLoop` is the lighter 960 px version for project
-// cards. Each has a same-named .webp poster frame next to it.
-const loop = (slug: string, alt = "") => ({
-  src: `/loops/${slug}.mp4`,
-  width: 1600,
-  height: 1200,
-  alt,
-});
-
+// Project cards play the no-text cut of each project's trailer (see
+// content/trailers.ts): 960 x 720 H.264 films in public/loops/, each
+// with a same-named .webp poster frame.
 const cardLoop = (slug: string, alt: string) => ({
   src: `/loops/${slug}-card.mp4`,
   poster: `/loops/${slug}-card.webp`,
@@ -189,27 +180,6 @@ const cardLoop = (slug: string, alt: string) => ({
 // preview description in the hero, the specific feature it demonstrates
 // in the gallery), per the checklist's own instruction.
 const convayMobileAppRevampBody: CaseStudyBlock[] = [
-  // Hero visual: the fanned three-phone composition (a GIF; the
-  // playback scrubber is genuinely in motion, not a static crop) as its
-  // own full-width beat, followed by a supporting row of six
-  // straight-on preview screens below it. Originally one seven-tile
-  // ImageRow, but ImageRow forces every tile in a row to share one
-  // fixed height -- next to six tall portrait screenshots, the GIF's
-  // landscape 4:3 frame got squeezed down to match their height and
-  // rendered as a thin, cramped strip rather than the lead visual it's
-  // meant to be. Splitting it out as its own full-width `image` block
-  // lets it read at the size the composition was actually made for,
-  // with the static preview screens doing supporting work underneath.
-  // Kept as one hero moment with a one-line caption rather than an
-  // unexplained image. compactHero on the caseStudies entry below
-  // closes the gap between this and the header above it.
-  {
-    type: "image",
-    src: loop("convay-mobile-app-revamp").src,
-    width: 1600,
-    height: 1200,
-    alt: "Three angled screens from the redesigned Convay mobile app, showing the meeting dashboard and calendar view.",
-  },
   {
     type: "imageRow",
     images: [
@@ -223,13 +193,13 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
         "6d5XSeXWX2BjpEwNvU2tHBAHs.png",
         750,
         2220,
-        "Convay mobile app meeting list preview, showing all scheduled meetings.",
+        "Convay mobile app Meeting Details screen, showing the title, description, time, meeting link, ID, password, participants, files, recordings and transcription.",
       ),
       img(
         "sqYPt61SyV3toXmoOXJPwh12wco.png",
         750,
         1624,
-        "Convay mobile app meeting details preview, showing meeting ID and join options.",
+        "Convay mobile app transcript screen, showing speaker-labeled messages with a Generate Summary button.",
       ),
       img(
         "VPSC5O7xehMPIy9U8xuTuD34yE.png",
@@ -247,7 +217,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
         "1SvqYcMGSkhXAPyYPkPGMkOZrHY.png",
         750,
         1624,
-        "Convay mobile app summary preview, showing a second generated meeting summary.",
+        "Convay mobile app summary screen with an audio player and highlighted lines.",
       ),
     ],
   },
@@ -414,6 +384,25 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
     text: "Sometimes I just need to join a meeting instantly, signing up feels like an extra hassle.",
     attribution: "Internal testing feedback",
   },
+  // Close-up with pins: the screen where the guest-access decision
+  // lives. Notes condense this section and Constraints and Handoff.
+  {
+    type: "annotated",
+    label: "Close-up · joining without an account",
+    device: "phone",
+    image: {
+      src: framerAsset("7jxryX696rOXbbVRObvISh52Zg.png"),
+      width: 750,
+      height: 1624,
+      alt: "Convay mobile app Join a Meeting screen, showing Meeting ID entry, a name field and audio and video toggles before joining.",
+    },
+    notes: [
+      { x: 0.93, y: 0.205, text: "A Meeting ID or a deep link is enough to get in. No login first." },
+      { x: 0.93, y: 0.29, text: "Guests add a name and join. The old flow forced sign-up before any meeting." },
+      { x: 0.7, y: 0.49, text: "A camera and mic check happens before joining, not after." },
+      { x: 0.93, y: 0.58, text: "Join stays one tap away, within thumb reach." },
+    ],
+  },
 
   { type: "heading", level: 4, text: "2. Mobile-Optimized Dashboard" },
   {
@@ -433,7 +422,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
         "JCocsdjK8gSkgLls5yv35pYJL0.png",
         750,
         1624,
-        "Convay mobile app calendar view, showing scheduled meetings by month.",
+        "Convay mobile app My Meetings screen in week view, listing the selected day's meetings.",
       ),
       img(
         "VPSC5O7xehMPIy9U8xuTuD34yE.png",
@@ -451,7 +440,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
         "6d5XSeXWX2BjpEwNvU2tHBAHs.png",
         750,
         2220,
-        "Convay mobile app My Meetings list, showing all scheduled meetings.",
+        "Convay mobile app Meeting Details screen, showing the title, description, time, meeting link, ID, password, participants, files, recordings and transcription.",
       ),
     ],
   },
@@ -468,31 +457,31 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
         "sqYPt61SyV3toXmoOXJPwh12wco.png",
         750,
         1624,
-        "Convay mobile app Meeting Details screen, showing meeting link, ID, password, participants, files, and recording and transcription availability.",
+        "Convay mobile app transcript screen, showing speaker-labeled messages with a Generate Summary button.",
       ),
       img(
         "vMYgPucySmXNJMdy0C7PwRLw02U.png",
         750,
         1624,
-        "Convay mobile app live transcript screen, showing speaker-labeled messages as the meeting is transcribed.",
+        "Convay mobile app transcript screen while a summary is generated, with a 50% progress overlay.",
       ),
       img(
         "OUEfdLxb2IR25LivtGIh4j4Vx0.png",
         750,
         1624,
-        "Convay mobile app transcript screen mid-load, showing a progress spinner overlay.",
+        "Convay mobile app summary screen with the Choose Language picker open.",
       ),
       img(
         "Itj4dk903fNmQp2RVN07xLIQwg.png",
         750,
         1624,
-        "Convay mobile app summary screen with the Choose Language picker open, showing multiple language options.",
+        "Convay mobile app summary screen with a copy, share, export and delete menu open.",
       ),
       img(
         "uIJedHGKyUAgQgQ718vlIOOF8A.png",
         750,
         1624,
-        "Convay mobile app summary screen with a copy, share, export, and delete contextual menu open.",
+        "Convay mobile app transcript screen with a 'Meeting summary ready' notice at the top.",
       ),
       img(
         "z14lwNcGd9LW5GbE3P3j6HnvY.png",
@@ -504,37 +493,37 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
         "WieFKhpVaTwrFnKJhMkdNmPveU.png",
         750,
         1624,
-        "Convay mobile app transcript screen, showing an editable segment of the conversation.",
+        "Convay mobile app summary screen with the export dialog open, showing a file name and PDF format.",
       ),
       img(
         "NiyoTTYIANAtfKu4p1fzzlPUlA.png",
         750,
         1624,
-        "Convay mobile app transcript screen, showing further conversation detail.",
+        "Convay mobile app summary screen in edit mode, with the keyboard open and a Save button.",
       ),
       img(
         "1SvqYcMGSkhXAPyYPkPGMkOZrHY.png",
         750,
         1624,
-        "Convay mobile app summary screen, showing a second generated meeting summary.",
+        "Convay mobile app summary screen with an audio player and highlighted lines.",
       ),
       img(
         "mvtYICQECg3fCWxMNZkrdlZS4.png",
         750,
         1624,
-        "Convay mobile app export screen, showing format options for downloading notes.",
+        "Convay mobile app summary screen with the language menu open on Bangla.",
       ),
       img(
         "nB1wNttRToNDEsn4Pe4FJyjc0I.png",
         750,
         1624,
-        "Convay mobile app summary screen, showing further summary detail.",
+        "Convay mobile app summary screen translated into Bangla.",
       ),
       img(
         "RfAIFaFawsJLQq1FIPQYBgGtA.png",
         750,
         1624,
-        "Convay mobile app transcript screen, showing the completed transcript.",
+        "Convay mobile app summary screen with a download dialog, showing a file name and format.",
       ),
     ],
   },
@@ -560,7 +549,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
         "tT0Q4Unl05q5M1Yw3WyKrZyLThg.png",
         750,
         1624,
-        "Convay mobile app recordings list, showing three files with duration and file size.",
+        "Convay mobile app recordings list, showing three files with date, time and file size.",
       ),
       img(
         "ejJ5yjgYGAoBRDIbTOoYLvo5I.png",
@@ -701,23 +690,6 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
 // honest and general -- a plausible open/edit/confirm sequence, not a
 // verified one -- flagged again in the final walkthrough.
 const convayAiBody: CaseStudyBlock[] = [
-  // Hero visual: the establishing mosaic GIF gets its own
-  // prefers-reduced-motion-safe component (05_Interaction_and_Motion.md:
-  // "a hard requirement, not a nice-to-have," since a GIF cannot itself
-  // respond to that media query), with the six static preview screens as
-  // a supporting row beneath it and a one-line caption per
-  // 03_Content_Final.md.
-  {
-    type: "reducedMotionHero",
-    loopSrc: loop("convay-ai-for-physical-meetings").src,
-    fallbackSrc: img("1Xrqe0NuG8d4DN8vwSWL99pzRPk.png", 1600, 1200).src,
-    width: 1600,
-    height: 1200,
-    loopAlt:
-      "Looping preview of Convay AI for Physical Meetings, cycling through the meeting panel, transcript, and summary screens.",
-    fallbackAlt:
-      "Convay AI for Physical Meetings, Main Meeting Panel screen, a single still from the hero animation shown when motion is reduced.",
-  },
   {
     type: "imageRow",
     images: [
@@ -1284,20 +1256,28 @@ const convayDesignSystemBody: CaseStudyBlock[] = [
   // image is the full variable set grouped by role (brand, button
   // states, accent, radio button, etc.), not a themed re-render of the
   // same table.
+  // Close-up with pins on the color table; notes condense Approach and
+  // Color. The full variable set follows as its own image.
   {
-    type: "variantComparison",
-    variants: [
-      {
-        ...img("Pz3gr4au6hAzTaXAeWRxckpYxW4.png", 839, 1067),
-        alt: "Convay's color token reference table in Figma, listing each token's light-mode and dark-mode value side by side.",
-        caption: "Each color token's light and dark value, defined side by side.",
-      },
-      {
-        ...img("RFIwMbzOBq1i3CiHl7feTRCmbc.png", 839, 1063),
-        alt: "Convay's full set of color variables in Figma, grouped by role: brand, button states, accent, radio button, and more.",
-        caption: "The full variable set, grouped by role rather than by raw color.",
-      },
+    type: "annotated",
+    label: "Close-up · the color variables in Figma",
+    device: "panel",
+    image: {
+      ...img("Pz3gr4au6hAzTaXAeWRxckpYxW4.png", 839, 1067),
+      alt: "Convay's color token reference table in Figma, listing each token's light-mode and dark-mode value side by side.",
+    },
+    notes: [
+      { x: 0.69, y: 0.098, text: "Every color token holds a light value and a dark value, side by side." },
+      { x: 0.17, y: 0.15, text: "Tokens are grouped by role, brand, content and accent, not by raw color." },
+      { x: 0.43, y: 0.413, text: "Names were shaped with developers, so they map onto how the code implements them." },
+      { x: 0.17, y: 0.565, text: "Spacing, stroke width and corner radius live in the same set of variables." },
     ],
+  },
+  {
+    type: "image",
+    ...img("RFIwMbzOBq1i3CiHl7feTRCmbc.png", 839, 1063),
+    alt: "Convay's full set of color variables in Figma, grouped by role: brand, button states, accent, radio button, and more.",
+    caption: "The full variable set, grouped by role rather than by raw color.",
   },
   { type: "heading", level: 4, text: "Spacing" },
   {
@@ -1453,7 +1433,6 @@ const fitvibeBody: CaseStudyBlock[] = [
   {
     type: "imageRow",
     images: [
-      loop("fitvibe", "FitVibe app walkthrough"),
       img("dflAECgSKcfG0tKG8f3RwEzRTs.png", 375, 1175),
       img("MQRWfkzhmnpVKADq7BwBifnpCE.png", 375, 1527),
       img("PS5uD7vNAXNBESTYvyYhIKZ6YmE.png", 375, 812),
@@ -1870,33 +1849,52 @@ const travelMateBody: CaseStudyBlock[] = [
     type: "paragraph",
     text: "**Itinerary, transport, journal, and weather**\nThe rest of the app is built around the moments a trip actually moves through: planning a day, getting somewhere, remembering it afterward, and checking the conditions around all of it. A calendar view for adding activities and seeing the day at a glance. A transport hub comparing walking, metro, and taxi by cost and time. A travel journal for photos and notes from each stop. Weather and emergency info surfaced directly in the app, so none of it requires switching to something else.",
   },
+  // Prototype player: one line per screen, condensed from the paragraph
+  // above it.
   {
-    type: "imageRow",
-    images: [
-      img(
-        "nOM36AUEzLOD673zi9osVUO6xw.png",
-        804,
-        2160,
-        "TravelMate itinerary screen showing a weekly calendar view with a scheduled museum visit and an option to add new activities.",
-      ),
-      img(
-        "j5uJwrQlFKN05Uhl8UuR8amZaM.png",
-        804,
-        1748,
-        "TravelMate transport hub screen showing walking, metro, and taxi options with estimated cost and time for each.",
-      ),
-      img(
-        "4ypYjbGyt1AejHjGJoEO781eWE.png",
-        804,
-        1800,
-        "TravelMate travel journal screen showing dated entries with photos and short notes from a Paris and Rome trip.",
-      ),
-      img(
-        "gmEHNYW9VL5FJQEYRWcuVl32jZo.png",
-        804,
-        2804,
-        "TravelMate weather screen showing the current temperature, a five-day forecast, and a 24-hour temperature graph.",
-      ),
+    type: "screenPlayer",
+    label: "The rest of the trip · four screens",
+    screens: [
+      {
+        tab: "Itinerary",
+        ...img(
+          "nOM36AUEzLOD673zi9osVUO6xw.png",
+          804,
+          2160,
+          "TravelMate itinerary screen showing a weekly calendar view with a scheduled museum visit and an option to add new activities.",
+        ),
+        line: "A calendar for adding activities and seeing the day at a glance.",
+      },
+      {
+        tab: "Transport",
+        ...img(
+          "j5uJwrQlFKN05Uhl8UuR8amZaM.png",
+          804,
+          1748,
+          "TravelMate transport hub screen showing walking, metro, and taxi options with estimated cost and time for each.",
+        ),
+        line: "Walking, metro and taxi, compared by cost and time.",
+      },
+      {
+        tab: "Journal",
+        ...img(
+          "4ypYjbGyt1AejHjGJoEO781eWE.png",
+          804,
+          1800,
+          "TravelMate travel journal screen showing dated entries with photos and short notes from a Paris and Rome trip.",
+        ),
+        line: "Photos and notes from each stop, kept as a travel journal.",
+      },
+      {
+        tab: "Weather",
+        ...img(
+          "gmEHNYW9VL5FJQEYRWcuVl32jZo.png",
+          804,
+          2804,
+          "TravelMate weather screen showing the current temperature, a five-day forecast, and a 24-hour temperature graph.",
+        ),
+        line: "The weather, right in the app, so checking it isn't another app switch.",
+      },
     ],
   },
   { type: "heading", level: 3, text: "Challenges and Decisions" },
@@ -1965,7 +1963,6 @@ const convayNotificationsBody: CaseStudyBlock[] = [
   {
     type: "imageRow",
     images: [
-      loop("convay-notifications", "Convay notifications walkthrough"),
       img("EDYS5PEjuQKLCjvzA8zuZC9H3F8.png", 2048, 1280),
       img("5oVV6lx4Zwx4EMP4m3IY9FC2Vo.png", 720, 2384),
       img("V1cOAEB1e56ZJZLhxfQTzKimHA.png", 2048, 1280),
@@ -2035,8 +2032,35 @@ const convayNotificationsBody: CaseStudyBlock[] = [
   },
   { type: "image", ...img("P5zbovYKufyweoW0M6YGA83uh0o.png", 2048, 1280), caption: "File Notifications" },
   { type: "heading", level: 3, text: "Design Evolution" },
-  { type: "image", ...img("Qi6ZHRgC3ESWgzWAeyp0gDnClaQ.png", 2048, 2027), caption: "Previous Version" },
-  { type: "image", ...img("aetbQpG4pv4WsWj16JM6Xz3KAw.png", 2048, 2027), caption: "Final Version" },
+  // Previous and final panels as close-ups at the same crop (cut from
+  // the full dashboard screens), so the changes sit side by side. The
+  // final one carries pins on exactly what changed; notes condense the
+  // two lists below and the Feature Overview.
+  {
+    type: "image",
+    src: "/closeups/convay-notifications-panel-previous.png",
+    width: 686,
+    height: 1064,
+    alt: "The previous version of the Convay notification panel: plain circle icons to mark items as read, and similar icons for every notification type.",
+    caption: "Previous version",
+  },
+  {
+    type: "annotated",
+    label: "Close-up · the final version",
+    device: "panel",
+    image: {
+      src: "/closeups/convay-notifications-panel-final.png",
+      width: 686,
+      height: 1064,
+      alt: "The final version of the Convay notification panel: All, Meetings, Chat and Files tabs, Mark all as read, a distinct icon per notification type, and checkmarks to mark items as read.",
+    },
+    notes: [
+      { x: 0.82, y: 0.448, text: "A checkmark marks an update as read. It replaced a plain circle that people found unclear." },
+      { x: 0.15, y: 0.3, text: "Each type has its own icon, so meeting, chat and cloud updates read apart at a glance." },
+      { x: 0.965, y: 0.124, text: "Meetings, Chat and Files as filters, with everything together under All." },
+      { x: 0.58, y: 0.05, text: "Mark everything as read in one go." },
+    ],
+  },
   { type: "paragraph", text: "**Mark as Read Button**" },
   {
     type: "list",
@@ -2607,13 +2631,31 @@ const arenewbergBody: CaseStudyBlock[] = [
     type: "callout",
     text: "One design choice. Two teams working from different angles. Two problems solved at once. That's the strongest single decision in this project, and it's the kind of outcome I look for on every project since.",
   },
+  // Close-up with pins (the mockup's annotated shot). Every note
+  // condenses this chapter or the cost list below it.
   {
-    type: "image",
-    src: "/arenewberg/silent-disco.png",
-    width: 394,
-    height: 840,
-    alt: "The Activities tab with the Silent Disco card expanded: 'Wireless headphones, three DJs, zero noise complaints,' Winding Tower Hall, €5, 'Headsets at the door.'",
-    caption: "The Silent Disco card explaining its own reasoning, not just the pitch deck.",
+    type: "annotated",
+    label: "Close-up · the Silent Disco card",
+    device: "phone",
+    image: {
+      src: "/arenewberg/silent-disco.png",
+      width: 394,
+      height: 840,
+      alt: "The Activities tab with the Silent Disco card expanded: 'Wireless headphones, three DJs, zero noise complaints,' Winding Tower Hall, €5, 'Headsets at the door.'",
+    },
+    notes: [
+      {
+        x: 0.06,
+        y: 0.428,
+        text: "The card gives the reason, not just the pitch: wireless headphones, three DJs, zero noise complaints.",
+      },
+      {
+        x: 0.86,
+        y: 0.535,
+        text: "Each visitor picks a channel and sets the volume. That choice is the sensory control.",
+      },
+      { x: 0.79, y: 0.578, text: "€5 covers the headphone rental, not profit." },
+    ],
   },
   {
     type: "paragraph",
@@ -2625,15 +2667,34 @@ const arenewbergBody: CaseStudyBlock[] = [
     type: "paragraph",
     text: "Not every decision was about solving two problems at once. Some were just about knowing what we couldn't afford. Good ideas are cheap in a five-day sprint. Knowing which ones to cut is expensive.",
   },
+  // The same six ideas and figures that used to be a list, as a chart:
+  // real numbers on a log scale, so €100 and €500,000 fit side by side.
   {
-    type: "list",
+    type: "costChart",
+    label: "Rough cost per idea · log scale",
+    caption:
+      "Approximate costs in euros. Each step on the axis is ten times the last. The silent disco and film figure is per night.",
     items: [
-      "**Hologram system for immersive mine tours**: ~€500,000. Not shipped; flagged as barely realistic by the team itself.",
-      "**VR mining game**: ~€100,000. Not shipped.",
-      "**Zip line between two headframes**: ~€150,000–200,000. Not shipped.",
-      "**Scavenger hunt**: prize budget only. Shipped.",
-      "**Silent disco + film screenings**: ~€300–600/night, headphone rental. Shipped, priced at €5 to cover rental cost, not profit.",
-      "**Forest rest area**: ~€100–200. Shipped.",
+      {
+        label: "Hologram system for immersive mine tours",
+        status: "cut",
+        low: 500000,
+        high: 500000,
+        value: "~500,000",
+        note: "flagged as barely realistic by the team itself",
+      },
+      { label: "Zip line between two headframes", status: "cut", low: 150000, high: 200000, value: "~150,000–200,000" },
+      { label: "VR mining game", status: "cut", low: 100000, high: 100000, value: "~100,000" },
+      {
+        label: "Silent disco and film screenings",
+        status: "shipped",
+        low: 300,
+        high: 600,
+        value: "~300–600 a night",
+        note: "€5 a ticket covers the headphone rental",
+      },
+      { label: "Forest rest area", status: "shipped", low: 100, high: 200, value: "~100–200" },
+      { label: "Scavenger hunt", status: "shipped", value: "Prize budget only" },
     ],
   },
   {
@@ -2650,18 +2711,59 @@ const arenewbergBody: CaseStudyBlock[] = [
     type: "paragraph",
     text: "I built the prototype myself: a working, full click-through app, not static mockups. It has five sections, and each one does one job.",
   },
+  // Prototype player (the mockup's medium shot): one line per section,
+  // each condensed from the section text below it.
+  {
+    type: "screenPlayer",
+    label: "The prototype · five sections, one job each",
+    screens: [
+      {
+        tab: "Home",
+        src: "/arenewberg/home.png",
+        width: 410,
+        height: 840,
+        alt: "The Home tab: 'Festival Live, Arenberg Mine,' a schedule-chip timeline (Gates/Market/Hunt), a live Scavenger Hunt card with 147 players and 2h remaining, and quick-access Silent Disco and Open Air Cinema cards.",
+        line: "What's on now, what's next, and one clear action: join the hunt.",
+      },
+      {
+        tab: "Activities",
+        src: "/arenewberg/silent-disco.png",
+        width: 394,
+        height: 840,
+        alt: "The Activities tab listing tonight's five experiences, with the Silent Disco card expanded.",
+        line: "Everything on tonight in one list, with the Silent Disco card saying why it's silent.",
+      },
+      {
+        tab: "Hunt",
+        src: "/arenewberg/hunt-clue-screen.png",
+        width: 284,
+        height: 642,
+        alt: "Clue 1 of 7 of the scavenger hunt, with a Take photo button and a live leaderboard.",
+        line: "Seven clues, each tied to a real place on site, with a live leaderboard.",
+      },
+      {
+        tab: "Map",
+        src: "/arenewberg/map.png",
+        width: 386,
+        height: 840,
+        alt: "The Festival Map: five color-coded zones (Forest, Cinema, Disco, Market, Entrance) around the Headframe, a 'you are here' marker, and the Market zone's detail card expanded below.",
+        line: "Five color-coded zones, every clue plotted, and a live you-are-here marker.",
+      },
+      {
+        tab: "Profile",
+        src: "/arenewberg/entry-pass.png",
+        width: 394,
+        height: 840,
+        alt: "The Entry Pass on the Profile tab: a scannable QR code for general admission.",
+        line: "A digital ticket whose QR code doubles as the entry pass for the night.",
+      },
+    ],
+  },
 
   { type: "heading", level: 4, text: "Home" },
   {
     type: "paragraph",
     text: "The first thing a visitor sees: what's happening right now, what's coming up next, and one clear action to take. A live schedule bar shows the night's timeline. The Scavenger Hunt sits front and center, since it's the main draw, with a live player count and a direct way to join. Smaller cards below surface the Silent Disco and the film screening without demanding attention they haven't earned yet.",
-  },
-  {
-    type: "image",
-    src: "/arenewberg/home.png",
-    width: 410,
-    height: 840,
-    alt: "The Home tab: 'Festival Live, Arenberg Mine,' a schedule-chip timeline (Gates/Market/Hunt), a live Scavenger Hunt card with 147 players and 2h remaining, and quick-access Silent Disco and Open Air Cinema cards.",
   },
   { type: "divider" },
 
@@ -2707,13 +2809,6 @@ const arenewbergBody: CaseStudyBlock[] = [
   {
     type: "paragraph",
     text: "Five zones, color-coded, with a live \"you are here\" marker and every clue plotted. Tap a zone and a detail card slides up with hours, what's on offer, and how to pay. This screen solves the exact confusion the team named as the reason to build an app in the first place: a visitor arriving with no idea where anything is.",
-  },
-  {
-    type: "image",
-    src: "/arenewberg/map.png",
-    width: 386,
-    height: 840,
-    alt: "The Festival Map: five color-coded zones (Forest, Cinema, Disco, Market, Entrance) around the Headframe, a 'you are here' marker, and the Market zone's detail card expanded below.",
   },
   { type: "divider" },
 
@@ -3178,7 +3273,7 @@ export const caseStudies: CaseStudy[] = [
     // projects get one. This is the same GIF that opens the full case
     // study, already sized 1600x1200 (4:3), matching ProjectCard's media
     // aspect ratio exactly, so it renders here uncropped.
-    thumbnail: cardLoop("convay-mobile-app-revamp", "Convay mobile app walkthrough"),
+    thumbnail: cardLoop("convay-mobile-app-revamp", "A short film of the Convay mobile app: joining a meeting, transcripts and summaries on mobile, and the full set of redesigned screens."),
     // Convay Mobile App Revamp rebuild: replaces the old hook paragraph,
     // which 01_Audit.md flagged as the one place the writing voice broke
     // on the whole page ("The goal? Make sure users could rely on
@@ -3219,7 +3314,7 @@ export const caseStudies: CaseStudy[] = [
     scale: "product",
     isFlagship: true,
     contentStatus: "complete",
-    thumbnail: cardLoop("convay-ai-for-physical-meetings", "Convay AI meeting transcription walkthrough"),
+    thumbnail: cardLoop("convay-ai-for-physical-meetings", "A short film of Convay AI for Physical Meetings: recording a meeting, the transcript, the AI summary, and the light and dark panels that were tested."),
     oneLineScope:
       "Convay AI for Physical Meetings started with a simple question: *Why should only online meetings be easy to document?* In high-stakes rooms, whether it's a government briefing or an internal sync, people still scramble to take notes or forget key points entirely. This feature was our answer: **record audio, let AI handle the rest.** Transcripts, summaries, multilingual support, all packaged into a simple, intuitive flow that turns real-world conversations into shareable outcomes.",
     meta: {
@@ -3267,39 +3362,14 @@ export const caseStudies: CaseStudy[] = [
     title: "Convay Design System",
     track: "work",
     scale: "platform",
-    // Not marked isFlagship here even though Portfolio_Strategy_Roadmap.md
-    // Section 6 calls this the strongest, most verifiable claim -- the
-    // Work index page's flagship layout was built for exactly 2 wide
-    // cards (a 2-up row); adding a 3rd would break that grid. Worth
-    // revisiting in a dedicated pass, not as a side effect of a content
-    // migration commit.
-    //
-    // Thumbnail Refresh milestone: previously no `thumbnail` (Milestone 3
-    // note, kept below for history) -- the case study's own first
-    // imageRow is six assorted, irregularly-sized diagrams that don't
-    // crop cleanly into a 4:3 card. A screen recording sidesteps that
-    // problem entirely instead of forcing a bad crop: it's a scroll
-    // through the actual design-system tokens (color, spacing, shadow
-    // scales) rather than any single irregular diagram. Trimmed ~0.8s off
-    // each end of the source clip (a fade to/from a blank frame) so the
-    // loop opens and closes on real content instead of an empty
-    // rectangle; re-encoded from a 25fps/1600x1200 ~48MB raw export to
-    // 1100px-wide H.264 (see ProjectCard.tsx for why video over GIF).
-    //
-    // Prior note: unlike the other five migrated case studies, this one
-    // doesn't open with a clean 4:3 hero shot -- its first imageRow is
-    // six assorted, irregularly-sized diagrams (a 647x245 banner, several
-    // tall portrait crops). Forcing any one of those into ProjectCard's
-    // 4:3 media block would crop it badly. Kept the generated
-    // ProjectVisual placeholder instead, which was the more honest choice
-    // than a bad crop of a real asset -- until this real screen
-    // recording became available.
+    // Card film: the no-text cut of this project's trailer (see
+    // content/trailers.ts), made from its real screens.
     thumbnail: {
       src: "/loops/convay-design-system-card.mp4",
       poster: "/loops/convay-design-system-card.webp",
-      width: 1100,
-      height: 826,
-      alt: "Scrolling through Convay's design system: color tokens, spacing scale, and shadow values in Figma.",
+      width: 960,
+      height: 720,
+      alt: "A short film of the Convay design system in Figma: colour variables with light and dark values, then type, grid and elevation styles, stacked as layers.",
     },
     contentStatus: "complete",
     // Convay Design System rebuild: hero paragraph replaced verbatim
@@ -3354,7 +3424,7 @@ export const caseStudies: CaseStudy[] = [
     track: "work",
     scale: "product",
     contentStatus: "complete",
-    thumbnail: cardLoop("fitvibe", "FitVibe app walkthrough"),
+    thumbnail: cardLoop("fitvibe", "A short film of FitVibe: the app's main screens, then the personas, affinity map, sketches and wireframes behind them."),
     oneLineScope:
       "FitVibe is a comprehensive fitness app designed for fitness enthusiasts and individuals pursuing a healthy lifestyle. It offers a range of features including workout and diet planners, progress tracking, social interaction, gamified challenges, and an e-commerce shop. With a focus on personalized guidance and community support, FitVibe caters to passionate fitness enthusiasts and those seeking to improve their well-being. I worked on it as a UI design intern at Kaz Software, alongside a senior designer, on a client product whose real name is under NDA.",
     meta: {
@@ -3391,7 +3461,7 @@ export const caseStudies: CaseStudy[] = [
     // confirmed duration -- it's finished content now, not a project
     // still waiting on a decision.
     contentStatus: "complete",
-    thumbnail: cardLoop("travelmate-ai", "TravelMate AI app walkthrough"),
+    thumbnail: cardLoop("travelmate-ai", "A short film of TravelMate AI: a chat answer with a map, the voice mode, and the itinerary, transport, journal and weather screens."),
     oneLineScope:
       "TravelMate AI is a mobile-based conversational assistant designed to make traveling simpler and stress-free. It helps tourists navigate new cities, get instant recommendations, translate on the go, and access emergency info in real time. By combining chat, voice, and travel utilities in one app, TravelMate brings together tools that are usually scattered across multiple platforms, giving users a single, reliable travel companion.",
     meta: {
@@ -3434,7 +3504,7 @@ export const caseStudies: CaseStudy[] = [
     track: "work",
     scale: "feature",
     contentStatus: "complete",
-    thumbnail: cardLoop("convay-notifications", "Convay notifications walkthrough"),
+    thumbnail: cardLoop("convay-notifications", "A short film of Convay Notifications: the notification panel on web and mobile, its three categories, and turning off one chat."),
     oneLineScope:
       "In a platform used across 45+ countries, including by government agencies, missing a critical update can break workflows. I helped design a centralized, categorized notification system for Convay, ensuring users could easily stay on top of meetings, messages, and file updates. This feature was a small yet strategic step toward making Convay a seamless, scalable collaboration tool.",
     meta: {
@@ -3484,21 +3554,15 @@ export const caseStudies: CaseStudy[] = [
       duration: "2025 – 2026",
       tools: "Figma (prototype), Atlas.ti",
     },
-    // Thumbnail Refresh milestone: swapped the static landing-screen crop
-    // for a real screen recording of Lumi in use (the widget opening,
-    // topic buttons, a live conversation) -- motion that shows the
-    // product actually working, not just its splash screen. Source clip
-    // was a 25fps/1600x1200, ~40MB raw export; re-encoded to 1100px-wide
-    // H.264 (see ProjectCard.tsx for why video instead of a native GIF).
-    // 723x542 kept as the width/height metadata (matches the video's 4:3
-    // aspect; ProjectCard only reads these for the aspect-ratio math, not
-    // for actually sizing a <video> element).
+    // Card film: the no-text cut of this project's trailer (see
+    // content/trailers.ts), made from its real screens.
     thumbnail: {
       src: "/loops/lumi-card.mp4",
       poster: "/loops/lumi-card.webp",
-      width: 723,
-      height: 542,
-      alt: "Lumi in use: the chat widget opening, topic buttons, and a live conversation answering a student's question about healthcare in Finland.",
+      width: 960,
+      height: 720,
+      wide: { src: "/loops/lumi-card-wide.mp4", poster: "/loops/lumi-card-wide.webp", width: 1600, height: 900 },
+      alt: "A short film of Lumi: the prototype's home and chat screens, an off-script question, and the trust line from the study rising slowly and breaking fast.",
     },
     nextCaseStudy: {
       title: "Multimodal Robot Interaction (RoboCarnival)",
@@ -3530,22 +3594,14 @@ export const caseStudies: CaseStudy[] = [
       duration: "June 2026",
       tools: "Figma (Make)",
     },
-    // Thumbnail Refresh milestone: swapped the static splash-screen crop
-    // for a real screen recording (splash screen -> a scavenger-hunt clue
-    // -> the festival's live activity list), so the card shows the
-    // product actually working rather than just its title screen. The
-    // source clip (Scene9, later re-exported by Aseer as
-    // Scene9-c7fb1a1a.gif after the first export turned out to have a
-    // persistent third-party watermark baked across the whole animation)
-    // was a 25fps/1600x1200, ~24MB raw GIF; trimmed ~0.3s off each end
-    // (a fade to/from black) and re-encoded to 1100px-wide H.264, same
-    // treatment as Lumi and Convay Design System (see ProjectCard.tsx).
+    // Card film: the no-text cut of this project's trailer (see
+    // content/trailers.ts), made from its real screens.
     thumbnail: {
       src: "/loops/arenewberg-card.mp4",
       poster: "/loops/arenewberg-card.webp",
-      width: 1100,
-      height: 826,
-      alt: "The aRENEWberg app: splash screen, a scavenger-hunt clue, and the festival's live activity list.",
+      width: 960,
+      height: 720,
+      alt: "A short film of the aRENEWberg festival app: the home screen, the silent disco, the scavenger hunt and the entry pass.",
     },
     // Last entry in the Work track's own index order -- bridges into
     // Research instead of dead-ending or looping back to the start of

@@ -4,7 +4,9 @@ import { SkipLink } from "@/components/layout/SkipLink";
 import { NavBar } from "@/components/layout/NavBar";
 import { Footer } from "@/components/layout/Footer";
 import { LightboxProvider } from "@/components/ui/Lightbox";
-import { site } from "@/content/site";
+import { footerPages, nav, site } from "@/content/site";
+import { caseStudies } from "@/content/projects";
+import { CommandBar } from "@/components/ui/CommandBar";
 // Self-hosted fonts (no request to Google Fonts at build or runtime).
 // Newsreader loads with its optical-size axis ("opsz") in both styles,
 // since italics carry emphasis in headlines. IBM Plex Mono is not a
@@ -64,6 +66,20 @@ export const metadata: Metadata = {
   },
 };
 
+// The ⌘K bar's destinations, built here on the server so the client
+// bundle carries only titles and links, not the case study content.
+const commandCases = caseStudies.map((study) => ({
+  label: study.title,
+  href: `/${study.track === "work" ? "work" : "research"}/${study.slug}`,
+  hint: study.track === "work" ? "Work" : "Research",
+}));
+const commandPages = [
+  { label: "Home", href: "/", hint: "Page" },
+  ...nav.map((item) => ({ label: item.label, href: item.href, hint: "Page" })),
+  { label: "CV", href: "/resume", hint: "Page" },
+  ...footerPages.map((item) => ({ label: item.label, href: item.href, hint: "Page" })),
+];
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -85,6 +101,13 @@ export default function RootLayout({
           <main id="main-content">{children}</main>
         </LightboxProvider>
         <Footer />
+        <CommandBar
+          cases={commandCases}
+          pages={commandPages}
+          email={site.email}
+          resumeUrl={site.resumeUrl}
+          academicCvUrl={site.academicCvUrl}
+        />
         {umamiWebsiteId && (
           <Script
             src="https://cloud.umami.is/script.js"

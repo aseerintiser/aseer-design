@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { CaseStudyBlock } from "@/content/types";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
@@ -16,7 +17,9 @@ import { PainPointList } from "./PainPointList";
 import { ComparisonDiagram } from "./ComparisonDiagram";
 import { VariantComparison } from "./VariantComparison";
 import { PhaseFilmstrip } from "./PhaseFilmstrip";
-import { ReducedMotionHero } from "./ReducedMotionHero";
+import { AnnotatedScreen } from "./AnnotatedScreen";
+import { ScreenPlayer } from "./ScreenPlayer";
+import { CostChart } from "./CostChart";
 import { ChapterNav, type Chapter } from "./ChapterNav";
 import { ParticipantsFigure } from "@/components/research/ParticipantsFigure";
 import { StudyDesignFigure } from "@/components/research/StudyDesignFigure";
@@ -239,17 +242,22 @@ function renderBlock(
       return (
         <PhaseFilmstrip key={key} label={block.label} intro={block.intro} images={block.images} />
       );
-    case "reducedMotionHero":
+    case "annotated":
       return (
-        <div key={key} className="mt-6">
-          <ReducedMotionHero
-            loopSrc={block.loopSrc}
-            fallbackSrc={block.fallbackSrc}
-            width={block.width}
-            height={block.height}
-            loopAlt={block.loopAlt}
-            fallbackAlt={block.fallbackAlt}
-          />
+        <div key={key} className="mt-8">
+          <AnnotatedScreen label={block.label} image={block.image} device={block.device} notes={block.notes} />
+        </div>
+      );
+    case "screenPlayer":
+      return (
+        <div key={key} className="mt-8">
+          <ScreenPlayer label={block.label} screens={block.screens} />
+        </div>
+      );
+    case "costChart":
+      return (
+        <div key={key} className="mt-8">
+          <CostChart label={block.label} caption={block.caption} items={block.items} />
         </div>
       );
     case "details":
@@ -338,7 +346,6 @@ const WIDE_BLOCKS = new Set<CaseStudyBlock["type"]>([
   "image",
   "imageRow",
   "video",
-  "reducedMotionHero",
   "phaseGroup",
   "variantComparison",
   "twoColumnCompare",
@@ -349,6 +356,9 @@ const WIDE_BLOCKS = new Set<CaseStudyBlock["type"]>([
   "flowSteps",
   "metricGrid",
   "figure",
+  "annotated",
+  "screenPlayer",
+  "costChart",
 ]);
 
 function slugify(text: string) {
@@ -375,7 +385,6 @@ function withoutHeroDuplicates(blocks: CaseStudyBlock[], heroSrcs: string[]) {
     if (block.type === "heading" && block.level === 3) beforeFirstHeading = false;
     if (beforeFirstHeading) {
       if (block.type === "image" && isHero(block.src)) continue;
-      if (block.type === "reducedMotionHero" && isHero(block.loopSrc)) continue;
       if (block.type === "imageRow") {
         const images = block.images.filter((image) => !isHero(image.src));
         if (!images.length) continue;
@@ -403,8 +412,12 @@ export function CaseStudyBody({
   referenceMarks,
   heroSrcs = [],
   numberFigures = false,
+  tint,
 }: {
   blocks: CaseStudyBlock[];
+  /** The case's chapter color, for dark moments inside the body (the
+   * prototype player sits on the same lit ground as the project films). */
+  tint?: string;
   /** Convay AI for Physical Meetings rebuild: see the `referenceMarks`
    * note on CaseStudy in content/types.ts. Undefined for every other
    * case study, which keeps every "link" block's markup unchanged. */
@@ -451,7 +464,11 @@ export function CaseStudyBody({
   });
 
   return (
-    <div id="case-body" className="mx-auto w-full max-w-7xl px-4 pt-12 pb-24 sm:px-6 md:pt-16 lg:grid lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:gap-14 lg:px-8 lg:pt-20">
+    <div
+      id="case-body"
+      style={tint ? ({ "--chapter-tint": tint } as CSSProperties) : undefined}
+      className="mx-auto w-full max-w-7xl px-4 pt-12 pb-24 sm:px-6 md:pt-16 lg:grid lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:gap-14 lg:px-8 lg:pt-20"
+    >
       <ChapterNav chapters={chapters} containerId="case-body" />
       <div className="min-w-0">
         {numbered.map((section, index) => (

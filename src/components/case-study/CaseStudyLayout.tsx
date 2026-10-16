@@ -14,27 +14,13 @@ import { renderInlineMarkdown } from "@/lib/inline-markdown";
 import { chapterFor } from "@/content/chapters";
 import { inShort } from "@/content/inShort";
 import { projectSummaries } from "@/content/projects";
+import { trailers } from "@/content/trailers";
+import { CaseTrailer } from "./CaseTrailer";
 
-/** Full-size loops cut from the walkthroughs (public/loops/<slug>.mp4). */
-const FULL_LOOPS = new Set([
-  "convay-mobile-app-revamp",
-  "convay-ai-for-physical-meetings",
-  "convay-notifications",
-  "fitvibe",
-  "travelmate-ai",
-]);
-
-function heroMediaFor(caseStudy: CaseStudy): StageMedia | null {
-  if (FULL_LOOPS.has(caseStudy.slug)) {
-    return {
-      src: `/loops/${caseStudy.slug}.mp4`,
-      poster: `/loops/${caseStudy.slug}.webp`,
-      width: 1600,
-      height: 1200,
-      alt: caseStudy.thumbnail?.alt ?? caseStudy.title,
-    };
-  }
-  return caseStudy.thumbnail ?? null;
+/** The case hero: the project's trailer when it has one (see
+ * content/trailers.ts), otherwise its still, full bleed. */
+function heroStillFor(caseStudy: CaseStudy): StageMedia | null {
+  return trailers[caseStudy.slug] ? null : (caseStudy.thumbnail ?? null);
 }
 
 const SKIP_KEYS = new Set(["src", "href", "alt", "poster", "loopSrc", "fallbackSrc", "id", "type"]);
@@ -59,8 +45,7 @@ function readingMinutes(blocks: CaseStudyBlock[]) {
  *
  * 1. The hero, on night: a trail back to Work or Research, the title,
  *    the one-line scope, role, time, tools and reading time, and the
- *    project on its stage, rising from the bottom edge into the page,
- *    so the card a visitor clicked carries straight over.
+ *    project's trailer, a short film for anyone who won't read further.
  * 2. In short (featured cases): problem, role, key decision and result
  *    with its evidence, so a recruiter can stop after one screen.
  * 3. The body, in numbered chapters with a chapter rail (see
@@ -71,7 +56,8 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
   const chapter = chapterFor(caseStudy.slug);
   const trackLabel = caseStudy.track === "work" ? "Work" : "Research";
   const trackHref = caseStudy.track === "work" ? "/work" : "/research";
-  const hero = heroMediaFor(caseStudy);
+  const trailer = trailers[caseStudy.slug];
+  const still = heroStillFor(caseStudy);
   const summary = inShort[caseStudy.slug];
   const minutes = caseStudy.body ? readingMinutes(caseStudy.body) : null;
 
@@ -133,17 +119,22 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
             />
           </div>
         </Container>
-        {hero && (
-          <Container className="mt-12 md:mt-16">
-            <Stage
-              chapter={chapter}
-              media={hero}
-              shape="wide"
-              autoplay
-              priority
-              sizes="(min-width: 1024px) 60vw, 92vw"
-              className="rounded-t-[var(--radius-lg)]"
-            />
+        {(trailer || still) && (
+          <Container className="mt-12 pb-12 md:mt-16 md:pb-16">
+            {trailer ? (
+              <CaseTrailer trailer={trailer} />
+            ) : (
+              still && (
+                <Stage
+                  chapter={chapter}
+                  media={still}
+                  shape="wide"
+                  priority
+                  sizes="(min-width: 1280px) 1200px, 92vw"
+                  className="rounded-[var(--radius-lg)]"
+                />
+              )
+            )}
           </Container>
         )}
       </header>
@@ -182,8 +173,9 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
         <CaseStudyBody
           blocks={caseStudy.body}
           referenceMarks={caseStudy.referenceMarks}
-          heroSrcs={hero ? [hero.src] : []}
+          heroSrcs={[trailer?.src, caseStudy.thumbnail?.src].filter((src): src is string => Boolean(src))}
           numberFigures={caseStudy.track === "research"}
+          tint={chapter.tint}
         />
       ) : (
         <Section density="open" measure="narrow">

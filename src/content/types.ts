@@ -47,6 +47,9 @@ export interface ProjectSummary {
      * Without it, Low Power Mode, reduced motion or a slow connection
      * leaves the card blank. */
     poster?: string;
+    /** A 16:9 cut of the same film for a card that spans a full row, so
+     * the 4:3 film isn't cropped and stretched to fill it. */
+    wide?: { src: string; poster: string; width: number; height: number };
   };
 }
 
@@ -73,7 +76,49 @@ export interface CaseStudyMeta {
  * rendered via `renderInlineMarkdown` (src/lib/inline-markdown.tsx),
  * not stripped, since that emphasis is part of the original voice.
  */
+export interface ScreenImage {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+}
+
 export type CaseStudyBlock =
+  | {
+      /** A close-up of one real screen with numbered pins, each tied to
+       * a note beside it. Choosing a pin or a note highlights both.
+       * `x` and `y` are fractions of the image (0 to 1). Notes are
+       * condensed from the case study's own text. */
+      type: "annotated";
+      label: string;
+      image: ScreenImage;
+      /** "phone" draws a device edge; "panel" a plain bordered frame. */
+      device: "phone" | "panel";
+      notes: { x: number; y: number; text: string }[];
+    }
+  | {
+      /** A prototype player: one phone, a tab per section, and one line
+       * saying what each screen is for. */
+      type: "screenPlayer";
+      label: string;
+      screens: (ScreenImage & { tab: string; line: string })[];
+    }
+  | {
+      /** Rough costs per idea on a log scale, cut versus shipped. Ideas
+       * without a figure keep their row and say so, with no bar. */
+      type: "costChart";
+      label: string;
+      caption: string;
+      items: {
+        label: string;
+        status: "cut" | "shipped";
+        /** Lowest and highest estimate in euros; equal for one figure. */
+        low?: number;
+        high?: number;
+        value: string;
+        note?: string;
+      }[];
+    }
   | {
       /** A numbered research figure (Phase 4). Research pages number
        * their figures and captioned images in reading order, the way an
@@ -281,24 +326,6 @@ export type CaseStudyBlock =
       label: string;
       intro: string;
       images: { src: string; width: number; height: number; alt: string; caption: string }[];
-    }
-  | {
-      /** Convay AI for Physical Meetings rebuild: the hero establishing
-       * animation with a `prefers-reduced-motion` fallback. A looping
-       * GIF can't itself respond to that media query, so this swaps the
-       * whole image via `<picture><source media="(prefers-reduced-
-       * motion: reduce)">` (05_Interaction_and_Motion.md: "a hard
-       * requirement, not a nice-to-have"). Renders via ReducedMotionHero.
-       * `loopAlt`/`fallbackAlt` are separate since the fallback is a
-       * single still frame, not a looping mosaic, and deserves its own
-       * accurate description. */
-      type: "reducedMotionHero";
-      loopSrc: string;
-      fallbackSrc: string;
-      width: number;
-      height: number;
-      loopAlt: string;
-      fallbackAlt: string;
     }
   | {
       /** A minimal visual break between two beats inside the same

@@ -16,6 +16,8 @@ export type EvidenceStatus = "verified" | "own" | "directional";
 export interface Evidence {
   status: EvidenceStatus;
   text: string;
+  /** Where the claim comes from, shown on the chip's source card. */
+  source?: string;
 }
 
 // ---------------------------------------------------------------------
@@ -23,8 +25,9 @@ export interface Evidence {
 // ---------------------------------------------------------------------
 
 /** The five clips inside public/loops/trailer.mp4, in playing order, with
- * the second each one starts at (the cut has 0.35 s crossfades). Cut from
- * the real project loops by scripts in the Phase 2 commit message. */
+ * the second each one starts at (the middle of each 0.45 s crossfade).
+ * Each clip is the opening scene of that project's card film (see
+ * content/trailers.ts), so every frame is a real project screen. */
 export const trailerClips = [
   {
     id: "fitvibe",
@@ -37,7 +40,7 @@ export const trailerClips = [
   },
   {
     id: "design-system",
-    start: 3.65,
+    start: 2.475,
     title: "Convay Design System",
     meta: "UX Designer, Synesis IT · 2023–24",
     href: "/work/convay-design-system",
@@ -46,7 +49,7 @@ export const trailerClips = [
   },
   {
     id: "mobile",
-    start: 6.3,
+    start: 5.175,
     title: "Convay Mobile App Revamp",
     meta: "UX Designer, Synesis IT · 2023–24",
     href: "/work/convay-mobile-app-revamp",
@@ -55,7 +58,7 @@ export const trailerClips = [
   },
   {
     id: "ai",
-    start: 9.35,
+    start: 7.875,
     title: "Convay AI for Physical Meetings",
     meta: "UX Designer, Synesis IT · 2023–24",
     href: "/work/convay-ai-for-physical-meetings",
@@ -64,7 +67,7 @@ export const trailerClips = [
   },
   {
     id: "lumi",
-    start: 12.4,
+    start: 10.575,
     title: "Lumi",
     meta: "M.Sc. thesis, Tampere University · 2025–26",
     href: "/research/lumi",
@@ -73,7 +76,7 @@ export const trailerClips = [
   },
 ] as const;
 
-export const trailerDuration = 16.6;
+export const trailerDuration = 13.5;
 
 /** The career line, strictly in time order. Dates from the CV and the
  * career archive: B.Sc. Jan 2019 to May 2023; Kaz internship May to Aug
@@ -133,7 +136,7 @@ export const lumiFeature = {
   outcome:
     "I designed a conversational AI guide to Finnish public services, then studied how 15 newcomers came to trust it, or stopped.",
   role: "Sole researcher and designer · supervised by Prof. Thomas Olsson",
-  evidence: { status: "verified", text: "Thesis graded 5/5" } as Evidence,
+  evidence: { status: "verified", text: "Thesis graded 5/5", source: "Tampere University's grade for the M.Sc. thesis this study belongs to (Human-Technology Interaction, June 2026)." } as Evidence,
   cta: "Read the study",
 };
 
@@ -159,6 +162,7 @@ export const convayChapter = {
       evidence: {
         status: "own",
         text: "93% transcription accuracy in quiet rooms · internal testing",
+        source: "Convay's internal testing in quiet rooms, as reported in the case study. Not a large-scale field study.",
       } as Evidence,
     },
     {
@@ -170,6 +174,7 @@ export const convayChapter = {
       evidence: {
         status: "own",
         text: "Five of six reviewers called it more intuitive",
+        source: "Internal design reviews at handoff, with the product and engineering team. Informal, not an external usability study.",
       } as Evidence,
     },
     {
@@ -182,6 +187,7 @@ export const convayChapter = {
       evidence: {
         status: "own",
         text: "Light and dark themes from one set of components",
+        source: "From building and using the system day to day as features shipped. Not a formal usage audit.",
       } as Evidence,
     },
   ],
@@ -199,7 +205,7 @@ export const fitvibeFeature = {
   outcome:
     "My first client app and my first usability study: 12 participants, and a SUS score of 63.3 that showed what to fix.",
   role: "UI design intern, with a senior designer · client name under NDA",
-  evidence: { status: "own", text: "SUS 63.3, recalculated from the recorded totals" } as Evidence,
+  evidence: { status: "own", text: "SUS 63.3, recalculated from the recorded totals", source: "The usability study with 12 participants. The case study recalculates the score step by step from the recorded item totals." } as Evidence,
 };
 
 // ---------------------------------------------------------------------
