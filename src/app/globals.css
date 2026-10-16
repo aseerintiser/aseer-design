@@ -129,10 +129,8 @@
   --color-signal: #ffd84a;
   --color-signal-ink: #14120a;
 
-  /* The trust-line mark: ink on paper, the signal on night. On hover
-     the nav mark redraws in the other one (see .trust-mark-hover). */
+  /* The trust-line mark: ink on paper, the signal on night. */
   --color-mark: #16140f;
-  --color-mark-hover: #ffd84a;
 
   /* Evidence-status tag colors (Design Brief non-negotiable: an
      evidence-status tag attached to every metric, never using color as
@@ -166,7 +164,6 @@
   --color-accent-contrast: #14120a;
   --color-focus-ring: #ffd84a;
   --color-mark: #ffd84a;
-  --color-mark-hover: #f2f0ea;
 
   --color-status-verified-bg: #143021;
   --color-status-verified-text: #8fe0ac;
@@ -292,10 +289,10 @@
   }
 }
 
-/* The nav mark on hover (TrustMark `hoverDraw`): the mark redraws itself
-   in its other color, rising slowly, breaking fast and recovering, a
-   little quicker than the load-time draw. The resting mark steps aside
-   while it draws, and comes back as soon as the pointer leaves. */
+/* The nav mark on hover (TrustMark `hoverDraw`): the mark redraws itself,
+   rising slowly, breaking fast and recovering, a little quicker than the
+   load-time draw. The resting mark steps aside while it draws, and comes
+   back as soon as the pointer leaves. */
 .trust-mark-base {
   transition: opacity var(--duration-fast) var(--ease-standard);
 }

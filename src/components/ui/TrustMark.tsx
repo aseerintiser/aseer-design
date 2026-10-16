@@ -15,10 +15,8 @@ import { cn } from "@/lib/utils";
  * animation instantly, so the mark simply appears complete.
  *
  * Color follows --color-mark: ink on paper, highlighter yellow on night.
- * With `hoverDraw`, hovering the nav wordmark redraws the mark in its
- * other color: ink becomes highlighter yellow on paper, and yellow
- * becomes paper on night, arriving in the same rise, break and recover
- * rhythm.
+ * With `hoverDraw`, hovering the nav wordmark redraws the mark in the
+ * same rise, break and recover rhythm, in its own color.
  */
 
 /** The single source for the mark's geometry, also used by the link
@@ -37,7 +35,7 @@ interface TrustMarkProps {
    * already names it (the nav wordmark), so it stays decorative. */
   title?: string;
   /** Inside a `group` link: on hover or keyboard focus the mark redraws
-   * itself in --color-mark-hover, in the same rhythm as the first draw. */
+   * itself in the same rhythm as the first draw. */
   hoverDraw?: boolean;
 }
 
@@ -67,7 +65,7 @@ export function TrustMark({ className, draw = false, weight = 2.3, title, hoverD
           d={TRUST_LINE_PATH}
           pathLength={1}
           fill="none"
-          stroke="var(--color-mark-hover)"
+          stroke="currentColor"
           strokeWidth={weight}
           strokeLinecap="round"
           strokeLinejoin="miter"
