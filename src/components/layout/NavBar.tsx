@@ -108,9 +108,13 @@ export function NavBar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex items-center gap-2.5 font-[family-name:var(--font-display)] text-[1.375rem] leading-none tracking-[-0.01em]"
+          className="group flex items-center gap-2.5 font-[family-name:var(--font-display)] text-[1.375rem] leading-none tracking-[-0.01em]"
         >
-          <TrustMark draw className="w-7 translate-y-[1px]" />
+          <TrustMark
+            draw
+            trace
+            className="w-7 translate-y-[1px] transition-colors duration-[var(--duration-fast)] group-hover:text-[var(--color-text)] group-focus-visible:text-[var(--color-text)]"
+          />
           <span>{site.shortName}</span>
         </Link>
 

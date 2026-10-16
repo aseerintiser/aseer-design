@@ -289,6 +289,30 @@
   }
 }
 
+/* The nav mark's hover trace (TrustMark `trace`): a highlighter band
+   retraces the line behind the ink, rising slowly, breaking fast and
+   recovering, a little quicker than the load-time draw. It leaves as
+   soon as the pointer does. */
+.trust-mark-trace {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
+
+.group:hover .trust-mark-trace,
+.group:focus-visible .trust-mark-trace {
+  opacity: 0.95;
+  animation: trust-line-draw 1100ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .trust-mark-trace,
+  .group:focus-visible .trust-mark-trace {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
 /* Registered so a stage can fade from one chapter color to the next (the
    homepage trailer) instead of jumping. */
 @property --stage-tint {
@@ -304,7 +328,7 @@
 /* The career line under the hero: progress and marker move at story
    speed, because they carry the story. */
 .career-progress {
-  transition: stroke-dashoffset var(--duration-rise) var(--ease-rise);
+  transition: clip-path var(--duration-rise) var(--ease-rise);
 }
 
 .career-marker {

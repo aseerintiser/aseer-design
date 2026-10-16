@@ -15,6 +15,9 @@ import { cn } from "@/lib/utils";
  * animation instantly, so the mark simply appears complete.
  *
  * Color follows --color-mark: ink on paper, highlighter yellow on night.
+ * With `trace`, hovering the nav wordmark runs a yellow highlighter along
+ * the line behind the ink, the site's "yellow behind ink" mark in motion
+ * (on night the ink turns to paper for it, so the yellow still shows).
  */
 
 /** The single source for the mark's geometry, also used by the link
@@ -32,9 +35,13 @@ interface TrustMarkProps {
   /** Accessible name. Omit when the mark sits next to visible text that
    * already names it (the nav wordmark), so it stays decorative. */
   title?: string;
+  /** Hover trace: inside a `group` link, a highlighter-yellow band
+   * retraces the line behind the ink on hover or keyboard focus, in the
+   * same rise, break and recover rhythm. */
+  trace?: boolean;
 }
 
-export function TrustMark({ className, draw = false, weight = 2.3, title }: TrustMarkProps) {
+export function TrustMark({ className, draw = false, weight = 2.3, title, trace = false }: TrustMarkProps) {
   return (
     <svg
       viewBox="0 0 32 20"
@@ -43,7 +50,20 @@ export function TrustMark({ className, draw = false, weight = 2.3, title }: Trus
       aria-label={title}
       aria-hidden={title ? undefined : true}
       focusable="false"
+      overflow="visible"
     >
+      {trace && (
+        <path
+          d={TRUST_LINE_PATH}
+          pathLength={1}
+          fill="none"
+          stroke="var(--color-signal)"
+          strokeWidth={weight * 2.6}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="trust-mark-trace"
+        />
+      )}
       <path
         d={TRUST_LINE_PATH}
         pathLength={1}

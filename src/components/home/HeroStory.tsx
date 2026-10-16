@@ -200,16 +200,25 @@ export function HeroStory({ intro }: { intro: ReactNode }) {
           aria-hidden="true"
         >
           <path d={LINE_D} fill="none" stroke="var(--color-border-strong)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+        </svg>
+        {/* Progress: the same line in yellow, revealed up to the active
+            step. The line only ever moves right, so clipping it at the
+            step's x lands the end exactly under the marker at any width
+            (a stroke-dash fraction drifts once the line is stretched). */}
+        <svg
+          viewBox="0 0 1000 72"
+          preserveAspectRatio="none"
+          className="career-progress pointer-events-none absolute inset-x-0 top-0 h-[72px] w-full"
+          style={{ clipPath: `inset(-4px ${100 - (NODE_X[activeStepIndex] ?? 10)}% -4px 0)` }}
+          aria-hidden="true"
+        >
           <path
             d={LINE_D}
-            pathLength={1}
             fill="none"
             stroke="var(--color-signal)"
             strokeWidth="2"
             strokeLinecap="round"
             vectorEffect="non-scaling-stroke"
-            className="career-progress"
-            style={{ strokeDasharray: 1, strokeDashoffset: 1 - activeStepIndex / (careerSteps.length - 1) }}
           />
         </svg>
         <span
