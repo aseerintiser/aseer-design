@@ -129,8 +129,10 @@
   --color-signal: #ffd84a;
   --color-signal-ink: #14120a;
 
-  /* The trust-line mark: ink on paper, the signal on night. */
+  /* The trust-line mark: ink on paper, the signal on night. On hover
+     the nav mark redraws in the other one (see .trust-mark-hover). */
   --color-mark: #16140f;
+  --color-mark-hover: #ffd84a;
 
   /* Evidence-status tag colors (Design Brief non-negotiable: an
      evidence-status tag attached to every metric, never using color as
@@ -164,6 +166,7 @@
   --color-accent-contrast: #14120a;
   --color-focus-ring: #ffd84a;
   --color-mark: #ffd84a;
+  --color-mark-hover: #f2f0ea;
 
   --color-status-verified-bg: #143021;
   --color-status-verified-text: #8fe0ac;
@@ -289,25 +292,34 @@
   }
 }
 
-/* The nav mark's hover trace (TrustMark `trace`): a highlighter band
-   retraces the line behind the ink, rising slowly, breaking fast and
-   recovering, a little quicker than the load-time draw. It leaves as
-   soon as the pointer does. */
-.trust-mark-trace {
+/* The nav mark on hover (TrustMark `hoverDraw`): the mark redraws itself
+   in its other color, rising slowly, breaking fast and recovering, a
+   little quicker than the load-time draw. The resting mark steps aside
+   while it draws, and comes back as soon as the pointer leaves. */
+.trust-mark-base {
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+.trust-mark-hover {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   opacity: 0;
 }
 
-.group:hover .trust-mark-trace,
-.group:focus-visible .trust-mark-trace {
-  opacity: 0.95;
+.group:hover .trust-mark-base,
+.group:focus-visible .trust-mark-base {
+  opacity: 0;
+}
+
+.group:hover .trust-mark-hover,
+.group:focus-visible .trust-mark-hover {
+  opacity: 1;
   animation: trust-line-draw 1100ms both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .group:hover .trust-mark-trace,
-  .group:focus-visible .trust-mark-trace {
+  .group:hover .trust-mark-hover,
+  .group:focus-visible .trust-mark-hover {
     animation: none;
     stroke-dashoffset: 0;
   }

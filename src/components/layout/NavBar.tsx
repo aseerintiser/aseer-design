@@ -110,11 +110,7 @@ export function NavBar() {
           href="/"
           className="group flex items-center gap-2.5 font-[family-name:var(--font-display)] text-[1.375rem] leading-none tracking-[-0.01em]"
         >
-          <TrustMark
-            draw
-            trace
-            className="w-7 translate-y-[1px] transition-colors duration-[var(--duration-fast)] group-hover:text-[var(--color-text)] group-focus-visible:text-[var(--color-text)]"
-          />
+          <TrustMark draw hoverDraw className="w-7 translate-y-[1px]" />
           <span>{site.shortName}</span>
         </Link>
 
