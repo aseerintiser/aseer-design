@@ -11,3 +11,13 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+/** A heading as an id: "Outcome & Impact" becomes "outcome-and-impact".
+ * Case study chapters (ch-…) and Ask the portfolio's links share it. */
+export function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}

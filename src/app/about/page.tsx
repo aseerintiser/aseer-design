@@ -11,6 +11,7 @@ import { site } from "@/content/site";
 import { about } from "@/content/about";
 import { careerSteps } from "@/content/home";
 import { certificationCollections } from "@/content/certifications";
+import { slugify } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "About",
@@ -73,7 +74,7 @@ export default function AboutPage() {
       <Section density="default" className="border-t border-[var(--color-border)]">
         <div className="space-y-20 md:space-y-24">
           {reading.map((section, index) => (
-            <article key={section.heading} className="grid gap-6 lg:grid-cols-12">
+            <article key={section.heading} id={slugify(section.heading)} className="grid scroll-mt-24 gap-6 lg:grid-cols-12">
               <header className="lg:col-span-4">
                 <p className={label}>{String(index + 1).padStart(2, "0")}</p>
                 <Heading level={2} className="mt-2">
@@ -121,7 +122,7 @@ export default function AboutPage() {
       {offDuty && "image" in offDuty && offDuty.image && (
         <Section tone="dark" density="open">
           <div className="grid gap-10 lg:grid-cols-12">
-            <header className="lg:col-span-4">
+            <header id={slugify(offDuty.heading)} className="scroll-mt-24 lg:col-span-4">
               <p className={label}>{String(reading.length + 1).padStart(2, "0")}</p>
               <Heading level={2} className="mt-2">
                 {offDuty.heading}

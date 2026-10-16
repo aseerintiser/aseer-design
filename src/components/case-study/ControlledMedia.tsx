@@ -151,7 +151,7 @@ export function ControlledMedia({
             type="button"
             onClick={state === "ended" ? replay : play}
             aria-label={state === "ended" ? "Replay" : "Play"}
-            className="absolute inset-0 flex items-center justify-center bg-black/15 transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-black/25"
+            className="absolute inset-0 flex items-center justify-center bg-black/15 print:hidden transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:bg-black/25"
           >
             <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-bg)]/95 text-[var(--color-text)] shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
               {state === "ended" ? <ReplayIcon /> : <PlayIcon />}

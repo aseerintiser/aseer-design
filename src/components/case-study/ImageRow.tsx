@@ -73,7 +73,7 @@ export function ImageRow({ images, enlargeable = true }: ImageRowProps) {
     <div className="relative mt-8">
       <div
         ref={stripRef}
-        className="flex snap-x snap-mandatory items-start gap-4 overflow-x-auto pb-3 [scrollbar-width:thin]"
+        className="flex snap-x snap-mandatory items-start gap-4 overflow-x-auto pb-3 [scrollbar-width:thin] print:flex-wrap print:overflow-visible"
         style={{ justifyContent: "safe center" }}
         role="group"
         aria-label={`${images.length} screens. Scroll sideways to see them all.`}
@@ -134,7 +134,7 @@ export function ImageRow({ images, enlargeable = true }: ImageRowProps) {
       </div>
 
       {overflowing && (
-        <div className="mt-2 hidden items-center justify-end gap-2 md:flex">
+        <div className="mt-2 hidden items-center justify-end gap-2 md:flex print:hidden">
           <button
             type="button"
             onClick={() => scrollBy(-1)}

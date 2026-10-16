@@ -129,7 +129,7 @@ export function ChapterNav({ chapters, containerId }: ChapterNavProps) {
   return (
     <>
       {/* Wide screens: the rail. */}
-      <nav aria-label="Chapters" className="hidden lg:block">
+      <nav aria-label="Chapters" className="hidden lg:block print:hidden">
         <div className="sticky top-24">
           <p className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
             Chapters
@@ -147,7 +147,7 @@ export function ChapterNav({ chapters, containerId }: ChapterNavProps) {
       </nav>
 
       {/* Smaller screens: the slim bar. */}
-      <div ref={barRef} className="sticky top-[3.85rem] z-30 -mx-4 mb-8 sm:-mx-6 lg:hidden">
+      <div ref={barRef} className="sticky top-[3.85rem] z-30 -mx-4 mb-8 sm:-mx-6 lg:hidden print:hidden">
         <div className="border-y border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur">
           <button
             type="button"

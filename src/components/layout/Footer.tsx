@@ -5,18 +5,19 @@ import { CopyEmail } from "@/components/ui/CopyEmail";
 import { LocalTime } from "@/components/ui/LocalTime";
 import { TrustMark } from "@/components/ui/TrustMark";
 import { MotionToggle } from "@/components/ui/MotionToggle";
+import { VisionSelect } from "@/components/ui/VisionView";
 
 /**
  * The contact block that closes every page (Phase 2). It is the target
  * of the Contact button in the navigation, so reaching Aseer is one
  * click from anywhere: the address, a copy button that confirms in
  * place, his local time in Tampere, both CVs, the secondary pages that
- * left the main navigation, and the switch that pauses every looping
- * film on the site.
+ * left the main navigation, the switch that pauses every looping film
+ * on the site, and the color-vision view.
  */
 export function Footer() {
   return (
-    <footer id="contact" data-tone="dark" className="scroll-mt-16 bg-[var(--color-bg)] text-[var(--color-text)]">
+    <footer id="contact" data-tone="dark" className="scroll-mt-16 bg-[var(--color-bg)] text-[var(--color-text)] print:hidden">
       <Container className="pt-20 pb-10 md:pt-28">
         <p className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
           Contact
@@ -91,6 +92,7 @@ export function Footer() {
           </span>
           <span className="flex flex-wrap items-center gap-4">
             <MotionToggle />
+            <VisionSelect />
             Designed and built by Aseer
           </span>
         </div>

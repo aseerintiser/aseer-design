@@ -26,7 +26,7 @@ import { StudyDesignFigure } from "@/components/research/StudyDesignFigure";
 import { CopyText } from "@/components/ui/CopyText";
 import { claimIds, renderInlineMarkdown, renderInlineWithClaims } from "@/lib/inline-markdown";
 import { EvidenceClaim, EvidenceMargin, EvidenceProvider } from "./EvidenceLayer";
-import { cn } from "@/lib/utils";
+import { cn, slugify } from "@/lib/utils";
 
 /** Registry for the "interactive" block type's bespoke components (see
  * CaseStudyBlock in content/types.ts for why this is a named registry
@@ -378,14 +378,6 @@ const WIDE_BLOCKS = new Set<CaseStudyBlock["type"]>([
   "costChart",
 ]);
 
-function slugify(text: string) {
-  return text
-    .toLowerCase()
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-}
-
 /** Drops media that duplicates the case hero (Phase 3): the header stage
  * already plays the project's loop, so the same loop opening the body
  * would show it twice in a row. A single image that opens the body, ahead
@@ -552,6 +544,25 @@ export function CaseStudyBody({
             {sectionHasClaims(section.body) && <div data-note-barrier="" aria-hidden="true" />}
           </section>
         ))}
+        {/* On paper there is no margin to hover, so the notes for the
+            numbered claims are listed once at the end. */}
+        {Object.keys(numberedClaims).length > 0 && (
+          <section className="mt-16 hidden border-t border-[#999] pt-6 print:block">
+            <h2 className="font-[family-name:var(--font-display)] text-[14pt]">Sources for the numbered claims</h2>
+            <ol className="mt-3 space-y-2 text-[9.5pt] leading-snug">
+              {Object.values(numberedClaims)
+                .sort((a, b) => a.n - b.n)
+                .map((note) => (
+                  <li key={note.n} className="flex gap-3">
+                    <span className="w-4 shrink-0 font-[family-name:var(--font-mono)]">{note.n}</span>
+                    <span>
+                      <strong className="font-medium">{note.label}.</strong> {note.source}
+                    </span>
+                  </li>
+                ))}
+            </ol>
+          </section>
+        )}
       </EvidenceProvider>
     </div>
   );

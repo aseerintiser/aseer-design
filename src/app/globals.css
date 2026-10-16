@@ -304,6 +304,26 @@
   }
 }
 
+/* The color-vision view (lib/vision-preference.ts, VisionView.tsx). The
+   filter sits on the root element, which, unlike any other element, does
+   not become a containing block for fixed descendants, so the sticky nav
+   and the popovers keep their places. */
+html[data-vision="grayscale"] {
+  filter: grayscale(1);
+}
+
+html[data-vision="deuteranopia"] {
+  filter: url(#vision-deuteranopia);
+}
+
+html[data-vision="protanopia"] {
+  filter: url(#vision-protanopia);
+}
+
+html[data-vision="tritanopia"] {
+  filter: url(#vision-tritanopia);
+}
+
 /* Registered so a stage can fade from one chapter color to the next (the
    homepage trailer) instead of jumping. */
 @property --stage-tint {
@@ -492,5 +512,90 @@
     .grain-overlay {
       display: none;
     }
+  }
+}
+
+/*
+ * Print (Phase 5). Academic reviewers print case studies, so a printed
+ * case reads as a clean document: ink on white, no navigation, chapter
+ * bar, films' controls or footer, a line at the top saying where it came
+ * from (CaseStudyLayout), stills in place of films, and the sources for
+ * the numbered claims listed at the end (CaseStudyBody).
+ */
+@media print {
+  @page {
+    margin: 16mm 15mm;
+  }
+
+  :root,
+  [data-tone="dark"] {
+    --color-bg: #ffffff;
+    --color-bg-subtle: #ffffff;
+    --color-surface: #ffffff;
+    --color-border: #cfcfcf;
+    --color-border-strong: #9a9a9a;
+    --color-text: #111111;
+    --color-text-muted: #444444;
+    --color-accent: #111111;
+    --color-mark: #111111;
+  }
+
+  html,
+  html[data-vision] {
+    filter: none;
+  }
+
+  body {
+    background: #ffffff;
+    color: #111111;
+  }
+
+  .grain-overlay,
+  .vision-notice,
+  .evidence-card {
+    display: none !important;
+  }
+
+  /* Anything waiting for a scroll-in animation prints as finished. */
+  main [style*="opacity"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* The highlighter marks are worth their ink: they show what is a
+     claim. */
+  mark,
+  .evidence-claim {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+  }
+
+  figure,
+  img,
+  video,
+  blockquote,
+  li {
+    break-inside: avoid;
+  }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Links out of the site print their address, since paper can't be
+     clicked. */
+  #case-body a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #444444;
+    word-break: break-all;
   }
 }

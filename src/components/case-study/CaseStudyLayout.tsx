@@ -15,6 +15,7 @@ import { chapterFor } from "@/content/chapters";
 import { inShort } from "@/content/inShort";
 import { projectSummaries } from "@/content/projects";
 import { trailers } from "@/content/trailers";
+import { site } from "@/content/site";
 import { CaseTrailer } from "./CaseTrailer";
 
 /** The case hero: the project's trailer when it has one (see
@@ -84,6 +85,14 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
 
   return (
     <article>
+      {/* Printed copies say where they came from and how to reach Aseer. */}
+      <p className="hidden border-b border-[#999] pb-2 font-[family-name:var(--font-mono)] text-[9pt] text-[#444] print:flex print:justify-between">
+        <span>
+          {site.name} · aseer.design{trackHref}/{caseStudy.slug}
+        </span>
+        <span>{site.email}</span>
+      </p>
+
       {/* 1. Hero */}
       <header data-tone="dark" className="overflow-hidden bg-[var(--color-bg)] text-[var(--color-text)]">
         <Container className="pt-10 md:pt-14">
@@ -190,7 +199,7 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
 
       {/* 4. The next case */}
       {caseStudy.nextCaseStudy && (
-        <section data-tone="dark" aria-labelledby="next-case" className="bg-[var(--color-bg)] text-[var(--color-text)]">
+        <section data-tone="dark" aria-labelledby="next-case" className="bg-[var(--color-bg)] text-[var(--color-text)] print:hidden">
           <Container className="py-16 md:py-24">
             <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
               <div className="lg:col-span-5">

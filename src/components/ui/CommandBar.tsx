@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import { setMotionPreference, useAmbientMotion } from "@/lib/motion-preference";
+import { setVision, useVision, visions, type Vision } from "@/lib/vision-preference";
+import { printWhenReady } from "@/components/ui/PrintPrep";
 import { cn } from "@/lib/utils";
 
 export interface CommandLink {
@@ -19,7 +21,13 @@ interface CommandBarProps {
   academicCvUrl: string;
 }
 
-type Action = { kind: "go"; href: string } | { kind: "file"; href: string } | { kind: "copy" } | { kind: "motion" };
+type Action =
+  | { kind: "go"; href: string }
+  | { kind: "file"; href: string }
+  | { kind: "copy" }
+  | { kind: "print" }
+  | { kind: "motion" }
+  | { kind: "vision"; vision: Vision };
 
 interface Command {
   id: string;
@@ -27,7 +35,7 @@ interface Command {
   label: string;
   hint: string;
   keywords?: string;
-  icon: "go" | "copy" | "file" | "motion";
+  icon: "go" | "copy" | "file" | "print" | "motion" | "vision";
   action: Action;
 }
 
@@ -39,12 +47,17 @@ const ICONS: Record<Command["icon"], string> = {
   go: "M5 12h14M13 6l6 6-6 6",
   copy: "M9 9h10v10H9zM5 15V5h10",
   file: "M12 4v12M6 12l6 6 6-6M5 20h14",
+  print: "M7 9V4h10v5M7 17H5v-7h14v7h-2M7 14h10v6H7z",
   motion: "M5 4.5h4v15H5zM15 4.5h4v15h-4z",
+  vision: "M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16zM12 4v16",
 };
 
 /**
  * ⌘K (Ctrl K on Windows and Linux): jump to any case study or page, copy
- * the email address, open either CV, or pause the site's looping films.
+ * the email address, open either CV, print the page, pause the site's
+ * looping films, or
+ * see the site in grayscale or as people with color-vision deficiencies
+ * might.
  *
  * Built on the native <dialog>, so focus is held inside while it is open
  * and Escape closes it. The search field follows the ARIA combobox
@@ -59,6 +72,7 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
   const [active, setActive] = useState(0);
   const [status, setStatus] = useState<string | null>(null);
   const motion = useAmbientMotion();
+  const vision = useVision();
   const id = useId();
 
   const close = useCallback(() => dialogRef.current?.close(), []);
@@ -136,6 +150,15 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
         action: { kind: "file", href: academicCvUrl },
       },
       {
+        id: "print",
+        group: "Actions",
+        label: "Print this page",
+        hint: "Or save as PDF",
+        keywords: "pdf save paper",
+        icon: "print",
+        action: { kind: "print" },
+      },
+      {
         id: "motion",
         group: "Actions",
         label: motion ? "Pause the looping films" : "Play the looping films",
@@ -144,8 +167,19 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
         icon: "motion",
         action: { kind: "motion" },
       },
+      ...visions
+        .filter((option) => option.id !== vision && (option.id !== "normal" || vision !== "normal"))
+        .map((option) => ({
+          id: `vision-${option.id}`,
+          group: "Actions" as const,
+          label: option.command,
+          hint: "Color vision",
+          keywords: "accessibility color blind colour grayscale greyscale simulate",
+          icon: "vision" as const,
+          action: { kind: "vision" as const, vision: option.id },
+        })),
     ],
-    [cases, pages, email, resumeUrl, academicCvUrl, motion],
+    [cases, pages, email, resumeUrl, academicCvUrl, motion, vision],
   );
 
   function run(command: Command | undefined) {
@@ -165,6 +199,12 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
           window.setTimeout(close, 1100);
         })
         .catch(() => setStatus(`Couldn't copy. The address is ${email}`));
+    } else if (action.kind === "print") {
+      close();
+      void printWhenReady();
+    } else if (action.kind === "vision") {
+      setVision(action.vision);
+      close();
     } else {
       setMotionPreference(motion ? "off" : "on");
       setStatus(motion ? "Films paused across the site" : "Films playing again");

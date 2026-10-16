@@ -3405,7 +3405,7 @@ export const caseStudies: CaseStudy[] = [
       poster: "/loops/convay-design-system-card.webp",
       width: 960,
       height: 720,
-      alt: "A short film of the Convay design system in Figma: colour variables with light and dark values, then type, grid and elevation styles, stacked as layers.",
+      alt: "A short film of the Convay design system in Figma: color variables with light and dark values, then type, grid and elevation styles, stacked as layers.",
     },
     contentStatus: "complete",
     claims: {

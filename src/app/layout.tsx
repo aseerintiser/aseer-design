@@ -7,6 +7,8 @@ import { LightboxProvider } from "@/components/ui/Lightbox";
 import { footerPages, nav, site } from "@/content/site";
 import { caseStudies } from "@/content/projects";
 import { CommandBar } from "@/components/ui/CommandBar";
+import { VisionFilters, VisionNotice } from "@/components/ui/VisionView";
+import { PrintPrep } from "@/components/ui/PrintPrep";
 // Self-hosted fonts (no request to Google Fonts at build or runtime).
 // Newsreader loads with its optical-size axis ("opsz") in both styles,
 // since italics carry emphasis in headlines. IBM Plex Mono is not a
@@ -91,6 +93,7 @@ export default function RootLayout({
         {/* Functional grain, not decorative -- see globals.css .grain-overlay
             for the full rationale (prevents banding on flat color fields). */}
         <div className="grain-overlay" aria-hidden="true" />
+        <VisionFilters />
         <SkipLink />
         <NavBar />
         {/* Media Experience milestone: mounted once here so every
@@ -108,6 +111,8 @@ export default function RootLayout({
           resumeUrl={site.resumeUrl}
           academicCvUrl={site.academicCvUrl}
         />
+        <VisionNotice />
+        <PrintPrep />
         {umamiWebsiteId && (
           <Script
             src="https://cloud.umami.is/script.js"

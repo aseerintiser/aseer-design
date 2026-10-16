@@ -100,7 +100,7 @@ export function NavBar() {
     <header
       data-tone={onHome ? "dark" : undefined}
       className={cn(
-        "sticky top-0 z-40 border-b text-[var(--color-text)] transition-colors duration-[var(--duration-slow)] ease-[var(--ease-standard)]",
+        "sticky top-0 z-40 border-b text-[var(--color-text)] print:hidden transition-colors duration-[var(--duration-slow)] ease-[var(--ease-standard)]",
         scrolled || onHome ? "border-[var(--color-border)]" : "border-transparent",
         scrolled ? "bg-[var(--color-bg)]/85 backdrop-blur" : onHome ? "bg-[var(--color-bg)]" : "bg-transparent",
       )}
