@@ -612,10 +612,10 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
   {
     type: "list",
     items: [
-      "**Meeting entry dropped from five taps to three**, the clearest, most measurable change in the redesign.",
-      "**Mobile reached feature parity with web**: transcription, summaries, and recordings all shipped to the design.",
-      "Every task attempted during internal prototype walkthroughs was completed successfully.",
-      "**Five of six reviewers** described the redesign as \"more intuitive\" during design handoff.",
+      "[[**Meeting entry dropped from five taps to three**|taps]], the clearest, most measurable change in the redesign.",
+      "[[**Mobile reached feature parity with web**|parity]]: transcription, summaries, and recordings all shipped to the design.",
+      "[[Every task attempted during internal prototype walkthroughs was completed successfully|tasks]].",
+      "[[**Five of six reviewers** described the redesign as \"more intuitive\"|reviewers]] during design handoff.",
       "Mobile picked up **multilingual access**, including Bangla summaries, that the old app never had.",
       "The redesign meaningfully improves mobile readiness for on-the-go meetings in government and NGO settings.",
       "Visual and interaction consistency between web and mobile is stronger than at any earlier point in Convay's mobile history.",
@@ -1085,7 +1085,7 @@ const convayAiBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "We tested both variants (shown side by side above) and switched to dark mode for consistency and better focus.\n→ 82% of internal testers preferred the updated dark version.",
+    text: "We tested both variants (shown side by side above) and switched to dark mode for consistency and better focus.\n→ [[82% of internal testers preferred the updated dark version|dark-panel]].",
   },
   {
     type: "paragraph",
@@ -1093,7 +1093,7 @@ const convayAiBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "We designed a bulk rename flow, allowing users to rename once and apply it throughout.\n→ This reduced speaker editing time by an estimated 30-40%.",
+    text: "We designed a bulk rename flow, allowing users to rename once and apply it throughout.\n→ [[This reduced speaker editing time by an estimated 30-40%|rename-time]].",
   },
   {
     type: "paragraph",
@@ -1122,8 +1122,8 @@ const convayAiBody: CaseStudyBlock[] = [
   {
     type: "list",
     items: [
-      "**93% transcription accuracy** was achieved in quiet environments, even with varied speaker tones, based on internal testing rather than a large-scale field study.",
-      "Teams reported a **30-40% reduction** in time spent creating meeting notes, an internal estimate from the same testing.",
+      "[[**93% transcription accuracy** was achieved in quiet environments|accuracy]], even with varied speaker tones, based on internal testing rather than a large-scale field study.",
+      "[[Teams reported a **30-40% reduction** in time spent creating meeting notes|notes-time]], an internal estimate from the same testing.",
       "The AI summarization feature helped users quickly recall key takeaways, especially in confidential internal syncs where formal minutes were previously missing.",
       "Support for Bengali transcription gave Convay a unique edge over global competitors, especially for local government adoption.",
       "The streamlined export process (PDF) made it easy to share documentation post-meeting, helping teams align faster.",
@@ -1386,14 +1386,14 @@ const convayDesignSystemBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Outcome & Impact" },
   {
     type: "paragraph",
-    text: "The design system has been in active use since 2024. What follows reflects my experience working with it day to day and building on top of it as new features shipped, not a formal usage audit or a quantitative study.",
+    text: "[[The design system has been in active use since 2024|in-use]]. What follows reflects my experience working with it day to day and building on top of it as new features shipped, not a formal usage audit or a quantitative study.",
   },
   {
     type: "list",
     items: [
-      "Every feature built on Convay since has drawn from this system instead of starting its visual design from zero.",
+      "[[Every feature built on Convay since has drawn from this system|every-feature]] instead of starting its visual design from zero.",
       "Both light and dark themes are covered by the same components, not maintained as separate design efforts.",
-      "Handoff to developers changed shape: instead of redlining every screen individually, developers could reference named variables and components directly in Figma.",
+      "Handoff to developers changed shape: instead of redlining every screen individually, [[developers could reference named variables and components directly in Figma|handoff]].",
       "The system is still what Convay's core platform and new features are built on today, across web and mobile.",
     ],
   },
@@ -1500,7 +1500,7 @@ const fitvibeBody: CaseStudyBlock[] = [
   { type: "heading", level: 4, text: "User Research: Ideation Phase Survey" },
   {
     type: "paragraph",
-    text: "During the ideation phase of FitVibe, **a survey was conducted with 30 participants** to gather **feedback on their fitness habits and preferences**. The survey helped inform the **decision-making process regarding which features to include** in the app.",
+    text: "During the ideation phase of FitVibe, [[**a survey was conducted with 30 participants**|survey]] to gather **feedback on their fitness habits and preferences**. The survey helped inform the **decision-making process regarding which features to include** in the app.",
   },
   {
     type: "paragraph",
@@ -1676,7 +1676,7 @@ const fitvibeBody: CaseStudyBlock[] = [
       "Participants appreciated personalized workout and diet planners, progress tracking, and social media features.",
       "Areas for improvement identified, such as clearer labels and instructions for certain features and a more intuitive e-commerce shop interface.",
       "Some participants reported difficulties with entering and tracking progress, particularly in the nutrition tracking feature.",
-      "A System Usability Scale (SUS) score of **63.3** out of 100: usable, but just below the commonly cited average of 68, with clear room to improve.",
+      "[[A System Usability Scale (SUS) score of **63.3** out of 100|sus]]: usable, but just below the commonly cited average of 68, with clear room to improve.",
       "Overall, valuable feedback obtained to enhance user experience and make improvements to the app's design.",
     ],
   },
@@ -2269,7 +2269,7 @@ const lumiBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "To find out, I recruited 15 international students at Tampere University who had personally navigated these systems as newcomers, and ran single-session studies with each of them. Every session lasted about 35 minutes and moved through four real scenarios: student housing, banking, healthcare, and university services. Before and after each session, I asked participants to describe what they felt, not just what they thought.",
+    text: "To find out, [[I recruited 15 international students at Tampere University|participants]] who had personally navigated these systems as newcomers, and ran single-session studies with each of them. Every session lasted about 35 minutes and moved through four real scenarios: student housing, banking, healthcare, and university services. Before and after each session, I asked participants to describe what they felt, not just what they thought.",
   },
   {
     type: "paragraph",
@@ -2478,7 +2478,7 @@ const lumiBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Go deeper" },
   {
     type: "paragraph",
-    text: "This project is part of my Master's thesis, completed at Tampere University and graded 5/5. I'm preparing parts of this study for academic publication, so a few details stay under wraps for now, but I'm glad to share more directly.",
+    text: "This project is part of my Master's thesis, [[completed at Tampere University and graded 5/5|grade]]. I'm preparing parts of this study for academic publication, so a few details stay under wraps for now, but I'm glad to share more directly.",
   },
   {
     type: "paragraph",
@@ -3267,6 +3267,28 @@ export const caseStudies: CaseStudy[] = [
     scale: "product",
     isFlagship: true,
     contentStatus: "complete",
+    claims: {
+      taps: {
+        status: "own",
+        label: "Five taps to three",
+        source: "Counted on the old and new join flows. Not measured in a live release.",
+      },
+      tasks: {
+        status: "own",
+        label: "Every task completed",
+        source: "Informal walkthroughs with teammates, not a test with outside users.",
+      },
+      parity: {
+        status: "own",
+        label: "Feature parity with web",
+        source: "A design-stage comparison with the web app, not production data.",
+      },
+      reviewers: {
+        status: "own",
+        label: "Five of six reviewers",
+        source: "Internal reviews at handoff. Informal, not an external study.",
+      },
+    },
     // Milestone 3: the case study's own opening shot, reused as this
     // card's thumbnail instead of a generated placeholder -- see
     // ProjectSummary.thumbnail in content/types.ts for why only some
@@ -3314,6 +3336,28 @@ export const caseStudies: CaseStudy[] = [
     scale: "product",
     isFlagship: true,
     contentStatus: "complete",
+    claims: {
+      "dark-panel": {
+        status: "own",
+        label: "82% preferred the dark panel",
+        source: "Internal testers at Convay compared both panels. Not customers.",
+      },
+      "rename-time": {
+        status: "directional",
+        label: "Speaker editing time down an estimated 30-40%",
+        source: "An estimate, not a timed measurement.",
+      },
+      accuracy: {
+        status: "own",
+        label: "93% accuracy in quiet rooms",
+        source: "Convay's internal testing in quiet rooms, not a field study.",
+      },
+      "notes-time": {
+        status: "directional",
+        label: "Note-taking time down 30-40%",
+        source: "Reported by teams in the same internal testing. Not timed.",
+      },
+    },
     thumbnail: cardLoop("convay-ai-for-physical-meetings", "A short film of Convay AI for Physical Meetings: recording a meeting, the transcript, the AI summary, and the light and dark panels that were tested."),
     oneLineScope:
       "Convay AI for Physical Meetings started with a simple question: *Why should only online meetings be easy to document?* In high-stakes rooms, whether it's a government briefing or an internal sync, people still scramble to take notes or forget key points entirely. This feature was our answer: **record audio, let AI handle the rest.** Transcripts, summaries, multilingual support, all packaged into a simple, intuitive flow that turns real-world conversations into shareable outcomes.",
@@ -3372,6 +3416,23 @@ export const caseStudies: CaseStudy[] = [
       alt: "A short film of the Convay design system in Figma: colour variables with light and dark values, then type, grid and elevation styles, stacked as layers.",
     },
     contentStatus: "complete",
+    claims: {
+      "in-use": {
+        status: "own",
+        label: "In active use since 2024",
+        source: "From working with it daily. Not a formal usage audit.",
+      },
+      "every-feature": {
+        status: "own",
+        label: "Every new feature drew from it",
+        source: "What I saw in features I designed and reviewed. Not measured product-wide.",
+      },
+      handoff: {
+        status: "own",
+        label: "Developers used named variables",
+        source: "How handoff worked on my projects. Names were shaped with developers.",
+      },
+    },
     // Convay Design System rebuild: hero paragraph replaced verbatim
     // with CASE_STUDY_FINAL.md's "Hero -> Supporting paragraph." This
     // field also feeds the page's SEO meta description (see
@@ -3424,6 +3485,18 @@ export const caseStudies: CaseStudy[] = [
     track: "work",
     scale: "product",
     contentStatus: "complete",
+    claims: {
+      survey: {
+        status: "own",
+        label: "Survey with 30 participants",
+        source: "The project's ideation survey, summarised as the pain points below.",
+      },
+      sus: {
+        status: "own",
+        label: "SUS score of 63.3",
+        source: "Recalculated step by step below from the study's item totals (12 participants). The common SUS average is 68.",
+      },
+    },
     thumbnail: cardLoop("fitvibe", "A short film of FitVibe: the app's main screens, then the personas, affinity map, sketches and wireframes behind them."),
     oneLineScope:
       "FitVibe is a comprehensive fitness app designed for fitness enthusiasts and individuals pursuing a healthy lifestyle. It offers a range of features including workout and diet planners, progress tracking, social interaction, gamified challenges, and an e-commerce shop. With a focus on personalized guidance and community support, FitVibe caters to passionate fitness enthusiasts and those seeking to improve their well-being. I worked on it as a UI design intern at Kaz Software, alongside a senior designer, on a client product whose real name is under NDA.",
@@ -3536,6 +3609,18 @@ export const caseStudies: CaseStudy[] = [
     scale: "research",
     isFlagship: true,
     contentStatus: "complete",
+    claims: {
+      participants: {
+        status: "verified",
+        label: "15 participants",
+        source: "Documented in my M.Sc. thesis, Tampere University, 2026.",
+      },
+      grade: {
+        status: "verified",
+        label: "Thesis graded 5/5",
+        source: "Tampere University's grade for my M.Sc. thesis, June 2026.",
+      },
+    },
     // Final intro paragraph from Lumi_Case_Study_FINAL.md, replacing the
     // earlier one-line placeholder summary.
     oneLineScope:

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import { setMotionPreference, useAmbientMotion } from "@/lib/motion-preference";
+import { setEvidenceShown, useEvidenceShown } from "@/lib/evidence-preference";
 import { cn } from "@/lib/utils";
 
 export interface CommandLink {
@@ -19,7 +20,7 @@ interface CommandBarProps {
   academicCvUrl: string;
 }
 
-type Action = { kind: "go"; href: string } | { kind: "file"; href: string } | { kind: "copy" } | { kind: "motion" };
+type Action = { kind: "go"; href: string } | { kind: "file"; href: string } | { kind: "copy" } | { kind: "motion" } | { kind: "evidence" };
 
 interface Command {
   id: string;
@@ -27,7 +28,7 @@ interface Command {
   label: string;
   hint: string;
   keywords?: string;
-  icon: "go" | "copy" | "file" | "motion";
+  icon: "go" | "copy" | "file" | "motion" | "evidence";
   action: Action;
 }
 
@@ -40,11 +41,13 @@ const ICONS: Record<Command["icon"], string> = {
   copy: "M9 9h10v10H9zM5 15V5h10",
   file: "M12 4v12M6 12l6 6 6-6M5 20h14",
   motion: "M5 4.5h4v15H5zM15 4.5h4v15h-4z",
+  evidence: "M4 20h16M7 16l9-9 3 3-9 9H7z",
 };
 
 /**
  * ⌘K (Ctrl K on Windows and Linux): jump to any case study or page, copy
- * the email address, open either CV, or pause the site's looping films.
+ * the email address, open either CV, pause the site's looping films, or
+ * turn the evidence marks in the case studies on and off.
  *
  * Built on the native <dialog>, so focus is held inside while it is open
  * and Escape closes it. The search field follows the ARIA combobox
@@ -59,6 +62,7 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
   const [active, setActive] = useState(0);
   const [status, setStatus] = useState<string | null>(null);
   const motion = useAmbientMotion();
+  const evidence = useEvidenceShown();
   const id = useId();
 
   const close = useCallback(() => dialogRef.current?.close(), []);
@@ -144,8 +148,17 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
         icon: "motion",
         action: { kind: "motion" },
       },
+      {
+        id: "evidence",
+        group: "Actions",
+        label: evidence ? "Hide the evidence marks" : "Show the evidence marks",
+        hint: "Case studies",
+        keywords: "sources claims proof notes highlight",
+        icon: "evidence",
+        action: { kind: "evidence" },
+      },
     ],
-    [cases, pages, email, resumeUrl, academicCvUrl, motion],
+    [cases, pages, email, resumeUrl, academicCvUrl, motion, evidence],
   );
 
   function run(command: Command | undefined) {
@@ -165,6 +178,9 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
           window.setTimeout(close, 1100);
         })
         .catch(() => setStatus(`Couldn't copy. The address is ${email}`));
+    } else if (action.kind === "evidence") {
+      setEvidenceShown(!evidence);
+      setStatus(evidence ? "Evidence marks hidden in the case studies" : "Evidence marks shown in the case studies");
     } else {
       setMotionPreference(motion ? "off" : "on");
       setStatus(motion ? "Films paused across the site" : "Films playing again");

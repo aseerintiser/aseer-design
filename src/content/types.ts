@@ -2,6 +2,16 @@ import type { EvidenceStatus } from "@/components/ui/EvidenceStatusTag";
 
 export type Track = "work" | "research";
 
+/** One marked claim's evidence note (see CaseStudy.claims). Status uses
+ * the same three levels as the evidence chips. */
+export interface ClaimNote {
+  status: "verified" | "own" | "directional";
+  /** A short name for the claim, shown at the top of its note. */
+  label: string;
+  /** Where the claim comes from, plainly, including its limits. */
+  source: string;
+}
+
 /**
  * A single sourced metric, always paired with an evidence status. Content
  * modules should prefer this shape over a bare string whenever a number
@@ -408,6 +418,10 @@ export interface CaseStudy extends ProjectSummary {
    * template, which is a worse impression than one clear, deliberate
    * "not written yet" panel. */
   contentStatus?: "placeholder" | "complete";
+  /** The evidence layer: claims marked inside the body text as
+   * `[[claim text|id]]`, each tied to a note saying how sure it is and
+   * where it comes from. Numbered in reading order on the page. */
+  claims?: Record<string, ClaimNote>;
   /** Real, migrated case-study content (Milestone 2). See CaseStudyBlock
    * above for why this is block-based rather than the flat fields. Only
    * present when contentStatus is "complete". */

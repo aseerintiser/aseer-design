@@ -12,7 +12,39 @@ import { Fragment } from "react";
  * newlines already present in the migrated strings. Not a general
  * markdown parser -- migrated content doesn't need one.
  */
-export function renderInlineMarkdown(text: string) {
+/** Evidence-layer claims: `[[claim text|id]]`. */
+const CLAIM = /(\[\[[^\]|]+\|[a-z0-9-]+\]\])/g;
+
+/** The ids of the claims marked in a piece of text, in order. */
+export function claimIds(text: string) {
+  return [...text.matchAll(/\[\[[^\]|]+\|([a-z0-9-]+)\]\]/g)].map((match) => match[1]!);
+}
+
+/**
+ * Like renderInlineMarkdown, plus evidence-layer claims. `renderClaim`
+ * receives the claim's id and its already-formatted content. Without a
+ * renderer the markers are dropped and the claim reads as plain text.
+ */
+export function renderInlineWithClaims(
+  text: string,
+  renderClaim?: (id: string, content: React.ReactNode, key: string) => React.ReactNode,
+) {
+  if (!text.includes("[[")) return renderInlineMarkdown(text);
+  return text.split(CLAIM).map((part, index) => {
+    const match = part.match(/^\[\[([^\]|]+)\|([a-z0-9-]+)\]\]$/);
+    if (!match) return <Fragment key={index}>{renderInlineMarkdown(part)}</Fragment>;
+    const content = renderInlineMarkdown(match[1]!);
+    return renderClaim ? (
+      <Fragment key={index}>{renderClaim(match[2]!, content, String(index))}</Fragment>
+    ) : (
+      <Fragment key={index}>{content}</Fragment>
+    );
+  });
+}
+
+export function renderInlineMarkdown(source: string) {
+  // Claim markers outside an evidence-aware renderer read as plain text.
+  const text = source.includes("[[") ? source.replace(/\[\[([^\]|]+)\|[a-z0-9-]+\]\]/g, "$1") : source;
   const lines = text.split("\n");
 
   return lines.map((line, lineIndex) => {

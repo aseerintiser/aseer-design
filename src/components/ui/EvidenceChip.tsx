@@ -1,16 +1,17 @@
 "use client";
 
-import { useCallback, useEffect, useId, useRef } from "react";
+import { useId, useRef } from "react";
 import type { Evidence } from "@/content/home";
+import { usePopoverPlacement } from "@/lib/use-popover-placement";
 import { cn } from "@/lib/utils";
 
-const statusLabel: Record<Evidence["status"], string> = {
+export const statusLabel: Record<Evidence["status"], string> = {
   verified: "Verified",
   own: "My own account",
   directional: "Directional",
 };
 
-const statusMeaning: Record<Evidence["status"], string> = {
+export const statusMeaning: Record<Evidence["status"], string> = {
   verified: "Checked against a record outside me, one anyone can ask for.",
   own: "What I did and saw, or an internal record. Honest, not audited.",
   directional: "An estimate or a small sample. Read it as a signal.",
@@ -31,44 +32,7 @@ export function EvidenceChip({ evidence, className }: { evidence: Evidence; clas
   const cardId = `evidence-${id.replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const buttonRef = useRef<HTMLButtonElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
-
-  // Popovers open in the top layer; place the card under its chip (or
-  // above it near the bottom of the screen), and keep it there on scroll.
-  const place = useCallback(() => {
-    const button = buttonRef.current;
-    const card = cardRef.current;
-    if (!button || !card) return;
-    const rect = button.getBoundingClientRect();
-    const width = Math.min(320, window.innerWidth - 32);
-    const left = Math.min(Math.max(16, rect.left), window.innerWidth - width - 16);
-    const below = rect.bottom + 8;
-    const height = card.offsetHeight;
-    const top = below + height > window.innerHeight - 8 ? Math.max(8, rect.top - height - 8) : below;
-    card.style.width = `${width}px`;
-    card.style.left = `${left}px`;
-    card.style.top = `${top}px`;
-  }, []);
-
-  useEffect(() => {
-    const card = cardRef.current;
-    if (!card) return;
-    let open = false;
-    const onToggle = (event: Event) => {
-      open = (event as ToggleEvent).newState === "open";
-      if (open) place();
-    };
-    const onMove = () => {
-      if (open) place();
-    };
-    card.addEventListener("toggle", onToggle);
-    window.addEventListener("scroll", onMove, { passive: true });
-    window.addEventListener("resize", onMove);
-    return () => {
-      card.removeEventListener("toggle", onToggle);
-      window.removeEventListener("scroll", onMove);
-      window.removeEventListener("resize", onMove);
-    };
-  }, [place]);
+  usePopoverPlacement(buttonRef, cardRef);
 
   return (
     <>
@@ -88,35 +52,49 @@ export function EvidenceChip({ evidence, className }: { evidence: Evidence; clas
         <span>{evidence.text}</span>
         <span className="sr-only"> (show the source)</span>
       </button>
-      <div
-        ref={cardRef}
-        id={cardId}
-        popover="auto"
-        className="evidence-card fixed m-0 rounded-[var(--radius-md)] border border-[#2c2b27] bg-[#151513] p-4 text-left text-[#f2f0ea] shadow-[0_24px_48px_-20px_rgb(0_0_0/0.7)]"
-      >
-        <p className="flex items-center gap-2 font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.12em] uppercase">
-          <span className="text-[#f2f0ea]">
-            <EvidenceGlyph status={evidence.status} />
-          </span>
-          {statusLabel[evidence.status]}
-        </p>
-        <p className="mt-2 text-sm leading-relaxed text-[#c9c5ba]">{statusMeaning[evidence.status]}</p>
-        {evidence.source && (
-          <p className="mt-3 border-t border-[#2c2b27] pt-3 text-sm leading-relaxed">
-            <span className="block font-[family-name:var(--font-mono)] text-[0.625rem] tracking-[0.12em] text-[#9c998f] uppercase">
-              Source
-            </span>
-            {evidence.source}
-          </p>
-        )}
+      <div ref={cardRef} id={cardId} popover="auto" className="evidence-card">
+        <EvidenceCardBody status={evidence.status} source={evidence.source} />
       </div>
+    </>
+  );
+}
+
+/** What goes inside a source card: the status, what it means, and where
+ * the claim comes from. Spans only, so it can sit inside a paragraph. */
+export function EvidenceCardBody({
+  status,
+  source,
+  label,
+}: {
+  status: Evidence["status"];
+  source?: string;
+  label?: string;
+}) {
+  return (
+    <>
+      <span className="flex items-center gap-2 font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.12em] uppercase">
+        <span className="text-[#f2f0ea]">
+          <EvidenceGlyph status={status} />
+        </span>
+        {statusLabel[status]}
+      </span>
+      {label && <span className="mt-2 block font-medium">{label}</span>}
+      <span className="mt-2 block text-sm leading-relaxed text-[#c9c5ba]">{statusMeaning[status]}</span>
+      {source && (
+        <span className="mt-3 block border-t border-[#2c2b27] pt-3 text-sm leading-relaxed">
+          <span className="block font-[family-name:var(--font-mono)] text-[0.625rem] tracking-[0.12em] text-[#9c998f] uppercase">
+            Source
+          </span>
+          {source}
+        </span>
+      )}
     </>
   );
 }
 
 export function EvidenceGlyph({ status }: { status: Evidence["status"] }) {
   return (
-    <svg viewBox="0 0 12 12" className="h-3 w-3 shrink-0 text-current" aria-hidden="true">
+    <svg viewBox="0 0 12 12" className="inline-block h-3 w-3 shrink-0 text-current" aria-hidden="true">
       {status === "verified" && <circle cx="6" cy="6" r="5" fill="currentColor" />}
       {status === "own" && (
         <>

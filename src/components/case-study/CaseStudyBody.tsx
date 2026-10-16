@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import type { CaseStudyBlock } from "@/content/types";
+import type { CaseStudyBlock, ClaimNote } from "@/content/types";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { PullQuote } from "@/components/ui/PullQuote";
@@ -24,7 +24,8 @@ import { ChapterNav, type Chapter } from "./ChapterNav";
 import { ParticipantsFigure } from "@/components/research/ParticipantsFigure";
 import { StudyDesignFigure } from "@/components/research/StudyDesignFigure";
 import { CopyText } from "@/components/ui/CopyText";
-import { renderInlineMarkdown } from "@/lib/inline-markdown";
+import { claimIds, renderInlineMarkdown, renderInlineWithClaims } from "@/lib/inline-markdown";
+import { EvidenceClaim, EvidenceMargin, EvidenceProvider } from "./EvidenceLayer";
 import { cn } from "@/lib/utils";
 
 /** Registry for the "interactive" block type's bespoke components (see
@@ -50,6 +51,22 @@ function FigureLabel({ n }: { n?: number }) {
       Figure {n}.
     </span>
   );
+}
+
+/** Evidence-layer claims inside paragraph and list text. */
+function renderClaim(id: string, content: React.ReactNode, key: string) {
+  return (
+    <EvidenceClaim key={key} id={id}>
+      {content}
+    </EvidenceClaim>
+  );
+}
+
+/** The claim ids a block carries, in reading order. */
+function blockClaims(block: CaseStudyBlock): string[] {
+  if (block.type === "paragraph") return claimIds(block.text);
+  if (block.type === "list") return block.items.flatMap(claimIds);
+  return [];
 }
 
 function renderBlock(
@@ -79,7 +96,7 @@ function renderBlock(
           muted={block.variant === "caption"}
           className={block.variant === "caption" ? "mt-3 text-center" : "mt-4"}
         >
-          {renderInlineMarkdown(block.text)}
+          {renderInlineWithClaims(block.text, renderClaim)}
         </Text>
       );
     case "list":
@@ -87,7 +104,7 @@ function renderBlock(
         <ul key={key} className="mt-4 list-disc space-y-2 pl-5">
           {block.items.map((item, index) => (
             <li key={index} className="text-[var(--color-text)]">
-              {renderInlineMarkdown(item)}
+              {renderInlineWithClaims(item, renderClaim)}
             </li>
           ))}
         </ul>
@@ -413,8 +430,11 @@ export function CaseStudyBody({
   heroSrcs = [],
   numberFigures = false,
   tint,
+  claims,
 }: {
   blocks: CaseStudyBlock[];
+  /** Evidence notes for the claims marked in the text (see EvidenceLayer). */
+  claims?: Record<string, ClaimNote>;
   /** The case's chapter color, for dark moments inside the body (the
    * prototype player sits on the same lit ground as the project films). */
   tint?: string;
@@ -453,6 +473,23 @@ export function CaseStudyBody({
     sections.forEach((section) => section.body.forEach(visit));
   }
 
+  // Evidence notes, numbered in reading order.
+  const numberedClaims: Record<string, ClaimNote & { n: number }> = {};
+  if (claims) {
+    let claimNumber = 0;
+    sections.forEach((section) =>
+      section.body.forEach((block) =>
+        blockClaims(block).forEach((id) => {
+          const note = claims[id];
+          if (note && !numberedClaims[id]) numberedClaims[id] = { ...note, n: ++claimNumber };
+        }),
+      ),
+    );
+  }
+
+  const sectionHasClaims = (body: CaseStudyBlock[]) =>
+    body.some((block) => blockClaims(block).some((id) => numberedClaims[id]));
+
   let n = 0;
   const chapters: Chapter[] = [];
   const numbered = sections.map((section) => {
@@ -470,7 +507,7 @@ export function CaseStudyBody({
       className="mx-auto w-full max-w-7xl px-4 pt-12 pb-24 sm:px-6 md:pt-16 lg:grid lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:gap-14 lg:px-8 lg:pt-20"
     >
       <ChapterNav chapters={chapters} containerId="case-body" />
-      <div className="min-w-0">
+      <EvidenceProvider notes={numberedClaims} className="min-w-0">
         {numbered.map((section, index) => (
           <section
             key={index}
@@ -488,22 +525,34 @@ export function CaseStudyBody({
                 </Heading>
               </header>
             )}
-            {section.body.map((block, blockIndex) => (
-              <div
-                key={blockIndex}
-                className={cn(
-                  WIDE_BLOCKS.has(block.type) ? "max-w-[var(--measure-wide)]" : "max-w-[var(--measure)]",
-                  // Each block sits in its own wrapper, so `first:` cannot
-                  // see a sub-heading that opens a chapter; trim it here.
-                  blockIndex === 0 && "[&>h3]:mt-4",
-                )}
-              >
-                {renderBlock(block, blockIndex, referenceMarks, figureNumbers)}
-              </div>
-            ))}
+            {section.body.map((block, blockIndex) => {
+              const ids = blockClaims(block).filter((id) => numberedClaims[id]);
+              return (
+                <div
+                  key={blockIndex}
+                  data-note-barrier={claims && WIDE_BLOCKS.has(block.type) ? "" : undefined}
+                  className={cn(
+                    WIDE_BLOCKS.has(block.type) ? "max-w-[var(--measure-wide)]" : "max-w-[var(--measure)]",
+                    // A paragraph with marked claims gets its notes in the
+                    // margin beside it on wide screens.
+                    ids.length > 0 &&
+                      "xl:grid xl:max-w-none xl:grid-cols-[minmax(0,var(--measure))_15rem] xl:items-start xl:gap-10",
+                    // Each block sits in its own wrapper, so `first:` cannot
+                    // see a sub-heading that opens a chapter; trim it here.
+                    blockIndex === 0 && "[&>h3]:mt-4",
+                  )}
+                >
+                  {renderBlock(block, blockIndex, referenceMarks, figureNumbers)}
+                  {ids.length > 0 && <EvidenceMargin ids={ids} />}
+                </div>
+              );
+            })}
+            {/* Margin notes may run past a chapter's last paragraph; this
+                marks where they have to stop (see EvidenceLayer). */}
+            {sectionHasClaims(section.body) && <div data-note-barrier="" aria-hidden="true" />}
           </section>
         ))}
-      </div>
+      </EvidenceProvider>
     </div>
   );
 }

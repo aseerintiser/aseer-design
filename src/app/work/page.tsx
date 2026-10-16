@@ -5,7 +5,7 @@ import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { ArrowIcon } from "@/components/ui/ArrowIcon";
 import { WorkIndex, type WorkItem } from "@/components/work/WorkIndex";
-import { caseStudies } from "@/content/projects";
+import { caseStudies, projectSummaries } from "@/content/projects";
 import { designShowcaseItems, zentype } from "@/content/design-showcase";
 import { yearsFrom } from "@/lib/dates";
 
@@ -31,7 +31,8 @@ export default function WorkIndexPage() {
   const items: WorkItem[] = caseStudies
     .filter((project) => project.track === "work")
     .map((project) => ({
-      project,
+      // Only the card's fields go to the client, not the whole case body.
+      project: projectSummaries.find((summary) => summary.slug === project.slug)!,
       kind: workContext[project.slug]?.kind ?? "product",
       context: workContext[project.slug]?.context ?? "",
       years: yearsFrom(project.meta.duration),
