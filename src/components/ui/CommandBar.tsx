@@ -33,7 +33,7 @@ type Action =
 
 interface Command {
   id: string;
-  group: "Case studies" | "Pages" | "Actions";
+  group: "Ask" | "Case studies" | "Pages" | "Actions";
   label: string;
   hint: string;
   keywords?: string;
@@ -44,6 +44,8 @@ interface Command {
 /** Other parts of the site (the navigation's search button) open the bar
  * by dispatching this event. */
 export const OPEN_COMMAND_BAR = "command-bar:open";
+
+const GROUPS = ["Ask", "Case studies", "Pages", "Actions"] as const;
 
 const ICONS: Record<Command["icon"], string> = {
   go: "M5 12h14M13 6l6 6-6 6",
@@ -219,23 +221,48 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return commands;
+    // Results run in the order the groups are shown, so the arrow keys
+    // move down the list as it reads.
+    const inOrder = (list: Command[]) =>
+      GROUPS.flatMap((group) => list.filter((command) => command.group === group));
+    if (!q) {
+      // Ask the portfolio leads the empty bar, so everyone who opens
+      // search sees that they can also ask.
+      return inOrder([
+        {
+          id: "ask-open",
+          group: "Ask",
+          label: "Ask the portfolio a question",
+          hint: "Answers in Aseer's own words",
+          icon: "ask",
+          action: { kind: "go", href: "/ask" },
+        },
+        ...commands,
+      ]);
+    }
     const words = q.split(/\s+/);
     const matches = commands.filter((command) => {
       const haystack = `${command.label} ${command.hint} ${command.group} ${command.keywords ?? ""}`.toLowerCase();
       return words.every((word) => haystack.includes(word));
     });
-    // Anything typed can also go to Ask the portfolio, which answers
-    // from the site's own text.
-    const askCommand: Command = {
-      id: "ask",
-      group: "Actions",
-      label: `Ask the portfolio: “${query.trim()}”`,
-      hint: "Answers from the site",
-      icon: "ask",
-      action: { kind: "ask", question: query.trim() },
-    };
-    return [...matches, askCommand];
+    // Anything typed can also go to Ask the portfolio. A question (or
+    // anything nothing else matches) puts it first; a plain search keeps
+    // it last, so "lumi" still opens the Lumi case on Enter.
+    const isQuestion =
+      q.endsWith("?") ||
+      /^(what|how|why|who|where|when|which|do|does|did|are|is|can|could|have|has|tell|was|were|will)\b/.test(q) ||
+      matches.length === 0;
+    return inOrder([
+      ...matches,
+      {
+        id: "ask",
+        group: isQuestion ? "Ask" : "Actions",
+        label: `Ask the portfolio: “${query.trim()}”`,
+        hint: "Answers from the site",
+        icon: "ask",
+        action: { kind: "ask", question: query.trim() },
+      },
+    ]);
   }, [commands, query]);
 
   const current = Math.min(active, Math.max(0, results.length - 1));
@@ -260,14 +287,14 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
     }
   }
 
-  const groups = (["Case studies", "Pages", "Actions"] as const)
+  const groups = GROUPS
     .map((group) => ({ group, items: results.map((item, index) => ({ item, index })).filter(({ item }) => item.group === group) }))
     .filter(({ items }) => items.length > 0);
 
   return (
     <dialog
       ref={dialogRef}
-      aria-label="Search the site"
+      aria-label="Search the site or ask a question"
       onClose={() => restoreRef.current?.focus?.()}
       onClick={(event) => {
         // A click on the backdrop (the dialog element itself) closes it.
@@ -289,8 +316,8 @@ export function CommandBar({ cases, pages, email, resumeUrl, academicCvUrl }: Co
             aria-controls={`${id}-list`}
             aria-activedescendant={results.length ? optionId(current) : undefined}
             aria-autocomplete="list"
-            aria-label="Search projects and pages, or type a command"
-            placeholder="Search projects and pages, or type a command"
+            aria-label="Search projects and pages, or ask a question"
+            placeholder="Search projects and pages, or ask a question"
             value={query}
             onChange={(event) => {
               setQuery(event.target.value);

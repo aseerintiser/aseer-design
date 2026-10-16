@@ -79,7 +79,8 @@ const commandPages = [
   { label: "Home", href: "/", hint: "Page" },
   ...nav.map((item) => ({ label: item.label, href: item.href, hint: "Page" })),
   { label: "CV", href: "/resume", hint: "Page" },
-  ...footerPages.map((item) => ({ label: item.label, href: item.href, hint: "Page" })),
+  // Ask the portfolio has its own row at the top of the bar.
+  ...footerPages.filter((item) => item.href !== "/ask").map((item) => ({ label: item.label, href: item.href, hint: "Page" })),
 ];
 
 export default function RootLayout({

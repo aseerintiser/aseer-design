@@ -337,6 +337,13 @@ export default function HomePage() {
                 Get in touch
               </Button>
             </div>
+            <p className="mt-6 max-w-[var(--measure)] text-sm text-[var(--color-text-muted)]">
+              You can also{" "}
+              <Link href="/ask" className="link-ink font-medium text-[var(--color-text)]">
+                ask the portfolio a question
+              </Link>
+              . It answers in my own words, quoted from this site.
+            </p>
           </div>
         </div>
       </Section>

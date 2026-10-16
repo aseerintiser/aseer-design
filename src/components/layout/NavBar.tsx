@@ -198,7 +198,7 @@ export function NavBar() {
               <button
                 type="button"
                 onClick={() => window.dispatchEvent(new Event(OPEN_COMMAND_BAR))}
-                aria-label="Search the site"
+                aria-label="Search or ask a question"
                 aria-keyshortcuts="Meta+K Control+K"
                 className="ml-1 flex items-center gap-2 rounded-[var(--radius-md)] border border-[var(--color-border)] py-1.5 pr-1.5 pl-2.5 text-[var(--color-text-muted)] transition-colors duration-[var(--duration-fast)] hover:border-[var(--color-border-strong)] hover:text-[var(--color-text)]"
               >
@@ -206,6 +206,9 @@ export function NavBar() {
                   <circle cx="11" cy="11" r="7" />
                   <path d="m20 20-3.5-3.5" />
                 </svg>
+                <span aria-hidden="true" className="hidden text-sm lg:inline">
+                  Search or ask
+                </span>
                 <kbd aria-hidden="true" className="inline-block w-[4.6em] rounded-[5px] bg-[var(--color-bg-subtle)] py-0.5 text-center font-[family-name:var(--font-mono)] text-[0.625rem] whitespace-nowrap">
                   {shortcut}
                 </kbd>
@@ -298,7 +301,7 @@ export function NavBar() {
               <circle cx="11" cy="11" r="7" />
               <path d="m20 20-3.5-3.5" />
             </svg>
-            Search the site
+            Search or ask a question
           </button>
           <Link
             href="#contact"
