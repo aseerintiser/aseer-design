@@ -16,7 +16,6 @@ import { inShort } from "@/content/inShort";
 import { projectSummaries } from "@/content/projects";
 import { trailers } from "@/content/trailers";
 import { CaseTrailer } from "./CaseTrailer";
-import { EvidenceToggle } from "./EvidenceLayer";
 
 /** The case hero: the project's trailer when it has one (see
  * content/trailers.ts), otherwise its still, full bleed. */
@@ -166,9 +165,6 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
               </div>
             ))}
           </dl>
-          {caseStudy.claims && (
-            <EvidenceToggle className="mt-10 border-t border-[var(--color-border)] pt-6" />
-          )}
         </Section>
       )}
 

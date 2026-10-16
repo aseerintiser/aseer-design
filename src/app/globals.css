@@ -131,17 +131,6 @@
 
   /* The trust-line mark: ink on paper, the signal on night. */
   --color-mark: #16140f;
-
-  /* Evidence-status tag colors (Design Brief non-negotiable: an
-     evidence-status tag attached to every metric, never using color as
-     the sole differentiator -- see EvidenceStatusTag.tsx for the paired
-     icon + text label). */
-  --color-status-verified-bg: #e6f4ea;
-  --color-status-verified-text: #1e5a34;
-  --color-status-internal-bg: #eef0fb;
-  --color-status-internal-text: #2c3477;
-  --color-status-directional-bg: #fbf1e2;
-  --color-status-directional-text: #7a4c0c;
 }
 
 /* Dark tone, applied as a section-level pacing device (Creative
@@ -164,13 +153,6 @@
   --color-accent-contrast: #14120a;
   --color-focus-ring: #ffd84a;
   --color-mark: #ffd84a;
-
-  --color-status-verified-bg: #143021;
-  --color-status-verified-text: #8fe0ac;
-  --color-status-internal-bg: #1d2150;
-  --color-status-internal-text: #b7c0ff;
-  --color-status-directional-bg: #352810;
-  --color-status-directional-text: #f0c887;
 }
 
 /*

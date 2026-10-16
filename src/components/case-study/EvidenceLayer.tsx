@@ -10,8 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import type { ClaimNote } from "@/content/types";
-import { EvidenceCardBody, EvidenceGlyph, statusLabel } from "@/components/ui/EvidenceChip";
-import { setEvidenceShown, useEvidenceShown } from "@/lib/evidence-preference";
+import { EvidenceCardBody } from "@/components/ui/EvidenceChip";
 import { usePopoverPlacement } from "@/lib/use-popover-placement";
 import { cn } from "@/lib/utils";
 
@@ -19,9 +18,8 @@ import { cn } from "@/lib/utils";
  * The evidence layer. Claims in a case study's text carry a highlighter
  * mark and a number. On wide screens each paragraph's notes sit in the
  * margin beside it, and choosing a claim lights up its note; on smaller
- * screens choosing a claim opens the same note as a card. Each note says
- * how sure the claim is (verified, my own account, directional) and
- * where it comes from. A switch turns the marks off for clean reading.
+ * screens choosing a claim opens the same note as a card. Each note
+ * names the claim and says where it comes from.
  *
  * Margin notes are sidenotes: each one lines up with its claim and may
  * run down past a short paragraph instead of pushing the next one away.
@@ -81,7 +79,6 @@ export function EvidenceProvider({
   const [active, setActive] = useState<string | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
-  const shown = useEvidenceShown();
   const hasNotes = Object.keys(notes).length > 0;
 
   useLayoutEffect(() => {
@@ -89,12 +86,11 @@ export function EvidenceProvider({
     if (!root || !hasNotes) return;
     const run = () => layoutNotes(root);
     run();
-    if (!shown) return;
     const observer = new ResizeObserver(run);
     observer.observe(root);
     document.fonts?.ready.then(run);
     return () => observer.disconnect();
-  }, [shown, hasNotes]);
+  }, [hasNotes]);
 
   return (
     <EvidenceContext.Provider value={{ notes, active, setActive, hovered, setHovered }}>
@@ -105,16 +101,15 @@ export function EvidenceProvider({
   );
 }
 
-/** A marked claim inside running text. Outside a case with notes, or
- * with the marks turned off, it is plain text. */
+/** A marked claim inside running text. Outside a case with notes it is
+ * plain text. */
 export function EvidenceClaim({ id, children }: { id: string; children: ReactNode }) {
   const context = useContext(EvidenceContext);
-  const shown = useEvidenceShown();
   const linkRef = useRef<HTMLAnchorElement>(null);
   const cardRef = useRef<HTMLSpanElement>(null);
   const place = usePopoverPlacement(linkRef, cardRef);
   const note = context?.notes[id];
-  if (!context || !note || !shown) return <>{children}</>;
+  if (!context || !note) return <>{children}</>;
 
   function onClick(event: MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
@@ -157,7 +152,7 @@ export function EvidenceClaim({ id, children }: { id: string; children: ReactNod
         }}
         className="evidence-card"
       >
-        <EvidenceCardBody status={note.status} source={note.source} label={`${note.n} · ${note.label}`} />
+        <EvidenceCardBody source={note.source} label={`${note.n} · ${note.label}`} />
       </span>
     </>
   );
@@ -168,8 +163,7 @@ export function EvidenceClaim({ id, children }: { id: string; children: ReactNod
  * claim's description stays available to screen readers. */
 export function EvidenceMargin({ ids }: { ids: string[] }) {
   const context = useContext(EvidenceContext);
-  const shown = useEvidenceShown();
-  if (!context || !shown) return null;
+  if (!context) return null;
   const notes = ids.map((id) => ({ id, note: context.notes[id] })).filter((entry) => entry.note);
   if (!notes.length) return null;
 
@@ -190,61 +184,16 @@ export function EvidenceMargin({ ids }: { ids: string[] }) {
                 : "border-[var(--color-border-strong)]",
             )}
           >
-            <p className="flex items-center gap-2 font-[family-name:var(--font-mono)] text-[0.625rem] tracking-[0.12em] text-[var(--color-text-muted)] uppercase">
-              <span className="text-[var(--color-text)]">{note!.n}</span>
-              <span className="text-[var(--color-text)]">
-                <EvidenceGlyph status={note!.status} />
+            <p className="flex items-baseline gap-2.5 font-medium text-[var(--color-text)]">
+              <span className="font-[family-name:var(--font-mono)] text-[0.6875rem] text-[var(--color-text-muted)]">
+                {note!.n}
               </span>
-              {statusLabel[note!.status]}
+              {note!.label}
             </p>
-            <p className="mt-1.5 font-medium text-[var(--color-text)]">{note!.label}</p>
             <p className="mt-1 text-[var(--color-text-muted)]">{note!.source}</p>
           </li>
         ))}
       </ol>
-    </div>
-  );
-}
-
-/** The switch for the whole layer, with the legend it needs. */
-export function EvidenceToggle({ className }: { className?: string }) {
-  const shown = useEvidenceShown();
-  return (
-    <div className={cn("flex flex-wrap items-center gap-x-6 gap-y-3", className)}>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={shown}
-        onClick={() => setEvidenceShown(!shown)}
-        className="inline-flex items-center gap-2.5 text-sm font-medium"
-      >
-        <span
-          aria-hidden="true"
-          className={cn(
-            "relative h-[18px] w-[30px] rounded-[var(--radius-full)] transition-colors duration-[var(--duration-fast)]",
-            shown ? "bg-[var(--color-text)]" : "bg-[var(--color-border-strong)]",
-          )}
-        >
-          <span
-            className={cn(
-              "absolute top-[2px] left-[2px] h-[14px] w-[14px] rounded-full bg-[var(--color-bg)] transition-transform duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
-              shown && "translate-x-[12px]",
-            )}
-          />
-        </span>
-        Evidence marks
-      </button>
-      <p className="flex flex-wrap items-center gap-x-4 gap-y-1 font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.04em] text-[var(--color-text-muted)]">
-        <span>Claims are marked by how sure they are:</span>
-        {(["verified", "own", "directional"] as const).map((status) => (
-          <span key={status} className="inline-flex items-center gap-1.5">
-            <span className="text-[var(--color-text)]">
-              <EvidenceGlyph status={status} />
-            </span>
-            {statusLabel[status]}
-          </span>
-        ))}
-      </p>
     </div>
   );
 }

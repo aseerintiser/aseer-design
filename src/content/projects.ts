@@ -3269,22 +3269,18 @@ export const caseStudies: CaseStudy[] = [
     contentStatus: "complete",
     claims: {
       taps: {
-        status: "own",
         label: "Five taps to three",
         source: "Counted on the old and new join flows. Not measured in a live release.",
       },
       tasks: {
-        status: "own",
         label: "Every task completed",
         source: "Informal walkthroughs with teammates, not a test with outside users.",
       },
       parity: {
-        status: "own",
         label: "Feature parity with web",
         source: "A design-stage comparison with the web app, not production data.",
       },
       reviewers: {
-        status: "own",
         label: "Five of six reviewers",
         source: "Internal reviews at handoff. Informal, not an external study.",
       },
@@ -3338,22 +3334,18 @@ export const caseStudies: CaseStudy[] = [
     contentStatus: "complete",
     claims: {
       "dark-panel": {
-        status: "own",
         label: "82% preferred the dark panel",
         source: "Internal testers at Convay compared both panels. Not customers.",
       },
       "rename-time": {
-        status: "directional",
         label: "Speaker editing time down an estimated 30-40%",
         source: "An estimate, not a timed measurement.",
       },
       accuracy: {
-        status: "own",
         label: "93% accuracy in quiet rooms",
         source: "Convay's internal testing in quiet rooms, not a field study.",
       },
       "notes-time": {
-        status: "directional",
         label: "Note-taking time down 30-40%",
         source: "Reported by teams in the same internal testing. Not timed.",
       },
@@ -3418,17 +3410,14 @@ export const caseStudies: CaseStudy[] = [
     contentStatus: "complete",
     claims: {
       "in-use": {
-        status: "own",
         label: "In active use since 2024",
         source: "From working with it daily. Not a formal usage audit.",
       },
       "every-feature": {
-        status: "own",
         label: "Every new feature drew from it",
         source: "What I saw in features I designed and reviewed. Not measured product-wide.",
       },
       handoff: {
-        status: "own",
         label: "Developers used named variables",
         source: "How handoff worked on my projects. Names were shaped with developers.",
       },
@@ -3487,12 +3476,10 @@ export const caseStudies: CaseStudy[] = [
     contentStatus: "complete",
     claims: {
       survey: {
-        status: "own",
         label: "Survey with 30 participants",
         source: "The project's ideation survey, summarised as the pain points below.",
       },
       sus: {
-        status: "own",
         label: "SUS score of 63.3",
         source: "Recalculated step by step below from the study's item totals (12 participants). The common SUS average is 68.",
       },
@@ -3611,12 +3598,10 @@ export const caseStudies: CaseStudy[] = [
     contentStatus: "complete",
     claims: {
       participants: {
-        status: "verified",
         label: "15 participants",
         source: "Documented in my M.Sc. thesis, Tampere University, 2026.",
       },
       grade: {
-        status: "verified",
         label: "Thesis graded 5/5",
         source: "Tampere University's grade for my M.Sc. thesis, June 2026.",
       },
