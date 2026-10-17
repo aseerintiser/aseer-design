@@ -33,7 +33,7 @@ export function LocalTime({ className }: { className?: string }) {
     );
   }
   return (
-    <time className={className} aria-label={`Local time in Tampere: ${time}`}>
+    <time className={className} aria-label={`Local time in Finland: ${time}`}>
       {time}
     </time>
   );

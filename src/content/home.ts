@@ -105,14 +105,15 @@ export const careerSteps = [
     id: "msc",
     years: "2024–26",
     title: "M.Sc. Human-Technology Interaction",
-    place: "Tampere University, with Distinction",
+    // The scholarship, as the scholarship letter words it ("100%").
+    place: "Tampere University, 100% scholarship, with Distinction",
     card: null,
   },
   {
     id: "now",
     years: "Now",
     title: "Open to new roles",
-    place: "Tampere, open to relocating",
+    place: "Based in Finland, open to relocating",
     card: "Open to new roles, wherever the work means understanding people and building for them.",
   },
 ] as const;

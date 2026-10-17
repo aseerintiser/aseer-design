@@ -112,7 +112,7 @@ export default function HomePage() {
                 <span>{site.title}</span>
                 <span aria-hidden="true" className="hidden sm:inline">·</span>
                 <span>
-                  Tampere <LocalTime />
+                  Finland <LocalTime />
                 </span>
               </p>
               <Heading level={1} size="display" className="mt-5">

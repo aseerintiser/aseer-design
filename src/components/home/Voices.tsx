@@ -4,17 +4,25 @@ import { useLightbox } from "@/components/ui/Lightbox";
 import { voices } from "@/content/home";
 import { testimonialImageUrl, testimonials } from "@/content/testimonials";
 
+interface Voice {
+  id: string;
+  quote: string;
+  name: string;
+  role: string;
+}
+
 /**
- * Three short quotes from LinkedIn recommendations. Each quote is an
- * exact sentence from the transcription on the Testimonials page, and
- * "View original" opens the screenshot of the recommendation itself.
+ * Short quotes from LinkedIn recommendations. Each quote is an exact
+ * sentence from the transcription on the Testimonials page, and "View
+ * original" opens the screenshot of the recommendation itself. The
+ * homepage shows three; About passes its own two.
  */
-export function Voices() {
+export function Voices({ items = voices, columns = 3 }: { items?: readonly Voice[]; columns?: 2 | 3 }) {
   const { open } = useLightbox();
 
   return (
-    <div className="grid gap-10 md:grid-cols-3 md:gap-8">
-      {voices.map((voice) => {
+    <div className={columns === 3 ? "grid gap-10 md:grid-cols-3 md:gap-8" : "grid gap-10 md:grid-cols-2 md:gap-10"}>
+      {items.map((voice) => {
         const source = testimonials.find((t) => t.id === voice.id);
         return (
           <figure key={voice.id} className="m-0 flex flex-col border-t border-[var(--color-border-strong)] pt-6">

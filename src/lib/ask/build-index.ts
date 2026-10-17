@@ -216,21 +216,56 @@ export function buildAskIndex(): Passage[] {
   // About.
   add({ text: `${about.heading} ${about.intro}`, page: "About", section: "Introduction", href: "/about", kind: "about", prior: 1.1 });
   add({ text: site.currentStatus, page: "About", section: "Now", href: "/about", kind: "status", prior: 1.1 });
-  for (const section of about.sections) {
-    const href = `/about#${slugify(section.heading)}`;
-    for (const paragraph of section.paragraphs) {
-      add({ text: paragraph, page: "About", section: section.heading, href, kind: "about" });
-    }
-    if ("quote" in section && section.quote) add({ text: section.quote, page: "About", section: section.heading, href, kind: "about" });
-    if ("tags" in section && section.tags) {
-      add({ text: `Interests: ${section.tags.join(", ")}`, page: "About", section: section.heading, href, kind: "about" });
-    }
+  const { story, howIWork, drives, exploring, offDuty, recognition } = about;
+  const aboutHref = (heading: string) => `/about#${slugify(heading)}`;
+  for (const paragraph of story.paragraphs) {
+    add({ text: paragraph, page: "About", section: story.heading, href: aboutHref(story.heading), kind: "about" });
+  }
+  for (const row of howIWork.rows) {
+    add({
+      text: `${row.label}: ${row.line} ${row.proof}`,
+      page: "About",
+      section: howIWork.heading,
+      href: aboutHref(howIWork.heading),
+      kind: "method",
+    });
+  }
+  for (const paragraph of drives.paragraphs) {
+    add({ text: paragraph, page: "About", section: drives.heading, href: aboutHref(drives.heading), kind: "about" });
+  }
+  add({
+    text: `${exploring.question} ${exploring.line}`,
+    page: "About",
+    section: exploring.heading,
+    href: aboutHref(exploring.heading),
+    kind: "about",
+  });
+  for (const paragraph of offDuty.paragraphs) {
+    add({ text: paragraph, page: "About", section: offDuty.heading, href: aboutHref(offDuty.heading), kind: "about" });
+  }
+  add({ text: offDuty.quote, page: "About", section: offDuty.heading, href: aboutHref(offDuty.heading), kind: "about" });
+  add({
+    text: `Interests: ${offDuty.tags.join(", ")}`,
+    page: "About",
+    section: offDuty.heading,
+    href: aboutHref(offDuty.heading),
+    kind: "about",
+  });
+  for (const item of [...recognition.lead, ...recognition.more]) {
+    const figure = item.figure === "4.67" ? `GPA ${item.figure} ${item.unit}` : [item.figure, item.unit].filter(Boolean).join(" ");
+    add({
+      text: `${figure}: ${item.title} (${item.meta})`,
+      page: "About",
+      section: recognition.heading,
+      href: aboutHref(recognition.heading),
+      kind: "education",
+    });
   }
   add({
     text: `Certificates: ${certificationCollections.map((collection) => collection.title).join(", ")}`,
     page: "About",
-    section: "Credentials",
-    href: "/about",
+    section: recognition.heading,
+    href: "/certifications",
     kind: "education",
   });
 
