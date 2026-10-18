@@ -245,7 +245,7 @@ export function buildAskIndex(): Passage[] {
   }
   add({ text: offDuty.quote, page: "About", section: offDuty.heading, href: aboutHref(offDuty.heading), kind: "about" });
   add({
-    text: `Interests: ${offDuty.tags.join(", ")}`,
+    text: `Interests: filmmaking. ${offDuty.alsoInto}`,
     page: "About",
     section: offDuty.heading,
     href: aboutHref(offDuty.heading),
