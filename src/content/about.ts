@@ -138,8 +138,11 @@ export const about = {
     paragraphs: [
       "Outside of work, I'm usually behind a camera. Filmmaking is where I slow down and notice things I'd otherwise miss: light, timing, the small decisions that make a moment feel real instead of staged. That habit of noticing carries over into design more than people expect. These days I share my films as Bohrscope.",
     ],
+    // The real camera photo with a warm golden grade, light film grain and
+    // a soft vignette so it sits with the teaser's tones (Aseer approved,
+    // October 18, 2026). Graded only; nothing added or removed.
     image: {
-      src: framerAsset("wU56WDpraknSWD3JVfLhEmFXQI.png"),
+      src: "/about/camera-golden.jpg",
       width: 613,
       height: 721,
       alt: "Aseer holding a camera",
