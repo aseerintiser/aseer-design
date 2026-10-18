@@ -229,13 +229,22 @@ export default function AboutPage() {
 
         <div className="mt-8 flex flex-wrap items-center justify-between gap-6">
           {/* The one action in this section, so it gets the primary
-              (highlighter) style; the other interests are a quiet line. */}
+              (highlighter) style. */}
           <Button href={offDuty.externalLink.href} target="_blank" rel="noreferrer" variant="primary" withArrow={false}>
             {offDuty.externalLink.text}
             <span aria-hidden="true"> ↗</span>
             <span className="sr-only"> (opens in a new tab)</span>
           </Button>
-          <p className="text-sm text-[var(--color-text-muted)]">{offDuty.alsoInto}</p>
+          <ul className="flex flex-wrap gap-2" aria-label="Interests">
+            {offDuty.tags.map((tag) => (
+              <li
+                key={tag}
+                className="rounded-[var(--radius-full)] border border-[var(--color-border-strong)] px-3 py-1 font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.08em] text-[var(--color-text-muted)] uppercase"
+              >
+                {tag}
+              </li>
+            ))}
+          </ul>
         </div>
       </Section>
 

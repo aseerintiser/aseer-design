@@ -161,9 +161,7 @@ export const about = {
       text: "Watch my films on Bohrscope",
       href: "https://aseer-films.vercel.app",
     },
-    // One quiet line instead of interest chips (Aseer, October 18, 2026).
-    tags: ["Photography", "Travel", "Cricket", "Gaming", "Music"],
-    alsoInto: "Also into photography, travel, cricket, gaming and music.",
+    tags: ["Filmmaking", "Photography", "Travel", "Cricket", "Gaming", "Music"],
   },
 
   /**
