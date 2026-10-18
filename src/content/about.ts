@@ -154,7 +154,7 @@ export const about = {
     quote: "I've filmed a sunset on three different continents and once edited a short film on a moving train.",
     externalLink: {
       text: "Watch my stories",
-      href: "https://aseerniloy.wixsite.com/portfolio",
+      href: "https://aseer-films.vercel.app",
     },
     tags: ["Filmmaking", "Photography", "Travel", "Cricket", "Gaming", "Music"],
   },
