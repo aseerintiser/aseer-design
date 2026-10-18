@@ -228,9 +228,7 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-8 flex flex-wrap items-center justify-between gap-6">
-          {/* The one action in this section, so it gets the primary
-              (highlighter) style. */}
-          <Button href={offDuty.externalLink.href} target="_blank" rel="noreferrer" variant="primary" withArrow={false}>
+          <Button href={offDuty.externalLink.href} target="_blank" rel="noreferrer" variant="secondary" size="sm">
             {offDuty.externalLink.text}
             <span aria-hidden="true"> ↗</span>
             <span className="sr-only"> (opens in a new tab)</span>
