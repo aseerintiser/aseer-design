@@ -136,7 +136,7 @@ export const about = {
   offDuty: {
     heading: "When I'm Not Designing",
     paragraphs: [
-      "Outside of work, I'm usually behind a camera. Filmmaking is where I slow down and notice things I'd otherwise miss: light, timing, the small decisions that make a moment feel real instead of staged. That habit of noticing carries over into design more than people expect.",
+      "Outside of work, I'm usually behind a camera. Filmmaking is where I slow down and notice things I'd otherwise miss: light, timing, the small decisions that make a moment feel real instead of staged. That habit of noticing carries over into design more than people expect. These days I share my films as Bohrscope.",
     ],
     image: {
       src: framerAsset("wU56WDpraknSWD3JVfLhEmFXQI.png"),
@@ -153,7 +153,7 @@ export const about = {
     caption: "Stills from my short films and travel footage",
     quote: "I've filmed a sunset on three different continents and once edited a short film on a moving train.",
     externalLink: {
-      text: "Watch my stories",
+      text: "Watch my films on Bohrscope",
       href: "https://aseer-films.vercel.app",
     },
     tags: ["Filmmaking", "Photography", "Travel", "Cricket", "Gaming", "Music"],

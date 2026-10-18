@@ -241,6 +241,8 @@ export default function AboutPage() {
         <div className="mt-8 flex flex-wrap items-center justify-between gap-6">
           <Button href={offDuty.externalLink.href} target="_blank" rel="noreferrer" variant="secondary" size="sm">
             {offDuty.externalLink.text}
+            <span aria-hidden="true"> ↗</span>
+            <span className="sr-only"> (opens in a new tab)</span>
           </Button>
           <ul className="flex flex-wrap gap-2" aria-label="Interests">
             {offDuty.tags.map((tag) => (
