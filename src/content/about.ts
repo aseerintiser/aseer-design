@@ -144,13 +144,15 @@ export const about = {
       height: 721,
       alt: "Aseer holding a camera",
     },
-    wideImage: {
-      src: "/about/filmmaking-collage.png",
-      width: 1695,
-      height: 947,
-      alt: "A collage of stills from Aseer's short films and travel footage",
+    // Aseer's own 10-second Bohrscope teaser (October 2026), with his
+    // sound. Web copy: 1600x900, H.264 CRF 24, AAC 128k; poster is the
+    // sunset frame at 3.5 s.
+    teaser: {
+      src: "/about/bohrscope-teaser.mp4",
+      poster: "/about/bohrscope-teaser.webp",
+      label: "The Bohrscope teaser: shots from Aseer's films, a boat on a lake, a road, a sunset, a gull, a forest path and a silhouette by the sea, ending on the Bohrscope title.",
+      caption: "Bohrscope teaser",
     },
-    caption: "Stills from my short films and travel footage",
     quote: "I've filmed a sunset on three different continents and once edited a short film on a moving train.",
     externalLink: {
       text: "Watch my films on Bohrscope",

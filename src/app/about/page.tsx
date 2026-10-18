@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { ArrowIcon } from "@/components/ui/ArrowIcon";
 import { Voices } from "@/components/home/Voices";
 import { ColorSight } from "@/components/about/ColorSight";
-import { SlowPan } from "@/components/about/SlowPan";
+import { FilmTeaser } from "@/components/about/FilmTeaser";
 import { site } from "@/content/site";
 import { about } from "@/content/about";
 import { slugify } from "@/lib/utils";
@@ -211,31 +211,20 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-12 grid gap-4 sm:grid-cols-12">
-          <div className="overflow-hidden rounded-[var(--radius-lg)] sm:col-span-4">
+          {/* The teaser sets the row's height; the camera photo crops to it. */}
+          <div className="overflow-hidden rounded-[var(--radius-lg)] sm:relative sm:col-span-4">
             <Image
               src={offDuty.image.src}
               width={offDuty.image.width}
               height={offDuty.image.height}
               alt={offDuty.image.alt}
-              className="stage-photo-grade h-full w-full object-cover"
+              className="stage-photo-grade h-full w-full object-cover sm:absolute sm:inset-0"
               sizes="(min-width: 1024px) 30vw, (min-width: 640px) 33vw, 100vw"
             />
           </div>
-          <figure className="relative m-0 aspect-[1695/947] overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-bg-subtle)] sm:col-span-8 sm:aspect-auto">
-            <SlowPan>
-              <Image
-                src={offDuty.wideImage.src}
-                width={offDuty.wideImage.width}
-                height={offDuty.wideImage.height}
-                alt={offDuty.wideImage.alt}
-                className="stage-photo-grade h-full w-full object-cover"
-                sizes="(min-width: 1024px) 60vw, (min-width: 640px) 66vw, 100vw"
-              />
-            </SlowPan>
-            <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pt-10 pb-3 font-[family-name:var(--font-mono)] text-[0.625rem] tracking-[0.12em] text-white/85 uppercase">
-              {offDuty.caption}
-            </figcaption>
-          </figure>
+          <div className="sm:col-span-8">
+            <FilmTeaser {...offDuty.teaser} />
+          </div>
         </div>
 
         <div className="mt-8 flex flex-wrap items-center justify-between gap-6">

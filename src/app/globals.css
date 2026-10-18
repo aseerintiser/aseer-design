@@ -533,30 +533,7 @@ mark.ask-hit {
  * from (CaseStudyLayout), stills in place of films, and the sources for
  * the numbered claims listed at the end (CaseStudyBody).
  */
-/*
- * About: the film collage drifts very slowly, like a camera move over a
- * still (see SlowPan.tsx). Transform only, so it stays on the compositor.
- */
-@keyframes slow-pan {
-  from {
-    transform: scale(1.03) translate3d(-1.2%, 0.6%, 0);
-  }
-  to {
-    transform: scale(1.09) translate3d(1.2%, -0.8%, 0);
-  }
-}
-
-.slow-pan {
-  animation: slow-pan 26s var(--ease-standard) infinite alternate;
-  will-change: transform;
-}
-
 @media print {
-  .slow-pan {
-    animation: none;
-    transform: none;
-  }
-
   @page {
     margin: 16mm 15mm;
   }
