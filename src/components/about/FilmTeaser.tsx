@@ -8,8 +8,6 @@ interface FilmTeaserProps {
   poster: string;
   /** What the teaser shows, for screen readers. */
   label: string;
-  /** The short visible caption in the corner. */
-  caption: string;
 }
 
 function SpeakerIcon({ on }: { on: boolean }) {
@@ -36,7 +34,7 @@ function SpeakerIcon({ on }: { on: boolean }) {
  * restarts the teaser so it is heard from the beginning. It pauses off
  * screen, sound or not.
  */
-export function FilmTeaser({ src, poster, label, caption }: FilmTeaserProps) {
+export function FilmTeaser({ src, poster, label }: FilmTeaserProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const ambient = useAmbientMotion();
   const [inView, setInView] = useState(false);
@@ -88,8 +86,7 @@ export function FilmTeaser({ src, poster, label, caption }: FilmTeaserProps) {
         aria-label={label}
         className="block aspect-video h-auto w-full object-cover"
       />
-      <figcaption className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 bg-gradient-to-t from-black/75 to-transparent px-3 pt-10 pb-3 sm:px-4">
-        <span className="font-[family-name:var(--font-mono)] text-[0.625rem] tracking-[0.12em] text-white/85 uppercase">{caption}</span>
+      <div className="absolute inset-x-0 bottom-0 flex items-center justify-end gap-3 bg-gradient-to-t from-black/75 to-transparent px-3 pt-10 pb-3 sm:px-4">
         <button
           type="button"
           onClick={toggleSound}
@@ -98,7 +95,7 @@ export function FilmTeaser({ src, poster, label, caption }: FilmTeaserProps) {
           <SpeakerIcon on={sound} />
           {sound ? "Sound off" : "Sound on"}
         </button>
-      </figcaption>
+      </div>
     </figure>
   );
 }

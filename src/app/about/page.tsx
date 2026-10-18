@@ -228,7 +228,9 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-8 flex flex-wrap items-center justify-between gap-6">
-          <Button href={offDuty.externalLink.href} target="_blank" rel="noreferrer" variant="secondary" size="sm">
+          <Button href={offDuty.externalLink.href} target="_blank" rel="noreferrer" variant="secondary"
+            className="border-0 bg-[var(--color-text)] text-[var(--color-bg)] hover:bg-white hover:text-[var(--color-bg)]"
+          >
             {offDuty.externalLink.text}
             <span aria-hidden="true"> ↗</span>
             <span className="sr-only"> (opens in a new tab)</span>

@@ -154,7 +154,6 @@ export const about = {
       src: "/about/bohrscope-teaser.mp4",
       poster: "/about/bohrscope-teaser.webp",
       label: "The Bohrscope teaser: shots from Aseer's films, a boat on a lake, a road, a sunset, a gull, a forest path and a silhouette by the sea, ending on the Bohrscope title.",
-      caption: "Bohrscope teaser",
     },
     quote: "I've filmed a sunset on three different continents and once edited a short film on a moving train.",
     externalLink: {
