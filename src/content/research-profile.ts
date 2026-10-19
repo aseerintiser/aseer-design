@@ -20,7 +20,6 @@ export const researchProfile = {
   heading: "I study how people come to trust AI systems, and how design can help them calibrate that trust.",
   intro:
     "I'm Aseer, an HCI researcher with an M.Sc. in Human-Technology Interaction from Tampere University, completed with Distinction (GPA 4.67/5.0). My thesis studied how international students came to trust a conversational AI guide to Finnish public services, and what made that trust break.",
-  looking: "I'm looking for a doctoral or research position to continue this work.",
 
   links: [
     { label: "Academic CV", href: site.academicCvUrl, note: "PDF" },

@@ -80,9 +80,6 @@ export default function ResearchProfilePage() {
           <Text size="lead" className="mt-5 max-w-[var(--measure)] text-[var(--color-text-muted)]">
             {profile.intro}
           </Text>
-          <p className="mt-8 max-w-[var(--measure)] border-l-2 border-[var(--color-text)] pl-5 text-[var(--color-text)]">
-            {profile.looking}
-          </p>
           <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
             {profile.links.map((link) => (
               <li key={link.label}>
