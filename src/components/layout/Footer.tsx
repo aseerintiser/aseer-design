@@ -6,6 +6,15 @@ import { LocalTime } from "@/components/ui/LocalTime";
 import { TrustMark } from "@/components/ui/TrustMark";
 import { MotionToggle } from "@/components/ui/MotionToggle";
 import { VisionSelect } from "@/components/ui/VisionView";
+import { researchProfiles } from "@/content/publications";
+import { OnRoute } from "./OnRoute";
+
+const ACADEMIC = "/research-profile";
+const academicPages = [
+  { label: "Research overview", href: "/research" },
+  { label: "The Lumi study", href: "/research/lumi" },
+  { label: "About", href: "/about" },
+];
 
 /**
  * The contact block that closes every page (Phase 2). It is the target
@@ -14,6 +23,11 @@ import { VisionSelect } from "@/components/ui/VisionView";
  * place, his local time in Tampere, the CV, the secondary pages that
  * left the main navigation, the switch that pauses every looping film
  * on the site, and the color-vision view.
+ *
+ * On the research profile, the page professors land on from Aseer's
+ * emails, the same block speaks to them instead of to hiring teams: a
+ * plainer line, the academic CV with ORCID and Google Scholar, and links
+ * to the research rather than the design pages.
  */
 export function Footer() {
   return (
@@ -23,7 +37,19 @@ export function Footer() {
           Contact
         </p>
         <h2 className="mt-4 max-w-4xl font-[family-name:var(--font-display)] text-[length:var(--text-h1)] leading-[1.05] font-[420] tracking-[-0.02em]">
-          Let&apos;s build something worth <mark className="italic">trusting</mark>.
+          <OnRoute
+            path={ACADEMIC}
+            match={
+              <>
+                Happy to talk about the <mark className="italic">research</mark>.
+              </>
+            }
+            otherwise={
+              <>
+                Let&apos;s build something worth <mark className="italic">trusting</mark>.
+              </>
+            }
+          />
         </h2>
 
         <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
@@ -36,7 +62,11 @@ export function Footer() {
         <div className="mt-16 grid gap-10 border-t border-[var(--color-border)] pt-10 md:grid-cols-12">
           <div className="md:col-span-5">
             <p className="text-[var(--color-text)]">
-              {site.footer.openTo} {site.footer.openToLine2}
+              <OnRoute
+                path={ACADEMIC}
+                match="Based in Finland and open to relocating."
+                otherwise={`${site.footer.openTo} ${site.footer.openToLine2}`}
+              />
             </p>
             <p className="mt-3 font-[family-name:var(--font-mono)] text-xs tracking-[0.06em] text-[var(--color-text-muted)]">
               Tampere, Finland · <LocalTime /> local time
@@ -48,11 +78,33 @@ export function Footer() {
               CV and profiles
             </p>
             <ul className="mt-4 space-y-2 text-sm">
-              <li>
-                <a href={site.resumeUrl} target="_blank" rel="noreferrer" className="link-ink no-underline">
-                  CV<span className="sr-only"> (PDF, opens in a new tab)</span>
-                </a>
-              </li>
+              <OnRoute
+                path={ACADEMIC}
+                match={
+                  <>
+                    <li>
+                      <a href={site.academicCvUrl} target="_blank" rel="noreferrer" className="link-ink no-underline">
+                        Academic CV<span className="sr-only"> (PDF, opens in a new tab)</span>
+                      </a>
+                    </li>
+                    {researchProfiles.map((profile) => (
+                      <li key={profile.href}>
+                        <a href={profile.href} target="_blank" rel="noreferrer" className="link-ink no-underline">
+                          {profile.label}
+                          <span className="sr-only"> (opens in a new tab)</span>
+                        </a>
+                      </li>
+                    ))}
+                  </>
+                }
+                otherwise={
+                  <li>
+                    <a href={site.resumeUrl} target="_blank" rel="noreferrer" className="link-ink no-underline">
+                      CV<span className="sr-only"> (PDF, opens in a new tab)</span>
+                    </a>
+                  </li>
+                }
+              />
               {site.socials.map((social) => (
                 <li key={social.href}>
                   <a href={social.href} target="_blank" rel="noreferrer" className="link-ink no-underline">
@@ -69,13 +121,23 @@ export function Footer() {
               More
             </p>
             <ul className="mt-4 space-y-2 text-sm">
-              {footerPages.map((page) => (
-                <li key={page.href}>
-                  <Link href={page.href} className="link-ink no-underline">
-                    {page.label}
-                  </Link>
-                </li>
-              ))}
+              <OnRoute
+                path={ACADEMIC}
+                match={academicPages.map((page) => (
+                  <li key={page.href}>
+                    <Link href={page.href} className="link-ink no-underline">
+                      {page.label}
+                    </Link>
+                  </li>
+                ))}
+                otherwise={footerPages.map((page) => (
+                  <li key={page.href}>
+                    <Link href={page.href} className="link-ink no-underline">
+                      {page.label}
+                    </Link>
+                  </li>
+                ))}
+              />
             </ul>
           </nav>
         </div>

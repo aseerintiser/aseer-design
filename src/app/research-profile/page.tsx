@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Section } from "@/components/layout/Section";
@@ -11,15 +12,18 @@ import { researchProfile } from "@/content/research-profile";
 import { renderInlineMarkdown } from "@/lib/inline-markdown";
 import { site } from "@/content/site";
 
-/** Unlisted: shared directly in research and doctoral applications, and
+/** Unlisted: shared directly in research outreach and applications, and
  * kept out of search results. Nothing on the site links here. */
 export const metadata: Metadata = {
-  title: "Research profile",
-  description: "Research on trust in conversational AI: the question, the M.Sc. thesis, other studies and methods.",
+  title: { absolute: "Md Aseer Intiser · Research profile" },
+  description:
+    "Md Aseer Intiser, HCI researcher: trust and affect in human-AI interaction. Publications, the M.Sc. thesis, methods and education.",
   robots: { index: false, follow: false },
 };
 
 const label = "font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase";
+/** Place and years under an entry's title, in sentence case so long names stay readable. */
+const meta = "font-[family-name:var(--font-mono)] text-xs tracking-[0.02em] text-[var(--color-text-muted)]";
 
 function Part({ n, title, children }: { n: number; title: string; children: ReactNode }) {
   return (
@@ -30,25 +34,19 @@ function Part({ n, title, children }: { n: number; title: string; children: Reac
           {title}
         </Heading>
       </header>
-      <div className="lg:col-span-8">{children}</div>
+      <div className="min-w-0 lg:col-span-8">{children}</div>
     </article>
   );
 }
 
-function TextLink({ href, children, external = false }: { href: string; children: ReactNode; external?: boolean }) {
+function TextLink({ href, children }: { href: string; children: ReactNode }) {
+  const external = /^https?:/.test(href);
   const content = (
     <>
       <span className="link-ink">{children}</span>
-      <ArrowIcon className="h-3.5 w-3.5 transition-transform duration-[var(--duration-base)] group-hover:translate-x-0.5" />
+      <ArrowIcon className="h-3.5 w-3.5 shrink-0 transition-transform duration-[var(--duration-base)] group-hover:translate-x-0.5" />
     </>
   );
-  if (href.startsWith("mailto:")) {
-    return (
-      <a href={href} className="group inline-flex items-center gap-2 text-sm font-medium">
-        {content}
-      </a>
-    );
-  }
   return external ? (
     <a href={href} target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 text-sm font-medium">
       {content}
@@ -61,90 +59,164 @@ function TextLink({ href, children, external = false }: { href: string; children
   );
 }
 
+/** A small titled entry: mono meta line, title, one muted line. */
+function Entry({ meta, title, children }: { meta: string; title: string; children?: ReactNode }) {
+  return (
+    <li className="border-t border-[var(--color-border)] pt-4">
+      <p className="font-[family-name:var(--font-display)] text-lg leading-snug">{title}</p>
+      <p className={`${meta} mt-1.5`}>{meta}</p>
+      {children && <div className="mt-2 text-[0.9375rem] leading-relaxed text-[var(--color-text-muted)]">{children}</div>}
+    </li>
+  );
+}
+
 /**
  * The research profile (see content/research-profile.ts): the academic
- * entrance to the site. It leads with the research question and the
- * thesis, then the other studies and methods, and presents the industry
- * work as applied practice that supports the research.
+ * entrance to the site and the first page a professor sees. Name and
+ * affiliation first, then interests, publications, the thesis in depth,
+ * other research, methods, education, teaching, applied practice and
+ * references.
  */
 export default function ResearchProfilePage() {
   const profile = researchProfile;
+  const { thesis } = profile;
+
   return (
     <>
       <Section density="open">
-        <div className="max-w-3xl">
-          <p className={label}>{profile.eyebrow}</p>
-          <Heading level={1} className="mt-3">
-            {profile.heading}
-          </Heading>
-          <Text size="lead" className="mt-5 max-w-[var(--measure)] text-[var(--color-text-muted)]">
-            {profile.intro}
-          </Text>
-          <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
-            {profile.links.map((link) => (
-              <li key={link.label}>
-                <a href={link.href} target="_blank" rel="noreferrer" className="link-ink font-medium">
-                  {link.label}
-                  {link.note && <span className="text-[var(--color-text-muted)]"> · {link.note}</span>}
-                  <span className="sr-only"> (opens in a new tab)</span>
+        <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
+          <div className="lg:col-span-8">
+            <p className={label}>{profile.eyebrow}</p>
+            <Heading level={1} size="display" className="mt-3">
+              {profile.name}
+            </Heading>
+            <p className="mt-4 max-w-[var(--measure)] text-[1.0625rem] font-medium text-balance">{profile.affiliation}</p>
+            <Text size="lead" className="mt-6 max-w-[var(--measure)] text-[var(--color-text-muted)]">
+              {profile.summary}
+            </Text>
+            <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+              {profile.links.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} target="_blank" rel="noreferrer" className="link-ink font-medium">
+                    {link.label}
+                    {link.note && <span className="text-[var(--color-text-muted)]"> · {link.note}</span>}
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a href={`mailto:${site.email}`} className="link-ink font-medium">
+                  {site.email}
                 </a>
               </li>
-            ))}
-            <li>
-              <a href={`mailto:${site.email}`} className="link-ink font-medium">
-                {site.email}
-              </a>
-            </li>
-          </ul>
+            </ul>
+          </div>
+          <div className="order-first lg:order-none lg:col-span-4 lg:justify-self-end">
+            <div className="aspect-[4/5] w-28 overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-bg-subtle)] sm:w-40 lg:w-64">
+              <Image
+                src={profile.portrait.src}
+                width={profile.portrait.width}
+                height={profile.portrait.height}
+                alt={profile.portrait.alt}
+                className="stage-photo-grade h-full w-full object-cover"
+                sizes="(min-width: 1024px) 16rem, 10rem"
+                priority
+              />
+            </div>
+          </div>
         </div>
       </Section>
 
       <Section density="default" className="border-t border-[var(--color-border)]">
-        <div className="space-y-20 md:space-y-24">
-          <Part n={1} title="The question">
+        <div className="space-y-20 md:space-y-28">
+          <Part n={1} title="Research interests">
             <Text size="lead" className="max-w-[var(--measure)]">
-              {profile.question.text}
+              {profile.interests.lead}
             </Text>
-            <ul className="mt-6 max-w-[var(--measure)] space-y-2">
-              {profile.question.interests.map((interest) => (
-                <li key={interest} className="border-t border-[var(--color-border)] pt-2 text-[0.9375rem]">
-                  {interest}
+            <ul className="mt-8 grid gap-x-10 gap-y-6 sm:grid-cols-2">
+              {profile.interests.items.map((item) => (
+                <li key={item.title} className="border-t border-[var(--color-border-strong)] pt-4">
+                  <p className="font-medium">{item.title}</p>
+                  <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-[var(--color-text-muted)]">{item.line}</p>
                 </li>
               ))}
             </ul>
           </Part>
 
-          <Part n={2} title="Master's thesis">
+          <Part n={2} title="Publications">
+            <ol className="max-w-[var(--measure)]">
+              {profile.publications.map((publication) => (
+                <li
+                  key={publication.citation}
+                  className="border-t border-[var(--color-border)] py-6 first:border-t-0 first:pt-0"
+                >
+                  <p className={label}>{publication.label ?? publication.status}</p>
+                  <p className="mt-2 font-[family-name:var(--font-display)] text-lg leading-relaxed">
+                    {renderInlineMarkdown(publication.citation)}
+                  </p>
+                  {publication.detail && (
+                    <p className="mt-2 text-[0.9375rem] leading-relaxed text-[var(--color-text-muted)]">{publication.detail}</p>
+                  )}
+                  <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
+                    <CopyText text={publication.citation.replace(/\*/g, "")} label="Copy citation" />
+                    {publication.fullText && <TextLink href={publication.fullText.href}>{publication.fullText.label}</TextLink>}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Part>
+
+          <Part n={3} title="Master's thesis">
             <div className="max-w-[var(--measure)]">
-              <p className="font-[family-name:var(--font-display)] text-xl leading-relaxed">
-                {renderInlineMarkdown(profile.thesis.citation)}
-              </p>
-              <div className="mt-4">
-                <CopyText text={profile.thesis.citation.replace(/\*/g, "")} label="Copy citation" />
-              </div>
-              <div className="mt-8">
-                <MetaRow items={profile.thesis.details} className="grid-cols-3 sm:grid-cols-3" />
+              <p className="font-[family-name:var(--font-display)] text-2xl leading-snug text-balance">{thesis.title}</p>
+              <div className="mt-6">
+                <MetaRow items={thesis.details} className="sm:grid-cols-[minmax(0,2fr)_repeat(3,minmax(0,1fr))]" />
               </div>
               <p className={`${label} mt-10`}>Method</p>
-              <Text className="mt-2">{profile.thesis.method}</Text>
+              <Text className="mt-2">{thesis.method}</Text>
               <p className={`${label} mt-8`}>What it found</p>
-              <Text className="mt-2">{profile.thesis.findings}</Text>
-              <Text muted className="mt-4">
-                {profile.thesis.publication}
+              <div className="mt-2 space-y-3">
+                {thesis.findings.map((finding) => (
+                  <Text key={finding}>{finding}</Text>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-10">
+              <p className={label}>Seven design principles</p>
+              <div className="mt-4 grid gap-x-8 gap-y-8 sm:grid-cols-3">
+                {thesis.principles.map((group) => (
+                  <div key={group.group} className="border-t border-[var(--color-border-strong)] pt-4">
+                    <p className="text-sm font-medium">{group.group}</p>
+                    <ul className="mt-3 space-y-3">
+                      {group.items.map((item) => (
+                        <li key={item.label}>
+                          <p className="font-[family-name:var(--font-display)] text-[1.0625rem] italic">{item.label}</p>
+                          <p className="mt-0.5 text-sm leading-snug text-[var(--color-text-muted)]">{item.detail}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-10 max-w-[var(--measure)]">
+              <p className={label}>Limits</p>
+              <Text muted className="mt-2">
+                {thesis.limits}
               </Text>
               <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+                <TextLink href={thesis.fullText}>Read the full thesis on Trepo</TextLink>
                 <TextLink href="/research/lumi">Read the Lumi case study</TextLink>
-                <TextLink href={`mailto:${site.email}?subject=${encodeURIComponent("Request: M.Sc. thesis")}`}>
-                  Request the full thesis
-                </TextLink>
               </div>
             </div>
           </Part>
 
-          <Part n={3} title="Other studies">
+          <Part n={4} title="Other research">
             <ul className="max-w-[var(--measure)] space-y-8">
-              {profile.studies.map((study) => (
-                <li key={study.slug} className="border-t border-[var(--color-border)] pt-4">
+              {profile.otherResearch.map((study) => (
+                <li key={study.href} className="border-t border-[var(--color-border)] pt-4">
                   <p className={label}>{study.label}</p>
                   <p className="mt-1.5 font-[family-name:var(--font-display)] text-xl">{study.title}</p>
                   <Text className="mt-2 text-[var(--color-text-muted)]">{study.line}</Text>
@@ -156,21 +228,75 @@ export default function ResearchProfilePage() {
             </ul>
           </Part>
 
-          <Part n={4} title="Methods I've used">
-            <ul className="grid max-w-3xl gap-x-10 gap-y-2 sm:grid-cols-2">
-              {profile.methods.map((method) => (
-                <li key={method} className="border-t border-[var(--color-border)] pt-2 text-[0.9375rem]">
-                  {method}
+          <Part n={5} title="Methods">
+            <div className="grid gap-x-8 gap-y-8 sm:grid-cols-3">
+              {profile.methods.map((group) => (
+                <div key={group.group}>
+                  <p className={label}>{group.group}</p>
+                  <ul className="mt-3">
+                    {group.items.map((method) => (
+                      <li key={method} className="border-t border-[var(--color-border)] py-2 text-[0.9375rem] leading-snug">
+                        {method}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </Part>
+
+          <Part n={6} title="Education">
+            <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+              {profile.education.map((degree) => (
+                <li key={degree.degree} className="border-t border-[var(--color-border-strong)] pt-4">
+                  <p className="font-[family-name:var(--font-display)] text-xl leading-snug">{degree.degree}</p>
+                  <p className={`${meta} mt-1.5`}>
+                    {degree.place} · {degree.years}
+                  </p>
+                  <ul className="mt-3 space-y-1.5 text-[0.9375rem] leading-relaxed text-[var(--color-text-muted)]">
+                    {degree.notes.map((note) => (
+                      <li key={note}>{note}</li>
+                    ))}
+                  </ul>
                 </li>
+              ))}
+            </ul>
+            <p className={`${label} mt-12`}>Selected programmes</p>
+            <ul className="mt-4 grid gap-x-10 gap-y-6 sm:grid-cols-2">
+              {profile.programmes.map((programme) => (
+                <Entry key={programme.title} meta={programme.meta} title={programme.title}>
+                  {programme.line}
+                </Entry>
               ))}
             </ul>
           </Part>
 
-          <Part n={5} title="From practice to research">
+          <Part n={7} title="Teaching and mentoring">
+            <ul className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
+              {profile.teaching.map((role) => (
+                <Entry key={role.title} meta={role.meta} title={role.title}>
+                  {role.line}
+                </Entry>
+              ))}
+            </ul>
+          </Part>
+
+          <Part n={8} title="Applied practice">
             <Text className="max-w-[var(--measure)]">{profile.practice}</Text>
             <div className="mt-6">
               <TextLink href="/work">See the applied work</TextLink>
             </div>
+          </Part>
+
+          <Part n={9} title="References">
+            <ul className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
+              {profile.references.map((reference) => (
+                <Entry key={reference.name} meta={reference.role} title={reference.name} />
+              ))}
+            </ul>
+            <Text muted className="mt-6 max-w-[var(--measure)] text-sm">
+              Contact details are in the academic CV.
+            </Text>
           </Part>
         </div>
       </Section>

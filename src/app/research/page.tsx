@@ -70,8 +70,7 @@ export default function ResearchIndexPage() {
         ))}
       </Grid>
 
-      {/* Phase 4: publications, ready for Published, Accepted and Under
-          review as papers come; for now the thesis. */}
+      {/* Publications: papers under review and both theses. */}
       <section aria-labelledby="publications" className="mt-24 border-t border-[var(--color-border)] pt-12">
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
@@ -79,8 +78,7 @@ export default function ResearchIndexPage() {
               Publications
             </h2>
             <p className="mt-3 max-w-sm text-sm text-[var(--color-text-muted)]">
-              Parts of the Lumi study are being prepared for academic publication. New papers will
-              appear here.
+              Papers under review and both theses, with the full text where it is public.
             </p>
             <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
               {researchProfiles.map((profile) => (
@@ -96,7 +94,7 @@ export default function ResearchIndexPage() {
             {sortedPublications().map((publication) => (
               <li key={publication.citation} className="border-t border-[var(--color-border)] py-6 first:border-t-0 first:pt-0">
                 <p className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
-                  {publication.status}
+                  {publication.label ?? publication.status}
                 </p>
                 <p className="mt-2 font-[family-name:var(--font-display)] text-xl leading-relaxed">
                   {renderInlineMarkdown(publication.citation)}
@@ -106,6 +104,18 @@ export default function ResearchIndexPage() {
                 )}
                 <div className="mt-4 flex flex-wrap items-center gap-4">
                   <CopyText text={publication.citation.replace(/\*/g, "")} label="Copy citation" />
+                  {publication.fullText && (
+                    <a
+                      href={publication.fullText.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group inline-flex items-center gap-2 text-sm font-medium"
+                    >
+                      <span className="link-ink">{publication.fullText.label}</span>
+                      <ArrowIcon className="h-3.5 w-3.5 transition-transform duration-[var(--duration-base)] group-hover:translate-x-0.5" />
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  )}
                   {publication.href && (
                     <Link href={publication.href} className="group inline-flex items-center gap-2 text-sm font-medium">
                       <span className="link-ink">{publication.hrefLabel ?? "Read more"}</span>

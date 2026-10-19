@@ -325,7 +325,7 @@ export function buildAskIndex(): Passage[] {
       page: "Research",
       section: "Publications",
       href: "/research",
-      project: "thesis publication",
+      project: publication.status === "Thesis" ? "thesis publication" : "publication",
       kind: "education",
     });
   }

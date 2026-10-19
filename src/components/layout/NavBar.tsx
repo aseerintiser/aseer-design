@@ -32,6 +32,9 @@ export function NavBar() {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
   const onHome = pathname === "/";
+  // The research profile is the page professors land on, so its CV link
+  // opens the academic CV; everywhere else it opens the public CV.
+  const cvHref = pathname === "/research-profile" ? site.academicCvUrl : site.resumeUrl;
   // "⌘K" on Apple devices, "Ctrl K" elsewhere; the key cap keeps one
   // width either way, so the bar never shifts when this settles.
   const shortcut = useSyncExternalStore(
@@ -64,7 +67,9 @@ export function NavBar() {
   }, [open]);
 
   function isActiveHref(href: string) {
-    return href === "/" ? pathname === "/" : pathname.startsWith(href);
+    // Exact page or a child of it, so /research-profile doesn't light up
+    // Research.
+    return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
   }
 
   return (
@@ -121,7 +126,7 @@ export function NavBar() {
             })}
             <li>
               <a
-                href={site.resumeUrl}
+                href={cvHref}
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-[var(--color-text-muted)] transition-colors duration-[var(--duration-fast)] hover:text-[var(--color-text)]"
@@ -214,7 +219,7 @@ export function NavBar() {
             })}
             <li>
               <a
-                href={site.resumeUrl}
+                href={cvHref}
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-baseline justify-between rounded-[var(--radius-md)] px-3 py-3 font-[family-name:var(--font-display)] text-2xl hover:bg-[var(--color-bg-subtle)]"
