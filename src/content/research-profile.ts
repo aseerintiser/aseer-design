@@ -198,11 +198,6 @@ export const researchProfile = {
     },
   ],
 
-  references: [
-    { name: "Prof. Thomas Olsson", role: "M.Sc. thesis supervisor, Tampere University" },
-    { name: "Mohammad Anas Jawad", role: "B.Sc. thesis supervisor, Islamic University of Technology" },
-  ],
-
   practice:
     "Before the master's, I worked for eleven months as a junior UX designer at Synesis IT on Convay, an enterprise video conferencing platform used by government and enterprise clients. I ran usability tests and heuristic evaluations, designed AI features such as multilingual meeting transcription, and laid the foundation for its design system. As an intern at Kaz Software, I designed the interface of a hygiene-monitoring prototype for UNICEF-supported sanitation work in Rohingya refugee camps, built for low-connectivity conditions. With a software engineering degree behind both, I can build the systems I study, as I did with Lumi, and test them in realistic conditions.",
 };

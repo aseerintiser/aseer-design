@@ -74,8 +74,9 @@ function Entry({ meta, title, children }: { meta: string; title: string; childre
  * The research profile (see content/research-profile.ts): the academic
  * entrance to the site and the first page a professor sees. Name and
  * affiliation first, then interests, publications, the thesis in depth,
- * other research, methods, education, teaching, applied practice and
- * references.
+ * other research, methods, education, teaching and applied practice.
+ * References stay in the academic CV, not on the page (Aseer, October
+ * 20, 2026).
  */
 export default function ResearchProfilePage() {
   const profile = researchProfile;
@@ -286,17 +287,6 @@ export default function ResearchProfilePage() {
             <div className="mt-6">
               <TextLink href="/work">See the applied work</TextLink>
             </div>
-          </Part>
-
-          <Part n={9} title="References">
-            <ul className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
-              {profile.references.map((reference) => (
-                <Entry key={reference.name} meta={reference.role} title={reference.name} />
-              ))}
-            </ul>
-            <Text muted className="mt-6 max-w-[var(--measure)] text-sm">
-              Contact details are in the academic CV.
-            </Text>
           </Part>
         </div>
       </Section>
