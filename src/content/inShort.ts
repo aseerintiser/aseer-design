@@ -65,7 +65,7 @@ export const inShort: Record<string, InShort> = {
       "Trust formed slowly and could vanish in one moment. The study produced seven design principles for trustworthy conversational AI.",
     evidence: { text: "Thesis graded 5/5", source: "Tampere University's grade for the M.Sc. thesis this study belongs to (Human-Technology Interaction, June 2026)." },
   },
-  // The short version; Where version 1 fell short; The idea; Accessibility, measured.
+  // The short version; The idea; Designing for trust; Accessibility, measured.
   "travelmate-ai": {
     problem:
       "Travellers juggle maps, translators, review sites and group chats, and most travel apps reward planning at home rather than being out in the city.",

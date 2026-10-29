@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { useAmbientMotion } from "@/lib/motion-preference";
+import { Tuki } from "./Tuki";
 
 export interface Chapter {
   id: string;
@@ -13,7 +16,15 @@ interface ChapterNavProps {
   chapters: Chapter[];
   /** The element whose scroll progress the bar shows (the case body). */
   containerId: string;
+  /** A mascot that rides along with the reader (TravelMate's Tuki): it
+   * marks the current chapter on the rail like a "you are here" stop on
+   * a transit line, and rides the progress bar on small screens. */
+  companion?: "tuki";
 }
+
+/** Tuki hops whenever the chapter changes, flapping while he moves.
+ * With motion paused or reduced, he simply moves to the new stop. */
+const HOP = { duration: 0.56, times: [0, 0.42, 1], ease: "easeOut" as const };
 
 function useActiveChapter(chapters: Chapter[]) {
   const [active, setActive] = useState(chapters[0]?.id ?? "");
@@ -75,12 +86,36 @@ function useProgress(containerId: string) {
  * chapter list on tap. Either way the reader always knows where they
  * are and can jump anywhere.
  */
-export function ChapterNav({ chapters, containerId }: ChapterNavProps) {
+export function ChapterNav({ chapters, containerId, companion }: ChapterNavProps) {
   const active = useActiveChapter(chapters);
   const progress = useProgress(containerId);
   const [open, setOpen] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
   const current = chapters.find((chapter) => chapter.id === active) ?? chapters[0];
+  const motionOn = useAmbientMotion();
+  const [flapping, setFlapping] = useState(false);
+  const hop = motionOn
+    ? {
+        animate: { y: [0, -10, 0] },
+        transition: HOP,
+        onAnimationStart: () => setFlapping(true),
+        onAnimationComplete: () => setFlapping(false),
+      }
+    : {};
+  const railItems = useRef<Record<string, HTMLLIElement | null>>({});
+  const [stopY, setStopY] = useState<number | null>(null);
+
+  // Where the current chapter sits on the rail, for Tuki's stop.
+  useLayoutEffect(() => {
+    if (!companion) return;
+    function measure() {
+      const item = railItems.current[active];
+      if (item && item.offsetParent) setStopY(item.offsetTop + item.offsetHeight / 2);
+    }
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [active, companion]);
 
   useEffect(() => {
     if (!open) return;
@@ -100,12 +135,21 @@ export function ChapterNav({ chapters, containerId }: ChapterNavProps) {
 
   if (chapters.length < 2 || !current) return null;
 
-  const list = (onPick?: () => void) => (
+  const list = (onPick?: () => void, rail = false) => (
     <ol className="space-y-1">
       {chapters.map((chapter) => {
         const isActive = chapter.id === active;
         return (
-          <li key={chapter.id}>
+          <li
+            key={chapter.id}
+            ref={
+              rail
+                ? (element) => {
+                    railItems.current[chapter.id] = element;
+                  }
+                : undefined
+            }
+          >
             <a
               href={`#${chapter.id}`}
               onClick={onPick}
@@ -141,7 +185,21 @@ export function ChapterNav({ chapters, containerId }: ChapterNavProps) {
               className="absolute top-0 left-0 w-px origin-top bg-[var(--color-text)]"
               style={{ height: "100%", transform: `scaleY(${progress})` }}
             />
-            {list()}
+            {list(undefined, true)}
+            {companion && stopY !== null && (
+              <motion.div
+                aria-hidden="true"
+                className="pointer-events-none absolute top-0 left-0 z-10"
+                style={{ x: -14 }}
+                initial={false}
+                animate={{ y: stopY - 16 }}
+                transition={motionOn ? { duration: 0.56, ease: [0.33, 1, 0.68, 1] } : { duration: 0 }}
+              >
+                <motion.div key={active} {...hop}>
+                  <Tuki size={28} flapping={flapping} />
+                </motion.div>
+              </motion.div>
+            )}
           </div>
         </div>
       </nav>
@@ -154,7 +212,10 @@ export function ChapterNav({ chapters, containerId }: ChapterNavProps) {
             aria-expanded={open}
             aria-controls="chapter-list"
             onClick={() => setOpen((value) => !value)}
-            className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left sm:px-6"
+            className={cn(
+              "flex w-full items-center justify-between gap-3 px-4 pt-3 text-left sm:px-6",
+              companion ? "pb-5" : "pb-3",
+            )}
           >
             <span className="flex min-w-0 items-baseline gap-3">
               <span className="shrink-0 font-[family-name:var(--font-mono)] text-[0.6875rem] tabular-nums text-[var(--color-text-muted)]">
@@ -169,7 +230,19 @@ export function ChapterNav({ chapters, containerId }: ChapterNavProps) {
               </svg>
             </span>
           </button>
-          <span aria-hidden="true" className="block h-0.5 origin-left bg-[var(--color-text)]" style={{ transform: `scaleX(${progress})` }} />
+          <span aria-hidden="true" className="relative block">
+            <span className="block h-0.5 origin-left bg-[var(--color-text)]" style={{ transform: `scaleX(${progress})` }} />
+            {companion && (
+              <span
+                className="pointer-events-none absolute bottom-0.5"
+                style={{ left: `calc(${progress} * (100% - 20px))` }}
+              >
+                <motion.span key={active} className="block" {...hop}>
+                  <Tuki size={20} flapping={flapping} />
+                </motion.span>
+              </span>
+            )}
+          </span>
           {open && (
             <div id="chapter-list" className="border-t border-[var(--color-border)] px-4 py-3 sm:px-6">
               {list(() => setOpen(false))}

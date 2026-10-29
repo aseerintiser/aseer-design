@@ -185,6 +185,7 @@ export function CaseStudyLayout({ caseStudy }: { caseStudy: CaseStudy }) {
           heroSrcs={[trailer?.src, caseStudy.thumbnail?.src].filter((src): src is string => Boolean(src))}
           numberFigures={caseStudy.track === "research"}
           tint={chapter.tint}
+          companion={chapter.companion}
           claims={caseStudy.claims}
         />
       ) : (

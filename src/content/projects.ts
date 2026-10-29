@@ -1740,15 +1740,17 @@ const fitvibeBody: CaseStudyBlock[] = [
 // ---------------------------------------------------------------------
 // 5. TravelMate (v2 redesign, October 2026)
 // ---------------------------------------------------------------------
-// Full rewrite for the v2 redesign. Version 1 (Jan to May 2025) was a
-// chat-first travel assistant; this case study tells the redesign
-// story: what v1 got wrong, the new product idea (reward going, not
-// planning), the three visual directions, the trust patterns carried
-// over from the Lumi thesis research, the design system and the
-// measured contrast audit. Every screen is a real export from the
-// TravelMate Figma file (public/travelmate/). The four wide figures
-// (core loop, Tuki evolution, design system, contrast audit) are
-// presentation graphics built from that same material. Nothing here
+// Full rewrite for the v2 redesign, shown on its own: version 1 (Jan to
+// May 2025, a chat-first assistant) gets one sentence, and the rejected
+// visual directions one more, so the page stays a short read about the
+// current product. Chapters: the idea (reward going, not planning), the
+// Now screen, the trust patterns carried over from the Lumi thesis
+// research, the stamp reward, the rest of the trip, the design system
+// and the measured contrast audit. Every screen is a real export from
+// the TravelMate Figma file (public/travelmate/). The three wide
+// figures (core loop, design system, contrast audit) are presentation
+// graphics built from that same material. Tuki rides the chapter rail
+// and plays the stamp moment (chapters.ts companion, imageRow tuki). Nothing here
 // claims user testing: the concept has not been tested yet, and the
 // last chapter says so. Copy is recorded in Case Studies/travelmate-ai/
 // 10_V2_Case_Study.md.
@@ -1776,57 +1778,6 @@ const travelMateBody: CaseStudyBlock[] = [
     ],
   },
 
-  { type: "heading", level: 3, text: "Where version 1 fell short" },
-  {
-    type: "paragraph",
-    text: "Version 1 answered questions well. That was the problem: it only helped when you already knew what to ask. Looking at it again a year later, four things stood out.",
-  },
-  {
-    type: "imageRow",
-    enlargeable: true,
-    images: [
-      {
-        src: "/travelmate/v1-onboarding.png",
-        width: 804,
-        height: 1748,
-        alt: "Version 1 onboarding: the original blue cartoon Tuki holding a map, with the line 'Navigate smarter, with real-time help' and a Next button.",
-      },
-      {
-        src: "/travelmate/v1-home.png",
-        width: 804,
-        height: 1748,
-        alt: "Version 1 home: an empty chat with suggested prompts such as best local restaurants and nearest metro station, above a five-tab bar.",
-      },
-      {
-        src: "/travelmate/v1-chat.png",
-        width: 804,
-        height: 1748,
-        alt: "Version 1 chat: the question 'How do I get to the Louvre?' answered with a walking time and a small map.",
-      },
-    ],
-  },
-  {
-    type: "painPointList",
-    items: [
-      {
-        label: "Chat first",
-        note: "An empty input box asks the traveller to do the thinking. In a city you do not know, you rarely know what to ask.",
-      },
-      {
-        label: "No reason to open it",
-        note: "Unless you were lost, nothing pulled you back into the app.",
-      },
-      {
-        label: "Answers without reasons",
-        note: "Suggestions arrived with no explanation. After a year studying trust in conversational AI for my thesis, that gap was hard to ignore.",
-      },
-      {
-        label: "A generic look",
-        note: "Blue buttons, a cartoon mascot, white cards. It could have been any AI travel app.",
-      },
-    ],
-  },
-
   { type: "heading", level: 3, text: "The idea: reward going, not planning" },
   {
     type: "paragraph",
@@ -1844,44 +1795,7 @@ const travelMateBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "The game layer is travel-native on purpose. A stamp only comes from being somewhere real, checked within 40 metres of the place. There are no streaks to protect and nothing to grind, because a travel app that punishes a rest day has misunderstood travel.",
-  },
-
-  { type: "heading", level: 3, text: "Three directions, one survivor" },
-  {
-    type: "paragraph",
-    text: "I explored the visual direction quickly, and judged each option against the product idea, not against taste alone. Two did not survive.",
-  },
-  {
-    type: "variantComparison",
-    label: "Three directions for the same home screen",
-    variants: [
-      {
-        src: "/travelmate/direction-a.png",
-        width: 402,
-        height: 874,
-        alt: "Direction A: a soft home screen with tinted icon tiles, a blue suggestion card and a list of quests.",
-        caption: "A · Safe and soft. Clean, but generic. Nothing on the screen said travel.",
-      },
-      {
-        src: "/travelmate/direction-b.png",
-        width: 402,
-        height: 874,
-        alt: "Direction B: a game-style screen with a winding path of round 3D buttons, chunky type and bright colours.",
-        caption: "B · Game-style. Bold, but it borrowed a language-learning app's vocabulary: a lesson path, 3D buttons, rounded type.",
-      },
-      {
-        src: "/travelmate/direction-c.png",
-        width: 804,
-        height: 1748,
-        alt: "Direction C: a map-first screen with explored neighbourhoods, a Tuki pin, and a suggestion sheet with an ink stamp ticket.",
-        caption: "C · Travel ephemera. Map first, with stamps, tickets and transit lines. The direction I kept.",
-      },
-    ],
-  },
-  {
-    type: "paragraph",
-    text: "Direction B taught me the most. Copying the surface of a successful app is not the same as learning from it. The principle worth keeping was simple: make progress visible and rewarding. How it looks had to come from travel itself, from passport stamps, boarding passes, postcards and transit maps.",
+    text: "The game layer is travel-native on purpose. Early on I tried a game-style direction with a lesson path and chunky 3D buttons, borrowed from a language-learning app. It taught me the most, because copying the surface of a successful app is not the same as learning from it. So the rewards here come from travel itself. A stamp only comes from being somewhere real, checked within 40 metres of the place, and there are no streaks to protect, because a travel app that punishes a rest day has misunderstood travel.",
   },
 
   { type: "heading", level: 3, text: "Now: a map, one suggestion, and the reason" },
@@ -1919,7 +1833,7 @@ const travelMateBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Designing for trust" },
   {
     type: "paragraph",
-    text: "This is the chapter I care most about. My master's thesis studied how international students come to trust a conversational AI, and what breaks that trust. One finding carried straight into TravelMate: trust builds slowly and can vanish in a single moment. So Tuki explains itself every time, and handles its own mistakes in the open.",
+    text: "This is the chapter I care most about. My master's thesis studied how international students come to trust a conversational AI, and what breaks that trust. One finding carried straight into TravelMate: trust builds slowly and can vanish in a single moment. So Tuki explains itself every time, and handles its own mistakes in the open. Tuki has four moods, and the newest one, Sorry, exists for exactly that moment.",
   },
   {
     type: "screenPlayer",
@@ -1973,6 +1887,9 @@ const travelMateBody: CaseStudyBlock[] = [
   {
     type: "imageRow",
     enlargeable: true,
+    // Tuki flies in once, stamps the Santa Luzia stamp, and perches on
+    // top of that screen (see TukiStampMoment). Static with motion off.
+    tuki: { perchOn: 1, inkAt: { x: 0.443, y: 0.332 } },
     images: [
       {
         src: "/travelmate/place.png",
@@ -2079,25 +1996,6 @@ const travelMateBody: CaseStudyBlock[] = [
     text: "Help now is the one screen without Tuki. When something goes wrong, a cartoon guide is the last thing you want to see, so that screen is calm, fast, and works without signal.",
   },
 
-  { type: "heading", level: 3, text: "Tuki, redrawn twice" },
-  {
-    type: "image",
-    src: "/travelmate/tuki-evolution.png",
-    width: 3200,
-    height: 1520,
-    enlargeable: true,
-    alt: "Three versions of Tuki: the original AI-generated blue sticker sheet, a first vector copy in the same cartoon style, and the final navy ink bird in four states: Happy, Wave, Thinking and Sorry.",
-    caption: "Same bird, same name, same scarf. The version 1 sticker sheets were generated with an AI image tool; both redraws are vector components in the Figma file.",
-  },
-  {
-    type: "paragraph",
-    text: "Tuki came from version 1, where the mascot was a set of AI-generated sticker sheets. My first redesign redrew him as a clean vector, but he was still an off-palette cartoon. Next to stamps and tickets, he pulled the whole app back toward a kids' game.",
-  },
-  {
-    type: "paragraph",
-    text: "The final Tuki is an ink bird: navy body, paper face, stamp-red scarf. Every colour comes from the app's tokens, so he switches to Dark mode on his own. He has four states, and the newest one, Sorry, exists for the trust moment above.",
-  },
-
   { type: "heading", level: 3, text: "A system, not a set of screens" },
   {
     type: "image",
@@ -2109,7 +2007,7 @@ const travelMateBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "Every colour in the interface comes from 17 semantic tokens, each with a Light and a Dark value. Type uses three families: Bricolage Grotesque for headlines, Inter for the interface, and JetBrains Mono for ticket-style data like times, codes and percentages.",
+    text: "Every colour comes from 17 semantic tokens, each with a Light and a Dark value. JetBrains Mono carries ticket-style data like times and percentages, so data reads differently from conversation.",
   },
   {
     type: "variantComparison",
@@ -2157,9 +2055,7 @@ const travelMateBody: CaseStudyBlock[] = [
     type: "list",
     items: [
       "Touch targets are at least 44 by 44 points, with small icon buttons padded to reach it.",
-      "Colour is never the only signal. Explored areas also get a tick and a percentage, and verified hosts get an icon and the words Host verified.",
-      "With Reduce Motion on, the stamp fades in instead of dropping.",
-      "Everything the map shows is also available as a plain list, for screen readers.",
+      "Colour is never the only signal. Explored areas also get a tick and a percentage.",
     ],
   },
 
@@ -2170,7 +2066,7 @@ const travelMateBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "I used Claude as an AI pair designer while producing the Figma file. The product idea, the decisions and the trade-offs on this page are mine, including the two directions I threw away.",
+    text: "I used Claude as an AI pair designer while producing the Figma file. The product idea, the decisions and the trade-offs on this page are mine, including the directions I threw away.",
   },
   {
     type: "paragraph",

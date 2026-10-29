@@ -610,3 +610,47 @@ mark.ask-hit {
     word-break: break-all;
   }
 }
+
+/* Tuki, TravelMate's mascot (components/case-study/Tuki.tsx). The wings
+   beat only while Tuki is flying (data-flap), and the feet tuck up in
+   flight. Each wing turns around its own shoulder. */
+.tuki .tuki-wing-l {
+  transform-origin: 24px 66px;
+}
+.tuki .tuki-wing-r {
+  transform-origin: 96px 66px;
+}
+.tuki .tuki-feet {
+  transition: opacity 120ms linear;
+}
+.tuki[data-flap] .tuki-wing-l {
+  animation: tuki-flap-l 170ms ease-in-out infinite alternate;
+}
+.tuki[data-flap] .tuki-wing-r {
+  animation: tuki-flap-r 170ms ease-in-out infinite alternate;
+}
+.tuki[data-flap] .tuki-feet {
+  opacity: 0;
+}
+@keyframes tuki-flap-l {
+  from {
+    transform: rotate(4deg);
+  }
+  to {
+    transform: rotate(78deg);
+  }
+}
+@keyframes tuki-flap-r {
+  from {
+    transform: rotate(-4deg);
+  }
+  to {
+    transform: rotate(-78deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tuki[data-flap] .tuki-wing-l,
+  .tuki[data-flap] .tuki-wing-r {
+    animation: none;
+  }
+}

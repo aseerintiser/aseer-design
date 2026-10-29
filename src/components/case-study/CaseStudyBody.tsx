@@ -162,7 +162,7 @@ function renderBlock(
     case "imageRow":
       return (
         <div key={key} className="mt-6">
-          <ImageRow images={block.images} enlargeable={block.enlargeable} />
+          <ImageRow images={block.images} enlargeable={block.enlargeable} tuki={block.tuki} />
         </div>
       );
     case "link": {
@@ -422,8 +422,11 @@ export function CaseStudyBody({
   heroSrcs = [],
   numberFigures = false,
   tint,
+  companion,
   claims,
 }: {
+  /** The chapter rail's mascot, if the project has one (see ChapterNav). */
+  companion?: "tuki";
   blocks: CaseStudyBlock[];
   /** Evidence notes for the claims marked in the text (see EvidenceLayer). */
   claims?: Record<string, ClaimNote>;
@@ -498,7 +501,7 @@ export function CaseStudyBody({
       style={tint ? ({ "--chapter-tint": tint } as CSSProperties) : undefined}
       className="mx-auto w-full max-w-7xl px-4 pt-12 pb-24 sm:px-6 md:pt-16 lg:grid lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:gap-14 lg:px-8 lg:pt-20"
     >
-      <ChapterNav chapters={chapters} containerId="case-body" />
+      <ChapterNav chapters={chapters} containerId="case-body" companion={companion} />
       <EvidenceProvider notes={numberedClaims} className="min-w-0">
         {numbered.map((section, index) => (
           <section

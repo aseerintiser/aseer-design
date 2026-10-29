@@ -84,6 +84,12 @@ export interface ScreenImage {
   alt: string;
 }
 
+/** Where Tuki stamps and perches in an image row (see TukiStampMoment). */
+export interface TukiMoment {
+  perchOn: number;
+  inkAt: { x: number; y: number };
+}
+
 export type CaseStudyBlock =
   | {
       /** A close-up of one real screen with numbered pins, each tied to
@@ -214,6 +220,11 @@ export type CaseStudyBlock =
       type: "imageRow";
       images: { src: string; width: number; height: number; alt: string }[];
       enlargeable?: boolean;
+      /** TravelMate only: Tuki flies in once when the row comes into
+       * view, stamps the point `inkAt` (fractions of the screen at
+       * index `perchOn`) and then perches on top of that screen. See
+       * TukiStampMoment. */
+      tuki?: TukiMoment;
     }
   | { type: "link"; text: string; href: string }
   | {

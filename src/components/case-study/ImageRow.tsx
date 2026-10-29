@@ -8,10 +8,14 @@ import { ArrowIcon } from "@/components/ui/ArrowIcon";
 import { LoopVideo } from "@/components/ui/LoopVideo";
 import { isVideo } from "@/lib/media";
 import { cn } from "@/lib/utils";
+import type { TukiMoment } from "@/content/types";
+import { TukiStampMoment } from "./TukiStampMoment";
 
 interface ImageRowProps {
   images: { src: string; width: number; height: number; alt: string }[];
   enlargeable?: boolean;
+  /** TravelMate's stamp moment (see TukiStampMoment). */
+  tuki?: TukiMoment;
 }
 
 /** Phone screens never render narrower than this (plan: no screen under
@@ -36,9 +40,12 @@ function tileSize(width: number, height: number) {
  * and every still opens full size in the lightbox, which steps through
  * the strip. On a mouse, arrow buttons scroll it a screen at a time.
  */
-export function ImageRow({ images, enlargeable = true }: ImageRowProps) {
+export function ImageRow({ images, enlargeable = true, tuki }: ImageRowProps) {
   const { open } = useLightbox();
   const stripRef = useRef<HTMLDivElement>(null);
+  const rowRef = useRef<HTMLDivElement>(null);
+  const tukiTileRef = useRef<HTMLDivElement>(null);
+  const tukiImage = tuki ? images[tuki.perchOn] : undefined;
   const [canScroll, setCanScroll] = useState({ left: false, right: false });
   // The lightbox only steps through stills; loops play in place.
   const stills = images.filter((image) => !isVideo(image.src));
@@ -70,7 +77,7 @@ export function ImageRow({ images, enlargeable = true }: ImageRowProps) {
   const overflowing = canScroll.left || canScroll.right;
 
   return (
-    <div className="relative mt-8">
+    <div ref={rowRef} className={cn("relative", tuki ? "mt-16" : "mt-8")}>
       <div
         ref={stripRef}
         className="flex snap-x snap-mandatory items-start gap-4 overflow-x-auto pb-3 [scrollbar-width:thin] print:flex-wrap print:overflow-visible"
@@ -109,7 +116,12 @@ export function ImageRow({ images, enlargeable = true }: ImageRowProps) {
           );
 
           return (
-            <div key={`${image.src}-${index}`} className={tileClass} style={size}>
+            <div
+              key={`${image.src}-${index}`}
+              ref={tuki && index === tuki.perchOn ? tukiTileRef : undefined}
+              className={tileClass}
+              style={size}
+            >
               {enlargeable ? (
                 <button
                   type="button"
@@ -132,6 +144,16 @@ export function ImageRow({ images, enlargeable = true }: ImageRowProps) {
           );
         })}
       </div>
+
+      {tuki && tukiImage && (
+        <TukiStampMoment
+          moment={tuki}
+          rowRef={rowRef}
+          stripRef={stripRef}
+          tileRef={tukiTileRef}
+          imageRatio={tukiImage.height / tukiImage.width}
+        />
+      )}
 
       {overflowing && (
         <div className="mt-2 hidden items-center justify-end gap-2 md:flex print:hidden">

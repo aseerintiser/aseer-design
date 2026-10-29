@@ -16,6 +16,9 @@ export interface Chapter {
   tint: string;
   /** "photo" gets the shared film-like grade; "screen" is shown as is. */
   medium: "screen" | "photo";
+  /** A mascot that rides the chapter rail (see ChapterNav). Only
+   * TravelMate has one: Tuki, from the app itself. */
+  companion?: "tuki";
 }
 
 const convay: Chapter = { name: "Convay", tint: "#3d3191", medium: "screen" };
@@ -27,7 +30,7 @@ export const chapters: Record<string, Chapter> = {
   "convay-notifications": convay,
   lumi: { name: "Lumi", tint: "#0a8f99", medium: "screen" },
   "cultural-festival-platform": { name: "aRENEWberg", tint: "#2f9e62", medium: "screen" },
-  "travelmate-ai": { name: "TravelMate", tint: "#b53724", medium: "screen" },
+  "travelmate-ai": { name: "TravelMate", tint: "#b53724", medium: "screen", companion: "tuki" },
   fitvibe: { name: "FitVibe", tint: "#7f93f0", medium: "screen" },
   robocarnival: { name: "RoboCarnival", tint: "#c0702a", medium: "photo" },
   "game-difficulty-player-types": { name: "Game difficulty", tint: "#3346a8", medium: "screen" },
