@@ -1738,221 +1738,448 @@ const fitvibeBody: CaseStudyBlock[] = [
 ];
 
 // ---------------------------------------------------------------------
-// 5. TravelMate AI
+// 5. TravelMate (v2 redesign, October 2026)
 // ---------------------------------------------------------------------
-// TravelMate AI rebuild (see the "TravelMate AI" package: 01_Audit.md
-// through 09_Claude_Code_Prompt.md, Case Studies/travelmate-ai/). This
-// resolves the project's long-open keep/cut/reframe question
-// (Master_Portfolio_Knowledge_Base.md Section 3) as a full reframe, not
-// a cut: TravelMate is real, well-scoped interface work, but the old
-// copy borrowed the register of tested, shipped work ("in peer testing,
-// 80% completing key tasks", "demonstrating end-to-end UX design
-// skills") it couldn't back up. This version states plainly, in a new
-// opening section, that it's a solo, self-directed concept project, and
-// replaces the unsourced statistic and self-referential framing with an
-// honest, specific account (roughly fifteen informal walkthroughs,
-// no formal method) confirmed directly by Aseer rather than invented.
-//
-// Structural changes from the old version (02_Information_
-// Architecture.md): the nine-image, unlabeled hero grid that opened the
-// page is removed entirely rather than relocated -- five of its nine
-// images were pixel-identical duplicates of screens already shown,
-// captioned, in the "Key Features" section below (06_Assets_
-// Checklist.md), so removing it both fixes the duplication and gives
-// the page a new first section: Context and Scope, stated before any
-// imagery so every image that follows is read in the right register.
-// Every image below now appears exactly once, with real, descriptive
-// alt text (previously empty on all but three of twenty images).
+// Full rewrite for the v2 redesign. Version 1 (Jan to May 2025) was a
+// chat-first travel assistant; this case study tells the redesign
+// story: what v1 got wrong, the new product idea (reward going, not
+// planning), the three visual directions, the trust patterns carried
+// over from the Lumi thesis research, the design system and the
+// measured contrast audit. Every screen is a real export from the
+// TravelMate Figma file (public/travelmate/). The four wide figures
+// (core loop, Tuki evolution, design system, contrast audit) are
+// presentation graphics built from that same material. Nothing here
+// claims user testing: the concept has not been tested yet, and the
+// last chapter says so. Copy is recorded in Case Studies/travelmate-ai/
+// 10_V2_Case_Study.md.
 const travelMateBody: CaseStudyBlock[] = [
-  { type: "heading", level: 3, text: "Context & Scope" },
+  { type: "heading", level: 3, text: "The short version" },
   {
     type: "paragraph",
-    text: "TravelMate AI is a self-directed project. There was no client, no company brief, and no research participants beyond informal feedback from people I showed the prototype to. I built it over five months to explore a question I kept running into as a traveler myself: why does getting around a new city require five different apps, each solving one small piece of the same problem?",
+    text: "TravelMate began in 2025 as a chat-first travel assistant: ask a question, get a map. It worked, but it looked and behaved like every other AI travel concept. In October 2026 I rebuilt it from the product idea up.",
   },
   {
     type: "paragraph",
-    text: "Everything in this case study, the problem framing, the feature decisions, the interface, and the prototype, is my own work, reasoned through without a team or a client to weigh in. That makes it smaller in scope than Convay or my thesis research. It also means every decision on this page is mine to explain and stand behind directly.",
-  },
-  { type: "heading", level: 3, text: "Problem & Solution Overview" },
-  {
-    type: "paragraph",
-    text: "When traveling in a new city, most people juggle multiple apps: one for maps, another for translations, another for weather, and still another for recommendations. Switching between them is stressful, especially when you're standing in a crowded metro station or dealing with a language you don't understand.",
+    text: "The new version has one idea at its centre. Most travel apps reward you for planning at home. **TravelMate rewards you for going.** Tuki, a small travel guide, suggests something good nearby and explains why. You go, you check in, and you earn an ink stamp, and that part of the city fills in on your map.",
   },
   {
     type: "paragraph",
-    text: "TravelMate brings all of this into one **conversational assistant**. Whether typing or speaking, users can ask simple questions like *\"How do I get to the Louvre?\"* or *\"Find me the best local restaurants.\"* Behind the scenes, TravelMate connects these requests with tools like **real-time navigation**, a **transport hub**, a **personalized itinerary**, a **travel journal**, and **local weather updates**.",
+    text: "This is a self-directed concept, not a shipped product, and nobody has tested it yet. I say that up front, because the rest of this page is about decisions, not results.",
   },
+  {
+    type: "metricGrid",
+    items: [
+      { value: "17", label: "Screens, in journey order" },
+      { value: "40", label: "Linked prototype interactions" },
+      { value: "2", label: "Modes, Light and Dark, from one set of tokens" },
+      { value: "6", label: "Contrast failures found and fixed" },
+    ],
+  },
+
+  { type: "heading", level: 3, text: "Where version 1 fell short" },
   {
     type: "paragraph",
-    text: "The aim was to design an assistant that feels **natural, context-aware, and always ready**, so tourists don't need five apps when one intelligent companion can do it all.",
-  },
-  { type: "heading", level: 3, text: "The Idea, One Screen at a Time" },
-  {
-    type: "paragraph",
-    text: "Five features, each solving one piece of the app-juggling problem. Here's how each one works, and what I was trying to get right.",
-  },
-  {
-    type: "paragraph",
-    text: "**Splash & Onboarding**\nThe first screen welcomes users with TravelMate branding and a **\"Get Started\"** call-to-action. It sets a clean, inviting tone while keeping friction low.",
-  },
-  {
-    type: "image",
-    ...img("DZJYuPCcyd7AzT9GRHMe0nWQv8.png", 804, 1748),
-    alt: "TravelMate splash screen showing the app logo over an illustrated hillside scene, with a Get Started button.",
-  },
-  {
-    type: "paragraph",
-    text: "**Conversational Chat & Voice**\nUsers can ask questions through text or voice and get real-time responses with maps and suggestions attached. I designed a text-chat view, a map view for directions, and a dedicated voice mode with a waveform indicator and example prompts, so switching between typing and speaking feels like one continuous conversation rather than two separate modes bolted together.",
+    text: "Version 1 answered questions well. That was the problem: it only helped when you already knew what to ask. Looking at it again a year later, four things stood out.",
   },
   {
     type: "imageRow",
+    enlargeable: true,
     images: [
-      img(
-        "8XZQgRm6eKPbeOmSl6md6bxac.png",
-        804,
-        1748,
-        "TravelMate chat screen showing a text conversation with suggested prompts like nearby restaurants and metro stations.",
-      ),
-      img(
-        "QhudtyTffIupolQVFV8goLYXmk.png",
-        804,
-        1748,
-        "TravelMate chat screen showing a map view with walking directions to a nearby museum.",
-      ),
-      img(
-        "oQBTps7BwjTNtyBIf0SEPI1vTFA.png",
-        804,
-        1748,
-        "TravelMate voice screen showing an active waveform while listening for a spoken question.",
-      ),
-      img(
-        "9aTNoTA1X3EMFN9Uuhx1WKGDJY.png",
-        804,
-        1748,
-        "TravelMate voice screen showing a second waveform state mid-response.",
-      ),
-      img(
-        "tarT09Fi4L4yDA5pM3yXyU1sic.png",
-        804,
-        1748,
-        "TravelMate voice screen showing the microphone control ready to start listening.",
-      ),
-      img(
-        "f5G1ucfeb9Quzcs3e9jFVBiGeY.png",
-        804,
-        1748,
-        "TravelMate voice screen showing an example spoken command with its translated response.",
-      ),
+      {
+        src: "/travelmate/v1-onboarding.png",
+        width: 804,
+        height: 1748,
+        alt: "Version 1 onboarding: the original blue cartoon Tuki holding a map, with the line 'Navigate smarter, with real-time help' and a Next button.",
+      },
+      {
+        src: "/travelmate/v1-home.png",
+        width: 804,
+        height: 1748,
+        alt: "Version 1 home: an empty chat with suggested prompts such as best local restaurants and nearest metro station, above a five-tab bar.",
+      },
+      {
+        src: "/travelmate/v1-chat.png",
+        width: 804,
+        height: 1748,
+        alt: "Version 1 chat: the question 'How do I get to the Louvre?' answered with a walking time and a small map.",
+      },
+    ],
+  },
+  {
+    type: "painPointList",
+    items: [
+      {
+        label: "Chat first",
+        note: "An empty input box asks the traveller to do the thinking. In a city you do not know, you rarely know what to ask.",
+      },
+      {
+        label: "No reason to open it",
+        note: "Unless you were lost, nothing pulled you back into the app.",
+      },
+      {
+        label: "Answers without reasons",
+        note: "Suggestions arrived with no explanation. After a year studying trust in conversational AI for my thesis, that gap was hard to ignore.",
+      },
+      {
+        label: "A generic look",
+        note: "Blue buttons, a cartoon mascot, white cards. It could have been any AI travel app.",
+      },
+    ],
+  },
+
+  { type: "heading", level: 3, text: "The idea: reward going, not planning" },
+  {
+    type: "paragraph",
+    text: "I started from the moments that matter on a trip: lost, hungry, alone, unsure. In every one of them, the traveller is out in the city, not at home planning. So the product should reward being out there.",
+  },
+  { type: "callout", text: "Turn a trip into something you collect." },
+  {
+    type: "image",
+    src: "/travelmate/core-loop.png",
+    width: 3200,
+    height: 1600,
+    enlargeable: true,
+    alt: "The core loop drawn as a transit line with five stations, each above a real screen: Tuki suggests, you go, check in, earn a stamp as the map fills in, and meet other travellers if you want.",
+    caption: "The core loop, drawn the way the app draws a day. Every screen in the file belongs to one of these five stations.",
+  },
+  {
+    type: "paragraph",
+    text: "The game layer is travel-native on purpose. A stamp only comes from being somewhere real, checked within 40 metres of the place. There are no streaks to protect and nothing to grind, because a travel app that punishes a rest day has misunderstood travel.",
+  },
+
+  { type: "heading", level: 3, text: "Three directions, one survivor" },
+  {
+    type: "paragraph",
+    text: "I explored the visual direction quickly, and judged each option against the product idea, not against taste alone. Two did not survive.",
+  },
+  {
+    type: "variantComparison",
+    label: "Three directions for the same home screen",
+    variants: [
+      {
+        src: "/travelmate/direction-a.png",
+        width: 402,
+        height: 874,
+        alt: "Direction A: a soft home screen with tinted icon tiles, a blue suggestion card and a list of quests.",
+        caption: "A · Safe and soft. Clean, but generic. Nothing on the screen said travel.",
+      },
+      {
+        src: "/travelmate/direction-b.png",
+        width: 402,
+        height: 874,
+        alt: "Direction B: a game-style screen with a winding path of round 3D buttons, chunky type and bright colours.",
+        caption: "B · Game-style. Bold, but it borrowed a language-learning app's vocabulary: a lesson path, 3D buttons, rounded type.",
+      },
+      {
+        src: "/travelmate/direction-c.png",
+        width: 804,
+        height: 1748,
+        alt: "Direction C: a map-first screen with explored neighbourhoods, a Tuki pin, and a suggestion sheet with an ink stamp ticket.",
+        caption: "C · Travel ephemera. Map first, with stamps, tickets and transit lines. The direction I kept.",
+      },
     ],
   },
   {
     type: "paragraph",
-    text: "**Itinerary, transport, journal, and weather**\nThe rest of the app is built around the moments a trip actually moves through: planning a day, getting somewhere, remembering it afterward, and checking the conditions around all of it. A calendar view for adding activities and seeing the day at a glance. A transport hub comparing walking, metro, and taxi by cost and time. A travel journal for photos and notes from each stop. Weather and emergency info surfaced directly in the app, so none of it requires switching to something else.",
+    text: "Direction B taught me the most. Copying the surface of a successful app is not the same as learning from it. The principle worth keeping was simple: make progress visible and rewarding. How it looks had to come from travel itself, from passport stamps, boarding passes, postcards and transit maps.",
   },
-  // Prototype player: one line per screen, condensed from the paragraph
-  // above it.
+
+  { type: "heading", level: 3, text: "Now: a map, one suggestion, and the reason" },
+  {
+    type: "paragraph",
+    text: "Travellers think in places, so the home screen is a map. Areas you have explored are clear, and the rest is softly hatched, like a scratch map. Over it sits one suggestion, not a feed.",
+  },
+  {
+    type: "annotated",
+    label: "Close-up · the Now screen",
+    device: "phone",
+    image: {
+      src: "/travelmate/now.png",
+      width: 804,
+      height: 1748,
+      alt: "The Now screen: a map of Lisbon with explored areas around Baixa and Alfama, a Tuki pin on Santa Luzia, and a sheet saying 'Santa Luzia is calm until about 11:00', with a Why this? line, a stamp ticket and a Take me there button.",
+    },
+    notes: [
+      { x: 0.74, y: 0.19, text: "Tuki points at a place on the map, not at a list." },
+      { x: 0.66, y: 0.39, text: "Explored areas fill in. Alfama is 40% revealed." },
+      { x: 0.92, y: 0.093, text: "Help is on every map screen." },
+      {
+        x: 0.3,
+        y: 0.705,
+        text: "Why this? sits under every suggestion, and admits it is based on typical crowd times, not live data.",
+      },
+      { x: 0.5, y: 0.77, text: "The ticket shows what you can earn before you go." },
+    ],
+  },
+  {
+    type: "paragraph",
+    text: "One main action per screen, in ink black, and help one tap away. Everything else on the map is there to answer one question: is this worth walking to right now?",
+  },
+
+  { type: "heading", level: 3, text: "Designing for trust" },
+  {
+    type: "paragraph",
+    text: "This is the chapter I care most about. My master's thesis studied how international students come to trust a conversational AI, and what breaks that trust. One finding carried straight into TravelMate: trust builds slowly and can vanish in a single moment. So Tuki explains itself every time, and handles its own mistakes in the open.",
+  },
   {
     type: "screenPlayer",
-    label: "The rest of the trip · four screens",
+    label: "Four trust moments",
     screens: [
       {
-        tab: "Itinerary",
-        ...img(
-          "nOM36AUEzLOD673zi9osVUO6xw.png",
-          804,
-          2160,
-          "TravelMate itinerary screen showing a weekly calendar view with a scheduled museum visit and an option to add new activities.",
-        ),
-        line: "A calendar for adding activities and seeing the day at a glance.",
+        tab: "Why this?",
+        src: "/travelmate/why-this.png",
+        width: 804,
+        height: 1748,
+        alt: "The Why this? sheet: what Tuki looked at (time of day, typical crowds, distance and taste, weather), a three-step confidence meter reading Fairly sure, and Yes or Not for me feedback buttons.",
+        line: "The reason, the sources, and how sure Tuki is, in plain words.",
       },
       {
-        tab: "Transport",
-        ...img(
-          "j5uJwrQlFKN05Uhl8UuR8amZaM.png",
-          804,
-          1748,
-          "TravelMate transport hub screen showing walking, metro, and taxi options with estimated cost and time for each.",
-        ),
-        line: "Walking, metro and taxi, compared by cost and time.",
+        tab: "When Tuki is wrong",
+        src: "/travelmate/chat.png",
+        width: 804,
+        height: 1748,
+        alt: "The chat: the traveller says Santa Luzia is packed with a tour group. Tuki, looking sorry, admits the mistake, explains what it changed, and suggests Miradouro da Graça instead.",
+        line: "Tuki admits the mistake, says what it changed, and offers a better option.",
+      },
+      {
+        tab: "A pick, with a reason",
+        src: "/travelmate/route.png",
+        width: 804,
+        height: 1748,
+        alt: "Route options: walk, Tram 28 and taxi compared on time, cost and crowds, with Tuki recommending the walk because the tram is usually full at this hour.",
+        line: "Walk, tram or taxi. Tuki recommends one and says why.",
+      },
+      {
+        tab: "Undo",
+        src: "/travelmate/plan.png",
+        width: 804,
+        height: 1748,
+        alt: "The Plan screen: the day drawn as a transit line, and a note from Tuki saying rain is likely after 17:00, so the tile museum moved to tomorrow, with an Undo link.",
+        line: "When Tuki changes the plan because of rain, one tap undoes it.",
+      },
+    ],
+  },
+  {
+    type: "paragraph",
+    text: "Confidence is shown as \"fairly sure\" on a three-step meter, never as a precise-looking percentage. A number like 82% would claim an accuracy the app cannot have.",
+  },
+  {
+    type: "linkCard",
+    text: "Read the research behind these patterns: the Lumi case study",
+    href: "/research/lumi",
+  },
+
+  { type: "heading", level: 3, text: "The reward: a stamp, and a city that fills in" },
+  {
+    type: "imageRow",
+    enlargeable: true,
+    images: [
+      {
+        src: "/travelmate/place.png",
+        width: 804,
+        height: 1748,
+        alt: "Place detail for Miradouro de Santa Luzia, with an azulejo tile illustration, a tip from Tuki, and a check-in card saying You are here, location confirmed within 40 m.",
+      },
+      {
+        src: "/travelmate/stamp-earned.png",
+        width: 804,
+        height: 1748,
+        alt: "Stamp earned: a large red ink stamp reading Santa Luzia, Lisboa, 28 Oct, and Alfama moving from 40% to 52% explored.",
+      },
+      {
+        src: "/travelmate/passport.png",
+        width: 804,
+        height: 1748,
+        alt: "The Passport: five stamps from the trip and one empty slot, with progress bars for Baixa, Alfama, Bairro Alto and Belém.",
+      },
+    ],
+  },
+  {
+    type: "paragraph",
+    text: "Check-in only works within 40 metres of the place. The stamp lands with a short drop and a small ink burst, and the neighbourhood's share of the map goes up. The Passport keeps every stamp from the trip, plus a plain list of how much of each area you have revealed.",
+  },
+
+  { type: "heading", level: 3, text: "Everything else a trip needs" },
+  {
+    type: "paragraph",
+    text: "The loop is the heart of the app, but a trip needs more. Each of these screens answers one moment from the journey map: arriving, ordering, asking, remembering, meeting people, and things going wrong.",
+  },
+  {
+    type: "screenPlayer",
+    label: "The rest of the trip",
+    screens: [
+      {
+        tab: "Welcome",
+        src: "/travelmate/welcome.png",
+        width: 804,
+        height: 1748,
+        alt: "Welcome: Tuki waving between three ink stamps from Helsinki, Kyoto and Lisboa, the line 'Turn a trip into something you collect', and a Start a trip button.",
+        line: "One promise and one button. No sign-up wall: you only need an account to keep your stamps.",
+      },
+      {
+        tab: "Boarding pass",
+        src: "/travelmate/boarding-pass.png",
+        width: 804,
+        height: 1748,
+        alt: "Trip setup styled as a boarding pass from Helsinki to Lisbon, 26 to 31 October, with travel style chips such as Views, Local food and Meeting people.",
+        line: "Trip setup as a boarding pass. Destination, dates and travel style in three taps.",
+      },
+      {
+        tab: "Permissions",
+        src: "/travelmate/permissions.png",
+        width: 804,
+        height: 1748,
+        alt: "Permissions: location, notifications at most twice a day, and an offline pack, each with Tuki's reason, and a note that every one is optional.",
+        line: "Every permission says why, in Tuki's voice. All optional, with what still works without them.",
+      },
+      {
+        tab: "Camera",
+        src: "/travelmate/camera.png",
+        width: 804,
+        height: 1748,
+        alt: "Ask Tuki with the camera on a Portuguese menu: each dish translated in place, and Tuki recommending the bacalhau à Brás because it is mild.",
+        line: "Point the camera at a menu. Translation, plus a pick that fits your taste.",
+      },
+      {
+        tab: "Voice",
+        src: "/travelmate/voice.png",
+        width: 804,
+        height: 1748,
+        alt: "Voice mode on a dark screen: the traveller's question said aloud in Portuguese, and a local's reply translated into English.",
+        line: "Talk to a local through Tuki, hands-free and out loud, in both directions.",
       },
       {
         tab: "Journal",
-        ...img(
-          "4ypYjbGyt1AejHjGJoEO781eWE.png",
-          804,
-          1800,
-          "TravelMate travel journal screen showing dated entries with photos and short notes from a Paris and Rome trip.",
-        ),
-        line: "Photos and notes from each stop, kept as a travel journal.",
+        src: "/travelmate/journal.png",
+        width: 804,
+        height: 1748,
+        alt: "The trip journal: the day as a postcard with a small route map and a note, and a timeline of stops drawn like a transit line.",
+        line: "The day becomes a postcard and a timeline you can share.",
       },
       {
-        tab: "Weather",
-        ...img(
-          "gmEHNYW9VL5FJQEYRWcuVl32jZo.png",
-          804,
-          2804,
-          "TravelMate weather screen showing the current temperature, a five-day forecast, and a 24-hour temperature graph.",
-        ),
-        line: "The weather, right in the app, so checking it isn't another app switch.",
-      },
-    ],
-  },
-  { type: "heading", level: 3, text: "Challenges and Decisions" },
-  {
-    type: "paragraph",
-    text: "Four decisions came out of watching where the concept could break under real conditions.",
-  },
-  {
-    type: "timeline",
-    steps: [
-      {
-        label: "Conversational flow vs. structure",
-        detail: "Shortcut buttons on the home screen for actions like \"Book Taxi,\" so typing stayed optional",
+        tab: "Meet",
+        src: "/travelmate/meet.png",
+        width: 804,
+        height: 1748,
+        alt: "Meet travellers: three small meetups shown as tickets with times, verified hosts, and a Safe by default note.",
+        line: "Small meetups shown as tickets. Public places and verified hosts only.",
       },
       {
-        label: "Designing for stressful moments",
-        detail: "Emergency help made one-tap accessible from the main navigation",
-      },
-      {
-        label: "Avoiding information overload",
-        detail: "Content grouped into five tabs: Home, Itinerary, Transport Hub, Journal, Weather",
-      },
-      {
-        label: "Supporting multimodal input",
-        detail: "Voice added alongside text, for hands full or streets too noisy to type",
+        tab: "Help now",
+        src: "/travelmate/help-now.png",
+        width: 804,
+        height: 1748,
+        alt: "Help now: a red Call 112 button, the nearest hospital, the embassy, a trusted contact, and a phrase card reading Preciso de ajuda.",
+        line: "Call 112, find the nearest hospital, show a phrase. Works offline.",
       },
     ],
   },
   {
-    type: "callout",
-    text: "**What I'd still want to solve.** Working alone meant every flow shipped on my own judgment, with no one else in the room to push back on a decision before I moved on to the next screen. A longer version of this project would start with someone else involved from day one, ideally before the interface was already fully formed, so decisions could be questioned while they were still cheap to change.",
-  },
-  { type: "heading", level: 3, text: "What This Project Showed Me" },
-  {
     type: "paragraph",
-    text: "Once the prototype was built, I walked about fifteen people, mostly friends and classmates, through it and watched how they used it. It was not formal usability testing: no structured tasks, no recorded sessions, no scripted questions, just enough to see whether the flows made sense to someone seeing them for the first time. That informal round is also why this case study does not carry a completion percentage or a formal finding: nothing here was measured rigorously enough to report as one.",
+    text: "Help now is the one screen without Tuki. When something goes wrong, a cartoon guide is the last thing you want to see, so that screen is calm, fast, and works without signal.",
   },
+
+  { type: "heading", level: 3, text: "Tuki, redrawn twice" },
   {
-    type: "paragraph",
-    text: "Working without a client or a team meant every decision, from the problem framing to the smallest interaction detail, was mine to make and mine to defend. TravelMate is a small project, but it's a complete one: a real problem, a reasoned set of trade-offs, and a working prototype I can walk someone through screen by screen.",
-  },
-  {
-    type: "link",
-    text: "View the Interactive Prototype",
-    href: "https://www.figma.com/proto/ifl10l5GGaaoTxNqquuggh/TravelMate?page-id=0%3A1&node-id=2-2075&scaling=scale-down&content-scaling=fixed&starting-point-node-id=2%3A2075&t=6mDBdkuIFxU7cqEH-1",
-  },
-  { type: "heading", level: 3, text: "Takeaways" },
-  {
-    type: "paragraph",
-    text: "Designing TravelMate pushed me to think beyond just screens and flows. I had to design for **real-world travel contexts** (moments of joy, stress, and urgency) and make sure the app adapted smoothly to each.",
+    type: "image",
+    src: "/travelmate/tuki-evolution.png",
+    width: 3200,
+    height: 1520,
+    enlargeable: true,
+    alt: "Three versions of Tuki: the original AI-generated blue sticker sheet, a first vector copy in the same cartoon style, and the final navy ink bird in four states: Happy, Wave, Thinking and Sorry.",
+    caption: "Same bird, same name, same scarf. The version 1 sticker sheets were generated with an AI image tool; both redraws are vector components in the Figma file.",
   },
   {
     type: "paragraph",
-    text: "This project strengthened my skills in **AI-driven UX, multi-modal design, and system thinking**, while reminding me that clarity and simplicity often matter most when users are under pressure.",
+    text: "Tuki came from version 1, where the mascot was a set of AI-generated sticker sheets. My first redesign redrew him as a clean vector, but he was still an off-palette cartoon. Next to stamps and tickets, he pulled the whole app back toward a kids' game.",
   },
   {
-    type: "quote",
-    text: "Good travel design isn't just about discovery,\nit's about giving people calm and confidence\nwhen they need it most.",
+    type: "paragraph",
+    text: "The final Tuki is an ink bird: navy body, paper face, stamp-red scarf. Every colour comes from the app's tokens, so he switches to Dark mode on his own. He has four states, and the newest one, Sorry, exists for the trust moment above.",
+  },
+
+  { type: "heading", level: 3, text: "A system, not a set of screens" },
+  {
+    type: "image",
+    src: "/travelmate/design-system.png",
+    width: 3200,
+    height: 1680,
+    enlargeable: true,
+    alt: "The design system: ten colour tokens shown with their Light and Dark values, a type specimen in Bricolage Grotesque, Inter and JetBrains Mono, and components including ink stamps, a stamp ticket, buttons and the tab bar.",
+  },
+  {
+    type: "paragraph",
+    text: "Every colour in the interface comes from 17 semantic tokens, each with a Light and a Dark value. Type uses three families: Bricolage Grotesque for headlines, Inter for the interface, and JetBrains Mono for ticket-style data like times, codes and percentages.",
+  },
+  {
+    type: "variantComparison",
+    label: "Same screen, two modes, nothing redrawn",
+    variants: [
+      {
+        src: "/travelmate/passport.png",
+        width: 804,
+        height: 1748,
+        alt: "The Passport screen in Light mode, on warm paper.",
+        caption: "Light",
+      },
+      {
+        src: "/travelmate/passport-dark.png",
+        width: 804,
+        height: 1748,
+        alt: "The same Passport screen in Dark mode, with lighter stamp colours on a near-black background.",
+        caption: "Dark",
+      },
+    ],
+  },
+  {
+    type: "paragraph",
+    text: "The Dark version is the same screen with one setting changed. Building it was also a test: it exposed two contrast failures that only appeared in Dark mode.",
+  },
+
+  { type: "heading", level: 3, text: "Accessibility, measured" },
+  {
+    type: "paragraph",
+    text: "A travel app is used outdoors, in a hurry, and sometimes in an emergency. So I measured instead of guessing.",
+  },
+  {
+    type: "image",
+    src: "/travelmate/contrast-audit.png",
+    width: 3200,
+    height: 1560,
+    enlargeable: true,
+    alt: "A contrast audit table with six failing colour pairs, four in Light mode and two in Dark mode, each shown before and after the fix with its ratio, all passing WCAG AA afterwards.",
+  },
+  {
+    type: "paragraph",
+    text: "The first audit found six pairs below WCAG AA. Five were fixed by changing a token, so every screen that used them updated at once. The sixth, the faded map labels, was a hard-coded colour that I fixed by hand.",
+  },
+  {
+    type: "list",
+    items: [
+      "Touch targets are at least 44 by 44 points, with small icon buttons padded to reach it.",
+      "Colour is never the only signal. Explored areas also get a tick and a percentage, and verified hosts get an icon and the words Host verified.",
+      "With Reduce Motion on, the stamp fades in instead of dropping.",
+      "Everything the map shows is also available as a plain list, for screen readers.",
+    ],
+  },
+
+  { type: "heading", level: 3, text: "What this does not prove yet" },
+  {
+    type: "paragraph",
+    text: "Nobody outside this project has used TravelMate yet, so none of it is validated. Two assumptions carry the whole concept, and they are what I would test first, with five travellers and the prototype. Do stamps motivate adults to explore, or do they feel like a gimmick? And does showing the reason make people trust a suggestion more?",
+  },
+  {
+    type: "paragraph",
+    text: "I used Claude as an AI pair designer while producing the Figma file. The product idea, the decisions and the trade-offs on this page are mine, including the two directions I threw away.",
+  },
+  {
+    type: "paragraph",
+    text: "What I am confident about: the core idea is specific, the trust patterns come from real research rather than taste, and the system holds together across seventeen screens and two modes.",
+  },
+  {
+    type: "linkCard",
+    text: "Play the prototype",
+    href: "https://www.figma.com/proto/NtbD4UlStLxosiM0JTFCNo/TravelMate-Redesign?node-id=45-1382&viewport=374%2C209%2C0.23&t=yeBOuDD5GYut0Jr8-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=45%3A1382&page-id=3%3A7",
   },
 ];
 
@@ -3503,54 +3730,34 @@ export const caseStudies: CaseStudy[] = [
       tools: ["Figma"],
     },
     nextCaseStudy: {
-      title: "TravelMate AI",
+      title: "TravelMate",
       href: "/work/travelmate-ai",
     },
     body: fitvibeBody,
   },
   {
     slug: "travelmate-ai",
-    title: "TravelMate AI",
+    title: "TravelMate",
     track: "work",
     scale: "product",
-    // The `status: "contingent"` flag (and the "Decision pending" badge
-    // it rendered on the project card) is removed as of the typography
-    // cleanup / TravelMate content pass: the keep/cut/reframe question
-    // Master_Portfolio_Knowledge_Base.md Section 3 flagged is resolved.
-    // TravelMate is kept, with a full published case study and a
-    // confirmed duration -- it's finished content now, not a project
-    // still waiting on a decision.
+    // v2 redesign (October 2026). The slug stays "travelmate-ai" so old
+    // links, the trailer and the card loop keep working; the product is
+    // now just "TravelMate".
     contentStatus: "complete",
-    thumbnail: cardLoop("travelmate-ai", "A short film of TravelMate AI: a chat answer with a map, the voice mode, and the itinerary, transport, journal and weather screens."),
+    thumbnail: cardLoop("travelmate-ai", "A short film of TravelMate: Tuki the ink-bird flies over a map of Lisbon, a suggestion card explains why, and a place earns an ink stamp."),
     oneLineScope:
-      "TravelMate AI is a mobile-based conversational assistant designed to make traveling simpler and stress-free. It helps tourists navigate new cities, get instant recommendations, translate on the go, and access emergency info in real time. By combining chat, voice, and travel utilities in one app, TravelMate brings together tools that are usually scattered across multiple platforms, giving users a single, reliable travel companion.",
+      "A travel companion that suggests what to do right now, explains why, and rewards every real place you visit with an ink stamp. A self-directed concept, redesigned from the ground up in 2026.",
     meta: {
-      // TravelMate AI rebuild: replaces "To be confirmed" -- this was a
-      // solo, self-directed project with no team, so "team" states that
-      // plainly rather than leaving an unresolved placeholder live on
-      // the page (it doesn't render when liveMeta is present, but the
-      // underlying data should still be accurate, not a stale TODO).
-      role: "UX Designer, UI Designer, UX Researcher (solo)",
+      role: "Product Designer (solo)",
       team: "None (self-directed, solo project)",
-      duration: "Jan 2025 – May 2025",
-      tools: "Figma",
+      duration: "Jan – May 2025, redesigned Oct 2026",
+      tools: "Figma, Claude (AI pair designer)",
     },
     liveMeta: {
-      category: ["Mobile Design", "Product Design"],
-      // TravelMate AI rebuild: "(solo)" resolves the framing gap
-      // 01_Audit.md flagged -- the live meta row previously listed
-      // three roles exactly like a job description, with nothing
-      // signaling all three were the same unsupervised person.
-      role: ["UX Designer", "UI Designer", "UX Researcher (solo)"],
-      tools: ["Figma"],
-      // TravelMate AI rebuild: fifth meta-row field, same mechanism
-      // Convay Mobile App Revamp introduced (01_Audit.md there: "state
-      // the pre-launch status plainly, early, and once"). Here it
-      // states scope rather than ship status, since the new Context &
-      // Scope section right below covers the same ground in prose --
-      // together they mean a reader can't reach any screenshot without
-      // first knowing this is a solo concept project, not client work.
-      status: "Self-directed concept project",
+      category: ["Mobile Design", "Product Design", "AI UX"],
+      role: ["Product Designer (solo)"],
+      tools: ["Figma", "Claude (AI pair designer)"],
+      status: "Self-directed concept, not yet user-tested",
     },
     nextCaseStudy: {
       title: "Convay Notifications",

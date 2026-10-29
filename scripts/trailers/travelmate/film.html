@@ -1,0 +1,190 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  TravelMate film: the intro trailer (mode=hero, 1920x1080, with titles)
+  and the card loop (mode=card, 1200x900, no text, seamless).
+  Every phone shows a real screen exported from the TravelMate Figma file,
+  and Tuki is drawn from the same vector shapes as the Tuki component.
+  window.__seek(t) renders one frame; render-film.py steps through it.
+-->
+<style>
+@font-face{font-family:Brico;src:url(fonts/bricolage-800.woff2);font-weight:800}
+@font-face{font-family:Inter;src:url(fonts/inter-500.woff2);font-weight:500}
+@font-face{font-family:Mono;src:url(fonts/jetbrains-700.woff2);font-weight:700}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow:hidden;background:#F4EFE6}
+#stage{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;background:#F4EFE6}
+.abs{position:absolute;left:0;top:0;will-change:transform,opacity}
+.phone{background:#121317;border-radius:62px;padding:13px;box-shadow:0 40px 80px -30px rgba(22,24,29,.45),0 0 0 1.5px rgba(22,24,29,.12)}
+.phone .scr{position:relative;border-radius:50px;overflow:hidden;background:#fff}
+.phone img{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+.k{font:700 22px Mono;letter-spacing:.12em;text-transform:uppercase;color:#B53724}
+.cap{font:800 64px/1.04 Brico;letter-spacing:-.025em;color:#16181D}
+.prog{background:#fff;border-radius:26px;padding:26px 30px;box-shadow:0 30px 60px -30px rgba(22,24,29,.35)}
+</style></head><body>
+<div id="stage"></div>
+<script>
+const Q=new URLSearchParams(location.search);
+const MODE=Q.get('mode')||'hero';
+const BASE=Q.get('base')||'../../../public/travelmate/';
+const W=MODE==='hero'?1920:1200,H=MODE==='hero'?1080:900;
+const stage=document.getElementById('stage');stage.style.width=W+'px';stage.style.height=H+'px';
+const fit=()=>{const s=Math.min(innerWidth/W,innerHeight/H);stage.style.transform=`scale(${s})`};fit();
+// ---------- helpers
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,a,b)=>cl((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3), ei=x=>x*x*x, eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const back=x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const lerp=(a,b,x)=>a+(b-a)*x;
+const bez=(p0,p1,p2,p3,x)=>{const u=1-x;return [u*u*u*p0[0]+3*u*u*x*p1[0]+3*u*x*x*p2[0]+x*x*x*p3[0],u*u*u*p0[1]+3*u*u*x*p1[1]+3*u*x*x*p2[1]+x*x*x*p3[1]]};
+const el=(html,cls='')=>{const d=document.createElement('div');d.className='abs '+cls;d.innerHTML=html;stage.appendChild(d);return d};
+const set=(e,x,y,s=1,r=0,o=1)=>{e.style.transform=`translate(${x}px,${y}px) rotate(${r}deg) scale(${s})`;e.style.opacity=o};
+// ---------- background
+let gl='';for(let i=0;i<34;i++){const r=70+i*30;gl+=`<ellipse cx="${W*.72}" cy="${H*.5}" rx="${r*1.25}" ry="${r}" stroke="#E6DECE" stroke-width="1.3" fill="none"/>`}
+const bg=el(`<svg width="${W}" height="${H}">${gl}</svg>`);
+const pathEl=el(`<svg width="${W}" height="${H}" style="overflow:visible"><path id="fp" fill="none" stroke="#9AA0A8" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.1 16"/></svg>`);
+const fp=pathEl.querySelector('#fp');
+// ---------- Tuki
+const N='#233A7A',R='#B53724',PA='#F4EFE6',I='#16181D',Y='#F2B705';
+const eyes={open:`<circle cx="45" cy="52" r="12" fill="${PA}"/><circle cx="75" cy="52" r="12" fill="${PA}"/><circle cx="47" cy="53" r="5.5" fill="${I}"/><circle cx="73" cy="53" r="5.5" fill="${I}"/><circle cx="48.8" cy="51.2" r="1.6" fill="${PA}"/><circle cx="74.8" cy="51.2" r="1.6" fill="${PA}"/>`,
+ joy:`<circle cx="45" cy="52" r="12" fill="${PA}"/><circle cx="75" cy="52" r="12" fill="${PA}"/><path d="M39 54c2-6 10-6 12 0M69 54c2-6 10-6 12 0" stroke="${I}" stroke-width="3.5" stroke-linecap="round" fill="none"/>`,
+ sorry:`<circle cx="45" cy="52" r="12" fill="${PA}"/><circle cx="75" cy="52" r="12" fill="${PA}"/><circle cx="47" cy="56" r="5.5" fill="${I}"/><circle cx="73" cy="56" r="5.5" fill="${I}"/><path d="M35 38l12-5M85 38l-12-5" stroke="${PA}" stroke-width="3.5" stroke-linecap="round"/>`};
+const tukiSVG=`<svg width="240" height="240" viewBox="0 0 120 120" style="overflow:visible">
+<path d="M56 21c-2-8 4-12 8-8M62 20c2-6 8-6 9-2" stroke="${N}" stroke-width="4" stroke-linecap="round" fill="none"/>
+<g id="feet"><path d="M48 104v8M44 112h8M72 104v8M68 112h8" stroke="${Y}" stroke-width="3.5" stroke-linecap="round"/></g>
+<g id="wl"><path d="M24 64C10 66 6 82 12 92c7-3 12-12 12-24z" fill="${N}"/></g>
+<g id="wr"><path d="M96 64c14 2 18 18 12 28-7-3-12-12-12-24z" fill="${N}"/></g>
+<path d="M60 18C86 18 100 40 100 66c0 26-18 42-40 42S20 92 20 66C20 40 34 18 60 18Z" fill="${N}"/>
+<path d="M60 84c11 0 18 6 18 13 0 6-8 9-18 9s-18-3-18-9c0-7 7-13 18-13Z" fill="${PA}"/>
+<path d="M28 76c20 9 44 9 64 0v8c-20 9-44 9-64 0z" fill="${R}"/><path id="tail" d="M78 84l11 15-13-4z" fill="${R}"/>
+<g id="eyes"></g><path d="M53 64h14l-7 10z" fill="${Y}"/></svg>`;
+const tuki=el(tukiSVG);tuki.style.transformOrigin='120px 120px';
+const tW=tuki.querySelector('#wl'),tR=tuki.querySelector('#wr'),tE=tuki.querySelector('#eyes'),tF=tuki.querySelector('#feet');
+tW.style.transformOrigin='24px 66px';tR.style.transformOrigin='96px 66px';
+let lastEyes='';const tukiPose=(x,y,s,{flap=0,wave=0,eye='open',rot=0,o=1,feet=1})=>{
+  set(tuki,x-120,y-120,s,rot,o);
+  const a=flap?Math.sin(flap*Math.PI*2)*38:0;
+  tW.style.transform=`rotate(${(flap?40+a:0)}deg)`;
+  tR.style.transform=`rotate(${flap?-(40+a):(wave?-(110+Math.sin(wave*Math.PI*2)*18):0)}deg)`;
+  tF.style.opacity=feet;
+  if(eye!==lastEyes){tE.innerHTML=eyes[eye];lastEyes=eye}
+};
+// ---------- phones
+const phoneW=MODE==='hero'?412:340;
+const mk=(keys)=>{const w=phoneW,sw=w-26,sh=Math.round(sw*874/402);const d=el(`<div class="phone"><div class="scr" style="width:${sw}px;height:${sh}px">${keys.map(k=>`<img data-k="${k}" src="${BASE}${k}.png">`).join('')}</div></div>`);d.style.transformOrigin='50% 50%';d.imgs={};d.querySelectorAll('img').forEach(i=>d.imgs[i.dataset.k]=i);d.h=sh+26;d.w=w;return d};
+const show=(ph,map)=>{for(const k in ph.imgs)ph.imgs[k].style.opacity=map[k]??0};
+// ---------- stamp
+const rough=(r,seed,amp)=>{let s=seed;const rnd=()=>{s=(s*9301+49297)%233280;return s/233280};const n=48;const p=[];let prev=0;for(let i=0;i<n;i++){prev=prev*.6+(rnd()-.5)*amp;p.push(r+prev)}let d='';for(let i=0;i<=n;i++){const a=i/n*Math.PI*2,rr=p[i%n];d+=(i?'L':'M')+(50+rr*Math.cos(a)).toFixed(2)+' '+(50+rr*Math.sin(a)).toFixed(2)+' '}return d+'Z'};
+const stampSVG=(size)=>`<svg width="${size}" height="${size}" viewBox="0 0 100 100"><path d="${rough(45,11,1.1)}" fill="none" stroke="${R}" stroke-width="4.2"/><path d="${rough(36,14,.7)}" fill="none" stroke="${R}" stroke-width="1.6"/><path d="M50 21l3.4 7 7.7 1.1-5.6 5.4 1.3 7.6L50 38.5l-6.8 3.6 1.3-7.6-5.6-5.4 7.7-1.1z" fill="${R}"/><text x="50" y="56" text-anchor="middle" font-family="Mono" font-weight="700" font-size="8.6" fill="${R}" letter-spacing=".4">SANTA LUZIA</text><path d="M28 63h44" stroke="${R}" stroke-width="1.2" stroke-dasharray="2 2"/><text x="50" y="73" text-anchor="middle" font-family="Mono" font-weight="700" font-size="6.4" fill="${R}">LISBOA · 28 OCT</text></svg>`;
+const burstSVG=(size)=>{let s='';const pts=[[12,30,7],[88,26,5],[84,82,8],[16,80,5],[50,6,4],[50,96,5],[4,54,4],[96,56,6]];for(const [x,y,r] of pts)s+=`<circle cx="${x}" cy="${y}" r="${r/2}" fill="${R}" fill-opacity=".45"/>`;s+=`<path d="M8 50h7M85 50h7M50 85v7M20 18l5 5M80 18l-5 5" stroke="${R}" stroke-opacity=".5" stroke-width="1.6" stroke-linecap="round"/>`;return `<svg width="${size}" height="${size}" viewBox="0 0 100 100">${s}</svg>`};
+// ---------- texts
+const cap=(k,t,w)=>{const d=el(`<div class="k">${k}</div><div class="cap" style="margin-top:18px;width:${w}px">${t}</div>`);return d};
+const fadeCap=(d,t,a,b,dx=0)=>{const i=eo(P(t,a,a+.6)),o=1-P(t,b-.45,b);set(d,d.bx+(1-i)*40*(dx||1)-(1-o)*0,d.by+(1-i)*0,1,0,Math.min(i,o))};
+
+// =================================================================
+if(MODE==='hero'){
+const ph1=mk(['now','why-this','place']);
+const phC=mk(['chat']),phR=mk(['route']);
+const fan=['welcome','plan','passport-dark','voice','help-now'].map(k=>mk([k]));
+const stamp=el(stampSVG(420)),burst=el(burstSVG(560));
+const prog=el(`<div class="prog" style="width:520px"><div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:800 34px Brico;letter-spacing:-.02em;color:#16181D">Alfama</span><span id="pv" style="font:700 22px Mono;color:#196A5F">40%</span></div><div style="height:14px;border-radius:7px;background:#E2DACB;margin-top:16px;overflow:hidden;position:relative"><i id="pb" style="position:absolute;left:0;top:0;bottom:0;background:#196A5F;border-radius:7px;width:40%"></i></div><div style="font:700 15px Mono;letter-spacing:.1em;color:#62666F;margin-top:14px">NEIGHBOURHOOD EXPLORED</div></div>`);
+const pv=prog.querySelector('#pv'),pb=prog.querySelector('#pb');
+const t1a=el(`<div class="k" style="text-align:center;width:1200px">TravelMate · 2026 redesign</div>`),
+ t1b=el(`<div class="cap" style="font-size:88px;text-align:center;width:1600px">Most travel apps reward planning.</div>`),
+ t1c=el(`<div class="cap" style="font-size:88px;text-align:center;width:1600px">TravelMate rewards <span style="color:#B53724">going</span>.</div>`);
+const c1=cap('01 · Suggest','Tuki suggests something good nearby, and says why.',640);c1.bx=150;c1.by=360;
+const c2=cap('02 · Collect','Real places earn ink stamps. The city fills in.',800);c2.bx=1040;c2.by=110;
+const c3=cap('03 · Trust','When Tuki gets it wrong, it says so, and learns.',600);c3.bx=150;c3.by=360;
+const c4=el(`<div class="k" style="text-align:center;width:1920px">04 · System</div><div class="cap" style="text-align:center;width:1920px;margin-top:16px">Seventeen screens. One system, in Light and Dark.</div>`);
+const wm=el(`<div style="font:800 210px Brico;letter-spacing:-.04em;color:#16181D;width:1920px;text-align:center">TravelMate</div>`),
+ ws=el(`<div style="font:800 52px Brico;letter-spacing:-.02em;color:#5B606B;width:1920px;text-align:center">Turn a trip into something you collect.</div>`),
+ wk=el(`<div class="k" style="width:1920px;text-align:center;color:#62666F">Product design concept · Md. Aseer Intiser</div>`);
+// stacking: bring tuki to front
+stage.appendChild(tuki);
+window.__duration=24;
+window.__render=(t)=>{
+ // background guilloche subtle drift
+ set(bg,0,0,1+0.02*Math.sin(t/6),0,1);
+ // ---- S1 0-4.2: flight path + title
+ const fpts=[[-160,760],[420,120],[900,120],[960,450]];
+ const pd=`M${fpts[0]} C${fpts[1]} ${fpts[2]} ${fpts[3]}`;fp.setAttribute('d',pd);
+ const fl=P(t,.2,2.0);const len=1400;fp.style.strokeDashoffset=0;fp.setAttribute('stroke-dasharray',`0.1 16`);
+ pathEl.style.opacity=(t<2.2?1:1-P(t,3.6,4.2))*(fl>0?1:0);
+ // reveal path progressively via clip
+ pathEl.style.clipPath=`inset(0 ${100-eo(fl)*100}% 0 0)`;
+ set(t1a,360,640,1,0,eo(P(t,.6,1.2))*(1-P(t,3.8,4.2)));
+ const b1=eo(P(t,.8,1.4))*(1-P(t,2.3,2.6)),b2=eo(P(t,2.5,3.0))*(1-P(t,3.8,4.2));
+ set(t1b,160,700+(1-eo(P(t,.8,1.4)))*30,1,0,b1);set(t1c,160,700+(1-eo(P(t,2.5,3.0)))*30,1,0,b2);
+ // ---- phone 1
+ let px=1180,py=1200,ps=1,po=1;
+ if(t<4.2){py=1300}
+ else if(t<8.4){const r=back(P(t,4.3,5.2));py=lerp(1300,95,r)}
+ else if(t<12.6){const m=eio(P(t,8.4,9.2));px=lerp(1180,420,m);py=95}
+ else{const m=eio(P(t,12.6,13.2));px=420;py=lerp(95,1300,m)}
+ set(ph1,px,py,ps,0,po);
+ show(ph1,{'now':1-P(t,6.6,7.0),'why-this':P(t,6.6,7.0)*(1-P(t,8.4,8.8)),'place':P(t,8.4,8.8)});
+ // ---- captions
+ fadeCap(c1,t,4.9,8.4);fadeCap(c2,t,8.9,12.6);fadeCap(c3,t,13.1,17.2);
+ const c4i=eo(P(t,17.5,18.1))*(1-P(t,20.2,20.6));set(c4,0,70+(1-c4i)*20,1,0,c4i);
+ // ---- stamp slam S3
+ const sl=P(t,9.5,9.85);const sIn=t>=9.5;const ss=sIn?lerp(2.6,1,ei(sl)):2.6;const shake=t>9.85&&t<10.15?Math.sin((t-9.85)*90)*6*(1-P(t,9.85,10.15)):0;
+ set(stamp,1170+shake,360,ss,lerp(-22,-8,sl),sIn?(t<12.6?Math.min(1,sl*2):1-P(t,12.6,13.0)):0);
+ const bu=P(t,9.85,10.5);set(burst,1100,290,0.8+bu*0.35,0,t>9.85&&t<12.8?(1-bu*0.4)*(1-P(t,12.4,12.8)):0);
+ const pg=eo(P(t,10.2,10.7)),pr=P(t,10.8,12.0);set(prog,1120,820+(1-pg)*30,1,0,pg*(1-P(t,12.4,12.8)));
+ const v=Math.round(lerp(40,52,eio(pr)));pv.textContent=(pr>0?'40% → ':'')+v+'%';pb.style.width=v+'%';
+ // ---- S4 trust: chat + route
+ const s4=back(P(t,12.9,13.7)),s4o=eio(P(t,16.8,17.3));
+ set(phC,820,lerp(1300,95,s4)+s4o*1250,1,0,1);set(phR,1330,lerp(1400,170,back(P(t,13.1,13.9)))+s4o*1250,.9,4,1);
+ // ---- S5 fan
+ fan.forEach((f,i)=>{const d=i-2;const a=back(P(t,17.4+i*.09,18.3+i*.09));const out=eio(P(t,20.2,20.8));set(f,960-f.w/2+d*300,lerp(1350,310+Math.abs(d)*40,a)+out*1100,.7,d*7,1)});
+ // ---- outro
+ const o1=eo(P(t,21.0,21.7));set(wm,0,410+(1-o1)*40,1,0,o1);set(ws,0,650+(1-eo(P(t,21.4,22.0)))*30,1,0,eo(P(t,21.4,22.0)));set(wk,0,760,1,0,eo(P(t,21.8,22.4)));
+ // ---- Tuki choreography
+ let tx,ty,ts=1,fl2=0,wv=0,eye='open',ro=0,feet=1;
+ if(t<2.0){const f=eo(P(t,.2,2.0));[tx,ty]=bez(...fpts,f);fl2=t*2.4;ro=lerp(-14,0,f);feet=.0}
+ else if(t<4.4){tx=960;ty=450;wv=P(t,2.2,4.0)*2;eye='joy';feet=1}
+ else if(t<5.4){const f=eio(P(t,4.4,5.4));[tx,ty]=bez([960,450],[1100,250],[1300,0],[1386,40],f);fl2=t*2.6;feet=0;ts=lerp(1,.62,f)}
+ else if(t<12.6){const m=eio(P(t,8.4,9.2));tx=lerp(1386,626,m);ty=40;ts=.62;eye=t>6.6&&t<8.4?'joy':'open'}
+ else if(t<13.6){const f=eio(P(t,12.6,13.6));[tx,ty]=bez([626,40],[700,-80],[900,-120],[880,30],f);fl2=t*2.6;ts=.62;feet=0}
+ else if(t<17.2){tx=880;ty=30;ts=.62;eye=t<15.4?'sorry':'joy';wv=t>15.4?P(t,15.4,17.0)*2:0}
+ else if(t<20.8){const f=eio(P(t,17.2,18.6));[tx,ty]=bez([880,30],[1200,-160],[1600,-40],[1720,330],f);fl2=t*2.6;ts=lerp(.62,.55,f);feet=0;if(t>18.6){tx=1720+Math.sin(t*2)*10;ty=330+Math.sin(t*3)*8;fl2=t*2.6}}
+ else{const f=eio(P(t,20.8,21.8));[tx,ty]=bez([1720,330],[1500,-60],[1100,0],[960,250],f);ts=lerp(.55,.95,f);fl2=f<1?t*2.6:0;feet=f<1?0:1;eye=f<1?'open':'joy';wv=f>=1?P(t,21.8,23.8)*2:0}
+ tukiPose(tx,ty,ts,{flap:fl2,wave:wv,eye,rot:ro,feet:fl2?0:1});
+};
+}
+// =================================================================
+else{ // card: no text, seamless loop, 1200x900
+const ph1=mk(['now','why-this','place']);const phC=mk(['chat']),phP=mk(['passport']),phR=mk(['route']);
+const stamp=el(stampSVG(330)),burst=el(burstSVG(440));
+stage.appendChild(tuki);
+window.__duration=14;
+window.__render=(t)=>{
+ set(bg,0,0,1,0,1);pathEl.style.opacity=0;
+ // phone 1 rises, swaps, moves left, exits
+ let px=430,py=1000;
+ const up=back(P(t,.5,1.4));py=lerp(1000,70,up);
+ const ml=eio(P(t,4.6,5.3));px=lerp(430,140,ml);
+ const out=eio(P(t,8.0,8.6));py+=out*1000;
+ set(ph1,px,py,1,0,1);show(ph1,{'now':1-P(t,3.0,3.4),'why-this':P(t,3.0,3.4)*(1-P(t,4.8,5.2)),'place':P(t,4.8,5.2)});
+ // stamp
+ const sl=P(t,5.8,6.15),sIn=t>=5.8;const shake=t>6.15&&t<6.45?Math.sin((t-6.15)*90)*5*(1-P(t,6.15,6.45)):0;
+ set(stamp,700+shake,260,sIn?lerp(2.4,1,ei(sl)):2.4,lerp(-22,-8,sl),sIn?Math.min(1,sl*2)*(1-P(t,8.0,8.4)):0);
+ const bu=P(t,6.15,6.8);set(burst,645,205,0.8+bu*0.35,0,t>6.15?(1-bu*.4)*(1-P(t,7.8,8.2)):0);
+ // three phones
+ const a=k=>back(P(t,8.3+k*.12,9.2+k*.12)),z=eio(P(t,11.6,12.3));
+ set(phR,60,lerp(1000,140,a(0))+z*900,.82,-6,1);set(phC,430,lerp(1000,60,a(1))+z*900,.86,0,1);set(phP,800,lerp(1000,140,a(2))+z*900,.82,6,1);
+ // Tuki: flies across at start (enters), perches, flies off at end
+ let tx,ty,ts=.55,fl=0,eye='open',wv=0;
+ if(t<1.6){const f=eo(P(t,0,1.6));[tx,ty]=bez([-140,300],[200,40],[500,-60],[600,52],f);fl=t*2.6}
+ else if(t<4.6){tx=600;ty=52;eye=t>3.0?'joy':'open'}
+ else if(t<5.3){const m=eio(P(t,4.6,5.3));tx=lerp(600,310,m);ty=52}
+ else if(t<8.0){tx=310;ty=52;eye=t>6.2?'joy':'open';wv=t>6.4?P(t,6.4,7.8)*2:0}
+ else if(t<9.4){const f=eio(P(t,8.0,9.4));[tx,ty]=bez([310,52],[400,-120],[560,-100],[600,40],f);fl=t*2.6}
+ else if(t<11.6){tx=600;ty=40;eye=t<10.6?'sorry':'joy'}
+ else{const f=ei(P(t,11.6,14.0));[tx,ty]=bez([600,40],[700,-100],[1000,-40],[1340,300],f);fl=t*2.6}
+ tukiPose(tx,ty,ts,{flap:fl,wave:wv,eye,feet:fl?0:1});
+};
+}
+window.__seek=(t)=>window.__render(t);
+window.__ready=Promise.all([document.fonts.ready,...[...document.images].map(i=>i.complete?1:new Promise(r=>{i.onload=r;i.onerror=r}))]).then(()=>{window.__render(0);return true});
+</script></body></html>

@@ -65,11 +65,13 @@ export const trailers: Record<string, Trailer> = {
     "02, Process: survey, personas, journey map, sketches, then wireframes.",
     "03, Tested: tested with 12 participants. A SUS of 63.3 showed what to fix.",
   ]),
-  "travelmate-ai": trailer("travelmate-ai", "Trailer for TravelMate AI, made from the concept's real screens.", [
-    "Five apps for one trip. Or one companion.",
-    "01, Ask: type or speak. Get directions with a map attached.",
-    "02, Voice: a voice mode with a live waveform and example prompts.",
-    "03, The whole trip: plan the day, get there, remember it, check the weather.",
+  "travelmate-ai": trailer("travelmate-ai", "Trailer for TravelMate, made from the redesign's real screens and its mascot, Tuki.", [
+    "Most travel apps reward planning. TravelMate rewards going.",
+    "01, Suggest: Tuki suggests something good nearby, and says why.",
+    "02, Collect: real places earn ink stamps. The city fills in.",
+    "03, Trust: when Tuki gets it wrong, it says so, and learns.",
+    "04, System: seventeen screens. One system, in Light and Dark.",
+    "TravelMate. Turn a trip into something you collect.",
   ]),
   "convay-notifications": trailer(
     "convay-notifications",

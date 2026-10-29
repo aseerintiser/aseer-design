@@ -5,7 +5,7 @@
  * Every tint is sampled from the project's own screens rather than
  * invented: Convay's indigo from its primary buttons, Lumi's teal from
  * its avatar and links, aRENEWberg's green from its live-status accents,
- * TravelMate's blue from its voice button, FitVibe's periwinkle from its
+ * TravelMate's stamp red from its ink stamps, FitVibe's periwinkle from its
  * charts, RoboCarnival's amber from the lab photo, and the game study's
  * cobalt from its own chart bars. The Stage component mixes the tint
  * into the night ground, so these values never appear as flat fills.
@@ -27,7 +27,7 @@ export const chapters: Record<string, Chapter> = {
   "convay-notifications": convay,
   lumi: { name: "Lumi", tint: "#0a8f99", medium: "screen" },
   "cultural-festival-platform": { name: "aRENEWberg", tint: "#2f9e62", medium: "screen" },
-  "travelmate-ai": { name: "TravelMate", tint: "#1f75e9", medium: "screen" },
+  "travelmate-ai": { name: "TravelMate", tint: "#b53724", medium: "screen" },
   fitvibe: { name: "FitVibe", tint: "#7f93f0", medium: "screen" },
   robocarnival: { name: "RoboCarnival", tint: "#c0702a", medium: "photo" },
   "game-difficulty-player-types": { name: "Game difficulty", tint: "#3346a8", medium: "screen" },

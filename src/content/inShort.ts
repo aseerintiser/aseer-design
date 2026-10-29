@@ -65,4 +65,14 @@ export const inShort: Record<string, InShort> = {
       "Trust formed slowly and could vanish in one moment. The study produced seven design principles for trustworthy conversational AI.",
     evidence: { text: "Thesis graded 5/5", source: "Tampere University's grade for the M.Sc. thesis this study belongs to (Human-Technology Interaction, June 2026)." },
   },
+  // The short version; Where version 1 fell short; The idea; Accessibility, measured.
+  "travelmate-ai": {
+    problem:
+      "Travellers juggle maps, translators, review sites and group chats, and most travel apps reward planning at home rather than being out in the city.",
+    role: "Sole product designer on a self-directed concept, with Claude as an AI pair designer for producing the Figma file.",
+    decision:
+      "Make the reward travel-native: real places earn ink stamps and reveal the map, and every AI suggestion shows its reason and how sure it is.",
+    result: "A 17-screen iOS concept with a token-based design system in Light and Dark mode, and a 40-link prototype.",
+    evidence: { text: "6 contrast failures found and fixed", source: "WCAG contrast audit of the final palette, measured in the TravelMate Figma file, October 2026." },
+  },
 };

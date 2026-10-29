@@ -238,7 +238,7 @@ export default function HomePage() {
           className="group mt-20 flex items-center justify-between gap-6 border-y border-[var(--color-border)] py-6"
         >
           <span className="text-[var(--color-text-muted)] transition-colors duration-[var(--duration-base)] group-hover:text-[var(--color-text)]">
-            All work, including Convay Notifications, TravelMate AI and the aRENEWberg festival app
+            All work, including Convay Notifications, TravelMate and the aRENEWberg festival app
           </span>
           <span className="flex items-center gap-2 font-[family-name:var(--font-mono)] text-xs tracking-[0.14em] uppercase">
             Index
