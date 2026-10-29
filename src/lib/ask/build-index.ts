@@ -3,7 +3,7 @@ import { caseStudies } from "@/content/projects";
 import { inShort } from "@/content/inShort";
 import { about } from "@/content/about";
 import { site } from "@/content/site";
-import { careerSteps, convayChapter, fitvibeFeature, lumiFeature, moreResearch, person } from "@/content/home";
+import { careerSteps, convayChapter, lumiFeature, moreResearch, person, travelmateFeature } from "@/content/home";
 import { certificationCollections } from "@/content/certifications";
 import { publications, researchProfiles } from "@/content/publications";
 import { cvSummary, publicCv } from "@/content/cv";
@@ -289,8 +289,8 @@ export function buildAskIndex(): Passage[] {
   for (const project of convayChapter.projects) {
     add({ text: project.outcome, page: "Home", section: `Convay · ${project.title}`, href: project.href, project: `Convay ${project.title}`, kind: "result" });
   }
-  add({ text: fitvibeFeature.outcome, page: "Home", section: "FitVibe", href: fitvibeFeature.href, project: "FitVibe Kaz Software", kind: "result" });
-  add({ text: fitvibeFeature.role, page: "Home", section: "FitVibe", href: fitvibeFeature.href, project: "FitVibe Kaz Software internship", kind: "role" });
+  add({ text: travelmateFeature.outcome, page: "Home", section: "TravelMate", href: travelmateFeature.href, project: "TravelMate travel companion concept", kind: "result" });
+  add({ text: travelmateFeature.role, page: "Home", section: "TravelMate", href: travelmateFeature.href, project: "TravelMate travel companion concept", kind: "role" });
   for (const item of moreResearch) {
     add({ text: `${item.title}: ${item.line}`, page: "Home", section: "More research", href: item.href, project: item.title, kind: "result" });
   }

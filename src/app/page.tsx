@@ -20,9 +20,9 @@ import { projectSummaries } from "@/content/projects";
 import { chapterFor } from "@/content/chapters";
 import {
   bridgeToConvay,
-  bridgeToFitvibe,
+  bridgeToTravelmate,
   convayChapter,
-  fitvibeFeature,
+  travelmateFeature,
   lumiFeature,
   moreResearch,
   person,
@@ -76,7 +76,8 @@ function CaseLink({ href, children }: { href: string; children: React.ReactNode 
  *
  * 1. The hook: who Aseer is, the promise, and his real path, with the
  *    work playing along it.
- * 2. The work: the featured five, newest first, each led by its outcome
+ * 2. The work: the featured five, research first, then Convay, then a
+ *    concept of Aseer's own, each led by its outcome
  *    and one evidence chip, with a true one-line bridge between them.
  * 3. The depth: more research, then three voices from people he worked
  *    with.
@@ -136,9 +137,9 @@ export default function HomePage() {
       {/* Act 2 · the work */}
       <Section tone="dark" density="default" id="work" className="scroll-mt-16 border-t border-[var(--color-border)]">
         <div className="max-w-3xl">
-          <Label>Selected work · newest first</Label>
+          <Label>Selected work</Label>
           <Heading level={2} className="mt-3">
-            Five projects, from a thesis on trust back to my first client app.
+            Five projects: a thesis on trust, enterprise product work, and a product of my own.
           </Heading>
         </div>
 
@@ -205,29 +206,29 @@ export default function HomePage() {
           </div>
         </section>
 
-        <Bridge>{bridgeToFitvibe}</Bridge>
+        <Bridge>{bridgeToTravelmate}</Bridge>
 
-        {/* FitVibe, compact: the origin */}
+        {/* TravelMate: a concept of his own, labelled as one */}
         <Reveal>
           <article className="grid items-center gap-8 md:grid-cols-12 md:gap-10">
             <HoverStage
-              href={fitvibeFeature.href}
-              label={`Open the ${fitvibeFeature.title} case study`}
-              chapter={chapterFor("fitvibe")}
-              media={thumbnailOf("fitvibe")}
-              sizes="(min-width: 768px) 34vw, 92vw"
-              className="md:col-span-5 lg:col-span-4"
+              href={travelmateFeature.href}
+              label={`Open the ${travelmateFeature.title} case study`}
+              chapter={chapterFor("travelmate-ai")}
+              media={thumbnailOf("travelmate-ai")}
+              sizes="(min-width: 768px) 42vw, 92vw"
+              className="md:col-span-6 lg:col-span-5"
             />
-            <div className="md:col-span-7 lg:col-span-6">
-              <Label>{fitvibeFeature.index}</Label>
+            <div className="md:col-span-6 lg:col-span-6">
+              <Label>{travelmateFeature.index}</Label>
               <h3 className="mt-3 font-[family-name:var(--font-display)] text-[length:var(--text-h2)] leading-[1.1]">
-                {fitvibeFeature.title}
+                {travelmateFeature.title}
               </h3>
-              <p className="mt-4 leading-relaxed">{fitvibeFeature.outcome}</p>
-              <p className="mt-2 text-sm text-[var(--color-text-muted)]">{fitvibeFeature.role}</p>
-              <EvidenceChip evidence={fitvibeFeature.evidence} className="mt-4" />
+              <p className="mt-4 leading-relaxed">{travelmateFeature.outcome}</p>
+              <p className="mt-2 text-sm text-[var(--color-text-muted)]">{travelmateFeature.role}</p>
+              <EvidenceChip evidence={travelmateFeature.evidence} className="mt-4" />
               <div>
-                <CaseLink href={fitvibeFeature.href}>Open the case study</CaseLink>
+                <CaseLink href={travelmateFeature.href}>Open the case study</CaseLink>
               </div>
             </div>
           </article>
@@ -238,7 +239,7 @@ export default function HomePage() {
           className="group mt-20 flex items-center justify-between gap-6 border-y border-[var(--color-border)] py-6"
         >
           <span className="text-[var(--color-text-muted)] transition-colors duration-[var(--duration-base)] group-hover:text-[var(--color-text)]">
-            All work, including Convay Notifications, TravelMate and the aRENEWberg festival app
+            All work, including FitVibe, Convay Notifications and the aRENEWberg festival app
           </span>
           <span className="flex items-center gap-2 font-[family-name:var(--font-mono)] text-xs tracking-[0.14em] uppercase">
             Index

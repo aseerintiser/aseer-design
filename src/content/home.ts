@@ -188,8 +188,28 @@ export const convayChapter = {
   ],
 };
 
-/** Bridge from Convay back to FitVibe: a date fact. */
-export const bridgeToFitvibe = "A year earlier, it started with an internship.";
+/** Bridge from Convay to TravelMate: a date fact. TravelMate replaced
+ * FitVibe on the homepage in October 2026, after its redesign; FitVibe
+ * stays in the Work index and in the hero film's career line. */
+export const bridgeToTravelmate = "During my master's, I also started a product of my own.";
+
+export const travelmateFeature = {
+  slug: "travelmate-ai",
+  href: "/work/travelmate-ai",
+  index: "Self-directed concept · 2025, redesigned 2026",
+  title: "TravelMate",
+  // The case study's one-line scope and "In short" result.
+  outcome:
+    "A travel companion that rewards going, not planning: real places earn ink stamps, and every suggestion says why. A 17-screen concept, not yet tested with users.",
+  role: "Solo product designer · Figma, with Claude as an AI pair designer",
+  evidence: {
+    text: "6 contrast failures found and fixed",
+    source: "WCAG contrast audit of the final palette, measured in the TravelMate Figma file, October 2026.",
+  } as Evidence,
+};
+
+/** FitVibe's homepage feature, kept for when it returns after its own
+ * redesign. Not shown on the homepage since October 2026. */
 
 export const fitvibeFeature = {
   slug: "fitvibe",

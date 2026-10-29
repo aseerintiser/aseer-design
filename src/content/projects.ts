@@ -3586,10 +3586,71 @@ export const caseStudies: CaseStudy[] = [
     // exploring" path: Work track in full, then a bridge into Research,
     // through to the end, looping back to the flagship that opened it.
     nextCaseStudy: {
+      title: "Convay Notifications",
+      href: "/work/convay-notifications",
+    },
+    body: convayDesignSystemBody,
+  },
+  {
+    slug: "convay-notifications",
+    title: "Convay Notifications",
+    track: "work",
+    scale: "feature",
+    contentStatus: "complete",
+    thumbnail: cardLoop("convay-notifications", "A short film of Convay Notifications: the notification panel on web and mobile, its three categories, and turning off one chat."),
+    oneLineScope:
+      "In a platform used across 45+ countries, including by government agencies, missing a critical update can break workflows. I helped design a centralized, categorized notification system for Convay, ensuring users could easily stay on top of meetings, messages, and file updates. This feature was a small yet strategic step toward making Convay a seamless, scalable collaboration tool.",
+    meta: {
+      role: "UX Designer",
+      team: "Product managers + engineering (team size to be confirmed)",
+      duration: "Sep 2023 – Jul 2024 (Convay tenure)",
+      tools: "Figma",
+    },
+    liveMeta: {
+      category: ["Web Design", "Product Design"],
+      role: ["UX Designer", "UI Designer"],
+      tools: ["Figma"],
+    },
+    nextCaseStudy: {
+      title: "TravelMate",
+      href: "/work/travelmate-ai",
+    },
+    body: convayNotificationsBody,
+  },
+  // -----------------------------------------------------------------
+  // Research track: no live-site equivalent (see file-level comment
+  // above). Lumi is written (see lumiBody above); the other four are
+  // still untouched placeholders.
+  // -----------------------------------------------------------------
+  {
+    slug: "travelmate-ai",
+    title: "TravelMate",
+    track: "work",
+    scale: "product",
+    // v2 redesign (October 2026). The slug stays "travelmate-ai" so old
+    // links, the trailer and the card loop keep working; the product is
+    // now just "TravelMate".
+    contentStatus: "complete",
+    thumbnail: cardLoop("travelmate-ai", "A short film of TravelMate: Tuki the ink-bird flies over a map of Lisbon, a suggestion card explains why, and a place earns an ink stamp."),
+    oneLineScope:
+      "A travel companion that suggests what to do right now, explains why, and rewards every real place you visit with an ink stamp. A self-directed concept, redesigned from the ground up in 2026.",
+    meta: {
+      role: "Product Designer (solo)",
+      team: "None (self-directed, solo project)",
+      duration: "Jan – May 2025, redesigned Oct 2026",
+      tools: "Figma, Claude (AI pair designer)",
+    },
+    liveMeta: {
+      category: ["Mobile Design", "Product Design", "AI UX"],
+      role: ["Product Designer (solo)"],
+      tools: ["Figma", "Claude (AI pair designer)"],
+      status: "Self-directed concept, not yet user-tested",
+    },
+    nextCaseStudy: {
       title: "FitVibe: A Comprehensive Fitness App",
       href: "/work/fitvibe",
     },
-    body: convayDesignSystemBody,
+    body: travelMateBody,
   },
   {
     slug: "fitvibe",
@@ -3626,72 +3687,11 @@ export const caseStudies: CaseStudy[] = [
       tools: ["Figma"],
     },
     nextCaseStudy: {
-      title: "TravelMate",
-      href: "/work/travelmate-ai",
-    },
-    body: fitvibeBody,
-  },
-  {
-    slug: "travelmate-ai",
-    title: "TravelMate",
-    track: "work",
-    scale: "product",
-    // v2 redesign (October 2026). The slug stays "travelmate-ai" so old
-    // links, the trailer and the card loop keep working; the product is
-    // now just "TravelMate".
-    contentStatus: "complete",
-    thumbnail: cardLoop("travelmate-ai", "A short film of TravelMate: Tuki the ink-bird flies over a map of Lisbon, a suggestion card explains why, and a place earns an ink stamp."),
-    oneLineScope:
-      "A travel companion that suggests what to do right now, explains why, and rewards every real place you visit with an ink stamp. A self-directed concept, redesigned from the ground up in 2026.",
-    meta: {
-      role: "Product Designer (solo)",
-      team: "None (self-directed, solo project)",
-      duration: "Jan – May 2025, redesigned Oct 2026",
-      tools: "Figma, Claude (AI pair designer)",
-    },
-    liveMeta: {
-      category: ["Mobile Design", "Product Design", "AI UX"],
-      role: ["Product Designer (solo)"],
-      tools: ["Figma", "Claude (AI pair designer)"],
-      status: "Self-directed concept, not yet user-tested",
-    },
-    nextCaseStudy: {
-      title: "Convay Notifications",
-      href: "/work/convay-notifications",
-    },
-    body: travelMateBody,
-  },
-  {
-    slug: "convay-notifications",
-    title: "Convay Notifications",
-    track: "work",
-    scale: "feature",
-    contentStatus: "complete",
-    thumbnail: cardLoop("convay-notifications", "A short film of Convay Notifications: the notification panel on web and mobile, its three categories, and turning off one chat."),
-    oneLineScope:
-      "In a platform used across 45+ countries, including by government agencies, missing a critical update can break workflows. I helped design a centralized, categorized notification system for Convay, ensuring users could easily stay on top of meetings, messages, and file updates. This feature was a small yet strategic step toward making Convay a seamless, scalable collaboration tool.",
-    meta: {
-      role: "UX Designer",
-      team: "Product managers + engineering (team size to be confirmed)",
-      duration: "Sep 2023 – Jul 2024 (Convay tenure)",
-      tools: "Figma",
-    },
-    liveMeta: {
-      category: ["Web Design", "Product Design"],
-      role: ["UX Designer", "UI Designer"],
-      tools: ["Figma"],
-    },
-    nextCaseStudy: {
       title: "Cultural Festival Platform, Arenberg UNESCO Site",
       href: "/work/cultural-festival-platform",
     },
-    body: convayNotificationsBody,
+    body: fitvibeBody,
   },
-  // -----------------------------------------------------------------
-  // Research track: no live-site equivalent (see file-level comment
-  // above). Lumi is written (see lumiBody above); the other four are
-  // still untouched placeholders.
-  // -----------------------------------------------------------------
   {
     slug: "lumi",
     title: "Lumi: Conversational AI for Public Services",
