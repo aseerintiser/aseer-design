@@ -3586,42 +3586,11 @@ export const caseStudies: CaseStudy[] = [
     // exploring" path: Work track in full, then a bridge into Research,
     // through to the end, looping back to the flagship that opened it.
     nextCaseStudy: {
-      title: "Convay Notifications",
-      href: "/work/convay-notifications",
-    },
-    body: convayDesignSystemBody,
-  },
-  {
-    slug: "convay-notifications",
-    title: "Convay Notifications",
-    track: "work",
-    scale: "feature",
-    contentStatus: "complete",
-    thumbnail: cardLoop("convay-notifications", "A short film of Convay Notifications: the notification panel on web and mobile, its three categories, and turning off one chat."),
-    oneLineScope:
-      "In a platform used across 45+ countries, including by government agencies, missing a critical update can break workflows. I helped design a centralized, categorized notification system for Convay, ensuring users could easily stay on top of meetings, messages, and file updates. This feature was a small yet strategic step toward making Convay a seamless, scalable collaboration tool.",
-    meta: {
-      role: "UX Designer",
-      team: "Product managers + engineering (team size to be confirmed)",
-      duration: "Sep 2023 – Jul 2024 (Convay tenure)",
-      tools: "Figma",
-    },
-    liveMeta: {
-      category: ["Web Design", "Product Design"],
-      role: ["UX Designer", "UI Designer"],
-      tools: ["Figma"],
-    },
-    nextCaseStudy: {
       title: "TravelMate",
       href: "/work/travelmate-ai",
     },
-    body: convayNotificationsBody,
+    body: convayDesignSystemBody,
   },
-  // -----------------------------------------------------------------
-  // Research track: no live-site equivalent (see file-level comment
-  // above). Lumi is written (see lumiBody above); the other four are
-  // still untouched placeholders.
-  // -----------------------------------------------------------------
   {
     slug: "travelmate-ai",
     title: "TravelMate",
@@ -3647,11 +3616,42 @@ export const caseStudies: CaseStudy[] = [
       status: "Self-directed concept, not yet user-tested",
     },
     nextCaseStudy: {
-      title: "FitVibe: A Comprehensive Fitness App",
-      href: "/work/fitvibe",
+      title: "Convay Notifications",
+      href: "/work/convay-notifications",
     },
     body: travelMateBody,
   },
+  {
+    slug: "convay-notifications",
+    title: "Convay Notifications",
+    track: "work",
+    scale: "feature",
+    contentStatus: "complete",
+    thumbnail: cardLoop("convay-notifications", "A short film of Convay Notifications: the notification panel on web and mobile, its three categories, and turning off one chat."),
+    oneLineScope:
+      "In a platform used across 45+ countries, including by government agencies, missing a critical update can break workflows. I helped design a centralized, categorized notification system for Convay, ensuring users could easily stay on top of meetings, messages, and file updates. This feature was a small yet strategic step toward making Convay a seamless, scalable collaboration tool.",
+    meta: {
+      role: "UX Designer",
+      team: "Product managers + engineering (team size to be confirmed)",
+      duration: "Sep 2023 – Jul 2024 (Convay tenure)",
+      tools: "Figma",
+    },
+    liveMeta: {
+      category: ["Web Design", "Product Design"],
+      role: ["UX Designer", "UI Designer"],
+      tools: ["Figma"],
+    },
+    nextCaseStudy: {
+      title: "FitVibe: A Comprehensive Fitness App",
+      href: "/work/fitvibe",
+    },
+    body: convayNotificationsBody,
+  },
+  // -----------------------------------------------------------------
+  // Research track: no live-site equivalent (see file-level comment
+  // above). Lumi is written (see lumiBody above); the other four are
+  // still untouched placeholders.
+  // -----------------------------------------------------------------
   {
     slug: "fitvibe",
     title: "FitVibe: A Comprehensive Fitness App",
