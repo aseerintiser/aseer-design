@@ -159,16 +159,16 @@ const cardLoop = (slug: string, alt: string) => ({
 // ---------------------------------------------------------------------
 // 1. Convay Mobile App Revamp
 // ---------------------------------------------------------------------
-// Rebuilt in November 2026 around the "If I designed this today"
-// concept. The shipped 2023-24 work stays first and keeps its evidence
-// tags (claims), so nothing that happened at Synesis IT is restated as
-// part of the concept. Everything after "Why redesign it" is the 2026
-// concept: 14 screens, 5 states, a Light/Dark token system and a
-// 49-link prototype in the "Convay Mobile App Redesign" Figma file.
-// Screens are 2x exports from that file in public/convay-mobile/. The
-// old screens survive only in the before/after graphic, the iteration
-// strip, and one collapsed "original screens" section. Copy record:
-// Case Studies/Convay Mobile App Revamp/10_Redesign_2026_Case_Study.md.
+// Rebuilt in November 2026 around the 2026 redesign concept, then cut to
+// ten chapters (the "In short" panel already carries the hook, so there
+// is no separate short-version chapter). Order: Convay at a Glance, the
+// shipped 2023-24 work with its evidence tags, then the concept. Nothing
+// from the shipped work is restated as part of the concept. Screens are
+// 2x exports from the "Convay Mobile App Redesign" Figma file in
+// public/convay-mobile/. The old screens survive only in the
+// before/after image, the iteration strip and one collapsed section.
+// Copy record: Case Studies/Convay Mobile App Revamp/
+// 10_Redesign_2026_Case_Study.md.
 const cm = (name: string, alt: string) => ({
   src: `/convay-mobile/${name}.png`,
   width: 824,
@@ -177,44 +177,12 @@ const cm = (name: string, alt: string) => ({
 });
 
 const convayMobileAppRevampBody: CaseStudyBlock[] = [
-  { type: "heading", level: 3, text: "The short version" },
-  {
-    type: "paragraph",
-    text: "From 2023 to 2024 I was the UX designer on Convay's mobile app at Synesis IT. That work shipped. People could join a meeting without signing up first, and transcripts, summaries and recordings reached mobile for the first time.",
-  },
-  {
-    type: "paragraph",
-    text: "Two years on, the screens show their age, and the live product is not mine to redraw. So in November 2026 I redesigned it again, as a self-initiated concept, to show how I would solve the same problems today.",
-  },
-  {
-    type: "paragraph",
-    text: "**Everything after the first section is that concept.** It has not shipped and nobody outside this project has tested it. I say that up front, so the rest of the page can be about decisions.",
-  },
-  {
-    type: "image",
-    src: "/convay-mobile/before-after.png",
-    width: 3200,
-    height: 1932,
-    enlargeable: true,
-    alt: "Two phones side by side. Left, the home screen as it shipped in 2023-24: three large purple buttons for Start Meeting, Schedule and Join Meeting above a list of meetings by day. Right, the 2026 concept: a Today screen with an Up next card for the weekly policy briefing, a Join meeting button, and an agenda with a red Now line.",
-    caption: "The home screen as it shipped, and the same screen redesigned in 2026.",
-  },
-  {
-    type: "metricGrid",
-    items: [
-      { value: "14", label: "Screens, in the order people use them" },
-      { value: "5", label: "Edge states most mockups skip" },
-      { value: "49", label: "Links in the clickable prototype" },
-      { value: "2", label: "Modes, Light and Dark, from one set of tokens" },
-    ],
-  },
-
   ...convayAtAGlance,
 
   { type: "heading", level: 3, text: "What shipped in 2023–24" },
   {
     type: "paragraph",
-    text: "The mobile app had fallen behind the web. Navigation was clunky, the way into a meeting was unclear, and even a quick meeting needed an account first. Transcription and summaries, already on the web, were missing on mobile. I audited the app, redesigned onboarding and the meeting flows, and designed mobile screens for transcripts, summaries and recordings, working with the product team and engineers on Android and iOS.",
+    text: "The mobile app had fallen behind the web. The way into a meeting was unclear, even a quick call needed an account, and transcripts and summaries were missing. I audited the app, redesigned onboarding and the meeting flows, and brought transcripts, summaries and recordings to mobile, working with the product team and engineers on Android and iOS.",
   },
   {
     type: "beforeAfterFlow",
@@ -234,7 +202,6 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
       "[[**Mobile reached feature parity with web**|parity]]: transcription, summaries and recordings.",
       "[[Every task in the internal prototype walkthroughs was completed|tasks]].",
       "[[**Five of six reviewers** called the redesign \"more intuitive\"|reviewers]] at handoff.",
-      "Mobile gained **multilingual access**, including Bangla summaries.",
     ],
   },
   {
@@ -276,7 +243,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
       {
         type: "paragraph",
         variant: "caption",
-        text: "Four of the screens I designed in 2023–24. Engineering bandwidth meant not every desktop feature shipped one-to-one, so we scoped MVPs together and handed off Figma files with mobile components, spacing rules and interaction specs.",
+        text: "Four of the screens I designed in 2023–24, handed off with mobile components, spacing rules and interaction specs.",
       },
     ],
   },
@@ -284,7 +251,16 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Why redesign it" },
   {
     type: "paragraph",
-    text: "The 2024 app fixed access. Looking at it now, it still behaves like a launcher. Home is three big buttons and a list of days, and it never says what is next. Summaries sit several taps deep. Bangla is a setting, not part of the experience. The product grew up, and its mobile app did not.",
+    text: "The 2024 app fixed access, but it still behaves like a launcher: three big buttons and a list of days, and nothing that says what is next. The live product is not mine to redraw, so in November 2026 I redesigned it as a self-initiated concept, to show how I would solve the same problems today. **Everything from here on is that concept. It has not shipped or been tested with users.**",
+  },
+  {
+    type: "image",
+    src: "/convay-mobile/before-after.png",
+    width: 3200,
+    height: 1932,
+    enlargeable: true,
+    alt: "Two phones side by side. Left, the home screen as it shipped in 2023-24: three large purple buttons for Start Meeting, Schedule and Join Meeting above a list of meetings by day. Right, the 2026 concept: a Today screen with an Up next card for the weekly policy briefing, a Join meeting button, and an agenda with a red Now line.",
+    caption: "The home screen as it shipped, and the same screen redesigned in 2026.",
   },
   {
     type: "list",
@@ -295,15 +271,11 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
       "**From a sign-up wall to two doors.** Guests join with a link. Staff sign in through their organisation.",
     ],
   },
-  {
-    type: "paragraph",
-    text: "I kept what makes Convay recognisable: its indigo, its ink, and its own AI gradient, taken from convay.com. Everything else was open.",
-  },
 
   { type: "heading", level: 3, text: "Getting in: two doors, no wall" },
   {
     type: "paragraph",
-    text: "Convay's users split in two. Guests get a link and want to be in the call in seconds. Staff at a ministry or a hospital already have a work account. So the first screen offers both, and neither path asks anyone to create a password.",
+    text: "Guests get a link and want to be in the call in seconds. Staff at a ministry or a hospital already have a work account. The first screen offers both, and neither path asks anyone to create a password.",
   },
   {
     type: "beforeAfterFlow",
@@ -329,7 +301,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
       {
         tab: "Join as guest",
         ...cm("join", "Join a meeting as a guest: a suggestion to use a link found on the clipboard, then fields for meeting ID, name and an optional password."),
-        line: "Guests give an ID and a name. A copied invite link is offered before they type anything.",
+        line: "Guests give an ID and a name. A copied invite link is offered first.",
       },
       {
         tab: "Pre-join",
@@ -346,10 +318,6 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
 
   { type: "heading", level: 3, text: "Today: one clear next action" },
   {
-    type: "paragraph",
-    text: "Home answers one question in under a second: what is next, and how do I join it. Everything else on the screen supports that answer or waits below it.",
-  },
-  {
     type: "annotated",
     label: "Close-up · the Today screen",
     device: "phone",
@@ -364,10 +332,6 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
     ],
   },
   {
-    type: "paragraph",
-    text: "There is one filled button on the screen. Audio only sits next to it for people on weak connections, which Convay is built to handle.",
-  },
-  {
     type: "image",
     src: "/convay-mobile/iterations.png",
     width: 3200,
@@ -378,13 +342,13 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "Getting here took five rounds. The first looked like every AI-made app. The second was well crafted but stopped looking like Convay. Then I stress-tested my own design as if I were reviewing someone else's, and fixed every finding inside the Up next card, which made it worse. The final version moved the device check to its own step and the timeline into the agenda. Most of the work was taking things out.",
+    text: "The first round looked like every AI-made app, and the second stopped looking like Convay. Then I stress-tested my own design and fixed every finding inside the Up next card, which made it worse. The final version moved the device check to its own step and the timeline into the agenda. Most of the work was taking things out.",
   },
 
-  { type: "heading", level: 3, text: "In the meeting: captions people can check" },
+  { type: "heading", level: 3, text: "Captions people can check" },
   {
     type: "paragraph",
-    text: "Convay already transcribes in five languages, including Bangla. The concept brings that into the call itself. When someone speaks English, the caption appears in Bangla, with the original line underneath, so nobody has to trust the translation blindly.",
+    text: "Convay already transcribes in five languages, including Bangla. The concept brings that into the call: English speech appears as a Bangla caption, with the original line underneath, so nobody has to trust the translation blindly.",
   },
   {
     type: "screenPlayer",
@@ -411,7 +375,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "AI that admits it is AI" },
   {
     type: "paragraph",
-    text: "My master's thesis studied how people come to trust a conversational AI, and what breaks that trust. One finding shaped this part of the concept: trust builds slowly and can vanish in a single moment. A government recap with a wrong name or number is that moment. So every recap says it was written by AI and asks people to check names and numbers before they share it.",
+    text: "My master's thesis found that trust in a conversational AI builds slowly and can vanish in a single moment. A government recap with a wrong name or number is that moment. So every recap says it was written by AI, and asks people to check names and numbers before they share it.",
   },
   {
     type: "screenPlayer",
@@ -435,7 +399,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
       {
         tab: "Export",
         ...cm("state-export", "Export sheet over the recap: PDF, Word and plain text options, each with when to use it, a language choice, and a switch to include the full transcript."),
-        line: "Format, language and transcript in one sheet, each option saying when to use it.",
+        line: "Format, language and transcript in one sheet.",
       },
     ],
   },
@@ -448,7 +412,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "The rest of the day" },
   {
     type: "screenPlayer",
-    label: "Planning, finding, scheduling",
+    label: "Planning, finding, and when things go wrong",
     screens: [
       {
         tab: "Meeting details",
@@ -470,24 +434,20 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
         ...cm("schedule", "Schedule meeting: title, date, start time, duration chips, invited people and groups, and switches for waiting room, recording with AI recap, and live captions, each with a line explaining the effect."),
         line: "Each switch says what attendees will experience.",
       },
+      {
+        tab: "Wrong ID",
+        ...cm("state-wrong-id", "Join screen with an error under the meeting ID field: no meeting found with this ID, check the last digits, or paste the invite link."),
+        line: "An error that names the likely mistake and offers the fix.",
+      },
+      {
+        tab: "Empty day",
+        ...cm("state-empty", "Today with no meetings: a calendar icon, the line No meetings today, the next meeting on Wednesday, and buttons to schedule or start a meeting now."),
+        line: "An empty day still points to the next meeting.",
+      },
     ],
   },
 
-  { type: "heading", level: 3, text: "The states most mockups skip" },
-  {
-    type: "imageRow",
-    enlargeable: true,
-    images: [
-      cm("state-wrong-id", "Join screen with an error under the meeting ID field: no meeting found with this ID, check the last digits, or paste the invite link."),
-      cm("state-empty", "Today with no meetings: a calendar icon, the line No meetings today, the next meeting on Wednesday, and buttons to schedule or start a meeting now."),
-    ],
-  },
-  {
-    type: "paragraph",
-    text: "A wrong meeting ID names the likely mistake and offers the fix. An empty day still points to the next meeting. Together with the waiting room, the recap in progress and the export sheet, these five states are where a product feels careful or careless.",
-  },
-
-  { type: "heading", level: 3, text: "One system, Light and Dark" },
+  { type: "heading", level: 3, text: "One system, Light and Dark, measured" },
   {
     type: "image",
     src: "/convay-mobile/design-system.png",
@@ -498,7 +458,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "Every colour is a token with a Light and a Dark value: 28 in all, plus 12 for spacing and radius. Fifteen components, from buttons to agenda rows, are bound to them. Geist carries the interface, and Noto Sans Bengali gets its own text style with a taller line height, because Bangla needs the room.",
+    text: "Every colour is a token with a Light and a Dark value, and every component is bound to them. Bangla gets its own text style with a taller line height, because it needs the room.",
   },
   {
     type: "variantComparison",
@@ -508,26 +468,15 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
       { ...cm("today-dark", "The same Today screen in Dark mode, on Convay's near-black, with a lighter indigo for buttons."), caption: "Dark" },
     ],
   },
-
-  { type: "heading", level: 3, text: "Accessibility, measured" },
   {
     type: "paragraph",
-    text: "The coral that marks time pressure looked fine and failed. As text it measured 3.5:1 against white, under the 4.5:1 that small text needs. Text now uses a darker coral at 5.6:1, and the bright coral stays on the dot and the Now line, where 3:1 is enough.",
-  },
-  {
-    type: "list",
-    items: [
-      "Touch targets are 48 dp, the Android minimum, including the round mic and camera toggles.",
-      "Colour is never the only signal. Live has a dot and a word, an overlap has an icon and a sentence.",
-      "Android first, because many of Convay's mobile users are on Android.",
-      "Bangla was checked at real lengths, in captions, recaps and chat, not just in a language label.",
-    ],
+    text: "The coral that marks time pressure looked fine and failed: 3.5:1 as text, under the 4.5:1 it needs. Text now uses a darker coral at 5.6:1. Touch targets are 48 dp, the Android minimum, and colour is never the only signal.",
   },
 
   { type: "heading", level: 3, text: "What this does not prove yet" },
   {
     type: "paragraph",
-    text: "This is a concept. It has not shipped, and nobody outside this project has used it. The shipped results above belong to the 2023–24 work, not to these screens. Two assumptions carry the redesign, and they are what I would test first with five Convay users and the prototype. Does the AI note make people check a recap before sharing it, or do they skip past it? And do staff find signing in with their work email easier than the account they have today?",
+    text: "This is a concept, and the shipped results above belong to the 2023–24 work, not to these screens. I would test two assumptions first, with five Convay users and the prototype. Does the AI note make people check a recap before sharing it? And is signing in with a work email easier than the account staff have today?",
   },
   {
     type: "paragraph",
@@ -3312,7 +3261,7 @@ export const caseStudies: CaseStudy[] = [
     // projects get one. This is the same GIF that opens the full case
     // study, already sized 1600x1200 (4:3), matching ProjectCard's media
     // aspect ratio exactly, so it renders here uncropped.
-    thumbnail: cardLoop("convay-mobile-app-revamp", "A short film of the Convay mobile redesign: a phone turns over a wall of the new screens, from Today to a live meeting with Bangla captions and an AI recap."),
+    thumbnail: cardLoop("convay-mobile-app-revamp", "A short film of the Convay mobile redesign: a phone turns slowly while a coral Now line wipes from Today to a live meeting, a Bangla recap, the welcome screen and Dark mode."),
     // Convay Mobile App Revamp rebuild: replaces the old hook paragraph,
     // which 01_Audit.md flagged as the one place the writing voice broke
     // on the whole page ("The goal? Make sure users could rely on

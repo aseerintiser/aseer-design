@@ -23,7 +23,7 @@ export const inShort: Record<string, InShort> = {
       "The mobile app lagged behind the web: clunky navigation, an unclear way into meetings, and no transcription or summaries.",
     role: "UX Designer at Synesis IT (2023–24), then a self-initiated redesign concept (2026).",
     decision: "Shipped: join with a meeting ID or a link, no sign-up. Concept: one clear next action on Today, captions translated into Bangla, and AI recaps that say they are AI.",
-    result: "Meeting entry dropped from five taps to three and mobile reached parity with web. The 2026 concept adds 14 screens, 5 states and a Light and Dark system.",
+    result: "Meeting entry dropped from five taps to three and mobile reached parity with web. The 2026 concept carries that further, with a Light and Dark system and a clickable prototype.",
     evidence: { text: "Five of six reviewers called it more intuitive at handoff", source: "Internal design reviews at handoff, with the product and engineering team. Informal, not an external usability study." },
   },
   // The Problem; Challenges and Solutions; Outcome and Impact.
