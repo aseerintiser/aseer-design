@@ -21,7 +21,6 @@ const workContext: Record<string, { kind: WorkItem["kind"]; context: string }> =
   "convay-mobile-app-revamp": { kind: "product", context: "Convay at Synesis IT" },
   "convay-ai-for-physical-meetings": { kind: "product", context: "Convay at Synesis IT" },
   "convay-design-system": { kind: "product", context: "Convay at Synesis IT" },
-  "convay-notifications": { kind: "product", context: "Convay at Synesis IT" },
   fitvibe: { kind: "product", context: "Client app at Kaz Software" },
   "travelmate-ai": { kind: "concept", context: "Self-directed concept" },
   "cultural-festival-platform": { kind: "concept", context: "ECIU Créathon, team of six" },

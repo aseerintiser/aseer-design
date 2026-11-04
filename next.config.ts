@@ -12,7 +12,6 @@ const caseSlugs = [
   "convay-mobile-app-revamp",
   "convay-ai-for-physical-meetings",
   "convay-design-system",
-  "convay-notifications",
   "fitvibe",
   "travelmate-ai",
   "cultural-festival-platform",
@@ -23,6 +22,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/about-me", destination: "/about", permanent: true },
+      { source: "/work/convay-notifications", destination: "/work", permanent: true },
+      { source: "/projects-main/convay-notifications", destination: "/work", permanent: true },
       { source: "/projects-main/convay-ai", destination: "/work/convay-ai-for-physical-meetings", permanent: true },
       ...caseSlugs.map((slug) => ({
         source: `/projects-main/${slug}`,

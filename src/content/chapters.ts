@@ -27,7 +27,6 @@ export const chapters: Record<string, Chapter> = {
   "convay-mobile-app-revamp": convay,
   "convay-ai-for-physical-meetings": convay,
   "convay-design-system": convay,
-  "convay-notifications": convay,
   lumi: { name: "Lumi", tint: "#0a8f99", medium: "screen" },
   "cultural-festival-platform": { name: "aRENEWberg", tint: "#2f9e62", medium: "screen" },
   "travelmate-ai": { name: "TravelMate", tint: "#b53724", medium: "screen", companion: "tuki" },

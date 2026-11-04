@@ -49,7 +49,6 @@ const projectWords: Record<string, string> = {
   "convay-mobile-app-revamp": "Convay Synesis IT mobile app",
   "convay-ai-for-physical-meetings": "Convay Synesis IT AI transcription summaries physical meetings",
   "convay-design-system": "Convay Synesis IT design system Figma",
-  "convay-notifications": "Convay Synesis IT notifications",
   fitvibe: "FitVibe Kaz Software internship fitness",
   lumi: "Lumi thesis Tampere University conversational AI trust",
   "travelmate-ai": "TravelMate travel companion concept",

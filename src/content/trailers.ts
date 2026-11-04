@@ -59,7 +59,7 @@ export const trailers: Record<string, Trailer> = {
     "convay-design-system",
     "Trailer for the Convay design system, made from the real variables, roles and styles in its Figma file.",
     [
-      "Convay Design System. Built at Synesis IT in 2023–24, as the only UX designer.",
+      "Convay Design System. Built at Synesis IT in 2023–24.",
       "01, Global: 76 variables. Each one Light and Dark.",
       "02, Roles: designers pick a role, never a hex.",
       "03, States: every state traces back to one colour.",
@@ -82,16 +82,6 @@ export const trailers: Record<string, Trailer> = {
     "04, System: seventeen screens. One system, in Light and Dark.",
     "TravelMate. Turn a trip into something you collect.",
   ]),
-  "convay-notifications": trailer(
-    "convay-notifications",
-    "Trailer for Convay Notifications, made from the feature's real web and mobile screens.",
-    [
-      "Updates were scattered, or missed. Now they live in one place.",
-      "01, One place: meetings, chat and files in one feed, on web and mobile.",
-      "02, Categories: three categories, each with its own icon and details.",
-      "03, In control: turn off a noisy chat, with an undo if you change your mind.",
-    ],
-  ),
   lumi: trailer("lumi", "Trailer for Lumi, made from the prototype's real screens and the study's main finding.", [
     "Trust forms slowly. And breaks fast.",
     "01, The prototype: real institutions, named directly, with links to their official sites.",

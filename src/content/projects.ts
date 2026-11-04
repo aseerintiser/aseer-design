@@ -6,7 +6,7 @@ import { site } from "./site";
  * -----------------------------------------------------------------------
  * Milestone 2 (migration): the six live "work" case studies below
  * (Convay Mobile App Revamp, Convay AI for Physical Meetings, Convay
- * Design System, Convay Notifications, FitVibe, TravelMate AI) are
+ * Design System, FitVibe, TravelMate AI; Convay Notifications was retired in November 2026) are
  * migrated verbatim from aseer.design's Framer-hosted pages, per that
  * milestone's "treat the live site as primary source, do not rewrite"
  * rule. Text is unedited except where the source's own markdown-like
@@ -816,7 +816,7 @@ const convayDesignSystemBody: CaseStudyBlock[] = [
   },
   {
     type: "paragraph",
-    text: "Every new feature meant drawing the basics again, and every mismatch made the product harder to build and harder to trust. As the only UX designer, I set out to give Convay one shared foundation in Figma.",
+    text: "Every new feature meant drawing the basics again, and every mismatch made the product harder to build and harder to trust. I set out to give Convay one shared foundation in Figma.",
   },
 
   { type: "heading", level: 3, text: "How I built it" },
@@ -948,7 +948,7 @@ const convayDesignSystemBody: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Reflection" },
   {
     type: "paragraph",
-    text: "This was the project where I stopped designing screens and started designing the rules behind them. A named corner radius or shadow level sounds small, but it removed a question from every handoff, and it gave a team of developers and one designer a shared language.",
+    text: "This was the project where I stopped designing screens and started designing the rules behind them. A named corner radius or shadow level sounds small, but it removed a question from every handoff, and it gave designers and developers a shared language.",
   },
 ];
 
@@ -1610,222 +1610,6 @@ const travelMateBody: CaseStudyBlock[] = [
     type: "linkCard",
     text: "Play the prototype",
     href: "https://www.figma.com/proto/NtbD4UlStLxosiM0JTFCNo/TravelMate-Redesign?node-id=45-1382&viewport=374%2C209%2C0.23&t=yeBOuDD5GYut0Jr8-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=45%3A1382&page-id=3%3A7",
-  },
-];
-
-// ---------------------------------------------------------------------
-// 6. Convay Notifications
-// ---------------------------------------------------------------------
-const convayNotificationsBody: CaseStudyBlock[] = [
-  {
-    type: "imageRow",
-    images: [
-      img("EDYS5PEjuQKLCjvzA8zuZC9H3F8.png", 2048, 1280),
-      img("5oVV6lx4Zwx4EMP4m3IY9FC2Vo.png", 720, 2384),
-      img("V1cOAEB1e56ZJZLhxfQTzKimHA.png", 2048, 1280),
-    ],
-  },
-  ...convayAtAGlance,
-  { type: "heading", level: 3, text: "Feature Overview" },
-  {
-    type: "paragraph",
-    text: "The goal was to make Convay smarter at keeping users informed, without overwhelming them. The Notifications system groups all updates into three intuitive categories: **Meetings**, **Chat**, and **Files**. Each update comes with a distinct icon and context-specific details, making it easy to scan, prioritize, and take action.",
-  },
-  {
-    type: "paragraph",
-    text: "Whether it's a last-minute meeting change, a new message, or a shared file, users can now access everything from one place, on both **web and mobile**, with options to filter, mark as read, and stay organized.",
-  },
-  { type: "heading", level: 3, text: "Problem" },
-  {
-    type: "paragraph",
-    text: "Before this redesign, Convay lacked a **centralized notification system**. Updates about meetings, chats, and file activities were scattered, or worse, missed entirely.",
-  },
-  {
-    type: "paragraph",
-    text: "Users had no easy way to **track real-time changes**, leading to confusion, delays, and poor coordination across teams. The absence of **categorization** or visual clarity made it hard to tell what mattered and what didn't. For a platform handling high-stakes meetings and collaborative work, this gap was more than an inconvenience, it was a risk.",
-  },
-  { type: "heading", level: 3, text: "My Role and Responsibilities" },
-  {
-    type: "paragraph",
-    text: "I led the UX design of the Notifications system, from concept to handoff. I worked closely with product managers and developers to design a structure that made critical updates easy to notice and act on. My responsibilities included:",
-  },
-  {
-    type: "list",
-    items: [
-      "Designing all UI states across **desktop and mobile**",
-      "Defining the **notification categories** and information hierarchy",
-      "Iterating on visuals and interactions based on internal feedback",
-      "Delivering components and specs in **Figma** for smooth handoff",
-    ],
-  },
-  {
-    type: "paragraph",
-    text: "The goal was to create a system that would work seamlessly across platforms and reduce the cognitive load for busy users.",
-  },
-  { type: "heading", level: 3, text: "User Interface Designs" },
-  {
-    type: "paragraph",
-    text: "**No Notifications Yet**: This screen provides a clean and minimal design, letting users know that there are no new updates. A subtle illustration and message create a welcoming, non-intrusive experience when there are no notifications.",
-  },
-  { type: "image", ...img("EDYS5PEjuQKLCjvzA8zuZC9H3F8.png", 2048, 1280), caption: "No Notifications Yet" },
-  {
-    type: "paragraph",
-    text: "**All Notifications**: This view displays all notifications in a single feed, combining updates from meetings, chats, and files. Users can mark all notifications as read or view updates chronologically.",
-  },
-  { type: "image", ...img("aetbQpG4pv4WsWj16JM6Xz3KAw.png", 2048, 2027), caption: "All Notifications" },
-  {
-    type: "paragraph",
-    text: "**Meeting Notifications**: This category filters notifications related to meetings, such as reminders, invitations, and updates on recorded meetings. This allows users to stay organized with their meeting schedules.",
-  },
-  { type: "image", ...img("V1cOAEB1e56ZJZLhxfQTzKimHA.png", 2048, 1280), caption: "Meeting Notifications" },
-  {
-    type: "paragraph",
-    text: "**Chat Notifications**: This view focuses on chat-related updates, including direct messages, group mentions, and replies in ongoing conversations, helping users keep track of important interactions.",
-  },
-  { type: "image", ...img("0ZyoKA94IJ2DGwhCfUjSk1HEvMY.png", 2048, 1280), caption: "Chat Notifications" },
-  {
-    type: "paragraph",
-    text: "**File Notifications**: This section organizes notifications related to file uploads, edits, or shared files, ensuring users are informed of changes in shared documents and resources.",
-  },
-  { type: "image", ...img("P5zbovYKufyweoW0M6YGA83uh0o.png", 2048, 1280), caption: "File Notifications" },
-  { type: "heading", level: 3, text: "Design Evolution" },
-  // Previous and final panels as close-ups at the same crop (cut from
-  // the full dashboard screens), so the changes sit side by side. The
-  // final one carries pins on exactly what changed; notes condense the
-  // two lists below and the Feature Overview.
-  {
-    type: "image",
-    src: "/closeups/convay-notifications-panel-previous.png",
-    width: 686,
-    height: 1064,
-    alt: "The previous version of the Convay notification panel: plain circle icons to mark items as read, and similar icons for every notification type.",
-    caption: "Previous version",
-  },
-  {
-    type: "annotated",
-    label: "Close-up · the final version",
-    device: "panel",
-    image: {
-      src: "/closeups/convay-notifications-panel-final.png",
-      width: 686,
-      height: 1064,
-      alt: "The final version of the Convay notification panel: All, Meetings, Chat and Files tabs, Mark all as read, a distinct icon per notification type, and checkmarks to mark items as read.",
-    },
-    notes: [
-      { x: 0.82, y: 0.448, text: "A checkmark marks an update as read. It replaced a plain circle that people found unclear." },
-      { x: 0.15, y: 0.3, text: "Each type has its own icon, so meeting, chat and cloud updates read apart at a glance." },
-      { x: 0.965, y: 0.124, text: "Meetings, Chat and Files as filters, with everything together under All." },
-      { x: 0.58, y: 0.05, text: "Mark everything as read in one go." },
-    ],
-  },
-  { type: "paragraph", text: "**Mark as Read Button**" },
-  {
-    type: "list",
-    items: [
-      "**Previous Design**: The \"Mark as Read\" feature was represented by a simple circle icon, which users found unclear and confusing. The icon didn't intuitively convey its function, causing hesitation when marking notifications as read.",
-      "**Current Design**: We replaced the circle with a checkmark icon, which is universally recognized as a \"done\" symbol. This change made the feature immediately understandable, aligning with user expectations and making it easier to manage notifications.",
-      "**Design Rationale**: The checkmark is a widely recognized symbol, and using it enhances usability by clearly communicating that the notification can be marked as read. This design choice reduces cognitive load, allowing users to take action with confidence.",
-    ],
-  },
-  { type: "paragraph", text: "**Distinct Icons for Notification Types**" },
-  {
-    type: "list",
-    items: [
-      "**Previous Design**: Notifications for Meetings, Chat, and Cloud were visually similar, making it difficult for users to quickly identify the type of each notification. This lack of differentiation led to scanning delays and increased cognitive load.",
-      "**Current Design**: In the final design, we introduced unique icons for each notification type (Meeting, Chat, Cloud), making it easier for users to recognize the category of each notification at a glance.",
-      "**Design Rationale**: Adding distinct icons for each notification type improves visual hierarchy and helps users filter information more efficiently. By providing clear visual cues, this design choice streamlines navigation and enhances the user experience by reducing time spent identifying notifications.",
-    ],
-  },
-  { type: "heading", level: 3, text: "Mobile Version" },
-  {
-    type: "imageRow",
-    images: [
-      img("44vlTnKZkUDeiPPdGM9vWGE9IcU.png", 720, 1280),
-      img("5oVV6lx4Zwx4EMP4m3IY9FC2Vo.png", 720, 2384),
-      img("ltaLk6qSPnedVycl18iY04uNQ2w.png", 720, 1438),
-      img("uhylPmBXURACtly9T7wFbpAJA7U.png", 720, 1438),
-      img("WMm1F28kMcsyHx0al8yeZxNBPE.png", 720, 1438),
-      img("PuIAK8FUturHFE06XssORQhz0wk.png", 720, 1438),
-      img("CNsHte7FbblcPEsiY8y3HFljo.png", 720, 1438),
-    ],
-  },
-  { type: "heading", level: 3, text: "Challenges and Solutions" },
-  {
-    type: "paragraph",
-    text: "Designing Convay's notification system wasn't just about listing updates, it was about creating clarity in the noise. Throughout the process, we faced several key usability and interface issues that required careful iteration.",
-  },
-  {
-    type: "paragraph",
-    text: "**Unclear Action Indicator**\n**Initial Issue:** The first \"Mark as Read\" icon was a plain circle, which confused users. It lacked affordance and didn't communicate its purpose.",
-  },
-  {
-    type: "paragraph",
-    text: "**What We Did:** Replaced it with a universally understood checkmark, which instantly signaled task completion. This small change improved interaction clarity and reduced hesitation.",
-  },
-  {
-    type: "paragraph",
-    text: "**Poor Visual Differentiation Between Notification Types**\n**Initial Issue:** All notifications looked similar, making it hard to scan quickly or understand what type of update had arrived.",
-  },
-  {
-    type: "paragraph",
-    text: "**What We Did:** We introduced distinct icons for Meetings, Chats, and Files. This visual cue helped users filter information at a glance and made the interface feel more structured.",
-  },
-  {
-    type: "quote",
-    text: "Now I don't have to guess which notification is about what.\nIt's much clearer with the icons.",
-    attribution: "Test Feedback",
-  },
-  {
-    type: "paragraph",
-    text: "**Cluttered, Overloaded Feed**\n**Initial Issue:** A single undivided feed overwhelmed users with too many mixed updates. They had to scroll and mentally categorize items themselves.",
-  },
-  {
-    type: "paragraph",
-    text: "**What We Did:** We added tab-based filtering. Users could now toggle between All, Meetings, Chat, or File notifications. This simple switch cut down friction and helped them zero in on what mattered.",
-  },
-  {
-    type: "paragraph",
-    text: "**Low Feedback in Empty States**\n**Initial Issue:** When there were no notifications, the UI felt broken or incomplete.",
-  },
-  {
-    type: "paragraph",
-    text: "**What We Did:** We designed a soft illustration and friendly copy for the empty state, making it feel intentional, not like a system glitch. This improved the emotional tone of the app and encouraged exploration.",
-  },
-  { type: "heading", level: 3, text: "Outcome and Impact" },
-  {
-    type: "list",
-    items: [
-      "**Faster Info Retrieval**: Distinct icons and categorized tabs helped users identify and access relevant updates up to **30% faster** during internal testing.",
-      "**Improved User Confidence**: Replacing vague icons with familiar symbols (like the checkmark) made interactions more intuitive, reducing user hesitation.",
-      "**Cleaner Experience**: Categorized filters and thoughtful empty states led to a **cleaner, less overwhelming interface**, especially for new or infrequent users.",
-      "**Foundation for Scalability**: The modular notification structure was designed to accommodate future additions (e.g. system alerts or task reminders) without breaking the UX.",
-    ],
-  },
-  {
-    type: "quote",
-    text: "Notifications used to feel messy. Now I actually check them, I know exactly where to look.",
-    attribution: "Internal Tester",
-  },
-  {
-    type: "paragraph",
-    text: "While no live user metrics were available during my design phase, qualitative feedback during testing highlighted increased clarity, faster scanning, and reduced frustration, key outcomes in a high-collaboration product like Convay.",
-  },
-  { type: "heading", level: 3, text: "Takeaways" },
-  {
-    type: "paragraph",
-    text: "Designing the Convay Notification System reminded me that **small decisions often have the biggest impact**. A single icon change, or adding visual categories, can completely shift how people feel while using a product.",
-  },
-  {
-    type: "paragraph",
-    text: "This project pushed me to think beyond screens, to consider how users mentally process information, what slows them down, and how I can remove that friction. It also strengthened my ability to **balance clarity with scalability**, creating patterns that work now and adapt easily later.",
-  },
-  {
-    type: "quote",
-    text: "Good UX isn't just about building features, it's about\nclearing the noise so what matters can come through.",
-  },
-  {
-    type: "paragraph",
-    text: "This project helped me grow as a product thinker, not just solving problems, but shaping how people navigate fast, collaborative workspaces with less friction.",
   },
 ];
 
@@ -3090,7 +2874,7 @@ export const caseStudies: CaseStudy[] = [
     // every other case study already uses rather than introducing a
     // second, page-specific metadata field.
     oneLineScope:
-      "When I joined Convay, every feature had been designed on its own, with no shared colours, type or components. As the only UX designer, I built Convay's first design system in Figma: 76 global variables, 118 colour roles, Light and Dark, and the styles and components built on them, shaped with the developers who used it.",
+      "When I joined Convay, every feature had been designed on its own, with no shared colours, type or components. I built Convay's first design system in Figma: 76 global variables, 118 colour roles, Light and Dark, and the styles and components built on them, shaped with the developers who used it.",
     meta: {
       role: "UX Designer",
       team: "Product team and developers",
@@ -3149,36 +2933,10 @@ export const caseStudies: CaseStudy[] = [
       status: "Self-directed concept, not yet user-tested",
     },
     nextCaseStudy: {
-      title: "Convay Notifications",
-      href: "/work/convay-notifications",
-    },
-    body: travelMateBody,
-  },
-  {
-    slug: "convay-notifications",
-    title: "Convay Notifications",
-    track: "work",
-    scale: "feature",
-    contentStatus: "complete",
-    thumbnail: cardLoop("convay-notifications", "A short film of Convay Notifications: the notification panel on web and mobile, its three categories, and turning off one chat."),
-    oneLineScope:
-      "In a platform used across 45+ countries, including by government agencies, missing a critical update can break workflows. I helped design a centralized, categorized notification system for Convay, ensuring users could easily stay on top of meetings, messages, and file updates. This feature was a small yet strategic step toward making Convay a seamless, scalable collaboration tool.",
-    meta: {
-      role: "UX Designer",
-      team: "Product managers + engineering (team size to be confirmed)",
-      duration: "Sep 2023 – Jul 2024 (Convay tenure)",
-      tools: "Figma",
-    },
-    liveMeta: {
-      category: ["Web Design", "Product Design"],
-      role: ["UX Designer", "UI Designer"],
-      tools: ["Figma"],
-    },
-    nextCaseStudy: {
       title: "FitVibe: A Comprehensive Fitness App",
       href: "/work/fitvibe",
     },
-    body: convayNotificationsBody,
+    body: travelMateBody,
   },
   // -----------------------------------------------------------------
   // Research track: no live-site equivalent (see file-level comment
