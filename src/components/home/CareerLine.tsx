@@ -15,8 +15,8 @@ const LINE_D = "M100 58 C200 58 200 47 300 47 S400 36 500 36 S600 24 700 24 S800
 const LAST = careerSteps.length - 1;
 
 /**
- * The path so far: Aseer's dated career line, on its own after the work
- * (it used to drive the hero film, until the hero became a reel of
+ * The path so far: Aseer's dated career line, in its own band between
+ * the hero and the work (it used to drive the hero film, until the hero became a reel of
  * chosen work in November 2026).
  *
  * The first time it comes into view, the yellow marker travels the line
@@ -159,7 +159,7 @@ export function CareerLine() {
 
       {/* The chosen step. Announced only once the visitor is choosing,
           not while the marker travels on its own. */}
-      <div className="mt-10 max-w-2xl md:mx-auto md:text-center" aria-live={touched ? "polite" : "off"}>
+      <div className="mt-8 max-w-2xl md:mx-auto md:text-center" aria-live={touched ? "polite" : "off"}>
         <p className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase md:hidden">
           {step.years} · {step.title}
         </p>

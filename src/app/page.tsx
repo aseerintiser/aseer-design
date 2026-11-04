@@ -76,7 +76,7 @@ function CaseLink({ href, children }: { href: string; children: React.ReactNode 
  * Homepage (Phase 2): one story in four acts.
  *
  * 1. The hook: who Aseer is and the promise, beside a reel of the work
- *    he chooses to lead with. His dated path follows the work.
+ *    he chooses to lead with, then his dated path in a slim band.
  * 2. The work: the featured five, research first, then Convay, then a
  *    concept of Aseer's own, each led by its outcome
  *    and one evidence chip, with a true one-line bridge between them.
@@ -138,6 +138,18 @@ export default function HomePage() {
             </div>
           }
         />
+      </Section>
+
+      {/* The path: a slim band between the hero and the work, so the
+          story reads "who I am, how I got here, then the work". Its own
+          label, not tied to the reel above. */}
+      <Section tone="dark" density="dense" id="path" className="scroll-mt-16 border-t border-[var(--color-border)] pt-10 pb-14 md:pt-12 md:pb-16">
+        <h2 className="font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase">
+          The path so far
+        </h2>
+        <div className="mt-6 md:mt-4">
+          <CareerLine />
+        </div>
       </Section>
 
       {/* Act 2 · the work */}
@@ -252,19 +264,6 @@ export default function HomePage() {
             <ArrowIcon className="h-3.5 w-3.5 transition-transform duration-[var(--duration-base)] group-hover:translate-x-0.5" />
           </span>
         </Link>
-      </Section>
-
-      {/* The path: the career line, after the work it led to. */}
-      <Section tone="dark" density="default" id="path" className="scroll-mt-16 border-t border-[var(--color-border)]">
-        <div className="max-w-3xl">
-          <Label>The path so far</Label>
-          <Heading level={2} className="mt-3">
-            From software engineer to designer and researcher.
-          </Heading>
-        </div>
-        <div className="mt-14">
-          <CareerLine />
-        </div>
       </Section>
 
       {/* Act 3 · the depth */}
