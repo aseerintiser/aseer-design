@@ -18,62 +18,60 @@ export interface Evidence {
 }
 
 // ---------------------------------------------------------------------
-// Act 1 · the hook: the trailer along the career line
+// Act 1 · the hook: a reel of the best work
 // ---------------------------------------------------------------------
 
-/** The five clips inside public/loops/trailer.mp4, in playing order, with
- * the second each one starts at (the middle of each 0.45 s crossfade).
- * Each clip is the opening scene of that project's card film (see
- * content/trailers.ts), so every frame is a real project screen. */
-export const trailerClips = [
+/**
+ * The hero reel (November 2026): the projects the hero plays, in this
+ * order. Aseer picks them; they are not tied to the career line any more.
+ * Each one plays its own card film (the project's `thumbnail` in
+ * content/projects.ts, the same film its card uses), so the hero stays
+ * current whenever a film is updated. To change the hero, edit this list.
+ *
+ * `tab` is the short name under the reel; `meta` is worded from the
+ * case studies and trailers.
+ */
+export const heroReel = [
   {
-    id: "fitvibe",
-    start: 0,
-    title: "FitVibe",
-    meta: "UI design intern, Kaz Software · 2022",
-    href: "/work/fitvibe",
-    chapter: "fitvibe",
-    step: "kaz",
-  },
-  {
-    id: "design-system",
-    start: 2.475,
-    title: "Convay Design System",
-    meta: "UX Designer, Synesis IT · 2023–24",
-    href: "/work/convay-design-system",
-    chapter: "convay-design-system",
-    step: "convay",
-  },
-  {
-    id: "mobile",
-    start: 5.175,
-    title: "Convay Mobile App Revamp",
-    meta: "UX Designer, Synesis IT · 2023–24",
+    slug: "convay-mobile-app-revamp",
     href: "/work/convay-mobile-app-revamp",
-    chapter: "convay-mobile-app-revamp",
-    step: "convay",
+    tab: "Convay Mobile",
+    title: "Convay Mobile App Revamp",
+    meta: "Shipped 2023–24 · redesigned 2026",
   },
   {
-    id: "ai",
-    start: 7.875,
-    title: "Convay AI for Physical Meetings",
-    meta: "UX Designer, Synesis IT · 2023–24",
+    slug: "convay-ai-for-physical-meetings",
     href: "/work/convay-ai-for-physical-meetings",
-    chapter: "convay-ai-for-physical-meetings",
-    step: "convay",
+    tab: "Convay AI",
+    title: "Convay AI for Physical Meetings",
+    meta: "Shipped 2023–24 · redesigned 2026",
   },
   {
-    id: "lumi",
-    start: 10.575,
+    slug: "convay-design-system",
+    href: "/work/convay-design-system",
+    tab: "Design System",
+    title: "Convay Design System",
+    meta: "Shipped at Synesis IT · 2023–24",
+  },
+  {
+    slug: "travelmate-ai",
+    href: "/work/travelmate-ai",
+    tab: "TravelMate",
+    title: "TravelMate",
+    meta: "Self-directed concept · 2025, redesigned 2026",
+  },
+  {
+    slug: "lumi",
+    href: "/research/lumi",
+    tab: "Lumi",
     title: "Lumi",
     meta: "M.Sc. thesis, Tampere University · 2025–26",
-    href: "/research/lumi",
-    chapter: "lumi",
-    step: "msc",
   },
 ] as const;
 
-export const trailerDuration = 13.5;
+// ---------------------------------------------------------------------
+// The path: the career line, its own section after the work
+// ---------------------------------------------------------------------
 
 /** The career line, strictly in time order. Dates from the CV and the
  * career archive: B.Sc. Jan 2019 to May 2023; Kaz internship May to Aug
@@ -85,21 +83,26 @@ export const careerSteps = [
     title: "B.Sc. Software Engineering",
     place: "Islamic University of Technology",
     // About page: "Software engineering taught me how systems break."
-    card: "Software engineering taught me how systems break. Design is where I learned why people do.",
+    detail: "Software engineering taught me how systems break. Design is where I learned why people do.",
+    link: { label: "Read how I got here", href: "/about#how-i-got-here" },
   },
   {
     id: "kaz",
     years: "2022",
     title: "Design intern",
     place: "Kaz Software",
-    card: null,
+    // FitVibe intro (the homepage feature it had until October 2026).
+    detail: "My first client app, FitVibe, and my first usability study, with 12 participants.",
+    link: { label: "Open the FitVibe case study", href: "/work/fitvibe" },
   },
   {
     id: "convay",
     years: "2023–24",
     title: "UX Designer",
     place: "Convay at Synesis IT",
-    card: null,
+    // convayChapter.context, shortened.
+    detail: "Eleven months designing Convay, a video conferencing platform now used in more than 45 countries.",
+    link: { label: "See the Convay work", href: "#convay" },
   },
   {
     id: "msc",
@@ -107,14 +110,16 @@ export const careerSteps = [
     title: "M.Sc. Human-Technology Interaction",
     // The scholarship, as the scholarship letter words it ("100%").
     place: "Tampere University, 100% scholarship, with Distinction",
-    card: null,
+    detail: "Two years of Human-Technology Interaction, ending in a thesis on how people come to trust a conversational AI.",
+    link: { label: "Read the Lumi study", href: "/research/lumi" },
   },
   {
     id: "now",
     years: "Now",
     title: "Open to new roles",
     place: "Based in Finland, open to relocating",
-    card: "Open to new roles, wherever the work means understanding people and building for them.",
+    detail: "Open to new roles, wherever the work means understanding people and building for them.",
+    link: { label: "Get in touch", href: "#contact" },
   },
 ] as const;
 
@@ -190,7 +195,7 @@ export const convayChapter = {
 
 /** Bridge from Convay to TravelMate: a date fact. TravelMate replaced
  * FitVibe on the homepage in October 2026, after its redesign; FitVibe
- * stays in the Work index and in the hero film's career line. */
+ * stays in the Work index and on the career line. */
 export const bridgeToTravelmate = "During my master's, I also started a product of my own.";
 
 export const travelmateFeature = {

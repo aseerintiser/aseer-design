@@ -18,7 +18,7 @@ python3 render.py lumi 1920 1080 still --stills 3.5,7.2       # stills for check
 
 Project keys: `mobile`, `ai`, `notif`, `ds`, `fitvibe`, `travelmate`, `lumi`, `arenewberg`.
 
-The site uses web copies: hooks at 1600x900 (`public/trailers/`, CRF 23) and cards at 960x720 (`public/loops/<slug>-card.mp4`, CRF 24), each with a WebP poster. The homepage trailer (`public/loops/trailer.mp4`) is the opening scene of five card films joined with 0.45 s crossfades; its clip start times live in `content/home.ts`.
+The site uses web copies: hooks at 1600x900 (`public/trailers/`, CRF 23) and cards at 960x720 (`public/loops/<slug>-card.mp4`, CRF 24), each with a WebP poster. The homepage hero plays the card films themselves, in the order listed in `heroReel` in `content/home.ts`, so it needs no film of its own.
 
 ## TravelMate (v2 redesign)
 

@@ -274,10 +274,10 @@ export function buildAskIndex(): Passage[] {
   for (const step of careerSteps) {
     const kind: PassageKind = step.id === "bsc" || step.id === "msc" ? "education" : step.id === "now" ? "status" : "role";
     add({
-      text: `${step.years} · ${step.title} · ${step.place}${step.card ? `. ${step.card}` : ""}`,
+      text: `${step.years} · ${step.title} · ${step.place}. ${step.detail}`,
       page: "Home",
       section: "Career line",
-      href: "/",
+      href: "/#path",
       kind,
       prior: 1.1,
     });

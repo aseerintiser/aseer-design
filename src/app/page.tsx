@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { preload } from "react-dom";
 import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
@@ -10,7 +9,8 @@ import { ArrowIcon } from "@/components/ui/ArrowIcon";
 import { EvidenceChip } from "@/components/ui/EvidenceChip";
 import { LocalTime } from "@/components/ui/LocalTime";
 import { Reveal } from "@/components/ui/Reveal";
-import { HeroStory } from "@/components/home/HeroStory";
+import { HeroReel, type ReelItem } from "@/components/home/HeroReel";
+import { CareerLine } from "@/components/home/CareerLine";
 import { HoverStage } from "@/components/home/HoverStage";
 import { Voices } from "@/components/home/Voices";
 import { renderInlineMarkdown } from "@/lib/inline-markdown";
@@ -20,6 +20,7 @@ import { projectSummaries } from "@/content/projects";
 import { chapterFor } from "@/content/chapters";
 import {
   bridgeToConvay,
+  heroReel,
   bridgeToTravelmate,
   convayChapter,
   travelmateFeature,
@@ -74,8 +75,8 @@ function CaseLink({ href, children }: { href: string; children: React.ReactNode 
 /**
  * Homepage (Phase 2): one story in four acts.
  *
- * 1. The hook: who Aseer is, the promise, and his real path, with the
- *    work playing along it.
+ * 1. The hook: who Aseer is and the promise, beside a reel of the work
+ *    he chooses to lead with. His dated path follows the work.
  * 2. The work: the featured five, research first, then Convay, then a
  *    concept of Aseer's own, each led by its outcome
  *    and one evidence chip, with a true one-line bridge between them.
@@ -88,9 +89,13 @@ function CaseLink({ href, children }: { href: string; children: React.ReactNode 
  * to paper for calmer reading.
  */
 export default function HomePage() {
-  // The trailer's poster is the largest thing on the first screen, so the
-  // browser fetches it first instead of after the card posters below.
-  preload("/loops/trailer.webp", { as: "image", fetchPriority: "high" });
+  // The hero plays each chosen project's own card film (content/home.ts).
+  const reel: ReelItem[] = heroReel.map((entry) => {
+    const media = thumbnailOf(entry.slug);
+    if (!media.poster) throw new Error(`Missing card film for ${entry.slug}`);
+    return { ...entry, tint: chapterFor(entry.slug).tint, src: media.src, poster: media.poster, alt: media.alt };
+  });
+  // The first film's poster is preloaded by HeroReel's priority image.
 
   const lumiChapter = chapterFor("lumi");
 
@@ -98,7 +103,8 @@ export default function HomePage() {
     <>
       {/* Act 1 · the hook */}
       <Section tone="dark" density="dense" className="pt-8 pb-14 md:pt-10 md:pb-16">
-        <HeroStory
+        <HeroReel
+          items={reel}
           intro={
             <div>
               {/* One item per line on phones, one row from sm up: the
@@ -172,7 +178,7 @@ export default function HomePage() {
         <Bridge>{bridgeToConvay}</Bridge>
 
         {/* The Convay chapter: one header, three cases */}
-        <section aria-labelledby="convay-chapter">
+        <section id="convay" aria-labelledby="convay-chapter" className="scroll-mt-20">
           <div className="grid gap-6 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-5">
               <Label>{convayChapter.label}</Label>
@@ -246,6 +252,19 @@ export default function HomePage() {
             <ArrowIcon className="h-3.5 w-3.5 transition-transform duration-[var(--duration-base)] group-hover:translate-x-0.5" />
           </span>
         </Link>
+      </Section>
+
+      {/* The path: the career line, after the work it led to. */}
+      <Section tone="dark" density="default" id="path" className="scroll-mt-16 border-t border-[var(--color-border)]">
+        <div className="max-w-3xl">
+          <Label>The path so far</Label>
+          <Heading level={2} className="mt-3">
+            From software engineer to designer and researcher.
+          </Heading>
+        </div>
+        <div className="mt-14">
+          <CareerLine />
+        </div>
       </Section>
 
       {/* Act 3 · the depth */}
