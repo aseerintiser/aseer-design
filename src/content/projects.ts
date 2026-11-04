@@ -159,450 +159,68 @@ const cardLoop = (slug: string, alt: string) => ({
 // ---------------------------------------------------------------------
 // 1. Convay Mobile App Revamp
 // ---------------------------------------------------------------------
-// Convay Mobile App Revamp rebuild (see the "Convay Mobile App Revamp"
-// package: 01_Audit.md through 08_Final_Review.md). Full content
-// replacement and reorder, not a copy edit -- 02_Information_
-// Architecture.md's six-section structure, 03_Content_Final.md's exact
-// copy, real per-image alt text throughout (06_Assets_Checklist.md),
-// and two new evidence pieces (a before/after entry-flow comparison and
-// a research pain-point synthesis) built from existing tokens, not new
-// illustrations. Nothing here invents a fact, metric, or quote beyond
-// what the live page already stated; the package's own audit and this
-// rewrite both treat that as a hard line. Two honest notes on the alt
-// text specifically: (1) the checklist confirms exact on-screen content
-// for the first five Transcription & Summarization screens and asks
-// that the remaining seven "follow the same pattern" -- those seven are
-// described at the same general, honest level of detail the section's
-// own body copy already supports (editing, exporting, saving), not
-// invented specifics I can't verify. (2) three source files are reused
-// between the hero preview and a later Design Decisions gallery; each
-// instance gets its own alt text appropriate to its context (a general
-// preview description in the hero, the specific feature it demonstrates
-// in the gallery), per the checklist's own instruction.
+// Rebuilt in November 2026 around the "If I designed this today"
+// concept. The shipped 2023-24 work stays first and keeps its evidence
+// tags (claims), so nothing that happened at Synesis IT is restated as
+// part of the concept. Everything after "Why redesign it" is the 2026
+// concept: 14 screens, 5 states, a Light/Dark token system and a
+// 49-link prototype in the "Convay Mobile App Redesign" Figma file.
+// Screens are 2x exports from that file in public/convay-mobile/. The
+// old screens survive only in the before/after graphic, the iteration
+// strip, and one collapsed "original screens" section. Copy record:
+// Case Studies/Convay Mobile App Revamp/10_Redesign_2026_Case_Study.md.
+const cm = (name: string, alt: string) => ({
+  src: `/convay-mobile/${name}.png`,
+  width: 824,
+  height: 1830,
+  alt,
+});
+
 const convayMobileAppRevampBody: CaseStudyBlock[] = [
+  { type: "heading", level: 3, text: "The short version" },
   {
-    type: "imageRow",
-    images: [
-      img(
-        "BkobjFZLUDbvcCYWoKrln3tuPI.png",
-        750,
-        1624,
-        "Convay mobile app home screen preview, showing quick actions and today's meeting list.",
-      ),
-      img(
-        "6d5XSeXWX2BjpEwNvU2tHBAHs.png",
-        750,
-        2220,
-        "Convay mobile app Meeting Details screen, showing the title, description, time, meeting link, ID, password, participants, files, recordings and transcription.",
-      ),
-      img(
-        "sqYPt61SyV3toXmoOXJPwh12wco.png",
-        750,
-        1624,
-        "Convay mobile app transcript screen, showing speaker-labeled messages with a Generate Summary button.",
-      ),
-      img(
-        "VPSC5O7xehMPIy9U8xuTuD34yE.png",
-        750,
-        1624,
-        "Convay mobile app calendar preview, showing a selected day's scheduled meetings.",
-      ),
-      img(
-        "z14lwNcGd9LW5GbE3P3j6HnvY.png",
-        750,
-        1624,
-        "Convay mobile app summary preview, showing a generated meeting summary.",
-      ),
-      img(
-        "1SvqYcMGSkhXAPyYPkPGMkOZrHY.png",
-        750,
-        1624,
-        "Convay mobile app summary screen with an audio player and highlighted lines.",
-      ),
-    ],
+    type: "paragraph",
+    text: "From 2023 to 2024 I was the UX designer on Convay's mobile app at Synesis IT. That work shipped. People could join a meeting without signing up first, and transcripts, summaries and recordings reached mobile for the first time.",
   },
   {
     type: "paragraph",
-    variant: "caption",
-    text: "The redesigned Convay mobile app: onboarding, dashboard, and meeting tools rebuilt for phone-sized screens.",
+    text: "Two years on, the screens show their age, and the live product is not mine to redraw. So in November 2026 I redesigned it again, as a self-initiated concept, to show how I would solve the same problems today.",
+  },
+  {
+    type: "paragraph",
+    text: "**Everything after the first section is that concept.** It has not shipped and nobody outside this project has tested it. I say that up front, so the rest of the page can be about decisions.",
+  },
+  {
+    type: "image",
+    src: "/convay-mobile/before-after.png",
+    width: 3200,
+    height: 1932,
+    enlargeable: true,
+    alt: "Two phones side by side. Left, the home screen as it shipped in 2023-24: three large purple buttons for Start Meeting, Schedule and Join Meeting above a list of meetings by day. Right, the 2026 concept: a Today screen with an Up next card for the weekly policy briefing, a Join meeting button, and an agenda with a red Now line.",
+    caption: "The home screen as it shipped, and the same screen redesigned in 2026.",
+  },
+  {
+    type: "metricGrid",
+    items: [
+      { value: "14", label: "Screens, in the order people use them" },
+      { value: "5", label: "Edge states most mockups skip" },
+      { value: "49", label: "Links in the clickable prototype" },
+      { value: "2", label: "Modes, Light and Dark, from one set of tokens" },
+    ],
   },
 
-  // 01. Convay at a Glance -- unchanged position (02_Information_
-  // Architecture.md); content now the approved refresh, sourced from
-  // the shared block itself, so this keeps reusing the shared
-  // block rather than forking it.
   ...convayAtAGlance,
 
-  // 02. The Problem -- unchanged position, copy tightened per
-  // 03_Content_Final.md (also removes the one question-fragment opener
-  // 01_Audit.md flagged, which lived in the old hero hook, not here;
-  // see the caseStudies entry below for that fix).
-  { type: "heading", level: 3, text: "The Problem" },
+  { type: "heading", level: 3, text: "What shipped in 2023–24" },
   {
     type: "paragraph",
-    text: "The existing Convay mobile app fell short of a smooth experience. Users struggled with clunky navigation, unclear meeting-entry flows, and no access to features like transcription and summaries that were already available on the web. The interface was inconsistent, and onboarding was rigid: even a quick meeting required creating an account first. These gaps became real barriers in fast-paced environments, where flexibility mattered most, government briefings, field visits, meetings joined from a phone between other things.",
+    text: "The mobile app had fallen behind the web. Navigation was clunky, the way into a meeting was unclear, and even a quick meeting needed an account first. Transcription and summaries, already on the web, were missing on mobile. I audited the app, redesigned onboarding and the meeting flows, and designed mobile screens for transcripts, summaries and recordings, working with the product team and engineers on Android and iOS.",
   },
-
-  // 03. Research & Reasoning (new, merged) -- replaces the old standalone
-  // "My Role & Responsibilities" section (now two sentences here instead
-  // of its own dark section of bullets) and moves ahead of the design
-  // decisions it explains, per 02_Information_Architecture.md's central
-  // fix: reasoning has to come before the decisions it justifies.
-  { type: "heading", level: 3, text: "Research & Reasoning" },
-  {
-    type: "paragraph",
-    text: "I worked on this redesign as UX Designer, auditing the existing app, redesigning the onboarding and meeting flows, and building mobile-optimized UIs for transcription, summaries, and recordings that matched Convay's web design system. Throughout, I worked directly with the product team and engineers to keep every decision technically realistic on both Android and iOS.",
-  },
-  { type: "heading", level: 4, text: "Research and Exploration" },
-  {
-    type: "paragraph",
-    text: "We started by identifying the pain points carried over from earlier mobile versions: clunky navigation, required logins, and limited access to meeting summaries and recordings. The user base ranged from government officials to institutional teams, many on Android. I reviewed existing mobile analytics and worked with product managers and support teams to map where users were getting stuck.",
-  },
-  // New asset: research-synthesis artifact (06_Assets_Checklist.md,
-  // "New asset 2"). Synthesizes the three pain points the paragraph
-  // above already names, so the section has one piece of visual
-  // evidence instead of five straight paragraphs of dark-background
-  // text.
-  {
-    type: "painPointList",
-    items: [
-      {
-        label: "Clunky navigation",
-        note: "Unclear meeting-entry flows made a simple join feel effortful.",
-      },
-      {
-        label: "Required logins",
-        note: "Even a quick meeting required creating an account first.",
-      },
-      {
-        label: "Limited access to summaries and recordings",
-        note: "Features already live on web were missing from mobile entirely.",
-      },
-    ],
-  },
-  {
-    type: "quote",
-    text: "It shouldn't take more than two taps to join a meeting.",
-    attribution: "PM insight during early planning",
-  },
-  { type: "heading", level: 4, text: "Ideation & UX Strategy" },
-  {
-    type: "paragraph",
-    text: "I redesigned onboarding around three entry points, deep links, Meeting IDs, and an optional password, none of which required signing up first. For the dashboard, I prioritized the actions people reached for most, Join and Start, while keeping search and calendar navigation simple.",
-  },
-  {
-    type: "paragraph",
-    text: "For post-meeting workflows, I added screens for editing transcripts and summaries with export options like PDF and DOCX. The goal throughout was feature parity with desktop, without slowing mobile users down.",
-  },
-  { type: "heading", level: 4, text: "Iteration and Testing" },
-  {
-    type: "paragraph",
-    text: "To check that the flows actually made sense, I shared prototypes with the team and collected informal feedback. The \"Join without login\" flow was the clearest win, people called out how much friction it removed. We also refined touch targets, spacing, and visual hierarchy for smaller screens, aiming for something that held up in fast-paced, on-the-go use.",
-  },
-  {
-    type: "quote",
-    text: "This feels way lighter. I'd actually use this version on mobile.",
-    attribution: "Developer during internal testing",
-  },
-
-  // 04. Design Decisions (renamed + merged) -- was "Design Highlights &
-  // Key Improvements" plus the standalone "Challenges and Solutions"
-  // section. Each challenge now sits directly beside the feature it
-  // explains instead of restating it a second time further down the
-  // page; the two cross-cutting challenges close the section as
-  // "Constraints and Handoff" instead of getting their own section.
-  { type: "heading", level: 3, text: "Design Decisions" },
-  {
-    type: "paragraph",
-    text: "The redesign focused on making the app intuitive and consistent with Convay's broader platform. Aligning with the web version was the baseline, the mobile-specific decisions below are where the real work happened.",
-  },
-
-  { type: "heading", level: 4, text: "1. Simplified Onboarding Flow" },
-  {
-    type: "paragraph",
-    text: "The old app required signing up before joining any meeting. The redesigned entry flow lets people join with just a Meeting ID or a deep link, no login required. Optional password entry, a pre-join camera and mic check, and clear error handling round out first-time access.",
-  },
-  {
-    type: "imageRow",
-    images: [
-      img(
-        "8TeXwnGcZZxx87Ev3pKBC6NVWA.png",
-        750,
-        1624,
-        "Convay mobile app Get Connected intro screen, the first onboarding screen a new user sees.",
-      ),
-      img(
-        "Ag3dTtrmXwtJfmRyLvvNB2sstKU.png",
-        750,
-        1624,
-        "Convay mobile app Get Connected screen, showing the call to sign in or join a meeting.",
-      ),
-      img(
-        "oMcKqOSsfqknwbursjoOy7vRM.png",
-        750,
-        1624,
-        "Convay mobile app Sign In screen, showing email and password fields.",
-      ),
-      img(
-        "PcUjaqL2oPNTAPLgj3L6j0LSgk.png",
-        750,
-        1624,
-        "Convay mobile app Create Account screen, showing the sign-up form.",
-      ),
-      img(
-        "7jxryX696rOXbbVRObvISh52Zg.png",
-        750,
-        1624,
-        "Convay mobile app Join a Meeting screen, showing Meeting ID entry and audio/video toggle before joining.",
-      ),
-      img(
-        "IgQYu8G0zLh41LfPARangdfg.png",
-        750,
-        1742,
-        "Convay mobile app Join a Meeting screen with an optional password field.",
-      ),
-      img(
-        "ZFbKyStXxAhhfTEkjHA3pqDdco.png",
-        750,
-        1624,
-        "Convay mobile app Verify Email screen, showing a code entry field.",
-      ),
-      img(
-        "OdNcILdTsOoo8Gg2Itir0dk1V7o.png",
-        750,
-        1624,
-        "Convay mobile app Update Profile screen, shown after first sign-in.",
-      ),
-    ],
-  },
-  {
-    type: "callout",
-    text: "The hardest part wasn't the happy path, it was guest access. Many users needed to join quickly without creating an account, and the old flow forced sign-up regardless. We solved it with a dedicated \"Join as Guest\" option built around the Meeting ID or deep link, which cut entry time meaningfully for high-pressure cases like official briefings.",
-  },
-  {
-    type: "quote",
-    text: "Sometimes I just need to join a meeting instantly, signing up feels like an extra hassle.",
-    attribution: "Internal testing feedback",
-  },
-  // Close-up with pins: the screen where the guest-access decision
-  // lives. Notes condense this section and Constraints and Handoff.
-  {
-    type: "annotated",
-    label: "Close-up · joining without an account",
-    device: "phone",
-    image: {
-      src: framerAsset("7jxryX696rOXbbVRObvISh52Zg.png"),
-      width: 750,
-      height: 1624,
-      alt: "Convay mobile app Join a Meeting screen, showing Meeting ID entry, a name field and audio and video toggles before joining.",
-    },
-    notes: [
-      { x: 0.93, y: 0.205, text: "A Meeting ID or a deep link is enough to get in. No login first." },
-      { x: 0.93, y: 0.29, text: "Guests add a name and join. The old flow forced sign-up before any meeting." },
-      { x: 0.7, y: 0.49, text: "A camera and mic check happens before joining, not after." },
-      { x: 0.93, y: 0.58, text: "Join stays one tap away, within thumb reach." },
-    ],
-  },
-
-  { type: "heading", level: 4, text: "2. Mobile-Optimized Dashboard" },
-  {
-    type: "paragraph",
-    text: "The dashboard gives quick access to scheduled meetings through search, a calendar view, and one-tap actions like Join or Start Meeting. It mirrors the web layout while accounting for mobile touch ergonomics: larger tap targets, thumb-reachable primary actions, and a simpler information hierarchy than the desktop version needs.",
-  },
-  {
-    type: "imageRow",
-    images: [
-      img(
-        "BkobjFZLUDbvcCYWoKrln3tuPI.png",
-        750,
-        1624,
-        "Convay mobile app home screen, showing quick actions (Start Meeting, Schedule, Join Meeting) and today's meeting list.",
-      ),
-      img(
-        "JCocsdjK8gSkgLls5yv35pYJL0.png",
-        750,
-        1624,
-        "Convay mobile app My Meetings screen in week view, listing the selected day's meetings.",
-      ),
-      img(
-        "VPSC5O7xehMPIy9U8xuTuD34yE.png",
-        750,
-        1624,
-        "Convay mobile app calendar view with a specific day selected.",
-      ),
-      img(
-        "7KwOWX6IzhfsUuQyA7MiXvhs.png",
-        750,
-        1678,
-        "Convay mobile app Meeting Invitation detail screen, showing meeting time and participants.",
-      ),
-      img(
-        "6d5XSeXWX2BjpEwNvU2tHBAHs.png",
-        750,
-        2220,
-        "Convay mobile app Meeting Details screen, showing the title, description, time, meeting link, ID, password, participants, files, recordings and transcription.",
-      ),
-    ],
-  },
-
-  { type: "heading", level: 4, text: "3. Transcription & Summarization Access" },
-  {
-    type: "paragraph",
-    text: "Dedicated pages let users view and edit transcripts, generate summaries, and download notes as PDF, DOCX, or TXT. Support for Bangla and English reflects the primary user base in Bangladesh, carrying over the same multilingual transcription (93% accuracy across five languages) available on web.",
-  },
-  {
-    type: "imageRow",
-    images: [
-      img(
-        "sqYPt61SyV3toXmoOXJPwh12wco.png",
-        750,
-        1624,
-        "Convay mobile app transcript screen, showing speaker-labeled messages with a Generate Summary button.",
-      ),
-      img(
-        "vMYgPucySmXNJMdy0C7PwRLw02U.png",
-        750,
-        1624,
-        "Convay mobile app transcript screen while a summary is generated, with a 50% progress overlay.",
-      ),
-      img(
-        "OUEfdLxb2IR25LivtGIh4j4Vx0.png",
-        750,
-        1624,
-        "Convay mobile app summary screen with the Choose Language picker open.",
-      ),
-      img(
-        "Itj4dk903fNmQp2RVN07xLIQwg.png",
-        750,
-        1624,
-        "Convay mobile app summary screen with a copy, share, export and delete menu open.",
-      ),
-      img(
-        "uIJedHGKyUAgQgQ718vlIOOF8A.png",
-        750,
-        1624,
-        "Convay mobile app transcript screen with a 'Meeting summary ready' notice at the top.",
-      ),
-      img(
-        "z14lwNcGd9LW5GbE3P3j6HnvY.png",
-        750,
-        1624,
-        "Convay mobile app summary screen, showing a generated meeting summary.",
-      ),
-      img(
-        "WieFKhpVaTwrFnKJhMkdNmPveU.png",
-        750,
-        1624,
-        "Convay mobile app summary screen with the export dialog open, showing a file name and PDF format.",
-      ),
-      img(
-        "NiyoTTYIANAtfKu4p1fzzlPUlA.png",
-        750,
-        1624,
-        "Convay mobile app summary screen in edit mode, with the keyboard open and a Save button.",
-      ),
-      img(
-        "1SvqYcMGSkhXAPyYPkPGMkOZrHY.png",
-        750,
-        1624,
-        "Convay mobile app summary screen with an audio player and highlighted lines.",
-      ),
-      img(
-        "mvtYICQECg3fCWxMNZkrdlZS4.png",
-        750,
-        1624,
-        "Convay mobile app summary screen with the language menu open on Bangla.",
-      ),
-      img(
-        "nB1wNttRToNDEsn4Pe4FJyjc0I.png",
-        750,
-        1624,
-        "Convay mobile app summary screen translated into Bangla.",
-      ),
-      img(
-        "RfAIFaFawsJLQq1FIPQYBgGtA.png",
-        750,
-        1624,
-        "Convay mobile app summary screen with a download dialog, showing a file name and format.",
-      ),
-    ],
-  },
-  {
-    type: "callout",
-    text: "Feature parity was the real challenge here. Mobile users had no access to transcription, summaries, or recordings at all, features that were standard on web. We designed mobile-specific interfaces for viewing, editing, and downloading transcripts and summaries, with the same multilingual support, so mobile stopped being the lesser version of Convay.",
-  },
-  {
-    type: "quote",
-    text: "I didn't expect to edit meeting notes this easily on mobile. This feels smooth.",
-    attribution: "Developer preview session",
-  },
-
-  { type: "heading", level: 4, text: "4. Recordings Page" },
-  {
-    type: "paragraph",
-    text: "Users can view, download, and manage recordings directly from the app. Processing loaders, file metadata, contextual menus, and a search bar bring the recordings experience to parity with web.",
-  },
-  {
-    type: "imageRow",
-    images: [
-      img(
-        "tT0Q4Unl05q5M1Yw3WyKrZyLThg.png",
-        750,
-        1624,
-        "Convay mobile app recordings list, showing three files with date, time and file size.",
-      ),
-      img(
-        "ejJ5yjgYGAoBRDIbTOoYLvo5I.png",
-        750,
-        1624,
-        "Convay mobile app recordings list with one file in a Processing state.",
-      ),
-      img(
-        "xaazyhUVhrEGDQlYlLMQdF65tUI.png",
-        750,
-        1624,
-        "Convay mobile app recordings screen with the search bar active.",
-      ),
-      img(
-        "0La9SJB149VU3e8KJkeHgyKQ8a8.png",
-        750,
-        1624,
-        "Convay mobile app meeting minutes screen with a language selector for exporting notes.",
-      ),
-    ],
-  },
-  {
-    type: "callout",
-    text: "Because the mobile and web apps had grown apart, switching between them used to be confusing, different layouts, different components, different mental models for the same task. Aligning the recordings page, and the rest of the redesign, with the web design system's layouts and components fixed that, so moving between platforms now feels like the same product.",
-  },
-
-  { type: "heading", level: 4, text: "Constraints and Handoff" },
-  {
-    type: "paragraph",
-    text: "Two constraints shaped the whole project rather than any single screen. Smaller screens meant rethinking hierarchy, spacing, and touch targets without losing clarity, we leaned on platform heuristics like thumb ergonomics and tap-area sizing to keep core actions like Join and Start one tap away. And limited engineering bandwidth meant not every desktop feature could ship one-to-one on mobile, so I worked with developers and PMs to scope realistic MVPs and handed off Figma files with mobile components, spacing rules, and interaction specs attached.",
-  },
-
-  // 05. Outcome and Impact -- status framing moved to the top, stated
-  // once, plainly (01_Audit.md's second-priority finding), then the new
-  // before/after comparison makes the "five taps to three" claim visible
-  // instead of only stated.
-  { type: "heading", level: 3, text: "Outcome and Impact" },
-  {
-    type: "callout",
-    text: "What follows comes from internal design reviews and prototype walkthroughs with the product and engineering team, informal validation with teammates and reviewers rather than an external usability study or live production data.",
-  },
-  // New asset: before/after entry-flow comparison
-  // (06_Assets_Checklist.md, "New asset 1"). Both sides are plain
-  // labeled steps, no screenshots: no authentic screenshot of the old,
-  // pre-revamp app exists anywhere in this project's files, and the
-  // package this was built from draws a hard line against ever
-  // recreating one. The exact step labels below (five old, three new)
-  // are the package's own given breakdown, not invented here.
   {
     type: "beforeAfterFlow",
     oldLabel: "Old flow: 5 steps",
     oldSteps: ["Open app", "Sign up", "Verify email", "Create profile", "Join meeting"],
-    newLabel: "New flow: 3 steps",
+    newLabel: "Shipped flow: 3 steps",
     newSteps: [
       "Join with Meeting ID or deep link",
       "Optional password",
@@ -612,33 +230,313 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
   {
     type: "list",
     items: [
-      "[[**Meeting entry dropped from five taps to three**|taps]], the clearest, most measurable change in the redesign.",
-      "[[**Mobile reached feature parity with web**|parity]]: transcription, summaries, and recordings all shipped to the design.",
-      "[[Every task attempted during internal prototype walkthroughs was completed successfully|tasks]].",
-      "[[**Five of six reviewers** described the redesign as \"more intuitive\"|reviewers]] during design handoff.",
-      "Mobile picked up **multilingual access**, including Bangla summaries, that the old app never had.",
-      "The redesign meaningfully improves mobile readiness for on-the-go meetings in government and NGO settings.",
-      "Visual and interaction consistency between web and mobile is stronger than at any earlier point in Convay's mobile history.",
+      "[[**Meeting entry dropped from five taps to three**|taps]].",
+      "[[**Mobile reached feature parity with web**|parity]]: transcription, summaries and recordings.",
+      "[[Every task in the internal prototype walkthroughs was completed|tasks]].",
+      "[[**Five of six reviewers** called the redesign \"more intuitive\"|reviewers]] at handoff.",
+      "Mobile gained **multilingual access**, including Bangla summaries.",
+    ],
+  },
+  {
+    type: "details",
+    summary: "The original 2023–24 screens and process",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "We started from pain points carried over from earlier versions, reviewed mobile analytics, and mapped where people got stuck with product managers and support teams. The user base ranged from government officials to institutional teams, many on Android.",
+      },
+      {
+        type: "painPointList",
+        items: [
+          { label: "Clunky navigation", note: "Unclear meeting-entry flows made a simple join feel effortful." },
+          { label: "Required logins", note: "Even a quick meeting required creating an account first." },
+          { label: "Limited access to summaries and recordings", note: "Features already live on web were missing from mobile entirely." },
+        ],
+      },
+      {
+        type: "quote",
+        text: "It shouldn't take more than two taps to join a meeting.",
+        attribution: "PM insight during early planning",
+      },
+      {
+        type: "quote",
+        text: "This feels way lighter. I'd actually use this version on mobile.",
+        attribution: "Developer during internal testing",
+      },
+      {
+        type: "imageRow",
+        enlargeable: true,
+        images: [
+          img("BkobjFZLUDbvcCYWoKrln3tuPI.png", 750, 1624, "Shipped home screen, with quick actions and today's meeting list."),
+          img("6d5XSeXWX2BjpEwNvU2tHBAHs.png", 750, 2220, "Shipped Meeting Details screen, with the title, time, link, ID, password, participants, files, recordings and transcription."),
+          img("sqYPt61SyV3toXmoOXJPwh12wco.png", 750, 1624, "Shipped transcript screen, with speaker-labelled messages and a Generate Summary button."),
+          img("1SvqYcMGSkhXAPyYPkPGMkOZrHY.png", 750, 1624, "Shipped summary screen, with an audio player and highlighted lines."),
+        ],
+      },
+      {
+        type: "paragraph",
+        variant: "caption",
+        text: "Four of the screens I designed in 2023–24. Engineering bandwidth meant not every desktop feature shipped one-to-one, so we scoped MVPs together and handed off Figma files with mobile components, spacing rules and interaction specs.",
+      },
+    ],
+  },
+
+  { type: "heading", level: 3, text: "Why redesign it" },
+  {
+    type: "paragraph",
+    text: "The 2024 app fixed access. Looking at it now, it still behaves like a launcher. Home is three big buttons and a list of days, and it never says what is next. Summaries sit several taps deep. Bangla is a setting, not part of the experience. The product grew up, and its mobile app did not.",
+  },
+  {
+    type: "list",
+    items: [
+      "**From a launcher to an answer.** Home says what is next and how to join it.",
+      "**From AI as a feature to AI in the flow.** A recap appears where the meeting ended, and says it was written by AI.",
+      "**From a language setting to language everywhere.** Captions, transcripts, recaps and chat handle English and Bangla side by side.",
+      "**From a sign-up wall to two doors.** Guests join with a link. Staff sign in through their organisation.",
     ],
   },
   {
     type: "paragraph",
-    text: "These results give Convay a credible case for prioritizing mobile as it keeps scaling across 45+ countries.",
+    text: "I kept what makes Convay recognisable: its indigo, its ink, and its own AI gradient, taken from convay.com. Everything else was open.",
   },
 
-  // 06. Takeaways -- unchanged position and content. The closing quote
-  // gets extra visual weight (size: "large") per 04_Visual_
-  // Specification.md: the single most memorable line on the page, and
-  // the only place in this rebuild where a visual element should look
-  // deliberately different from its siblings.
-  { type: "heading", level: 3, text: "Takeaways" },
+  { type: "heading", level: 3, text: "Getting in: two doors, no wall" },
   {
     type: "paragraph",
-    text: "Working on Convay Mobile pushed me to design more intentionally for constraints, not just screen size, but the ways people actually use phones during meetings. I learned the value of designing for real people in real contexts: a government official joining a meeting on the go, a participant quickly checking a summary in Bangla. I had to rethink flows from scratch, make room for quick access, and design for hosts and guests who might be joining from anywhere.",
+    text: "Convay's users split in two. Guests get a link and want to be in the call in seconds. Staff at a ministry or a hospital already have a work account. So the first screen offers both, and neither path asks anyone to create a password.",
+  },
+  {
+    type: "beforeAfterFlow",
+    oldLabel: "Staff account setup in 2024: 3 screens",
+    oldSteps: ["Create account", "Verify email", "Update profile"],
+    newLabel: "Sign-in in 2026: 1 screen",
+    newSteps: ["Type your work email", "Continue on your organisation's own login page"],
+  },
+  {
+    type: "screenPlayer",
+    label: "Getting in",
+    screens: [
+      {
+        tab: "Welcome",
+        ...cm("welcome", "Welcome screen: a product glimpse of four video tiles with a live Bangla caption, the line 'Meetings your organisation controls', and two buttons, Join a meeting and Sign in."),
+        line: "Two doors. The picture is the product itself: a call with live Bangla captions.",
+      },
+      {
+        tab: "Sign in",
+        ...cm("signin", "Sign in screen: a work email field, a green note saying the organisation uses single sign-on, a Continue with SSO button, and an option to get a one-time code."),
+        line: "A work email finds the organisation and hands off to its single sign-on.",
+      },
+      {
+        tab: "Join as guest",
+        ...cm("join", "Join a meeting as a guest: a suggestion to use a link found on the clipboard, then fields for meeting ID, name and an optional password."),
+        line: "Guests give an ID and a name. A copied invite link is offered before they type anything.",
+      },
+      {
+        tab: "Pre-join",
+        ...cm("prejoin", "Pre-join check: a large self-view with the camera off, mic and camera toggles, an audio output picker, connection strength, and a waiting-room note."),
+        line: "Mic, camera, speaker and connection, checked before anyone sees you.",
+      },
+      {
+        tab: "Waiting room",
+        ...cm("state-waiting", "Waiting room: the host's initials in a soft pulse, the line 'Waiting for the host to let you in', how long you have waited, and your mic and camera state."),
+        line: "Who you are waiting for, for how long, and how you will arrive.",
+      },
+    ],
+  },
+
+  { type: "heading", level: 3, text: "Today: one clear next action" },
+  {
+    type: "paragraph",
+    text: "Home answers one question in under a second: what is next, and how do I join it. Everything else on the screen supports that answer or waits below it.",
+  },
+  {
+    type: "annotated",
+    label: "Close-up · the Today screen",
+    device: "phone",
+    image: cm("today", "The Today screen: an Up next card for the weekly policy briefing starting in 8 minutes, with a Join meeting button and an Audio only option, and an agenda below with an ended meeting, a live one, a red Now line and two later meetings."),
+    notes: [
+      { x: 0.5, y: 0.2, text: "Up next: what is next, and how to join it." },
+      { x: 0.4, y: 0.322, text: "Clashes are flagged before you join, not after." },
+      { x: 0.86, y: 0.28, text: "Encrypted is stated, because this audience asks." },
+      { x: 0.33, y: 0.512, text: "An ended meeting links straight to its AI recap." },
+      { x: 0.5, y: 0.617, text: "The Now line puts the day in order." },
+      { x: 0.4, y: 0.865, text: "Meeting ID or link, always within thumb reach." },
+    ],
   },
   {
     type: "paragraph",
-    text: "It also deepened my collaboration skills. Aligning with the web experience, keeping components reusable, and staying inside what engineering could realistically build taught me how to balance usability, speed, and consistency, even while the product kept evolving.",
+    text: "There is one filled button on the screen. Audio only sits next to it for people on weak connections, which Convay is built to handle.",
+  },
+  {
+    type: "image",
+    src: "/convay-mobile/iterations.png",
+    width: 3200,
+    height: 1698,
+    enlargeable: true,
+    alt: "Five versions of the Today screen in a row. Round 1 uses a purple gradient card. Round 2 uses warm paper and black ink. Round 3 uses Convay's indigo with a day ribbon at the top. Round 4 packs a device check into the Up next card. The final version is the calm Today screen with a Now line in the agenda.",
+    caption: "Five rounds of one screen. The final version is the one with less in it.",
+  },
+  {
+    type: "paragraph",
+    text: "Getting here took five rounds. The first looked like every AI-made app. The second was well crafted but stopped looking like Convay. Then I stress-tested my own design as if I were reviewing someone else's, and fixed every finding inside the Up next card, which made it worse. The final version moved the device check to its own step and the timeline into the agenda. Most of the work was taking things out.",
+  },
+
+  { type: "heading", level: 3, text: "In the meeting: captions people can check" },
+  {
+    type: "paragraph",
+    text: "Convay already transcribes in five languages, including Bangla. The concept brings that into the call itself. When someone speaks English, the caption appears in Bangla, with the original line underneath, so nobody has to trust the translation blindly.",
+  },
+  {
+    type: "screenPlayer",
+    label: "Two languages, one meeting",
+    screens: [
+      {
+        tab: "In meeting",
+        ...cm("meeting", "In-meeting screen on a dark stage: six video tiles with the host speaking, a live caption in Bangla with the English original below it, and controls for mic, camera, sharing, captions, more and leave."),
+        line: "Live captions translated into Bangla, with the original line underneath.",
+      },
+      {
+        tab: "Transcript",
+        ...cm("transcript", "Transcript screen: an audio player with a waveform, speaker filters, and lines from four speakers, one in Bangla with an English translation below it, highlighted as playing."),
+        line: "People switch languages mid-sentence. The transcript keeps both.",
+      },
+      {
+        tab: "Chat",
+        ...cm("chat", "Chat screen: a live meeting's chat pinned on top, then conversations with colleagues and groups, one message in Bangla."),
+        line: "The live meeting's chat is pinned on top. Bangla and English sit side by side.",
+      },
+    ],
+  },
+
+  { type: "heading", level: 3, text: "AI that admits it is AI" },
+  {
+    type: "paragraph",
+    text: "My master's thesis studied how people come to trust a conversational AI, and what breaks that trust. One finding shaped this part of the concept: trust builds slowly and can vanish in a single moment. A government recap with a wrong name or number is that moment. So every recap says it was written by AI and asks people to check names and numbers before they share it.",
+  },
+  {
+    type: "screenPlayer",
+    label: "From the end of a call to a shared recap",
+    screens: [
+      {
+        tab: "Generating",
+        ...cm("state-generating", "Recap generating: a progress card with a gradient bar, steps for transcript, summary, action items and the Bangla version, an estimate of about one minute, and a note that you can leave the screen."),
+        line: "Steps and a time estimate instead of a spinner.",
+      },
+      {
+        tab: "AI recap",
+        ...cm("recap", "AI recap: an English and Bangla switch, a purple note saying it was written by Convay AI and to check names and numbers, a summary, one decision and three action items with owners."),
+        line: "A summary, the decision and action items with owners, under a clear AI note.",
+      },
+      {
+        tab: "In Bangla",
+        ...cm("recap-bangla", "The same AI recap with the Bangla tab selected: the summary, decision and action items in Bangla, while the interface labels stay in English."),
+        line: "One tap for Bangla. The content changes, the interface stays put.",
+      },
+      {
+        tab: "Export",
+        ...cm("state-export", "Export sheet over the recap: PDF, Word and plain text options, each with when to use it, a language choice, and a switch to include the full transcript."),
+        line: "Format, language and transcript in one sheet, each option saying when to use it.",
+      },
+    ],
+  },
+  {
+    type: "linkCard",
+    text: "Read the research behind this: the Lumi case study",
+    href: "/research/lumi",
+  },
+
+  { type: "heading", level: 3, text: "The rest of the day" },
+  {
+    type: "screenPlayer",
+    label: "Planning, finding, scheduling",
+    screens: [
+      {
+        tab: "Meeting details",
+        ...cm("details", "Meeting details: time, repeat, link and security on one card, the people invited with their replies, and a link to last week's AI recap with four open action items."),
+        line: "Everything before you join, plus last week's recap and its open action items.",
+      },
+      {
+        tab: "Calendar",
+        ...cm("calendar", "Calendar day view: meetings as blocks on an hour grid, two overlapping meetings side by side at 10:30, a red Now line and a warning that two meetings overlap."),
+        line: "Clashing meetings sit side by side, so the warning on Today makes sense.",
+      },
+      {
+        tab: "Library",
+        ...cm("library", "Library: recordings with live, processing and ready states, a progress bar with a time estimate, and older recordings from earlier in the week."),
+        line: "Recordings with honest states: live, processing with an estimate, and ready.",
+      },
+      {
+        tab: "Schedule",
+        ...cm("schedule", "Schedule meeting: title, date, start time, duration chips, invited people and groups, and switches for waiting room, recording with AI recap, and live captions, each with a line explaining the effect."),
+        line: "Each switch says what attendees will experience.",
+      },
+    ],
+  },
+
+  { type: "heading", level: 3, text: "The states most mockups skip" },
+  {
+    type: "imageRow",
+    enlargeable: true,
+    images: [
+      cm("state-wrong-id", "Join screen with an error under the meeting ID field: no meeting found with this ID, check the last digits, or paste the invite link."),
+      cm("state-empty", "Today with no meetings: a calendar icon, the line No meetings today, the next meeting on Wednesday, and buttons to schedule or start a meeting now."),
+    ],
+  },
+  {
+    type: "paragraph",
+    text: "A wrong meeting ID names the likely mistake and offers the fix. An empty day still points to the next meeting. Together with the waiting room, the recap in progress and the export sheet, these five states are where a product feels careful or careless.",
+  },
+
+  { type: "heading", level: 3, text: "One system, Light and Dark" },
+  {
+    type: "image",
+    src: "/convay-mobile/design-system.png",
+    width: 3200,
+    height: 1360,
+    enlargeable: true,
+    alt: "The design system: eight colour tokens each shown with a Light and a Dark value, Convay's AI gradient, a type specimen in Geist and Noto Sans Bengali, and components including buttons, tags, an agenda row, the join bar, device toggles, switches and the bottom navigation.",
+  },
+  {
+    type: "paragraph",
+    text: "Every colour is a token with a Light and a Dark value: 28 in all, plus 12 for spacing and radius. Fifteen components, from buttons to agenda rows, are bound to them. Geist carries the interface, and Noto Sans Bengali gets its own text style with a taller line height, because Bangla needs the room.",
+  },
+  {
+    type: "variantComparison",
+    label: "Same screen, two modes, nothing redrawn",
+    variants: [
+      { ...cm("today", "The Today screen in Light mode."), caption: "Light" },
+      { ...cm("today-dark", "The same Today screen in Dark mode, on Convay's near-black, with a lighter indigo for buttons."), caption: "Dark" },
+    ],
+  },
+
+  { type: "heading", level: 3, text: "Accessibility, measured" },
+  {
+    type: "paragraph",
+    text: "The coral that marks time pressure looked fine and failed. As text it measured 3.5:1 against white, under the 4.5:1 that small text needs. Text now uses a darker coral at 5.6:1, and the bright coral stays on the dot and the Now line, where 3:1 is enough.",
+  },
+  {
+    type: "list",
+    items: [
+      "Touch targets are 48 dp, the Android minimum, including the round mic and camera toggles.",
+      "Colour is never the only signal. Live has a dot and a word, an overlap has an icon and a sentence.",
+      "Android first, because many of Convay's mobile users are on Android.",
+      "Bangla was checked at real lengths, in captions, recaps and chat, not just in a language label.",
+    ],
+  },
+
+  { type: "heading", level: 3, text: "What this does not prove yet" },
+  {
+    type: "paragraph",
+    text: "This is a concept. It has not shipped, and nobody outside this project has used it. The shipped results above belong to the 2023–24 work, not to these screens. Two assumptions carry the redesign, and they are what I would test first with five Convay users and the prototype. Does the AI note make people check a recap before sharing it, or do they skip past it? And do staff find signing in with their work email easier than the account they have today?",
+  },
+  {
+    type: "paragraph",
+    text: "I used Claude as an AI pair designer to explore directions and produce the Figma file. I chose the direction, rejected the rounds that did not work, and own the decisions on this page.",
+  },
+  {
+    type: "linkCard",
+    text: "Play the prototype",
+    href: "https://www.figma.com/proto/uM7wA3VlG9XJolwSjOQR18/Convay-Mobile-App-Redesign?node-id=19-916&viewport=431%2C140%2C0.2&t=h1cVRnCwXHHolL77-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=19%3A916&page-id=6%3A20",
   },
   {
     type: "quote",
@@ -3414,7 +3312,7 @@ export const caseStudies: CaseStudy[] = [
     // projects get one. This is the same GIF that opens the full case
     // study, already sized 1600x1200 (4:3), matching ProjectCard's media
     // aspect ratio exactly, so it renders here uncropped.
-    thumbnail: cardLoop("convay-mobile-app-revamp", "A short film of the Convay mobile app: joining a meeting, transcripts and summaries on mobile, and the full set of redesigned screens."),
+    thumbnail: cardLoop("convay-mobile-app-revamp", "A short film of the Convay mobile redesign: a phone turns over a wall of the new screens, from Today to a live meeting with Bangla captions and an AI recap."),
     // Convay Mobile App Revamp rebuild: replaces the old hook paragraph,
     // which 01_Audit.md flagged as the one place the writing voice broke
     // on the whole page ("The goal? Make sure users could rely on
@@ -3422,17 +3320,18 @@ export const caseStudies: CaseStudy[] = [
     // otherwise natural, confident piece of writing, and the very first
     // paragraph a reader sees). Verbatim from 03_Content_Final.md.
     oneLineScope:
-      "Convay was growing fast, reaching global audiences and hosting high-stakes meetings, but its mobile app hadn't kept up. Users struggled to join meetings, key features were missing, and the experience felt clunky next to the web app. I redesigned the mobile experience from the ground up: simpler to use, faster to join, and consistent with Convay everywhere people met.",
+      "I designed Convay's mobile app at Synesis IT in 2023–24, and the work shipped: joining without sign-up, and transcripts, summaries and recordings on mobile. In 2026 I redesigned it again as a concept, to show how I would solve the same problems today.",
     meta: {
-      role: "UX Designer",
-      team: "Product managers + engineering (team size to be confirmed)",
-      duration: "Sep 2023 – Jul 2024 (Convay tenure)",
-      tools: "Figma",
+      role: "UX Designer (2023–24), Product Designer (2026 concept)",
+      team: "Product managers + engineering (2023–24); solo concept (2026)",
+      duration: "Sep 2023 – Jul 2024 (Convay tenure), redesigned Nov 2026",
+      tools: "Figma, Claude (AI pair designer, 2026 concept)",
     },
     liveMeta: {
       category: ["Mobile Design", "Product Design"],
       role: ["UX Designer", "UI Designer", "UX Researcher"],
-      tools: ["Figma"],
+      tools: ["Figma", "Claude (AI pair designer, 2026 concept)"],
+      status: "Shipped 2023–24 · Redesign concept 2026, not yet user-tested",
     },
     // Closes the roughly 1,000px dead-space gap 01_Audit.md measured
     // between the meta row and the hero visual -- see CaseStudyLayout.tsx

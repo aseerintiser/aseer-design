@@ -31,3 +31,15 @@ python3 render-film.py card 1200 900 travelmate-ai-card-1200x900.mp4           #
 ```
 
 Fonts are bundled in `travelmate/fonts/` so the film renders the same on any machine.
+
+## Convay Mobile App Revamp (2026 redesign)
+
+The Convay mobile films no longer come from `specs.js` (its old `mobile` spec still describes the 2023–24 screens and is kept only for reference). They live in `convay-mobile/`: `film.html` is a self-contained timeline built from the shipped 2023–24 home screen and the 2026 redesign's real screens in `public/convay-mobile/`, and `render-film.py` renders it frame by frame into ffmpeg, the same way as TravelMate.
+
+```
+cd scripts/trailers/convay-mobile
+python3 render-film.py hero 1920 1080 convay-mobile-app-revamp-trailer-1920x1080.mp4   # hook, with titles
+python3 render-film.py card 1200 900 convay-mobile-app-revamp-card-1200x900.mp4         # card, no text, seamless 14 s loop
+```
+
+Geist and Noto Sans Bengali are bundled in `convay-mobile/fonts/`. The homepage trailer's Convay Mobile clip now takes 1.0–4.15 s of the new card film (the Now line sweeping the wall).

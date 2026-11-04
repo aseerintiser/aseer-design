@@ -31,12 +31,15 @@ const trailer = (file: string, alt: string, script: string[]): Trailer => ({
 export const trailers: Record<string, Trailer> = {
   "convay-mobile-app-revamp": trailer(
     "convay-mobile-app-revamp",
-    "Trailer for the Convay mobile app revamp, made from the app's real screens.",
+    "Trailer for the Convay mobile app revamp, made from the shipped 2023–24 home screen and the real screens of the 2026 redesign.",
     [
-      "Joining a meeting took five taps. Now it takes three.",
-      "01, Joining: join with a meeting ID or a link. No sign-up first.",
-      "02, Parity: transcripts, summaries and recordings, now on mobile too.",
-      "03, End to end: onboarding, dashboard and meeting tools, rebuilt for phones.",
+      "Convay Mobile App Revamp. UX Designer, Synesis IT, 2023–24, redesigned 2026.",
+      "Shipped in 2023–24. Rethought in 2026. Same product, same people. Every screen redrawn with today's patterns.",
+      "01, Getting in: no account. No wall. Just join.",
+      "02, Live captions: English in, Bangla out.",
+      "03, Honest AI: AI recaps that say they are AI. Written by Convay AI. Check names and numbers before you share.",
+      "04, System: 14 screens, 5 states, Light and Dark.",
+      "Convay Mobile App Revamp. Shipped work, and a 2026 redesign concept.",
     ],
   ),
   "convay-ai-for-physical-meetings": trailer(
