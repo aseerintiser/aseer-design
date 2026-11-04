@@ -179,6 +179,24 @@ const cm = (name: string, alt: string) => ({
 const convayMobileAppRevampBody: CaseStudyBlock[] = [
   ...convayAtAGlance,
 
+  { type: "heading", level: 3, text: "The problem" },
+  {
+    type: "paragraph",
+    text: "We started from pain points carried over from earlier versions, reviewed mobile analytics, and mapped where people got stuck with product managers and support teams. The user base ranged from government officials to institutional teams, many on Android.",
+  },
+  {
+    type: "painPointList",
+    items: [
+      { label: "Clunky navigation", note: "Unclear meeting-entry flows made a simple join feel effortful." },
+      { label: "Required logins", note: "Even a quick meeting required creating an account first." },
+      { label: "Limited access to summaries and recordings", note: "Features already live on web were missing from mobile entirely." },
+    ],
+  },
+  {
+    type: "quote",
+    text: "It shouldn't take more than two taps to join a meeting.",
+    attribution: "PM insight during early planning",
+  },
   { type: "heading", level: 3, text: "What shipped in 2023–24" },
   {
     type: "paragraph",
@@ -205,31 +223,14 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
     ],
   },
   {
+    type: "quote",
+    text: "This feels way lighter. I'd actually use this version on mobile.",
+    attribution: "Developer during internal testing",
+  },
+  {
     type: "details",
-    summary: "The original 2023–24 screens and process",
+    summary: "The original 2023–24 screens",
     blocks: [
-      {
-        type: "paragraph",
-        text: "We started from pain points carried over from earlier versions, reviewed mobile analytics, and mapped where people got stuck with product managers and support teams. The user base ranged from government officials to institutional teams, many on Android.",
-      },
-      {
-        type: "painPointList",
-        items: [
-          { label: "Clunky navigation", note: "Unclear meeting-entry flows made a simple join feel effortful." },
-          { label: "Required logins", note: "Even a quick meeting required creating an account first." },
-          { label: "Limited access to summaries and recordings", note: "Features already live on web were missing from mobile entirely." },
-        ],
-      },
-      {
-        type: "quote",
-        text: "It shouldn't take more than two taps to join a meeting.",
-        attribution: "PM insight during early planning",
-      },
-      {
-        type: "quote",
-        text: "This feels way lighter. I'd actually use this version on mobile.",
-        attribution: "Developer during internal testing",
-      },
       {
         type: "imageRow",
         enlargeable: true,
@@ -425,16 +426,6 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
         line: "Clashing meetings sit side by side, so the warning on Today makes sense.",
       },
       {
-        tab: "Library",
-        ...cm("library", "Library: recordings with live, processing and ready states, a progress bar with a time estimate, and older recordings from earlier in the week."),
-        line: "Recordings with honest states: live, processing with an estimate, and ready.",
-      },
-      {
-        tab: "Schedule",
-        ...cm("schedule", "Schedule meeting: title, date, start time, duration chips, invited people and groups, and switches for waiting room, recording with AI recap, and live captions, each with a line explaining the effect."),
-        line: "Each switch says what attendees will experience.",
-      },
-      {
         tab: "Wrong ID",
         ...cm("state-wrong-id", "Join screen with an error under the meeting ID field: no meeting found with this ID, check the last digits, or paste the invite link."),
         line: "An error that names the likely mistake and offers the fix.",
@@ -523,19 +514,30 @@ const caPhone = (name: string, alt: string) => ({
 const convayAiBody: CaseStudyBlock[] = [
   ...convayAtAGlance,
 
+  { type: "heading", level: 3, text: "The problem" },
+  {
+    type: "paragraph",
+    text: "In government briefings and internal syncs, people met face to face and left with rough notes or none. Decisions and tasks slipped, and nobody could check later who had agreed to what. Convay already recorded and transcribed online calls, but a physical room had nothing.",
+  },
+
   { type: "heading", level: 3, text: "What shipped in 2023–24" },
   {
     type: "paragraph",
-    text: "Teams at government offices and in internal syncs met face to face, and nobody had a record afterwards. Convay already transcribed online calls. I designed the flow that brought the same to a physical room: set up a meeting, record it, review the transcript, summarise it with AI and export it, with Bangla transcription from the start. I worked with product managers and engineers, built the variants and ran the internal tests.",
+    text: "I designed the flow that brought Convay into the room: set up a meeting, record it, review the transcript, summarise it with AI and export it, with Bangla transcription from the start. I worked with product managers and engineers, built the variants and ran the internal tests. Four problems shaped it.",
   },
   {
     type: "list",
     items: [
-      "[[**82% of internal testers preferred the dark meeting panel**|dark-panel]] over the light one, so the shipped panel went dark to match the rest of Convay.",
-      "[[A bulk rename cut **speaker editing time by an estimated 30–40%**|rename-time]].",
-      "[[**93% transcription accuracy** in quiet rooms|accuracy]], from internal testing rather than a field study.",
-      "[[Teams reported **30–40% less time** spent writing meeting notes|notes-time]].",
+      "**Noisy rooms.** Background noise hurt the transcript. We explored early noise filtering and speaker identification. [[In quiet rooms, internal tests reached **93% accuracy**|accuracy]].",
+      "**A panel that did not match.** The panel started light while Convay was dark. I tested both, and [[**82% of internal testers** preferred dark|dark-panel]], so it shipped dark.",
+      "**Renaming speakers line by line.** In long meetings this took ages. A bulk rename, applied everywhere at once, [[cut speaker editing time by an **estimated 30–40%**|rename-time]].",
+      "**People hesitated to press \"Summarize with AI\".** A clear label, a prominent place and an optional step fixed most of it. Across the feature, [[teams reported **30–40% less time** writing notes|notes-time]].",
     ],
+  },
+  {
+    type: "quote",
+    text: "I didn't expect it to be that simple. The summary saved me a ton of time.",
+    attribution: "User feedback",
   },
   {
     type: "details",
@@ -563,18 +565,6 @@ const convayAiBody: CaseStudyBlock[] = [
           img("veV5cHUbDznR85kSt8TtYr2dSg.png", 2048, 1280, "Shipped transcript screen, where the transcript can be read and edited."),
           img("wvjdbZNqmnqe9WrrgfaDvgLenAk.png", 2048, 1280, "Shipped meeting summary screen."),
         ],
-      },
-      {
-        type: "list",
-        items: [
-          "Testing removed the \"Mute\" text label, moved the AI summary button, and smoothed the steps from transcript to summary to export.",
-          "Some people hesitated to press \"Summarize with AI\". A clear label and an optional, prominent button fixed most of that.",
-        ],
-      },
-      {
-        type: "quote",
-        text: "Even in busy rooms, the transcript quality held up well.",
-        attribution: "Internal tester",
       },
     ],
   },
