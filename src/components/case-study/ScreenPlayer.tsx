@@ -9,6 +9,7 @@ interface ScreenPlayerProps {
   label: string;
   screens: (ScreenImage & { tab: string; line: string })[];
   tint?: string;
+  device?: "phone" | "desktop";
 }
 
 /**
@@ -16,7 +17,8 @@ interface ScreenPlayerProps {
  * section of the app, and one line on what that screen is for. Tabs
  * follow the ARIA tabs pattern, so arrow keys move between them.
  */
-export function ScreenPlayer({ label, screens, tint }: ScreenPlayerProps) {
+export function ScreenPlayer({ label, screens, tint, device = "phone" }: ScreenPlayerProps) {
+  const isDesktop = device === "desktop";
   const [active, setActive] = useState(0);
   const id = useId();
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -40,12 +42,22 @@ export function ScreenPlayer({ label, screens, tint }: ScreenPlayerProps) {
       className="stage m-0 overflow-hidden rounded-[var(--radius-lg)] text-[#f2f0ea]"
       style={{ "--stage-tint": tint ?? "var(--chapter-tint, #5b584f)" } as CSSProperties}
     >
-      <div className="grid items-center gap-8 p-6 sm:p-8 md:grid-cols-[240px_minmax(0,1fr)] md:gap-12 md:p-10">
+      <div
+        className={cn(
+          "grid items-center gap-8 p-6 sm:p-8 md:p-10",
+          isDesktop ? "grid-cols-1 md:gap-8" : "md:grid-cols-[240px_minmax(0,1fr)] md:gap-12",
+        )}
+      >
         <div
           role="tabpanel"
           id={`${id}-panel`}
           aria-labelledby={`${id}-tab-${active}`}
-          className="relative mx-auto aspect-[9/19.5] w-[220px] overflow-hidden rounded-[32px] bg-black shadow-[0_0_0_7px_#151514,0_0_0_8px_rgb(255_255_255/0.08),0_40px_70px_-30px_rgb(0_0_0/0.9)] md:w-[240px]"
+          className={cn(
+            "relative mx-auto overflow-hidden bg-black",
+            isDesktop
+              ? "aspect-[16/10] w-full rounded-[14px] shadow-[0_0_0_1px_rgb(255_255_255/0.12),0_40px_70px_-30px_rgb(0_0_0/0.9)]"
+              : "aspect-[9/19.5] w-[220px] rounded-[32px] shadow-[0_0_0_7px_#151514,0_0_0_8px_rgb(255_255_255/0.08),0_40px_70px_-30px_rgb(0_0_0/0.9)] md:w-[240px]",
+          )}
         >
           {screens.map((screen, index) => (
             <Image
@@ -55,7 +67,7 @@ export function ScreenPlayer({ label, screens, tint }: ScreenPlayerProps) {
               height={screen.height}
               alt={index === active ? screen.alt : ""}
               aria-hidden={index === active ? undefined : true}
-              sizes="240px"
+              sizes={isDesktop ? "(min-width: 1024px) 960px, 92vw" : "240px"}
               className={cn(
                 "absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-[var(--duration-base)] ease-[var(--ease-standard)]",
                 index === active ? "opacity-100" : "opacity-0",
@@ -70,7 +82,10 @@ export function ScreenPlayer({ label, screens, tint }: ScreenPlayerProps) {
           </p>
           <p
             aria-live="polite"
-            className="mt-4 min-h-[3.5em] max-w-[30ch] font-[family-name:var(--font-display)] text-[clamp(1.375rem,1.1rem+0.9vw,1.75rem)] leading-[1.25]"
+            className={cn(
+              "mt-4 font-[family-name:var(--font-display)] text-[clamp(1.375rem,1.1rem+0.9vw,1.75rem)] leading-[1.25]",
+              isDesktop ? "min-h-[2.5em] max-w-[44ch]" : "min-h-[3.5em] max-w-[30ch]",
+            )}
           >
             {current?.line}
           </p>

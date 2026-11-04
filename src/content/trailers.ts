@@ -44,12 +44,15 @@ export const trailers: Record<string, Trailer> = {
   ),
   "convay-ai-for-physical-meetings": trailer(
     "convay-ai-for-physical-meetings",
-    "Trailer for Convay AI for Physical Meetings, made from the product's real screens.",
+    "Trailer for the Convay AI for Physical Meetings redesign, made from the concept's real screens and the shipped 2023-24 panel.",
     [
-      "Crucial details went undocumented. Now you press Record.",
-      "01, Record: record the room. Get a full transcript after.",
-      "02, Summarise: then an AI summary people can share.",
-      "03, Tested: two panels tested. 82% of internal testers preferred dark.",
+      "Convay AI for Physical Meetings. 2023–24, shipped. 2026, redesigned.",
+      "01, In the room: two languages, one transcript. Bangla lines get an English translation underneath.",
+      "02, Mark this moment: press M. It lands in the notes.",
+      "03, Convay AI: every note links to the second it came from.",
+      "04, Web and mobile: the room screen, and your pocket.",
+      "05, System: Light first. Dark when you want it.",
+      "Convay AI for Physical Meetings. Shipped in 2023–24. Redesigned as a concept in 2026.",
     ],
   ),
   "convay-design-system": trailer(

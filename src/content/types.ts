@@ -99,8 +99,9 @@ export type CaseStudyBlock =
       type: "annotated";
       label: string;
       image: ScreenImage;
-      /** "phone" draws a device edge; "panel" a plain bordered frame. */
-      device: "phone" | "panel";
+      /** "phone" draws a device edge; "panel" a plain bordered frame;
+       * "desktop" a full-width browser window with the notes below. */
+      device: "phone" | "panel" | "desktop";
       notes: { x: number; y: number; text: string }[];
     }
   | {
@@ -108,6 +109,8 @@ export type CaseStudyBlock =
        * saying what each screen is for. */
       type: "screenPlayer";
       label: string;
+      /** "desktop" shows a full-width browser window instead of a phone. */
+      device?: "phone" | "desktop";
       screens: (ScreenImage & { tab: string; line: string })[];
     }
   | {

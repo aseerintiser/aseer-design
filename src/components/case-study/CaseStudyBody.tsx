@@ -268,7 +268,7 @@ function renderBlock(
     case "screenPlayer":
       return (
         <div key={key} className="mt-8">
-          <ScreenPlayer label={block.label} screens={block.screens} />
+          <ScreenPlayer label={block.label} screens={block.screens} device={block.device} />
         </div>
       );
     case "costChart":

@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 interface AnnotatedScreenProps {
   label: string;
   image: ScreenImage;
-  device: "phone" | "panel";
+  device: "phone" | "panel" | "desktop";
   notes: { x: number; y: number; text: string }[];
 }
 
@@ -23,16 +23,21 @@ export function AnnotatedScreen({ label, image, device, notes }: AnnotatedScreen
   const [active, setActive] = useState(0);
   const id = useId();
   const isPhone = device === "phone";
+  const isDesktop = device === "desktop";
 
   return (
     <figure className="m-0">
       <div
         className={cn(
           "grid items-center gap-8 md:gap-12",
-          isPhone ? "md:grid-cols-[17rem_minmax(0,1fr)]" : "md:grid-cols-[minmax(0,24rem)_minmax(0,1fr)]",
+          isDesktop
+            ? "grid-cols-1"
+            : isPhone
+              ? "md:grid-cols-[17rem_minmax(0,1fr)]"
+              : "md:grid-cols-[minmax(0,24rem)_minmax(0,1fr)]",
         )}
       >
-        <div className={cn("relative mx-auto w-full", isPhone ? "max-w-[17rem]" : "max-w-[24rem]")}>
+        <div className={cn("relative mx-auto w-full", isDesktop ? "" : isPhone ? "max-w-[17rem]" : "max-w-[24rem]")}>
           <div
             className={cn(
               "overflow-hidden",
@@ -46,7 +51,7 @@ export function AnnotatedScreen({ label, image, device, notes }: AnnotatedScreen
               width={image.width}
               height={image.height}
               alt={image.alt}
-              sizes={isPhone ? "272px" : "(min-width: 768px) 384px, 92vw"}
+              sizes={isDesktop ? "(min-width: 1024px) 960px, 92vw" : isPhone ? "272px" : "(min-width: 768px) 384px, 92vw"}
               className="block h-auto w-full"
             />
           </div>
@@ -79,7 +84,10 @@ export function AnnotatedScreen({ label, image, device, notes }: AnnotatedScreen
           >
             {label}
           </p>
-          <ol aria-labelledby={`${id}-label`} className="mt-4 space-y-2.5">
+          <ol
+            aria-labelledby={`${id}-label`}
+            className={cn("mt-4", isDesktop ? "grid gap-2.5 sm:grid-cols-2" : "space-y-2.5")}
+          >
             {notes.map((note, index) => (
               <li key={index}>
                 <button

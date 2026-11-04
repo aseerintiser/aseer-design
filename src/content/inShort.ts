@@ -30,10 +30,10 @@ export const inShort: Record<string, InShort> = {
   "convay-ai-for-physical-meetings": {
     problem:
       "In-person meetings, from government briefings to internal syncs, often went undocumented, and transcription tools served online calls.",
-    role: "UX Designer at Synesis IT, with product managers and engineering.",
+    role: "UX Designer at Synesis IT (2023–24), with product managers and engineering. Redesigned solo as a 2026 concept.",
     decision:
-      "Moved the meeting panel to dark to match the rest of Convay, after testing both versions side by side.",
-    result: "A record, transcribe and summarise flow for physical rooms, with Bengali transcription support.",
+      "Shipped: record, transcribe and summarise a physical room, with Bangla. Concept: tell the room first, mark moments live, and AI notes that link to their source.",
+    result: "82% of internal testers chose the shipped dark panel. The 2026 concept goes Light first on purpose, with Dark one switch away, web and phone screens, and a clickable prototype.",
     evidence: { text: "82% of internal testers preferred the dark panel", source: "Convay's internal test of the light and dark meeting panels, both shown side by side in the case study." },
   },
   // The Problem; Approach; Outcome & Impact.
