@@ -56,8 +56,10 @@ export function ScreenPlayer({ label, screens, tint, device = "phone" }: ScreenP
             "relative mx-auto overflow-hidden bg-black",
             isDesktop
               ? "aspect-[16/10] w-full rounded-[14px] shadow-[0_0_0_1px_rgb(255_255_255/0.12),0_40px_70px_-30px_rgb(0_0_0/0.9)]"
-              : "aspect-[9/19.5] w-[220px] rounded-[32px] shadow-[0_0_0_7px_#151514,0_0_0_8px_rgb(255_255_255/0.08),0_40px_70px_-30px_rgb(0_0_0/0.9)] md:w-[240px]",
+              : "w-[220px] rounded-[32px] shadow-[0_0_0_7px_#151514,0_0_0_8px_rgb(255_255_255/0.08),0_40px_70px_-30px_rgb(0_0_0/0.9)] md:w-[240px]",
           )}
+          /* The phone takes the shape of its screens, so nothing is cropped. */
+          style={isDesktop ? undefined : { aspectRatio: `${screens[0]?.width ?? 9} / ${screens[0]?.height ?? 19.5}` }}
         >
           {screens.map((screen, index) => (
             <Image

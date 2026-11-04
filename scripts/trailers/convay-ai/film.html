@@ -174,27 +174,47 @@ window.__render=(t)=>{
 };
 }
 // =================================================================
-else{ // card: no text, seamless 14 s loop. A window and a phone, screens wiped in by the coral line
-const S=scene('radial-gradient(75% 85% at 40% 35%,#3B2E92 0%,#1B1546 45%,#07070B 88%)');
-rings(S,W*.42,H*.4,8,.08);
-const F=win(S,['live','notes','transcript','dark-live'],880);
-const Ph=phone(S,['m-live','m-notes','m-meetings'],230);
-const line=el(`<div style="width:5px;height:${H}px;background:#F8475E;box-shadow:0 0 30px 6px rgba(248,71,94,.55)"></div>`,'abs',S);
+else{ // card: no text, seamless 12 s loop. One camera flies over the real live screen: the recording timer,
+// the speakers, the Bangla line, a press on Mark this moment; pulls out to the window and the phone; a coral
+// blade turns it Dark; dives into a timestamped AI note; and lands back where it started.
+const S=scene('radial-gradient(80% 90% at 50% 40%,#3B2E92 0%,#1B1546 50%,#07070B 90%)');
+rings(S,W/2,H*.5,9,.07,140,110);
+const world=el('','abs',S);world.style.transformOrigin='0 0';
+const BAR=68,IW=2880,IH=1800;
+const wnd=el(`<div style="width:${IW}px;height:${BAR}px;background:#E7E6F0;display:flex;align-items:center;gap:16px;padding:0 26px"><i style="width:20px;height:20px;border-radius:50%;background:#C9C7D6"></i><i style="width:20px;height:20px;border-radius:50%;background:#C9C7D6"></i><i style="width:20px;height:20px;border-radius:50%;background:#C9C7D6"></i></div><div class="scr" style="position:relative;width:${IW}px;height:${IH}px;overflow:hidden">${['live','dark-live','notes'].map(k=>`<img data-k="${k}" src="${BASE}${k}.png" style="position:absolute;left:0;top:0;width:100%;height:100%">`).join('')}</div>`,'abs',world);
+wnd.style.cssText+=`border-radius:30px;overflow:hidden;box-shadow:0 120px 200px -60px rgba(0,0,0,.8),0 0 0 2px rgba(255,255,255,.12)`;
+const WI={};wnd.querySelectorAll('img').forEach(i=>WI[i.dataset.k]=i);
+const ph=el(`<div class="scr" style="position:relative;width:824px;height:1830px;border-radius:86px;overflow:hidden;background:#F7F6FA">${['m-live','m-notes'].map(k=>`<img data-k="${k}" src="${BASE}${k}.png" style="position:absolute;left:0;top:0;width:100%;height:100%">`).join('')}</div>`,'abs',world);
+ph.style.cssText+='background:#040406;border-radius:104px;padding:20px;box-shadow:0 120px 200px -60px rgba(0,0,0,.85),0 0 0 3px rgba(255,255,255,.1)';
+const PI={};ph.querySelectorAll('img').forEach(i=>PI[i.dataset.k]=i);
+const ring=el('','abs',world);ring.style.cssText+='border:8px solid #E8A23A;border-radius:999px';
+const box=el('','abs',world);box.style.cssText+='border:6px solid #F8475E;border-radius:22px;box-shadow:0 0 0 18px rgba(248,71,94,.16)';
+const wblade=el(`<div style="width:12px;height:${IH+BAR+80}px;background:#F8475E;box-shadow:0 0 80px 22px rgba(248,71,94,.6)"></div>`,'abs',world);
 stage.appendChild(grain());
-const D=14;window.__duration=D;
-const order=['live','notes','transcript','dark-live'],porder=['m-live','m-notes','m-meetings'];
+const D=12;window.__duration=D;
+// camera keys: [time, x, y, zoom] in window pixels (2x of the 1440 design); y includes the 68 px title bar
+const K=[[0,330,318,1.05],[1.9,1000,376,.92],[3.2,920,1420,1.0],[4.3,1510,1784,1.1],[5.3,1520,1784,1.18],[6.6,1760,1100,.285],[8.9,1760,1100,.285],[10.0,960,892,1.12],[10.8,960,892,1.18],[12,330,318,1.05]];
+const cam=t=>{for(let i=0;i<K.length-1;i++){const [a,x0,y0,z0]=K[i],[b,x1,y1,z1]=K[i+1];if(t>=a&&t<=b){const p=eio((t-a)/(b-a));const z=Math.exp(lerp(Math.log(z0),Math.log(z1),p));return [lerp(x0,x1,p),lerp(y0,y1,p),z]}}return K[0].slice(1)};
 window.__render=(t)=>{
- const u=t/D,s=Math.sin(u*Math.PI*2),c=Math.cos(u*Math.PI*2);
- const fx=90,fy=(H-F.h)/2-20+s*8;
- set3(F,fx,fy,{ry:8+s*4,rx:4+c*1.5,p:2600});
- set3(Ph,850,(H-Ph.h)/2+40-s*10,{ry:-12+s*4,rx:4,rz:2});
- const seg=D/order.length,i=Math.floor(t/seg)%order.length,f=(t%seg)/seg;const cur=order[i],nxt=order[(i+1)%order.length];
- const w=eio(P(f,.72,1));for(const k of order){F.imgs[k].style.opacity=0;F.imgs[k].style.clipPath='none'}
- F.imgs[cur].style.opacity=1;if(w>0){F.imgs[nxt].style.opacity=1;F.imgs[nxt].style.clipPath=`inset(0 ${F.sw-w*F.sw}px 0 0)`}
- set(line,fx+w*F.sw*1.0,0,1,0,w>0&&w<1?.9:0);
- const pseg=D/porder.length,pi=Math.floor(t/pseg)%porder.length,pf=(t%pseg)/pseg;const pc=porder[pi],pn=porder[(pi+1)%porder.length];
- const pw=eio(P(pf,.8,1));for(const k of porder){Ph.imgs[k].style.opacity=0;Ph.imgs[k].style.clipPath='none'}
- Ph.imgs[pc].style.opacity=1;if(pw>0){Ph.imgs[pn].style.opacity=1;Ph.imgs[pn].style.clipPath=`inset(0 0 ${Ph.sh-pw*Ph.sh}px 0)`}
+ const [cx,cy,z]=cam(t);const out=cl((0.9-z)/0.6);
+ world.style.transform=`perspective(4000px) translate(${W/2-cx*z}px,${H/2-cy*z}px) scale(${z}) rotateY(${-6*out}deg) rotateX(${3*out}deg)`;
+ set(wnd,0,0,1,0,1);
+ set(ph,2560,lerp(700,380,eo5(P(t,5.6,6.8)))*(1)+0,1,0,eo(P(t,5.4,6.2))*(1-P(t,9.6,10.0)));
+ // dark wipe 7.0-8.2 on the window, phone flips to notes with it
+ const dw=eio(P(t,7.0,8.2)),nw=eio(P(t,8.9,9.8)),back=eio(P(t,11.2,11.9));
+ for(const k in WI){WI[k].style.opacity=0;WI[k].style.clipPath='none'}
+ if(t<9.8+0.01){WI['live'].style.opacity=1;WI['dark-live'].style.opacity=dw>0?1:0;WI['dark-live'].style.clipPath=`inset(0 0 0 ${IW*(1-dw)}px)`;
+   if(nw>0){WI['notes'].style.opacity=1;WI['notes'].style.clipPath=`inset(0 ${IW*(1-nw)}px 0 0)`}}
+ else{WI['notes'].style.opacity=1;if(back>0){WI['live'].style.opacity=1;WI['live'].style.clipPath=`inset(0 ${IW*(1-back)}px 0 0)`;WI['live'].style.zIndex=3}}
+ WI['live'].style.zIndex=t>=9.8?3:0;WI['dark-live'].style.zIndex=1;WI['notes'].style.zIndex=2;
+ PI['m-live'].style.opacity=1;PI['m-notes'].style.opacity=dw;
+ let bx=-200;if(dw>0&&dw<1)bx=IW*(1-dw);if(nw>0&&nw<1)bx=IW*nw;if(back>0&&back<1)bx=IW*back;
+ set(wblade,bx-6,-40,1,0,bx>-100&&bx<IW?1:0);
+ // Bangla line highlight 2.5-3.9
+ set(box,400,BAR+1262,1,0,eo(P(t,2.6,2.9))*(1-P(t,3.7,4.0)));box.style.width='1380px';box.style.height='176px';
+ // press on Mark this moment: ring expands from the button
+ const rp=P(t,4.5,5.6);ring.style.width=(640+rp*700)+'px';ring.style.height=(104+rp*700)+'px';
+ set(ring,1572-(640+rp*700)/2,BAR+1712-(104+rp*700)/2,1,0,(t>4.5?1:0)*(1-rp));
 };
 }
 window.__seek=(t)=>window.__render(t);

@@ -505,8 +505,7 @@ const convayMobileAppRevampBody: CaseStudyBlock[] = [
 // test that chose dark. Desktop screens are 2x exports (2880 x 1800) and
 // phone screens 2x exports (824 x 1830) from the "Convay AI for Physical
 // Meetings" Figma file, in public/convay-ai/. The old screens survive
-// only in the before/after image, the iteration board and one collapsed
-// section. Copy record: Case Studies/Convay AI for Physical Meetings/
+// only in the before/after image and one collapsed section. Copy record: Case Studies/Convay AI for Physical Meetings/
 // 10_Redesign_2026_Case_Study.md.
 const ca = (name: string, alt: string) => ({
   src: `/convay-ai/${name}.png`,
@@ -651,19 +650,6 @@ const convayAiBody: CaseStudyBlock[] = [
       { x: 0.86, y: 0.17, text: "Live notes say they are drafted by AI, and that only you can see them." },
       { x: 0.545, y: 0.95, text: "Mark this moment is the main action, not End. M works from anywhere." },
     ],
-  },
-  {
-    type: "image",
-    src: "/convay-ai/iterations.png",
-    width: 3200,
-    height: 2582,
-    enlargeable: true,
-    alt: "Four versions of the live meeting screen in a grid. Round 1 is dark with a glowing waveform. Round 2 is the same layout in light. Round 3 is a reduced version after a self-review. The final version adds the Convay logo, indigo on Mark this moment and a quieter End button.",
-    caption: "Four rounds of one screen.",
-  },
-  {
-    type: "paragraph",
-    text: "The first round was dark like the shipped panel and looked like any AI tool. Light worked better for a bright room and a TV. Then I reviewed my own panel as a critic and took out an Up next card, a talk-time chart and half the labels. The last round made it look like Convay again: the logo, the indigo, and one strong button.",
   },
 
   { type: "heading", level: 3, text: "When the room fights back" },
@@ -3137,7 +3123,7 @@ export const caseStudies: CaseStudy[] = [
         source: "Reported by teams in the same internal testing. Not timed.",
       },
     },
-    thumbnail: cardLoop("convay-ai-for-physical-meetings", "A short film of the Convay AI for Physical Meetings redesign: a desktop window and a phone, wiped from the live meeting to the AI notes, the transcript and Dark mode."),
+    thumbnail: cardLoop("convay-ai-for-physical-meetings", "A short film of the Convay AI for Physical Meetings redesign: the camera moves across the live meeting, from the recording timer to a Bangla line and a press on Mark this moment, pulls back to the desktop and the phone, turns Dark, and lands on a timestamped AI note."),
     oneLineScope:
       "I designed Convay's feature for recording in-person meetings at Synesis IT in 2023–24, and it shipped: record the room, get a transcript, summarise it with AI, with Bangla from the start. In 2026 I redesigned it again as a concept, for the people in the room as much as the person holding the laptop.",
     meta: {

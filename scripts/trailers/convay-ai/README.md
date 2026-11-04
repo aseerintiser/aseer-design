@@ -1,7 +1,7 @@
 # Convay AI for Physical Meetings films
 
 `film.html` holds both films: the hero trailer (`mode=hero`, 1920x1080, 20.5 s,
-with titles) and the card loop (`mode=card`, 1200x900, 14 s, no text, seamless).
+with titles) and the card loop (`mode=card`, 1200x900, 12 s, no text, seamless: one camera move over the live screen, out to window and phone, Dark, and into a timestamped note).
 Every window and phone shows a real 2x export from the "Convay AI for Physical
 Meetings" Figma file in `public/convay-ai/`. A coral line carries every scene change.
 
