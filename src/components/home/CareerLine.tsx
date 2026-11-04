@@ -16,43 +16,49 @@ const LAST = careerSteps.length - 1;
 
 /**
  * The path so far: Aseer's dated career line, in its own band between
- * the hero and the work (it used to drive the hero film, until the hero became a reel of
- * chosen work in November 2026).
+ * the hero and the work. It used to drive the hero film, until the
+ * hero became a reel of chosen work in November 2026.
  *
- * The first time it comes into view, the yellow marker travels the line
- * from the degree to now. Any step can be pressed to read about it, with
- * a link to where that part of the story lives. With motion off the
- * marker starts at Now and does not travel. On a phone the line becomes
- * a row of years.
+ * Each time it comes into view, the yellow marker travels the line from
+ * the degree to now and stops there. Once it is fully off screen it
+ * quietly resets, so scrolling back replays it; it never loops while
+ * someone is looking at it. Pressing a step stops the replays for good,
+ * since the visitor is exploring. With motion off the marker rests at
+ * Now and never travels. On a phone the line becomes a row of years.
  */
 export function CareerLine() {
   const rootRef = useRef<HTMLDivElement>(null);
   const motion = useAmbientMotion();
   const [active, setActive] = useState(0);
   const [touched, setTouched] = useState(false);
-  const [played, setPlayed] = useState(false);
+  const [running, setRunning] = useState(false);
 
   useEffect(() => {
     const root = rootRef.current;
-    if (!root || played || touched) return;
+    if (!root || touched) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry?.isIntersecting) return;
-        observer.disconnect();
-        setPlayed(true);
+        if (!entry) return;
+        if (entry.intersectionRatio >= 0.5) {
+          setRunning(true);
+        } else if (!entry.isIntersecting) {
+          // Fully out of sight: rewind, ready to play again.
+          setRunning(false);
+          setActive(0);
+        }
       },
-      { threshold: 0.5 },
+      { threshold: [0, 0.5] },
     );
     observer.observe(root);
     return () => observer.disconnect();
-  }, [played, touched]);
+  }, [touched]);
 
-  // Travel once, a step at a time, unless the visitor takes over.
+  // Travel a step at a time to Now, unless the visitor takes over.
   useEffect(() => {
-    if (!played || touched || !motion || active >= LAST) return;
+    if (!running || touched || !motion || active >= LAST) return;
     const timer = window.setTimeout(() => setActive((current) => Math.min(current + 1, LAST)), 850);
     return () => window.clearTimeout(timer);
-  }, [played, touched, motion, active]);
+  }, [running, touched, motion, active]);
 
   function choose(index: number) {
     setTouched(true);
