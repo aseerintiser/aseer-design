@@ -57,12 +57,15 @@ export const trailers: Record<string, Trailer> = {
   ),
   "convay-design-system": trailer(
     "convay-design-system",
-    "Trailer for the Convay design system, made from its real Figma variables and styles.",
+    "Trailer for the Convay design system, made from the real variables, roles and styles in its Figma file.",
     [
-      "Every feature started from scratch. Now they share one system.",
-      "01, Variables: colour tokens with light and dark values, side by side.",
-      "02, Styles: type, grids and elevation, built on those variables.",
-      "03, Bottom-up: variables first, then styles, then components on top.",
+      "Convay Design System. Built at Synesis IT in 2023–24, as the only UX designer.",
+      "01, Global: 76 variables. Each one Light and Dark.",
+      "02, Roles: designers pick a role, never a hex.",
+      "03, States: every state traces back to one colour.",
+      "04, Scales: every size is a named step.",
+      "05, Type: one type scale, web and mobile.",
+      "Convay Design System. 76 global variables, 118 colour roles, in use since 2024.",
     ],
   ),
   fitvibe: trailer("fitvibe", "Trailer for FitVibe, made from the app's real screens and process work.", [

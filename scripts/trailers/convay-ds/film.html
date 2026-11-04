@@ -1,0 +1,115 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  Convay Design System films: the trailer (mode=hero, 1920x1080, titles) and
+  the card loop (mode=card, 1200x900, no text, seamless). Every value on
+  screen is read from the 2023-24 Figma variables: the Brand / Blue scale with
+  its Light and Dark values, the Button / Primary roles and their states, the
+  spacing and corner-radius aliases, and the web type scale. Nothing else is
+  drawn. window.__seek(t) renders one frame; render-film.py steps through it.
+-->
+<style>
+@font-face{font-family:G;src:url(fonts/geist.woff2);font-weight:100 900}
+@font-face{font-family:M;src:url(fonts/geist-mono.woff2);font-weight:100 900}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow:hidden;background:#06121B}
+#stage{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;font-family:G;-webkit-font-smoothing:antialiased;background:#06121B}
+.abs{position:absolute;left:0;top:0;will-change:transform,opacity}
+.k{font:600 21px M;letter-spacing:.16em;text-transform:uppercase;color:#7FC0E6}
+.big{font:680 112px/1 G;letter-spacing:-.05em;color:#F4F7FA}
+.mid{font:640 70px/1.05 G;letter-spacing:-.04em;color:#F4F7FA}
+.mask{overflow:hidden;display:inline-block;padding-bottom:.1em;margin-right:.24em;vertical-align:top}.mask>span{display:inline-block}
+.sw{display:flex;align-items:center;gap:22px;height:64px;padding:0 22px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+.sw i{width:40px;height:40px;border-radius:11px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
+.sw b{font:500 22px M;color:#DCE8F0;width:220px}.sw span{font:500 22px M;color:#7E93A3}
+.btn{display:flex;align-items:center;justify-content:center;font:620 44px G;color:#fff}
+</style></head><body><div id="stage"></div>
+<script>
+const Q=new URLSearchParams(location.search);const MODE=Q.get('mode')||'hero';
+const W=MODE==='hero'?1920:1200,H=MODE==='hero'?1080:900;
+const stage=document.getElementById('stage');stage.style.width=W+'px';stage.style.height=H+'px';
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),P=(t,a,b)=>cl((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3),eo5=x=>1-Math.pow(1-x,5),eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,lerp=(a,b,x)=>a+(b-a)*x;
+const el=(html,cls='abs',parent=stage)=>{const d=document.createElement('div');d.className=cls;d.innerHTML=html;parent.appendChild(d);return d};
+const set=(e,x,y,s=1,r=0,o=1)=>{e.style.transform=`translate(${x}px,${y}px) rotate(${r}deg) scale(${s})`;e.style.opacity=o};
+const kin=(html,cls,w,extra='')=>{const d=el(`<div class="${cls}" style="width:${w}px;${extra}">${html.split(' ').map(x=>`<span class="mask"><span>${x}</span></span>`).join('')}</div>`);d.words=[...d.querySelectorAll('.mask>span')];return d};
+const kinShow=(d,t,a,b,stag=.055)=>{const out=eio(P(t,b-.35,b));d.words.forEach((w,i)=>{const p=eo5(P(t,a+i*stag,a+i*stag+.6));w.style.transform=`translateY(${(1-p)*115-out*115}%)`})};
+// real values from the 2023-24 Figma file
+const BLUE=[["blue-light-92","EBF4F9","331B0F"],["blue-light-88","E0EEF5","331B0F"],["blue-light-80","CCE3EF","FFFFFF"],["blue-light-64","A3CCE2","5C317B"],["blue-light-4","0A78B1","FFFFFF"],["blue-default","0072AE","0072AE"],["blue-dark-16","006092","FFFFFF"],["blue-dark-24","005784","FFFFFF"]];
+const STATES=[["Active","0072AE","blue-default"],["Hover","0A78B1","blue-light-4"],["Pressed","006092","blue-dark-16"],["Inactive","A3CCE2","blue-light-64"]];
+const SP=[["XXS",20],["XS",40],["SNudge",60],["S",80],["MNudge",100],["M",120],["L",160],["XL",200],["XXL",240],["XXXL",320]];
+const RD=[["None",0],["Small",20],["Medium",40],["Large",60],["X-Large",80],["XX-Large",120],["Circular",999]];
+const glow=el(`<div style="width:${W*1.4}px;height:${W*1.4}px;border-radius:50%;background:radial-gradient(circle,rgba(0,114,174,.42),rgba(0,114,174,.12) 40%,rgba(0,0,0,0) 68%)"></div>`);
+const grid=el(`<svg width="${W}" height="${H}"><defs><pattern id="g" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#fff" stroke-opacity=".045"/></pattern></defs><rect width="100%" height="100%" fill="url(#g)"/></svg>`);
+const blade=el(`<div style="width:5px;height:${H+40}px;background:#F8475E;box-shadow:0 0 40px 10px rgba(248,71,94,.5)"></div>`);blade.style.zIndex=50;
+// swatch column
+const sws=BLUE.map(([n,l,d])=>{const s=el(`<div class="sw"><i></i><b>${n}</b><span></span></div>`);s.i=s.querySelector('i');s.v=s.querySelector('span');s.l=l;s.d=d;return s});
+// role chip and button
+const role=el(`<div class="sw" style="height:76px;border-color:rgba(127,192,230,.4);background:rgba(0,114,174,.18)"><span style="width:auto;color:#7FC0E6">Button / Primary /</span><b id="rs" style="width:auto;color:#fff">Active</b><span id="ra" style="margin-left:18px;width:auto;color:#DCE8F0;background:rgba(255,255,255,.08);padding:6px 12px;border-radius:9px">blue-default</span></div>`);
+role.style.transformOrigin='0 0';const rs=role.querySelector('#rs'),ra=role.querySelector('#ra');
+const btn=el(`<div class="btn" style="width:520px;height:132px;border-radius:24px;background:#0072AE;box-shadow:0 40px 80px -30px rgba(0,114,174,.8)">Join meeting</div>`);
+const btnLab=el(`<div style="font:500 26px M;color:#9FB5C4;width:520px;text-align:center"></div>`);
+// spacing bars and radius tiles
+const bars=SP.map(([n,v])=>el(`<div style="display:flex;align-items:center;gap:18px"><span style="font:500 20px M;color:#9FB5C4;width:110px">${n}</span><div class="b" style="height:22px;border-radius:6px;background:#0072AE;width:0"></div></div>`));
+const tiles=RD.map(([n,v])=>{const d=el(`<div style="display:flex;flex-direction:column;align-items:center;gap:12px"><div class="q" style="width:120px;height:120px;border:4px solid #7FC0E6;background:rgba(0,114,174,.25)"></div><span style="font:500 18px M;color:#9FB5C4">${n}</span></div>`);d.q=d.querySelector('.q');d.v=v;return d});
+const TY=[["Display",68],["Large Title",40],["Title 1",32],["Title 2",28],["Title 3",24],["Subtitle 1",20],["Body 1",16],["Caption 1",12]];
+const types=TY.map(([n,s])=>el(`<div style="display:flex;align-items:baseline;gap:28px;color:#F4F7FA"><span style="font:${s>=24?620:480} ${s*1.6}px/1 G;letter-spacing:-.02em">${n}</span><span style="font:500 20px M;color:#7E93A3">${s}</span></div>`));
+const hideAll=()=>[...sws,role,btn,btnLab,...bars,...tiles,...types].forEach(e=>e.style.opacity=0);
+const swPaint=(t,dark)=>sws.forEach(s=>{const v=dark?s.d:s.l;s.i.style.background='#'+v;s.v.textContent=v});
+
+if(MODE==='hero'){
+const t0=kin('Convay Design System','big',1800,'text-align:center'),sub0=el(`<div style="width:${W}px;text-align:center;font:560 32px G;color:#9FB5C4">Built at Synesis IT in 2023–24, as the only UX designer.</div>`);
+const k1=el('<div class="k">01 · Global</div>'),c1=kin('76 variables. Each one Light and Dark.','mid',900);
+const k2=el('<div class="k">02 · Roles</div>'),c2=kin('Designers pick a role, never a hex.','mid',900);
+const k3=el('<div class="k">03 · States</div>'),c3=kin('Every state traces back to one colour.','mid',900);
+const k4=el('<div class="k">04 · Scales</div>'),c4=kin('Every size is a named step.','mid',900);
+const k5=el('<div class="k">05 · Type</div>'),c5=kin('One type scale, web and mobile.','mid',900);
+const o1=kin('Convay Design System','big',1800,'text-align:center'),o2=el(`<div style="width:${W}px;text-align:center;font:560 32px G;color:#9FB5C4">76 global variables · 118 colour roles · in use since 2024</div>`),o3=el(`<div class="k" style="width:${W}px;text-align:center;color:#7E93A3;font-size:19px">Md. Aseer Intiser · Product Designer and HCI Researcher</div>`);
+const cuts=[3.2,6.4,9.0,11.8,14.6,17.2];
+window.__duration=20;
+window.__render=t=>{
+ hideAll();set(glow,W/2-W*.7+Math.sin(t*.4)*120,H/2-W*.7,1,0,1);set(grid,0,lerp(0,-80,(t%4)/4),1,0,1);
+ let bx=-100;cuts.forEach(c=>{if(t>=c&&t<c+.5)bx=eio(P(t,c,c+.5))*(W+40)});set(blade,bx,-20,1,0,bx>-50&&bx<W?1:0);
+ // S0 swatches fall into a fan behind the title
+ if(t<3.4){sws.forEach((s,i)=>{const p=eo5(P(t,.05*i,.9+.05*i));set(s,180+i*190,lerp(-120,180+Math.sin(i)*50+i*40,p),1,-6+i*1.5,p*.55*(1-P(t,2.9,3.3)))});swPaint(t,false);}
+ set(t0,60,420,1,0,1);kinShow(t0,t,.6,3.3,.07);set(sub0,0,560,1,0,eo(P(t,1.2,1.6))*(1-P(t,2.9,3.2)));
+ // S1 Global column, Light then Dark
+ if(t>=3.2&&t<6.6){const dk=t>5.0;swPaint(t,dk);sws.forEach((s,i)=>{s.style.filter='none';const p=eo5(P(t,3.3+i*.05,3.9+i*.05));set(s,1060,170+i*92,1,0,p*(1-P(t,6.3,6.6)))});}
+ set(k1,140,380,1,0,eo(P(t,3.5,3.9))*(1-P(t,6.1,6.4)));set(c1,140,430,1,0,1);kinShow(c1,t,3.6,6.5);
+ // S2 role: blue-default flies into the role chip
+ if(t>=6.4&&t<9.2){swPaint(t,false);const s=sws[5];const p=eio(P(t,6.6,7.4));set(s,lerp(1060,140,p),lerp(630,560,p),1,0,1-P(t,7.5,7.7));set(role,140,560,1.35,0,eo(P(t,7.3,7.7))*(1-P(t,8.8,9.1)));rs.textContent='Active';ra.textContent='blue-default';}
+ set(k2,140,330,1,0,eo(P(t,6.6,7.0))*(1-P(t,8.7,9.0)));set(c2,140,380,1,0,1);kinShow(c2,t,6.7,9.1);
+ // S3 states
+ if(t>=9.0&&t<12.0){const i=Math.min(3,Math.floor(P(t,9.6,11.6)*4));const [n,c,a]=STATES[i];btn.style.background='#'+c;btn.style.transform+='';set(btn,1180,380,1-(n==='Pressed'?.04:0),0,eo(P(t,9.1,9.5))*(1-P(t,11.6,11.9)));btnLab.textContent=`${n} · ${a} · #${c}`;set(btnLab,1180,550,1,0,eo(P(t,9.2,9.6))*(1-P(t,11.6,11.9)));}
+ set(k3,140,380,1,0,eo(P(t,9.2,9.6))*(1-P(t,11.5,11.8)));set(c3,140,430,1,0,1);c3.style.width='900px';kinShow(c3,t,9.3,11.9);
+ // S4 scales
+ if(t>=11.8&&t<14.8){bars.forEach((b,i)=>{const p=eo5(P(t,12.0+i*.06,12.7+i*.06));b.querySelector('.b').style.width=(SP[i][1]/320*560*p)+'px';set(b,1060,140+i*52,1,0,1-P(t,14.4,14.7))});}
+ set(k4,140,380,1,0,eo(P(t,12.0,12.4))*(1-P(t,14.3,14.6)));set(c4,140,430,1,0,1);kinShow(c4,t,12.1,14.7);
+ // S5 radius + type
+ if(t>=14.6&&t<17.4){types.forEach((d,i)=>set(d,1000,120+[0,130,210,280,340,395,440,480][i],1,0,eo(P(t,14.8+i*.07,15.2+i*.07))*(1-P(t,17.0,17.3))));}
+ set(k5,140,380,1,0,eo(P(t,14.8,15.2))*(1-P(t,16.9,17.2)));set(c5,140,430,1,0,1);c5.style.width='820px';kinShow(c5,t,14.9,17.3);
+ // outro: radius tiles morph under the title
+ if(t>=17.2){tiles.forEach((d,i)=>{const p=eo5(P(t,17.3+i*.06,17.9+i*.06));const r=d.v>=999?60:d.v/120*40;d.q.style.borderRadius=(r*p)+'px';set(d,W/2-7*160/2+i*160+20,700,1,0,p)});}
+ set(o1,60,330,1,0,1);kinShow(o1,t,17.4,21,.07);set(o2,0,470,1,0,eo(P(t,18.0,18.4)));set(o3,0,560,1,0,eo(P(t,18.3,18.7)));
+};
+}else{
+// card: 12 s seamless, no text. Swatches -> role -> button states -> radius morph -> spacing -> swatches
+window.__duration=12;
+window.__render=t=>{
+ hideAll();set(glow,W/2-W*.7+Math.sin(t/12*Math.PI*2)*80,H/2-W*.7,1,0,1);set(grid,0,-(t/12*80),1,0,1);set(blade,-200,0,1,0,0);
+ // 0-3: swatch column breathing, Light -> Dark -> Light (dark at 1.2-2.4)
+ const dark=t>1.2&&t<2.4;swPaint(t,dark);
+ const colIn=t<3.2||t>11.2;
+ sws.forEach((s,i)=>{const a=t<6?1-P(t,2.45,2.75):eo(P(t,11.2+i*.03,11.7+i*.03));let x=W/2-260,y=96+i*90;if(i===5&&t>2.6&&t<3.4){const p=eio(P(t,2.6,3.3));x=lerp(x,W/2-260,p);y=lerp(y,H/2-38,p)}set(s,x,y,1,0,i===5&&t>2.6&&t<3.5?1:a)});
+ // 3.2-5.6: button cycles states
+ if(t>=3.1&&t<6.2){const i=Math.min(3,Math.floor(P(t,3.6,5.6)*4));const [n,c]=STATES[i];btn.style.background='#'+c;btn.style.borderRadius='24px';set(btn,W/2-260,H/2-66,n==='Pressed'?.96:1,0,eo(P(t,3.1,3.5))*(1-P(t,6.6,6.9)));}
+ // 5.6-8.4: button radius morphs through the radius scale, tiles appear
+ if(t>=5.6&&t<8.8){const p=P(t,5.8,8.0);const k=Math.min(6,Math.floor(p*7));const r=RD[k][1]>=999?66:RD[k][1]/120*44;btn.style.background='#0072AE';btn.style.borderRadius=r+'px';set(btn,W/2-260,lerp(H/2-66,160,eio(P(t,6.0,6.5))),1,0,1-P(t,8.4,8.8));
+  tiles.forEach((d,i)=>{const q=eo5(P(t,6.2+i*.07,6.8+i*.07));d.q.style.borderRadius=(d.v>=999?60:d.v/120*40)+'px';d.q.style.borderColor=i===k?'#F8475E':'#7FC0E6';set(d,W/2-7*150/2+i*150+15,470,1,0,q*(1-P(t,8.4,8.8)))});}
+ // 8.4-11.4: spacing bars grow and shrink back into swatches
+ if(t>=8.4&&t<11.6){bars.forEach((b,i)=>{const p=eo5(P(t,8.6+i*.05,9.3+i*.05))*(1-eio(P(t,10.6,11.3)));b.querySelector('.b').style.width=(SP[i][1]/320*640*p)+'px';set(b,W/2-380,140+i*60,1,0,eo(P(t,8.5,8.9))*(1-P(t,11.0,11.4)))});}
+};
+}
+window.__seek=t=>window.__render(t);
+window.__ready=Promise.all([document.fonts.ready]).then(()=>{window.__render(0);return true});
+</script></body></html>

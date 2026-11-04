@@ -808,262 +808,157 @@ const convayAiBody: CaseStudyBlock[] = [
 // ---------------------------------------------------------------------
 // 3. Convay Design System
 // ---------------------------------------------------------------------
-// Convay Design System rebuild (implementation package: CASE_STUDY_
-// FINAL.md, IMPLEMENTATION_SPEC.md, VISUAL_LAYOUT_SPEC.md, ASSET_
-// MANIFEST.md, MOTION_SPEC.md). Copy below is exact, migrated verbatim
-// from CASE_STUDY_FINAL.md -- not rewritten, shortened, or reworded.
-// Structure follows IMPLEMENTATION_SPEC.md's section order exactly:
-// Hero (below) -> 01 Convay at a Glance (shared, unchanged) -> 02 The
-// Problem -> 03 Approach -> 04 Foundations -> 05 Styles & Patterns ->
-// 06 From Tokens to Components -> 07 Outcome & Impact -> 08 Reflection.
-//
-// Hero image grid: VISUAL_LAYOUT_SPEC asks for an asymmetric editorial
-// grid ("two larger images... three smaller... grid-styles panel as a
-// small closing tile") rather than one uniform row, but also says exact
-// arrangement can flex to match how the existing ImageRow component
-// actually behaves (fixed-height, auto-width tiles per row). Mixing all
-// 3 "smaller" images (a wide banner, a landscape panel, and a tall
-// narrow panel) in one row produced extremely lopsided tile widths in
-// practice, not the deliberate variety the spec asks for. Grouped by
-// compatible aspect ratio instead, in 3 rows of 2: the color pair
-// (both tall portrait, the featured moment) first, then the two
-// landscape-ish panels (spacing + stroke width), then the two narrow
-// portrait panels (text styles + grid styles) as the quieter close --
-// same intent (color pair featured, grid panel ends the grid on a
-// small, quiet note, not a spreadsheet-uniform 6-up), reached through
-// the grouping that actually renders well with the existing component.
+// Rebuilt in November 2026 as a shipped-only story: no 2026 concept layer.
+// The visuals in public/convay-ds/ are redrawn from the values in the
+// original Figma screenshots (variable names, hex values, aliases, style
+// names and sizes); nothing is added that the screenshots do not show. The
+// eight original panels sit in one collapsed section as the source. The
+// inactive-button contrast (white on #A3CCE2, 1.7:1) is computed from those
+// values. Copy record: Case Studies/Convay Design System/
+// 10_Rebuild_2026.md.
 const convayDesignSystemBody: CaseStudyBlock[] = [
-  {
-    type: "imageRow",
-    images: [img("Pz3gr4au6hAzTaXAeWRxckpYxW4.png", 839, 1067), img("RFIwMbzOBq1i3CiHl7feTRCmbc.png", 839, 1063)],
-  },
-  {
-    type: "imageRow",
-    images: [img("SR7Ty4Rtj9VnaJoe9zZ7wA2yFJI.png", 709, 561), img("wM8AKcML8xyCnuWF75Zo6IkA18.png", 647, 245)],
-  },
-  {
-    type: "imageRow",
-    images: [img("l9VJURbZM2vInRtmkGKwhfNrP0.png", 222, 904), img("PCl7JbO66ST97AOthwGOw9zmTs.png", 177, 302)],
-  },
   ...convayAtAGlance,
 
-  { type: "heading", level: 3, text: "The Problem" },
+  { type: "heading", level: 3, text: "The problem" },
   {
     type: "paragraph",
-    text: "When I joined Convay, the product already had a full set of features live: scheduling, live video, transcription, file storage, chat. But each one had been designed on its own, without shared styles or reusable components. Buttons looked different depending on which feature they were in. Spacing was inconsistent from screen to screen. Colors were picked case by case instead of pulled from a shared palette.",
+    text: "When I joined Convay, scheduling, live video, transcription, file storage and chat were all live. Each had been designed on its own. Buttons looked different from feature to feature, spacing changed from screen to screen, and colours were picked case by case.",
   },
   {
     type: "paragraph",
-    text: "This wasn't only a visual problem. Every new feature meant redesigning basic elements from scratch, and every small inconsistency made the product harder for developers to build and harder for users to trust. As Convay kept adding features and expanding into new markets, that lack of a shared foundation was only going to slow the team down more.",
+    text: "Every new feature meant drawing the basics again, and every mismatch made the product harder to build and harder to trust. As the only UX designer, I set out to give Convay one shared foundation in Figma.",
   },
 
-  { type: "heading", level: 3, text: "Approach" },
+  { type: "heading", level: 3, text: "How I built it" },
   {
     type: "paragraph",
-    text: "I started by auditing Convay's existing interface, screen by screen: cataloging the colors, spacing values, corner radii, and type styles already in use across every feature. The audit turned an abstract problem into a concrete one. Elements that should have matched didn't, and there was no shared reference to check anything against.",
-  },
-  {
-    type: "paragraph",
-    text: "Rather than starting with components, I built the system bottom-up: global variables first, then reusable styles, then components on top of both. Getting the order right mattered. Variables like color and spacing needed to be settled before anything was built on top of them, since every component would inherit from them, and getting that sequence wrong would have meant reworking components every time a foundational value changed.",
-  },
-  {
-    type: "paragraph",
-    text: "I worked closely with the product team, who set direction on priorities, and with developers, who needed the system to map cleanly onto how they'd actually implement it in code. Variable names, states, and structure were shaped as much by what was implementable as by what looked right in Figma.",
-  },
-
-  { type: "heading", level: 3, text: "Foundations" },
-  {
-    type: "paragraph",
-    text: "I started with the smallest, most foundational decisions: the variables everything else would be built from. Centralizing these meant a single update to a variable could ripple across the entire platform, instead of requiring a manual pass through every component that used it.",
-  },
-  { type: "heading", level: 4, text: "Color" },
-  {
-    type: "paragraph",
-    text: "I defined a palette of brand and content colors, each with light and dark mode variants. Every color was assigned a specific role, primary actions, secondary actions, status, content, rather than existing as a generic swatch, so a designer or developer reaches for the right color by what it means, not by picking the closest match visually. Building color as roles rather than one-off values also meant light and dark themes could both be supported without redesigning each screen twice, useful for anyone working in a bright office, a dark room, or anywhere in between.",
-  },
-  // MOTION_SPEC.md's Motion 1 (a light/dark crossfade toggle) was built
-  // here, then pulled per Aseer's review: the toggle's premise, and the
-  // approved package's own caption/alt text for these two images
-  // ("the same interface... not redesigned twice"), assumed both
-  // images show one UI with only colors swapped. Per Aseer, that's not
-  // accurate -- the light-mode image is a reference table listing both
-  // light and dark values together, while the dark-mode image shows a
-  // different, broader set of named variables (brand, button, primary,
-  // secondary, accent, radio button, etc.) with their values. Reverted
-  // to a static side-by-side pair (VISUAL_LAYOUT_SPEC.md's original
-  // baseline for this subsection). Also switched from `imageRow` to
-  // `variantComparison`: imageRow fixes every tile to a small shared
-  // height (built for a row of preview thumbnails), which rendered
-  // these two dense, text-heavy documentation panels small enough to
-  // be illegible (confirmed from Aseer's own screenshot of the live
-  // render). variantComparison renders each image up to 448px wide
-  // with its own caption, matching VISUAL_LAYOUT_SPEC's "~48% of
-  // container width" intent and giving each panel a caption that
-  // actually describes what it shows, now that Aseer has confirmed
-  // what's in each: the left image is a token reference table with
-  // light and dark values listed side by side per token; the right
-  // image is the full variable set grouped by role (brand, button
-  // states, accent, radio button, etc.), not a themed re-render of the
-  // same table.
-  // Close-up with pins on the color table; notes condense Approach and
-  // Color. The full variable set follows as its own image.
-  {
-    type: "annotated",
-    label: "Close-up · the color variables in Figma",
-    device: "panel",
-    image: {
-      ...img("Pz3gr4au6hAzTaXAeWRxckpYxW4.png", 839, 1067),
-      alt: "Convay's color token reference table in Figma, listing each token's light-mode and dark-mode value side by side.",
-    },
-    notes: [
-      { x: 0.69, y: 0.098, text: "Every color token holds a light value and a dark value, side by side." },
-      { x: 0.17, y: 0.15, text: "Tokens are grouped by role, brand, content and accent, not by raw color." },
-      { x: 0.43, y: 0.413, text: "Names were shaped with developers, so they map onto how the code implements them." },
-      { x: 0.17, y: 0.565, text: "Spacing, stroke width and corner radius live in the same set of variables." },
-    ],
-  },
-  {
-    type: "image",
-    ...img("RFIwMbzOBq1i3CiHl7feTRCmbc.png", 839, 1063),
-    alt: "Convay's full set of color variables in Figma, grouped by role: brand, button states, accent, radio button, and more.",
-    caption: "The full variable set, grouped by role rather than by raw color.",
-  },
-  { type: "heading", level: 4, text: "Spacing" },
-  {
-    type: "paragraph",
-    text: "Padding and layout spacing were reduced to a defined scale, from None up through XXS, XS, S, M, L, XL, and beyond. Every component pulls from this scale rather than arbitrary pixel values, so spacing stays consistent whether it's inside a button or between two page sections.",
-  },
-  {
-    type: "image",
-    ...img("SR7Ty4Rtj9VnaJoe9zZ7wA2yFJI.png", 709, 561),
-    alt: "Convay's spacing scale defined as Figma variables, from None to XXXL.",
-    caption: "Convay's spacing scale in Figma, from None to XXXL.",
-  },
-  { type: "heading", level: 4, text: "Stroke width and corner radius" },
-  {
-    type: "paragraph",
-    text: "Border and outline weights were standardized into four values, Thin, Thick, Thicker, and Thickest, so a divider and a focused input border use a deliberate weight instead of whatever felt right in the moment. Corner radius follows the same logic, from None for sharp-edged elements up to Circular for avatars and icon buttons, with defined steps in between. The radius applied to an element now signals its role: sharper corners read as structural, rounder corners read as interactive.",
-  },
-  // Same imageRow -> variantComparison fix as the Color pair above:
-  // these are documentation panels, not gallery preview tiles, and
-  // imageRow's fixed small tile height rendered them too small to
-  // read. CASE_STUDY_FINAL.md's single shared caption for this pair
-  // ("Stroke width and corner radius variables. Every border and
-  // rounded corner in the product traces back to one of these
-  // values.") is split across the two per-image captions
-  // variantComparison requires, not reworded or added to.
-  {
-    type: "variantComparison",
-    variants: [
-      {
-        ...img("wM8AKcML8xyCnuWF75Zo6IkA18.png", 647, 245),
-        alt: "Convay's stroke width variables: Thin, Thick, Thicker, Thickest.",
-        caption: "Stroke width variables: Thin, Thick, Thicker, Thickest.",
-      },
-      {
-        ...img("eklLqLjKkIanx3IlAAvezPLZlk.png", 646, 377),
-        alt: "Convay's corner radius variables, from None to Circular.",
-        caption: "Corner radius variables, from None to Circular.",
-      },
-    ],
-  },
-
-  { type: "heading", level: 3, text: "Styles & Patterns" },
-  {
-    type: "paragraph",
-    text: "With the variables in place, I built the styles that reference them: type, elevation, and layout grids. This is the layer between raw variables and finished components, the set of rules that determines how a screen actually looks and reads.",
-  },
-  { type: "heading", level: 4, text: "Type" },
-  {
-    type: "paragraph",
-    text: "Titles, subtitles, body copy, and captions were each defined down to font size, weight, and line height, with separate specifications for web and mobile. That meant a designer or developer picking \"Body 2\" got the same result every time, regardless of which screen they were working on.",
-  },
-  {
-    type: "image",
-    ...img("l9VJURbZM2vInRtmkGKwhfNrP0.png", 222, 904),
-    alt: "Convay's text style system, showing web and mobile type scales.",
-    caption: "The web and mobile type scale, defined once and referenced everywhere.",
-  },
-  { type: "heading", level: 4, text: "Elevation" },
-  {
-    type: "paragraph",
-    text: "Elevation is handled through a defined set of shadow styles, in both light and dark mode, ranging from a subtle lift (Shadow 02) to a pronounced one (Shadow 64). Modals and pop-up elements use the higher end of that range, so their prominence on screen is a deliberate choice rather than an accident of whatever shadow got applied.",
-  },
-  {
-    type: "image",
-    ...img("ldkkedVjXV5kjrW3geEq2xRrM.png", 195, 492),
-    alt: "Convay's shadow and elevation styles, from Shadow 02 to Shadow 64, in light and dark mode.",
-    caption: "Shadow styles in light and dark mode, used to signal elevation from subtle to prominent.",
-  },
-  { type: "heading", level: 4, text: "Grid" },
-  {
-    type: "paragraph",
-    text: "Layout is governed by a defined set of grid styles, desktop, tablet, and mobile, including a 12-column dashboard grid with defined auto-column variants down to 6, 5, 3, and 2 columns for narrower layouts.",
-  },
-  {
-    type: "image",
-    ...img("PCl7JbO66ST97AOthwGOw9zmTs.png", 177, 302),
-    alt: "Convay's named grid styles, from a 12-column desktop dashboard grid to 2-column narrow layouts.",
-    caption: "Convay's named grid styles, from a 12-column desktop dashboard grid down to 2-column layouts for narrow viewports.",
-  },
-
-  { type: "heading", level: 3, text: "From Tokens to Components" },
-  {
-    type: "paragraph",
-    text: "With the variables and styles in place, I built out Convay's core components on top of them: buttons, form fields, icons, badges, modals, so every piece of UI in the product traced back to the same foundation instead of being redrawn from scratch each time.",
-  },
-  {
-    type: "paragraph",
-    text: "Buttons carry states, primary, secondary, hover, active, pressed, built entirely from the shared color and spacing variables, so a button behaves and looks the same no matter which feature it appears in. Form fields (text inputs, dropdowns, checkboxes, radio buttons) follow the same type and spacing rules as the rest of the product, which matters more than it sounds: forms are where users spend the most deliberate attention, and inconsistency there creates friction fastest. Icons and badges use the same accent colors as the rest of the system, reserved for alerts and status rather than decoration. Modals and dialogs use the elevation styles defined earlier, so their prominence on screen follows the same logic as everywhere else, instead of being a one-off treatment.",
-  },
-  {
-    type: "paragraph",
-    text: "None of these components were designed in isolation. Each one is a direct application of the variables and styles defined earlier, which is what makes the system a system: change a variable, and every component built on it updates with it.",
-  },
-  // ASSET_MANIFEST.md's `convay-ds-component-evidence` (a tight crop of
-  // the color-variables table's status-indicator chips) is not
-  // implemented: it required cropping the existing color-light/dark
-  // screenshots, and framerusercontent.com is not reachable from this
-  // sandbox (confirmed via direct fetch, same limitation the package's
-  // own README already flags for sourcing the other eight assets).
-  // Guessing crop coordinates on an image I can't see isn't an option
-  // (README/ASSET_MANIFEST: "do not invent... a replacement for any
-  // asset"). This section already ships correctly as text-only per the
-  // package's own fallback for exactly this situation -- see the final
-  // implementation report for the flag.
-
-  { type: "heading", level: 3, text: "Outcome & Impact" },
-  {
-    type: "paragraph",
-    text: "[[The design system has been in active use since 2024|in-use]]. What follows reflects my experience working with it day to day and building on top of it as new features shipped, not a formal usage audit or a quantitative study.",
+    text: "I started with an audit, screen by screen, of the colours, spacing, corner radii and type already in use. Then I built bottom-up, because every later layer inherits from the one below it.",
   },
   {
     type: "list",
     items: [
-      "[[Every feature built on Convay since has drawn from this system|every-feature]] instead of starting its visual design from zero.",
-      "Both light and dark themes are covered by the same components, not maintained as separate design efforts.",
-      "Handoff to developers changed shape: instead of redlining every screen individually, [[developers could reference named variables and components directly in Figma|handoff]].",
-      "The system is still what Convay's core platform and new features are built on today, across web and mobile.",
+      "**Variables first.** Colour, spacing, stroke and radius, each with a name and a Light and Dark value.",
+      "**Styles on top.** Type, elevation and grids that reference those variables.",
+      "**Components last.** Buttons, fields, chips and modals built only from the layers below.",
+    ],
+  },
+  {
+    type: "paragraph",
+    text: "The product team set priorities, and developers shaped the names, so a variable in Figma matched what they would write in code.",
+  },
+
+  { type: "heading", level: 3, text: "Two layers of colour" },
+  {
+    type: "image",
+    src: "/convay-ds/token-architecture.png",
+    width: 1920,
+    height: 2350,
+    enlargeable: true,
+    alt: "Three panels joined by arrows. Global: the Brand Blue scale, eight variables from blue-light-92 to blue-dark-24, each with a Light and a Dark hex value. Roles: Brand Primary and Default Border, and the Button Primary and Secondary states, each pointing to a global variable such as blue-default. States: Join meeting buttons in Active, Hover, Pressed and Inactive for Primary, and Active, Hover and Pressed for Secondary, each labelled with its hex value. Counts at the top: 76 global variables, 118 colour roles, 2 modes.",
+    caption: "Redrawn from the variables in the original Figma file.",
+  },
+  {
+    type: "paragraph",
+    text: "The first layer holds 76 global variables: the raw blues, blacks, whites, grays and accents, each with a Light and a Dark value. The second holds 118 roles, grouped by where they are used: buttons, fields, the nav bar, cards and notifications. A designer picks Button / Primary / Hover, never a hex code, and changing one global colour updates every role that points to it.",
+  },
+
+  { type: "heading", level: 3, text: "Spacing, stroke and radius" },
+  {
+    type: "image",
+    src: "/convay-ds/scales.png",
+    width: 1920,
+    height: 2272,
+    enlargeable: true,
+    alt: "Three panels. Spacing: eleven named steps from None through XXS, XS, SNudge, S, MNudge, M, L, XL and XXL to XXXL, drawn as bars of growing length with their aliases. Stroke width: Thin, Thick, Thicker and Thickest as lines of growing weight. Corner radius: None, Small, Medium, Large, X-Large, XX-Large and Circular as squares with growing corner radius.",
+  },
+  {
+    type: "paragraph",
+    text: "Spacing became eleven named steps, stroke four, and corner radius seven, from None to Circular. Radius also carries meaning: sharper corners read as structure, rounder ones as something you can press.",
+  },
+
+  { type: "heading", level: 3, text: "Type, elevation and grids" },
+  {
+    type: "image",
+    src: "/convay-ds/type.png",
+    width: 1920,
+    height: 2142,
+    enlargeable: true,
+    alt: "The web type scale set at real sizes with size and line height: Display 68/92, Large Title 40/52, Title 1 32/40, Title 2 28/36, Title 3 24/32, Subtitle 1 20/28, Title 4 18/24, Subtitle 2 and Title 5 16/22, Body 1 16/22, Body 2 14/22, Caption 1 12/16, Caption 2 10/14, and the button styles, with their Strong and Stronger variants.",
+  },
+  {
+    type: "image",
+    src: "/convay-ds/styles.png",
+    width: 1920,
+    height: 2250,
+    enlargeable: true,
+    alt: "Two panels. Elevation: six shadow levels, Shadow 02 to Shadow 64, in a Light row and a Dark row. Grids: the 12-column dashboard grid and auto grids of 12, 6, 5, 3 and 2 columns.",
+  },
+  {
+    type: "paragraph",
+    text: "The web set has 27 text styles, with a matching set for mobile. Six shadow levels exist in both themes, so a modal sits higher than a card on purpose. Grids run from a 12-column dashboard down to two columns.",
+  },
+
+  { type: "heading", level: 3, text: "From tokens to components" },
+  {
+    type: "paragraph",
+    text: "Components came last and were built only from these layers. A primary button takes its four states from the button roles above, its padding from the spacing steps and its corners from the radius scale. Fields, chips, badges and modals follow the same rules, so a change to one variable reaches every component built on it.",
+  },
+
+  { type: "heading", level: 3, text: "Outcome" },
+  {
+    type: "paragraph",
+    text: "[[The design system has been in use since 2024|in-use]]. This comes from working with it day to day, not from a usage audit.",
+  },
+  {
+    type: "list",
+    items: [
+      "[[Handoff changed shape|handoff]]: instead of redlining every screen, developers referenced named variables and components straight from Figma.",
+      "Light and Dark are covered by the same variables, not by a second set of screens.",
+    ],
+  },
+
+  { type: "heading", level: 3, text: "What I would fix today" },
+  {
+    type: "paragraph",
+    text: "Redrawing the system from its own values showed a problem I missed in 2024. The inactive primary button is white text on #A3CCE2, a contrast of 1.7:1, far below the 4.5:1 that text needs. The other button states pass, at 4.8:1 to 6.8:1. Today I would give inactive buttons dark text, and check every role pair for contrast before calling a role done.",
+  },
+  {
+    type: "details",
+    summary: "The original Figma panels",
+    blocks: [
+      {
+        type: "imageRow",
+        enlargeable: true,
+        images: [
+          img("Pz3gr4au6hAzTaXAeWRxckpYxW4.png", 839, 1067, "Figma variables panel, Global collection: the Brand Blue scale with Light and Dark values."),
+          img("RFIwMbzOBq1i3CiHl7feTRCmbc.png", 839, 1063, "Figma variables panel, Color collection: Brand and Button roles pointing to global variables."),
+        ],
+      },
+      {
+        type: "imageRow",
+        enlargeable: true,
+        images: [
+          img("SR7Ty4Rtj9VnaJoe9zZ7wA2yFJI.png", 709, 561, "Spacing variables from None to XXXL."),
+          img("wM8AKcML8xyCnuWF75Zo6IkA18.png", 647, 245, "Stroke width variables: Thin, Thick, Thicker, Thickest."),
+          img("eklLqLjKkIanx3IlAAvezPLZlk.png", 646, 377, "Corner radius variables from None to Circular."),
+        ],
+      },
+      {
+        type: "imageRow",
+        enlargeable: true,
+        images: [
+          img("l9VJURbZM2vInRtmkGKwhfNrP0.png", 222, 904, "Web text styles with size and line height."),
+          img("ldkkedVjXV5kjrW3geEq2xRrM.png", 195, 492, "Elevation effect styles, Shadow 02 to Shadow 64, Light and Dark."),
+          img("PCl7JbO66ST97AOthwGOw9zmTs.png", 177, 302, "Grid styles from desktop to two columns."),
+        ],
+      },
     ],
   },
 
   { type: "heading", level: 3, text: "Reflection" },
   {
     type: "paragraph",
-    text: "Building Convay's design system from scratch was one of the most formative projects of my early career. It taught me that consistency isn't a limitation, it's what makes speed and trust possible at the same time.",
-  },
-  {
-    type: "paragraph",
-    text: "I learned to think beyond individual screens and design for systems that scale, and how much a well-documented decision, a corner radius, a shadow value, can reduce confusion for the people building on top of it.",
-  },
-  {
-    type: "paragraph",
-    text: "Most of all, this project reminded me that a design system isn't really about visuals. It's about building a foundation that lets a team move faster and build with more confidence, together.",
-  },
-  {
-    type: "quote",
-    text: "Good design systems don't just guide designs. They unlock better collaboration.",
-    size: "large",
+    text: "This was the project where I stopped designing screens and started designing the rules behind them. A named corner radius or shadow level sounds small, but it removed a question from every handoff, and it gave a team of developers and one designer a shared language.",
   },
 ];
 
@@ -3180,17 +3075,13 @@ export const caseStudies: CaseStudy[] = [
       poster: "/loops/convay-design-system-card.webp",
       width: 960,
       height: 720,
-      alt: "A short film of the Convay design system in Figma: color variables with light and dark values, then type, grid and elevation styles, stacked as layers.",
+      alt: "A short film of the Convay design system: the Brand Blue variables switch between Light and Dark, blue-default becomes a button that steps through its states, its corners run through the radius scale, and the spacing steps grow.",
     },
     contentStatus: "complete",
     claims: {
       "in-use": {
         label: "In active use since 2024",
         source: "From working with it daily. Not a formal usage audit.",
-      },
-      "every-feature": {
-        label: "Every new feature drew from it",
-        source: "What I saw in features I designed and reviewed. Not measured product-wide.",
       },
       handoff: {
         label: "Developers used named variables",
@@ -3209,10 +3100,10 @@ export const caseStudies: CaseStudy[] = [
     // every other case study already uses rather than introducing a
     // second, page-specific metadata field.
     oneLineScope:
-      "When I joined Convay, its interface had grown feature by feature, each one designed on its own, with no shared colors, type, or components holding it together. As the only UX designer on the team, I built Convay's first design system from the ground up: a single Figma source of truth for color, typography, spacing, and components, developed in close collaboration with the product and engineering teams. It's now the foundation every new Convay feature is built on, across web and mobile.",
+      "When I joined Convay, every feature had been designed on its own, with no shared colours, type or components. As the only UX designer, I built Convay's first design system in Figma: 76 global variables, 118 colour roles, Light and Dark, and the styles and components built on them, shaped with the developers who used it.",
     meta: {
       role: "UX Designer",
-      team: "Product managers + engineering (team size to be confirmed)",
+      team: "Product team and developers",
       duration: "Sep 2023 – Jul 2024 (Convay tenure)",
       tools: "Figma",
     },
