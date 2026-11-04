@@ -3261,7 +3261,7 @@ export const caseStudies: CaseStudy[] = [
     // projects get one. This is the same GIF that opens the full case
     // study, already sized 1600x1200 (4:3), matching ProjectCard's media
     // aspect ratio exactly, so it renders here uncropped.
-    thumbnail: cardLoop("convay-mobile-app-revamp", "A short film of the Convay mobile redesign: a phone turns slowly while a coral Now line wipes from Today to a live meeting, a Bangla recap, the welcome screen and Dark mode."),
+    thumbnail: cardLoop("convay-mobile-app-revamp", "A short film of the Convay mobile redesign: a phone turns over a wall of the new screens, from Today to a live meeting with Bangla captions and an AI recap."),
     // Convay Mobile App Revamp rebuild: replaces the old hook paragraph,
     // which 01_Audit.md flagged as the one place the writing voice broke
     // on the whole page ("The goal? Make sure users could rely on

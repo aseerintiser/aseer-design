@@ -1,4 +1,4 @@
-"""Render the Convay mobile film. usage: render-film.py <mode hero|card> <w> <h> <out.mp4|stills> [fps] [--base path] [--stills t1,t2]"""
+"""Render the Convay mobile films: film.html is the hero trailer, card.html the card loop. usage: render-film.py <mode hero|card> <w> <h> <out.mp4|stills> [fps] [--base path] [--stills t1,t2]"""
 import asyncio, os, subprocess, sys
 from playwright.async_api import async_playwright
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -13,7 +13,8 @@ async def main():
         errs = []
         pg.on("pageerror", lambda e: errs.append(str(e)))
         q = f"?mode={mode}" + (f"&base={base}" if base else "")
-        await pg.goto(f"file://{HERE}/film.html{q}")
+        page = "card.html" if mode == "card" else "film.html"
+        await pg.goto(f"file://{HERE}/{page}{q}")
         await pg.evaluate("window.__ready")
         if errs: print("errors", errs)
         if stills is not None:

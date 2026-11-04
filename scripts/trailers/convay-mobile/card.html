@@ -1,0 +1,187 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  Convay Mobile App Revamp card loop (mode=card, 1200x900, no text,
+  seamless). The hero trailer lives in film.html; this file's hero branch
+  is an earlier cut kept for reference.
+  Every phone and tile shows a real screen exported from the Convay
+  redesign Figma file (public/convay-mobile/), plus the shipped 2023-24
+  home screen for the opening wipe. On-screen text is condensed from the
+  case study. window.__seek(t) renders one frame; render-film.py steps
+  through it frame by frame into ffmpeg.
+-->
+<style>
+@font-face{font-family:Geist;src:url(fonts/geist.woff2);font-weight:100 900}
+@font-face{font-family:Bangla;src:url(fonts/noto-bengali-500.woff2);font-weight:500}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow:hidden;background:#07070B}
+#stage{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;background:#07070B;font-family:Geist;-webkit-font-smoothing:antialiased}
+.abs{position:absolute;left:0;top:0;will-change:transform,opacity}
+.phone{background:#040406;border-radius:56px;padding:11px;box-shadow:0 60px 120px -40px rgba(0,0,0,.85),0 0 0 1.5px rgba(255,255,255,.1),inset 0 0 0 1px rgba(255,255,255,.06)}
+.phone .scr{position:relative;border-radius:46px;overflow:hidden;background:#F7F6FA}
+.phone img,.tile img{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+.tile{position:absolute;border-radius:26px;overflow:hidden;background:#F7F6FA;box-shadow:0 30px 60px -20px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08)}
+.k{font:600 21px Geist;letter-spacing:.16em;text-transform:uppercase;color:#B9AEFF}
+.mask{overflow:hidden;display:block;padding-bottom:.08em}
+.mask>span{display:inline-block;will-change:transform}
+.big{font:680 132px/1 Geist;letter-spacing:-.055em;color:#F4F3F8}
+.mid{font:640 64px/1.06 Geist;letter-spacing:-.04em;color:#F4F3F8}
+.bn{font-family:Bangla,Geist;font-weight:500}
+.grad{background:linear-gradient(90deg,#00AAFF,#8636F8);-webkit-background-clip:text;background-clip:text;color:transparent}
+</style></head><body>
+<div id="stage"></div>
+<script>
+const Q=new URLSearchParams(location.search);
+const MODE=Q.get('mode')||'hero';
+const BASE=Q.get('base')||'../../../public/convay-mobile/';
+const W=MODE==='hero'?1920:1200,H=MODE==='hero'?1080:900;
+const stage=document.getElementById('stage');stage.style.width=W+'px';stage.style.height=H+'px';
+const fit=()=>{const s=Math.min(innerWidth/W,innerHeight/H);stage.style.transform=`scale(${s})`};fit();
+// ---------- helpers
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,a,b)=>cl((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3), eo5=x=>1-Math.pow(1-x,5), ei=x=>x*x*x, eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const back=x=>{const c1=1.3,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const lerp=(a,b,x)=>a+(b-a)*x;
+const el=(html,cls='',parent=stage)=>{const d=document.createElement('div');d.className='abs '+cls;d.innerHTML=html;parent.appendChild(d);return d};
+const set=(e,x,y,s=1,r=0,o=1)=>{e.style.transform=`translate(${x}px,${y}px) rotate(${r}deg) scale(${s})`;e.style.opacity=o};
+// 3D: perspective is baked into each transform so elements need no shared parent
+const set3=(e,x,y,{z=0,rx=0,ry=0,rz=0,s=1,o=1,p=2200}={})=>{e.style.transform=`perspective(${p}px) translate3d(${x}px,${y}px,${z}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${s})`;e.style.opacity=o};
+// kinetic lines: each word rises out of its own mask
+const kin=(html,cls,w)=>{const d=el(`<div class="${cls}" style="width:${w}px">${html.split(' ').map(x=>`<span class="mask" style="display:inline-block;margin-right:.24em"><span>${x}</span></span>`).join('')}</div>`);d.words=[...d.querySelectorAll('.mask>span')];return d};
+const kinShow=(d,t,a,b,stag=.06)=>{const out=P(t,b-.4,b);d.words.forEach((w,i)=>{const p=eo5(P(t,a+i*stag,a+i*stag+.7));w.style.transform=`translateY(${(1-p)*110+out*-110}%)`});d.style.opacity=t<a||t>b?0:1};
+// ---------- background
+const bg=el(`<div style="width:${W}px;height:${H}px"></div>`);
+const glowA=el(`<div style="width:1500px;height:1500px;border-radius:50%;background:radial-gradient(circle,rgba(86,64,214,.75) 0%,rgba(56,44,131,.35) 35%,rgba(13,13,18,0) 70%)"></div>`);
+const glowB=el(`<div style="width:1100px;height:1100px;border-radius:50%;background:radial-gradient(circle,rgba(0,170,255,.32) 0%,rgba(134,54,248,.18) 40%,rgba(13,13,18,0) 70%)"></div>`);
+let rings='';for(let i=0;i<10;i++){const r=200+i*140;rings+=`<circle cx="${W/2}" cy="${H/2}" r="${r}" stroke="#fff" stroke-opacity="${(.07-i*.005).toFixed(3)}" stroke-width="1.4" fill="none"/>`}
+const rg=el(`<svg width="${W}" height="${H}" style="overflow:visible">${rings}</svg>`);
+const grain=el(`<svg width="${W}" height="${H}"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .05 0"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>`);
+// ---------- phones and tiles
+const mkPhone=(keys,sw)=>{const sh=Math.round(sw*915/412);
+  const d=el(`<div class="phone"><div class="scr" style="width:${sw}px;height:${sh}px">${keys.map(k=>`<img data-k="${k}" src="${BASE}${k}.png">`).join('')}</div></div>`);
+  d.imgs={};d.querySelectorAll('img').forEach(i=>d.imgs[i.dataset.k]=i);d.sw=sw;d.sh=sh;d.w=sw+22;d.h=sh+22;d.scr=d.querySelector('.scr');d.style.transformOrigin='50% 50%';d.style.opacity=0;return d};
+const show=(ph,map)=>{for(const k in ph.imgs){ph.imgs[k].style.opacity=map[k]??0}};
+const wipe=(ph,top,bottom,p)=>{const y=Math.round(eio(p)*ph.sh);
+  ph.imgs[bottom].style.opacity=1;ph.imgs[top].style.opacity=1;ph.imgs[top].style.clipPath=`inset(${y}px 0 0 0)`;ph.imgs[bottom].style.clipPath=`inset(0 0 ${ph.sh-y}px 0)`;
+  if(!ph.line){ph.line=document.createElement('div');ph.line.style.cssText='position:absolute;left:0;right:0;height:4px;background:#F8475E;box-shadow:0 0 24px 4px rgba(248,71,94,.6)';
+    const dot=document.createElement('div');dot.style.cssText='position:absolute;left:14px;top:-7px;width:18px;height:18px;border-radius:50%;background:#F8475E;box-shadow:0 0 0 7px rgba(248,71,94,.22)';ph.line.appendChild(dot);ph.scr.appendChild(ph.line)}
+  ph.line.style.top=(y-2)+'px';ph.line.style.opacity=p>0&&p<1?1:0};
+const unwipe=ph=>{for(const k in ph.imgs)ph.imgs[k].style.clipPath='none';if(ph.line)ph.line.style.opacity=0};
+// isometric wall of every redesign screen
+const ALL=['today','meeting','recap','welcome','calendar','recap-bangla','prejoin','chat','state-generating','library','transcript','today-dark','signin','details','state-export','join','schedule','recap-dark','state-waiting','state-empty','state-wrong-id'];
+const mkWall=(cols,tw,gap,rep,per=0)=>{const th=Math.round(tw*915/412);const wall=el('');wall.style.transformOrigin='0 0';
+  wall.cols=[];for(let c=0;c<cols;c++){const col=el('','',wall);col.items=[];for(let r=0;r<rep;r++){const k=per?ALL[(c*per+(r%per))%ALL.length]:ALL[(c*3+r*5)%ALL.length];const tl=el(`<img src="${BASE}${k}.png">`,'tile',col);tl.style.width=tw+'px';tl.style.height=th+'px';tl.style.left='0px';tl.style.top=(r*(th+gap))+'px';col.items.push(tl)}col.style.left=(c*(tw+gap))+'px';wall.cols.push(col)}
+  wall.tw=tw;wall.th=th;wall.gap=gap;wall.cycle=th+gap;return wall};
+// coral Now line that can cross the whole frame
+const nowLine=el(`<div style="position:relative;width:${W*1.6}px;height:4px;background:#F8475E;box-shadow:0 0 30px 6px rgba(248,71,94,.55)"><div style="position:absolute;left:0;top:-9px;width:22px;height:22px;border-radius:50%;background:#F8475E;box-shadow:0 0 0 9px rgba(248,71,94,.22)"></div></div>`);
+nowLine.style.transformOrigin='0 50%';nowLine.style.opacity=0;
+const nowPill=el(`<div style="font:650 20px Geist;color:#fff;background:#F8475E;padding:5px 12px;border-radius:8px">Now</div>`);nowPill.style.opacity=0;
+
+// =================================================================
+if(MODE==='hero'){
+const A=mkPhone(['shipped-home','today'],400);
+const J=['welcome','signin','join','prejoin'].map(k=>{const p=mkPhone([k],300);show(p,{[k]:1});return p});
+const M=mkPhone(['meeting'],380);show(M,{meeting:1});
+const R=mkPhone(['state-generating','recap','recap-bangla'],380);
+const wall=mkWall(9,250,44,6);
+stage.appendChild(nowLine);stage.appendChild(nowPill);
+// type
+const kick=el(`<div class="k" style="width:${W}px;text-align:center">UX Designer · Synesis IT · 2023–24, redesigned 2026</div>`);
+const title=kin('Convay Mobile App Revamp','big',1700);title.style.textAlign='center';
+const t2a=kin('Shipped in 2023–24.','mid',760),t2b=kin('Rethought in 2026.','mid',760);t2b.querySelectorAll('.mask>span').forEach(s=>s.style.color='#B9AEFF');
+const t2c=el(`<div style="font:500 25px/1.45 Geist;color:#A8A6BA;width:640px">Same product, same people. Every screen redrawn with today's patterns.</div>`);
+const s3k=el(`<div class="k">01 · Getting in</div>`),s3=kin('No account. No wall. Just join.','mid',1500);
+const s4k=el(`<div class="k">02 · Live captions</div>`),s4=kin('English in, Bangla out.','mid',900);
+const bnWords='জেলা অফিসগুলো শুক্রবারের মধ্যে সংশোধিত হিসাব পাঠাবে।'.split(' ');
+const bnBig=el(`<div class="bn" style="font-size:84px;line-height:1.32;color:#F4F3F8;width:1120px"></div>`);const bnIn=bnBig.firstChild;
+const enSmall=el(`<div style="font:500 28px Geist;color:#8E8DA3;width:1000px">District offices will send revised figures by Friday.</div>`);
+const s5k=el(`<div class="k">03 · Honest AI</div>`),s5=kin('AI recaps that say they are AI.','mid',820);
+const aiBar=el(`<div style="width:640px"><div style="display:flex;justify-content:space-between;font:600 24px Geist;color:#F4F3F8"><span>Writing your recap</span><span id="pc" style="color:#8E8DA3">0%</span></div><div style="margin-top:16px;height:14px;border-radius:7px;background:#23212E;overflow:hidden"><div id="bf" style="height:100%;width:0;border-radius:7px;background:linear-gradient(90deg,#00AAFF,#8636F8);box-shadow:0 0 30px rgba(134,54,248,.6)"></div></div><div style="margin-top:18px;font:500 22px Geist;color:#C9B6FF">Written by Convay AI. Check names and numbers before you share.</div></div>`);
+const pc=aiBar.querySelector('#pc'),bf=aiBar.querySelector('#bf');
+const beam=el(`<div style="width:260px;height:${H*2}px;background:linear-gradient(90deg,rgba(0,170,255,0),rgba(0,170,255,.22),rgba(134,54,248,.32),rgba(134,54,248,0));filter:blur(8px)"></div>`);beam.style.transformOrigin='50% 0';
+const s6=el(`<div style="width:${W}px;text-align:center"><div class="k">04 · System</div><div class="mid" style="margin-top:18px">14 screens · 5 states · Light and Dark</div></div>`);
+const band=el(`<div style="width:${W}px;height:420px;background:linear-gradient(180deg,rgba(7,7,11,0),rgba(7,7,11,.9) 32%,rgba(7,7,11,.9) 68%,rgba(7,7,11,0))"></div>`);
+stage.appendChild(s6);
+const outT=kin('Convay Mobile App Revamp','big',1700);outT.style.textAlign='center';
+const outS=el(`<div style="width:${W}px;text-align:center;font:560 34px Geist;letter-spacing:-.02em;color:#B9AEFF">Shipped work, and a 2026 redesign concept</div>`);
+const outK=el(`<div class="k" style="width:${W}px;text-align:center;color:#8E8DA3;font-size:19px">Md. Aseer Intiser · Product Designer and HCI Researcher</div>`);
+const outLine=el(`<div style="width:520px;height:4px;border-radius:2px;background:#F8475E;box-shadow:0 0 24px rgba(248,71,94,.6)"></div>`);outLine.style.transformOrigin='0 50%';
+window.__duration=26;
+window.__render=(t)=>{
+ // background drift
+ set(glowA,lerp(-300,500,(Math.sin(t/7)+1)/2)+ (t>13.6&&t<18?300:0),lerp(-700,-300,(Math.cos(t/5)+1)/2),1,0,t<1.6?P(t,.9,2.2):1);
+ set(glowB,W-700+Math.sin(t/4)*80,H-600+Math.cos(t/6)*60,1,0,t>13.4&&t<18.4?eo(P(t,13.4,14.4))*(1-P(t,17.6,18.4)):.35*P(t,1,2.4));
+ set(rg,Math.sin(t/5)*16,Math.cos(t/6)*12,1+.02*Math.sin(t/4),0,P(t,1,2.4));
+ // ---- S1 (0-3.6): the Now line crosses the dark, the title rises
+ const nl=eo5(P(t,.15,1.0));
+ nowLine.style.opacity=t<3.4?(t<.15?0:1)*(1-P(t,3.0,3.4)):0;
+ set(nowLine,-W*.3,H*.62,1,0,nowLine.style.opacity);nowLine.style.transform+=` scaleX(${nl})`;
+ set(nowPill,lerp(-80,W*.62,nl),H*.62+16,1,0,t<.3?0:1-P(t,3.0,3.4));
+ set(kick,0,H*.62+70,1,0,eo(P(t,1.1,1.7))*(1-P(t,3.0,3.4)));
+ set(title,110,H*.62-170,1,0,1);kinShow(title,t,.7,3.45,.09);
+ // ---- S2 (3.4-7.6): then and now, 3D phone
+ const aIn=eo5(P(t,3.3,4.4)),aOut=eio(P(t,7.2,7.9));
+ const ary=lerp(-38,-14,aIn)+Math.sin(t*.9)*3-aOut*40,arx=lerp(14,6,aIn);
+ set3(A,1080,lerp(H+120,72,aIn)-aOut*30,{ry:ary,rx:arx,rz:lerp(4,0,aIn),z:lerp(-300,0,aIn)-aOut*600,o:Math.min(1,aIn*3)*(1-aOut)});
+ if(t<4.8){show(A,{'shipped-home':1});unwipe(A)}else wipe(A,'shipped-home','today',P(t,4.8,6.2));
+ set(t2a,160,330,1,0,1);kinShow(t2a,t,3.7,7.5);set(t2b,160,410,1,0,1);kinShow(t2b,t,5.2,7.5);
+ set(t2c,160,540,1,0,eo(P(t,5.8,6.4))*(1-P(t,7.1,7.5)));
+ // ---- S3 (7.6-11.4): getting in, a 3D carousel
+ set(s3k,160,120,1,0,eo(P(t,7.8,8.3))*(1-P(t,11.0,11.4)));set(s3,160,170,1,0,1);kinShow(s3,t,7.9,11.4,.07);
+ J.forEach((p,i)=>{const a=eo5(P(t,8.0+i*.14,9.1+i*.14)),o=eio(P(t,10.9+i*.05,11.6+i*.05));
+   const spin=lerp(30,-6,eo(P(t,8,11.4)));const x=360+i*360+lerp(220,0,a);
+   set3(p,x,lerp(H+80,330,a)+Math.sin(t*1.2+i)*6-o*0,{ry:spin+(i-1.5)*-4,rx:6,z:lerp(-500,0,a)-o*900,o:Math.min(1,a*2)*(1-o)})});
+ // ---- S4 (11.4-15.2): Bangla captions, huge
+ set(s4k,160,120,1,0,eo(P(t,11.6,12.1))*(1-P(t,14.8,15.2)));set(s4,160,170,1,0,1);kinShow(s4,t,11.7,15.2,.07);
+ const mIn=eo5(P(t,11.5,12.5)),mOut=eio(P(t,14.8,15.4));
+ set3(M,1400,lerp(H+80,100,mIn),{ry:lerp(-30,-12,mIn)-mOut*30,rx:5,z:-mOut*700,o:Math.min(1,mIn*2)*(1-mOut)});
+ const nW=Math.floor(cl((t-12.4)/0.28,0,bnWords.length));bnIn.innerHTML=bnWords.map((w,i)=>`<span style="opacity:${i<nW?1:0};transition:none">${w}</span>`).join(' ');
+ set(bnBig,160,370,1,0,(1-P(t,14.8,15.2)));set(enSmall,160,760+(1-eo(P(t,14.0,14.5)))*20,1,0,eo(P(t,14.0,14.5))*(1-P(t,14.8,15.2)));
+ // ---- S5 (15.2-19.4): honest AI
+ set(s5k,160,120,1,0,eo(P(t,15.4,15.9))*(1-P(t,19.0,19.4)));set(s5,160,170,1,0,1);kinShow(s5,t,15.5,19.4,.07);
+ const rIn=eo5(P(t,15.3,16.3)),rOut=eio(P(t,19.0,19.6));
+ set3(R,1280,lerp(H+80,100,rIn),{ry:lerp(30,12,rIn)+rOut*30,rx:5,z:-rOut*700,o:Math.min(1,rIn*2)*(1-rOut)});
+ show(R,{'state-generating':1-P(t,17.2,17.5),'recap':P(t,17.2,17.5)*(1-P(t,18.3,18.6)),'recap-bangla':P(t,18.3,18.6)});
+ const pr=eio(P(t,16.0,17.2));bf.style.width=(pr*100)+'%';pc.textContent=Math.round(pr*100)+'%';
+ set(aiBar,160,440+(1-eo(P(t,15.9,16.4)))*24,1,0,eo(P(t,15.9,16.4))*(1-P(t,19.0,19.4)));
+ set(beam,lerp(-300,W+200,P(t,16.9,17.9)),-H*.4,1,18,t>16.9&&t<17.9?1:0);
+ // ---- S6 (19.4-22.8): isometric wall
+ const wIn=eo(P(t,19.3,20.2)),wOut=eio(P(t,22.4,23.0));
+ const pan=(t-19.3)*120;
+ wall.style.transform=`perspective(2600px) translate3d(${W*.5-1300}px,${-260+pan*-.2}px,${lerp(-400,0,wIn)}px) rotateX(52deg) rotateZ(-34deg)`;wall.style.opacity=wIn*(1-wOut);
+ wall.cols.forEach((c,i)=>{c.style.transform=`translateY(${(i%2?-1:1)*((pan*(1+(i%3)*.15))%wall.cycle)-wall.cycle}px)`});
+ const c6=eo(P(t,20.0,20.6))*(1-P(t,22.3,22.8));set(s6,0,450+(1-c6)*20,1,0,c6);set(band,0,370,1,0,c6);
+ // ---- S7 (22.8-26): outro
+ set(outT,110,330,1,0,1);kinShow(outT,t,23.0,26.5,.09);
+ set(outLine,700,510,1,0,t>23.6?1:0);outLine.style.transform+=` scaleX(${eo5(P(t,23.6,24.4))})`;
+ set(outS,0,560+(1-eo(P(t,24.0,24.6)))*20,1,0,eo(P(t,24.0,24.6)));
+ set(outK,0,650,1,0,eo(P(t,24.4,25.0)));
+};
+}
+// =================================================================
+else{ // card: no text, seamless 14 s loop
+const wall=mkWall(8,210,36,8,2);
+const F=mkPhone(['today','meeting','recap-bangla'],330);
+stage.appendChild(nowLine);
+const vign=el(`<div style="width:${W}px;height:${H}px;background:radial-gradient(60% 70% at 50% 50%,rgba(7,7,11,0) 30%,rgba(7,7,11,.55) 100%)"></div>`);
+stage.appendChild(F);
+const D=14;window.__duration=D;
+window.__render=(t)=>{
+ const u=t/D, s=Math.sin(u*Math.PI*2), c=Math.cos(u*Math.PI*2);
+ set(glowA,-200+s*120,-500+c*80,1,0,1);set(glowB,W-650+c*60,H-560+s*50,1,0,.4);set(rg,0,0,1,0,1);
+ // wall pans exactly one tile cycle per loop, so frame 0 equals frame D
+ const pan=u*wall.cycle*2;
+ wall.style.transform=`perspective(2400px) translate3d(${W*.5-1040}px,-300px,0) rotateX(52deg) rotateZ(-34deg)`;wall.style.opacity=.55;
+ wall.cols.forEach((col,i)=>{col.style.transform=`translateY(${(i%2?pan:-pan)-wall.cycle*2}px)`});
+ // the hero phone floats and turns, cycling Today -> meeting -> Bangla recap
+ set3(F,(W-F.w)/2,(H-F.h)/2+s*10,{ry:-16+s*10,rx:6+c*3,rz:s*1.5});
+ const seg=x=>P(u,x,x+.04);
+ show(F,{'today':1-seg(.30)+seg(.94),'meeting':seg(.30)*(1-seg(.62)),'recap-bangla':seg(.62)*(1-seg(.94))});
+ // a coral Now line sweeps the frame once per loop
+ const sw=P(u,.08,.28);nowLine.style.opacity=sw>0&&sw<1?1:0;set(nowLine,-W*.4,lerp(-40,H+40,eio(sw)),1,-8,nowLine.style.opacity);
+};
+}
+window.__seek=(t)=>window.__render(t);
+window.__ready=Promise.all([document.fonts.ready,...[...document.images].map(i=>i.complete?1:new Promise(r=>{i.onload=r;i.onerror=r}))]).then(()=>{window.__render(0);return true});
+</script></body></html>
