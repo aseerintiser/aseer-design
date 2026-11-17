@@ -2773,6 +2773,7 @@ const periBody: CaseStudyBlock[] = [
     "type": "paragraph",
     "text": "A barista asks if you want the receipt, in Finnish. Peri shows her words small and faded, and the English meaning large, in a card with a small arrow pointing toward her. Below it are two replies. You read them in English, pinch to pick one, and the glasses speak it in Finnish."
   },
+  {"type": "video", "src": "/peri/cafeloop.mp4", "poster": "/peri/cafeloop.webp", "width": 1280, "height": 720, "alt": "A coffee is set down in front of you. The display translates the waiter's Finnish into English, Here's your coffee, anything else, and offers two replies.", "caption": "The same idea in motion, at another café moment."},
   {
     "type": "paragraph",
     "text": "The hardest part was not the card. It was the photo. The first barista was looking down at her work, so the moment did not feel like a conversation. The next showed two people posing with their hands in their pockets. A third swapped the scene for a stranger giving directions. **None of them felt real, and if the moment is not believable, the interface on top of it is not either.** The final photo shows what actually happens at a counter: she hands you the order and asks."
@@ -2815,6 +2816,8 @@ const periBody: CaseStudyBlock[] = [
       }
     ]
   },
+  {"type": "video", "src": "/peri/walkloop.mp4", "poster": "/peri/walkloop.webp", "width": 1280, "height": 720, "alt": "Walking down a narrow old alley. The display shows only an arrow and 120 metres, then a held message appears. The view switches to standing at a crossing, and the message opens with the reason.", "caption": "The world moves. The display stays, and shows less."},
+  {"type": "image", "src": "/peri/attention.jpg", "width": 3200, "height": 1800, "enlargeable": true, "alt": "A four-column diagram: standing, walking, crowded street and in traffic. As you move faster, translation goes from shown to short to paused, messages are held, navigation becomes an arrow, and Ask Peri pauses.", "caption": "Attention rules. The faster you move, the less Peri shows."},
   {
     "type": "imageRow",
     "enlargeable": true,
@@ -2923,6 +2926,7 @@ const periBody: CaseStudyBlock[] = [
     "text": "Everything shares one small system: a glass card, one large line at most, a mono font for system labels, and one mint signal colour. Warm colours are kept for states that matter to other people: mic, camera and recording."
   },
   {"type": "heading", "level": 3, "text": "Version 2: designing inside the real display"},
+  {"type": "image", "src": "/peri/exploration.jpg", "width": 3200, "height": 1800, "enlargeable": true, "alt": "Early exploration drawn as line art. On the left, version one draws outlines on a door and a building, a line from a card to a face, and pills in the corners. On the right, version two puts everything in one small window inside the right lens of a pair of glasses.", "caption": "Early exploration: what I first drew, and what a real display can show."},
   {"type": "paragraph", "text": "My first version had a problem an XR designer would spot at once. Cards floated anywhere, lines ran from text to faces, and doors and buildings got outlines. Real display glasses cannot do that. They show content in **one small window in one lens**, and nothing outside it."},
   {"type": "paragraph", "text": "So I redrew every screen inside that window. The world outlines and connector lines are gone. Instead, a small arrow next to a name tells you which way to look: \"Barista\", \"Door on your left\", \"The brick building\". Status lines that used to sit in the corners of your view now share the top row of the display."},
   {"type": "imageRow", "enlargeable": true, "images": [{"src": "/peri/translation-v1.jpg", "width": 3200, "height": 1800, "alt": "Version 1: the translation card floats beside the barista's face, joined to it by a line, with status pills in the corners of the view."}, {"src": "/peri/translation.jpg", "width": 3200, "height": 1800, "alt": "Version 2: everything sits inside one outlined display area in the right lens, with a small arrow next to the word Barista."}]},
@@ -2934,7 +2938,7 @@ const periBody: CaseStudyBlock[] = [
   },
   {
     "type": "paragraph",
-    "text": "The next step is a live prototype, where you can walk through these moments yourself. The trailer hints at the timing, but timing is most of the design here, and it deserves more than a film."
+    "text": "The prototype on this page lets you feel the timing, but on a laptop screen, not in front of your eyes. The next step is real display glasses, where size, brightness and glare will decide how much of this survives."
   },
   {
     "type": "paragraph",
