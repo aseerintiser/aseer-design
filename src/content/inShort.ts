@@ -66,6 +66,15 @@ export const inShort: Record<string, InShort> = {
     evidence: { text: "Thesis graded 5/5", source: "Tampere University's grade for the M.Sc. thesis this study belongs to (Human-Technology Interaction, June 2026)." },
   },
   // The short version; The idea; Designing for trust; Accessibility, measured.
+  peri: {
+    problem:
+      "Display glasses put a screen in front of someone who is looking at the real world, and often walking through it. Phone patterns do not fit.",
+    role: "Sole product designer on a self-directed concept, with Claude as an AI pair designer for the screens and the trailer.",
+    decision:
+      "Keep everything inside one small display window, show less while you move, and make the camera impossible to use in secret.",
+    result: "Eight moments inside the glasses, a phone companion and a small HUD system, redrawn in a second version to fit a realistic display area.",
+    evidence: { text: "Not user-tested", source: "Self-directed concept, November 2026. The screens are presentation designs over stock photos, not footage from real hardware." },
+  },
   "travelmate-ai": {
     problem:
       "Travellers juggle maps, translators, review sites and group chats, and most travel apps reward planning at home rather than being out in the city.",

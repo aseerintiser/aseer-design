@@ -52,6 +52,7 @@ const projectWords: Record<string, string> = {
   fitvibe: "FitVibe Kaz Software internship fitness",
   lumi: "Lumi thesis Tampere University conversational AI trust",
   "travelmate-ai": "TravelMate travel companion concept",
+  peri: "Peri smart glasses display glasses HUD wearables AR concept",
   "cultural-festival-platform": "Arenberg aRENEWberg cultural festival ECIU Créathon",
   robocarnival: "RoboCarnival robots human-robot interaction",
   "game-difficulty-player-types": "game difficulty player types survey",

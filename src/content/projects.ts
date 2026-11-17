@@ -2750,7 +2750,7 @@ const periBody: CaseStudyBlock[] = [
     "items": [
       "**The street comes first.** Content sits right of centre and never over your path.",
       "**Less while moving.** Walking shrinks everything to one line, and messages wait.",
-      "**Point at the source.** A thin line ties each card to the person or place it is about.",
+      "**Point at the source.** A small arrow next to a name shows which way to look, because the display cannot draw on the world itself.",
       "**Never secret.** Mic and camera states are always visible, to you and to people around you."
     ]
   },
@@ -2765,12 +2765,12 @@ const periBody: CaseStudyBlock[] = [
     "width": 3200,
     "height": 1800,
     "enlargeable": true,
-    "alt": "First-person view across a café counter. A barista hands over a takeaway order. A glass card next to her face shows her Finnish words in small text and the English translation in large text, with two reply buttons below.",
+    "alt": "First-person view across a café counter. A barista hands over a takeaway order. A glass card inside the display area shows her Finnish words in small text and the English translation in large text, with two reply buttons below.",
     "caption": "The barista asks in Finnish. You read English. Pick a reply and the glasses say it back in Finnish."
   },
   {
     "type": "paragraph",
-    "text": "A barista asks if you want the receipt, in Finnish. Peri shows her words small and faded, and the English meaning large, in a card linked to her face by a thin line. Below it are two replies. You read them in English, pinch to pick one, and the glasses speak it in Finnish."
+    "text": "A barista asks if you want the receipt, in Finnish. Peri shows her words small and faded, and the English meaning large, in a card with a small arrow pointing toward her. Below it are two replies. You read them in English, pinch to pick one, and the glasses speak it in Finnish."
   },
   {
     "type": "paragraph",
@@ -2822,7 +2822,7 @@ const periBody: CaseStudyBlock[] = [
         "src": "/peri/navigation.jpg",
         "width": 3200,
         "height": 1800,
-        "alt": "A narrow old street. A small card reads Right in 40 m, with a marker on the corner where to turn."
+        "alt": "A narrow old street. Inside the display area, a card reads Right in 40 m, turn after the yellow house."
       },
       {
         "src": "/peri/message-held.jpg",
@@ -2850,7 +2850,7 @@ const periBody: CaseStudyBlock[] = [
         "src": "/peri/arriving.jpg",
         "width": 3200,
         "height": 1800,
-        "alt": "A café front with its open door outlined by a dashed line and an Entrance tag, next to a card saying You have arrived."
+        "alt": "A café front. Inside the display area, a card says You have arrived, with an arrow to the open door on the left."
       },
       {
         "src": "/peri/idle.jpg",
@@ -2871,7 +2871,7 @@ const periBody: CaseStudyBlock[] = [
     "width": 3200,
     "height": 1800,
     "enlargeable": true,
-    "alt": "A row of historic townhouses with one brick building outlined. A card shows the question What style is this building and a short answer about Brick Gothic and its stepped gable.",
+    "alt": "Historic townhouses. Inside the display area, a card answers What style is this building, with an arrow toward the brick building.",
     "caption": "The answer describes what is visible. It does not guess a name or a history it cannot check."
   },
   {
@@ -2921,6 +2921,11 @@ const periBody: CaseStudyBlock[] = [
     "type": "paragraph",
     "text": "Everything shares one small system: a glass card, one large line at most, a mono font for system labels, and one mint signal colour. Warm colours are kept for states that matter to other people: mic, camera and recording."
   },
+  {"type": "heading", "level": 3, "text": "Version 2: designing inside the real display"},
+  {"type": "paragraph", "text": "My first version had a problem an XR designer would spot at once. Cards floated anywhere, lines ran from text to faces, and doors and buildings got outlines. Real display glasses cannot do that. They show content in **one small window in one lens**, and nothing outside it."},
+  {"type": "paragraph", "text": "So I redrew every screen inside that window. The world outlines and connector lines are gone. Instead, a small arrow next to a name tells you which way to look: \"Barista\", \"Door on your left\", \"The brick building\". Status lines that used to sit in the corners of your view now share the top row of the display."},
+  {"type": "imageRow", "enlargeable": true, "images": [{"src": "/peri/translation-v1.jpg", "width": 3200, "height": 1800, "alt": "Version 1: the translation card floats beside the barista's face, joined to it by a line, with status pills in the corners of the view."}, {"src": "/peri/translation.jpg", "width": 3200, "height": 1800, "alt": "Version 2: everything sits inside one outlined display area in the right lens, with a small arrow next to the word Barista."}]},
+  {"type": "paragraph", "text": "The change made the design quieter, and more honest about the hardware. It also turned one of my principles from a visual trick into a real constraint."},
   {
     "type": "heading",
     "level": 3,
@@ -2928,7 +2933,7 @@ const periBody: CaseStudyBlock[] = [
   },
   {
     "type": "paragraph",
-    "text": "The biggest gap is the display itself. Real display glasses show content in a small area of one lens, and my cards are larger than that would allow. The next step is to redraw every screen inside a true display boundary, then build a motion prototype, because timing is most of the design here."
+    "text": "The next step is a live prototype, where you can walk through these moments yourself. The trailer hints at the timing, but timing is most of the design here, and it deserves more than a film."
   },
   {
     "type": "paragraph",
@@ -3331,7 +3336,7 @@ export const caseStudies: CaseStudy[] = [
     // the Peri Figma file, in public/peri/. Photos: Unsplash, plus one
     // Freepik photo that needs the visible credit kept in the body.
     contentStatus: "complete",
-    thumbnail: { src: "/peri/card.jpg", width: 1440, height: 1080, alt: "A barista hands over an order while a glass card beside her face translates her Finnish into English." },
+    thumbnail: cardLoop("peri", "A short film of Peri: a barista's Finnish turns into English, a walking route shrinks to one arrow, and a recording light comes on at a dinner table."),
     oneLineScope:
       "A heads-up interface for display glasses, built on one rule: the real world comes first. A self-directed concept from 2026.",
     meta: {
