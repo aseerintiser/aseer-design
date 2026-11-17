@@ -84,9 +84,9 @@ export const trailers: Record<string, Trailer> = {
   ]),
   peri: trailer("peri", "Trailer for Peri: a 3D render of the glasses, then the concept's real screens seen through the right lens, over free stock footage.", [
     "Peri. A screen you wear should let you see. The glasses turn, and the display in the right lens lights up.",
-    "The camera dives into the display, and the world appears through the lens.",
+    "The glasses turn around and rise to your eyes, as if you put them on. The world appears through the right lens.",
     "01, Walk: the world moves, the display stays. You stop. It opens.",
-    "02, Translate: read English, answer in Finnish.",
+    "02, Translate: a barista sets your coffee down and smiles. Here you go! Anything else? Read English, answer in Finnish.",
     "03, Ask: only what the camera sees.",
     "04, Never secret: recording always lights up. What others see: the light is on. Always.",
     "Peri. The real world comes first.",
