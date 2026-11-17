@@ -2774,7 +2774,7 @@ const periBody: CaseStudyBlock[] = [
     "type": "paragraph",
     "text": "A barista asks if you want the receipt, in Finnish. Peri shows her words small and faded, and the English meaning large, in a card with a small arrow pointing toward her. Below it are two replies. You read them in English, pinch to pick one, and the glasses speak it in Finnish."
   },
-  {"type": "video", "src": "/peri/cafeloop.mp4", "poster": "/peri/cafeloop.webp", "width": 1280, "height": 720, "alt": "A coffee is set down in front of you. The display translates the waiter's Finnish into English, Here's your coffee, anything else, and offers two replies.", "caption": "The same idea in motion, at another café moment."},
+  {"type": "video", "src": "/peri/cafeloop.mp4", "poster": "/peri/cafeloop.webp", "width": 1280, "height": 720, "alt": "A barista sets a coffee down in front of you, you look up, and he smiles. The display translates his Finnish into English, Here you go, anything else, and offers two replies.", "caption": "The same idea in motion, at another café moment."},
   {
     "type": "paragraph",
     "text": "The hardest part was not the card. It was the photo. The first barista was looking down at her work, so the moment did not feel like a conversation. The next showed two people posing with their hands in their pockets. A third swapped the scene for a stranger giving directions. **None of them felt real, and if the moment is not believable, the interface on top of it is not either.** The final photo shows what actually happens at a counter: she hands you the order and asks."
@@ -2947,7 +2947,7 @@ const periBody: CaseStudyBlock[] = [
   },
   {
     "type": "paragraph",
-    "text": "Photos: café scene designed by Freepik, other scenes from Unsplash. Video in the trailer and simulator: Mixkit, under its free licence. Shop names and logos in street photos are blurred."
+    "text": "Photos: café scene designed by Freepik, other scenes from Unsplash. Video in the trailer and simulator: Mixkit and Pexels, under their free licences. The glasses are a 3D render made in code. Shop names and logos in street photos are blurred."
   },
   {
     "type": "link",
@@ -3342,7 +3342,7 @@ export const caseStudies: CaseStudy[] = [
     // the Peri Figma file, in public/peri/. Photos: Unsplash, plus one
     // Freepik photo that needs the visible credit kept in the body.
     contentStatus: "complete",
-    thumbnail: cardLoop("peri", "A short film of Peri: black glasses turn as a display lights up in the right lens, then the camera dives through the lens into a walking street with one arrow on screen."),
+    thumbnail: cardLoop("peri", "A short film of Peri: black glasses turn around and rise to your eyes, then the world appears through the right lens, a walking street with one arrow on screen."),
     oneLineScope:
       "A heads-up interface for display glasses, built on one rule: the real world comes first. A self-directed concept from 2026.",
     meta: {
