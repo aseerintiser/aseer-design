@@ -3342,7 +3342,7 @@ export const caseStudies: CaseStudy[] = [
     // the Peri Figma file, in public/peri/. Photos: Unsplash, plus one
     // Freepik photo that needs the visible credit kept in the body.
     contentStatus: "complete",
-    thumbnail: cardLoop("peri", "A short film of Peri: a barista's Finnish turns into English, a walking route shrinks to one arrow, and a recording light comes on at a dinner table."),
+    thumbnail: cardLoop("peri", "A short film of Peri: black glasses turn as a display lights up in the right lens, then the camera dives through the lens into a walking street with one arrow on screen."),
     oneLineScope:
       "A heads-up interface for display glasses, built on one rule: the real world comes first. A self-directed concept from 2026.",
     meta: {
