@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/Button";
 type Place = "street" | "cafe" | "oldtown" | "dinner";
 
 const PLACES: { id: Place; label: string; photo: string; alt: string }[] = [
-  { id: "street", label: "Street", photo: "/peri/sim/street.jpg", alt: "An old European street with colourful gabled houses, seen at eye level." },
+  { id: "street", label: "Street", photo: "/peri/sim/walk.jpg", alt: "A narrow old alley with brick walls, seen at eye level while walking." },
   { id: "cafe", label: "Café", photo: "/peri/sim/cafe.jpg", alt: "A barista hands over a takeaway order across a café counter." },
   { id: "oldtown", label: "Old town", photo: "/peri/sim/oldtown.jpg", alt: "A row of ornate historic townhouses on a market square." },
   { id: "dinner", label: "Dinner", photo: "/peri/sim/dinner.jpg", alt: "Friends sharing a candlelit dinner in a cosy restaurant." },
@@ -74,6 +74,7 @@ function useTyped(text: string, on: boolean, reduce: boolean, cps = 38) {
 export function PeriSimulator() {
   const reduce = useReducedMotion() ?? false;
   const stageRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [scale, setScale] = useState(0.5);
   const [place, setPlace] = useState<Place>("street");
   const [walking, setWalking] = useState(true);
@@ -97,6 +98,14 @@ export function PeriSimulator() {
     const id = setInterval(() => setSec((v) => v + 1), 1000);
     return () => clearInterval(id);
   }, [rec]);
+
+  // The street is real footage: it plays while you walk and freezes when you stop.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (walking && !reduce) void v.play().catch(() => {});
+    else v.pause();
+  }, [walking, reduce, place]);
 
   const translated = useTyped("Here you go! Would you like the receipt?", cafe !== "idle", reduce);
   const answer = useTyped("Brick Gothic, with a stepped gable. Common in old Northern European towns.", ask, reduce);
@@ -124,10 +133,10 @@ export function PeriSimulator() {
   const announce =
     place === "street"
       ? walking
-        ? `Walking. Right in 120 metres.${msg === "held" ? " One message held until you stop." : ""}`
+        ? `Walking. 120 metres, then left.${msg === "held" ? " One message held until you stop." : ""}`
         : msg === "open"
           ? "Standing. Message from Mira: Running 5 minutes late, sorry! Grab us a table? Shown now because you stopped walking."
-          : "Standing. Right in 40 metres, turn after the yellow house."
+          : "Standing. Left in 30 metres, at the bridge."
       : place === "cafe"
         ? cafe === "idle"
           ? "Listening for nearby speech."
@@ -152,7 +161,7 @@ export function PeriSimulator() {
         <div style={{ flex: 1 }} />
         <div style={{ display: "flex", gap: 10 }}>
           <span style={{ ...s.pill, fontSize: 20, fontWeight: 500 }}>
-            <svg aria-hidden width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={MINT} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20V4" /><path d="M6 10l6-6 6 6" /></svg>120 m
+            <svg aria-hidden width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={MINT} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20V4" /><path d="M6 10l6-6 6 6" /></svg>120 m · then left
           </span>
           {msg === "held" && <span style={{ ...s.pill, ...s.mono, color: "#F7FFFB" }}><Dot c="#FFC46B" />1 message held</span>}
         </div>
@@ -171,9 +180,9 @@ export function PeriSimulator() {
           <div style={s.card}>
             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
               <svg aria-hidden width="34" height="34" viewBox="0 0 24 24" fill="none" stroke={MINT} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 20V12a4 4 0 0 1 4-4h9" /><path d="M15 4l4 4-4 4" /></svg>
-              <span style={s.big}>Right in 40 m</span>
+              <span style={s.big}>Left in 30 m</span>
             </div>
-            <div style={s.small}>Turn after the yellow house</div>
+            <div style={s.small}>At the bridge</div>
           </div>
         )}
       </>
@@ -272,7 +281,20 @@ export function PeriSimulator() {
         className="relative mt-4 w-full overflow-hidden rounded-[var(--radius-md)] bg-black"
         style={{ aspectRatio: "16 / 9", position: "relative", overflow: "hidden", width: "100%" }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {place === "street" && (
+          <video
+            ref={videoRef}
+            src="/peri/sim/walk.mp4"
+            poster="/peri/sim/walk.jpg"
+            muted
+            loop
+            playsInline
+            aria-label={photo.alt}
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        )}
+        {place !== "street" && (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           key={photo.id}
           src={photo.photo}
@@ -285,6 +307,7 @@ export function PeriSimulator() {
             transition: "transform .6s ease",
           }}
         />
+        )}
         <div aria-hidden className="absolute inset-0" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 80% 75% at 56% 46%, rgba(0,0,0,0) 50%, rgba(0,0,0,.6) 100%), rgba(8,14,20,.18)" }} />
         {rec === "on" && place === "dinner" && (
           <span
@@ -325,7 +348,7 @@ export function PeriSimulator() {
       <div className="mt-4 flex flex-wrap gap-2">
         {place === "street" && (
           <>
-            <Button type="button" variant="secondary" size="sm" withArrow={false} onClick={() => (walking ? stop() : setWalking(true))}>
+            <Button type="button" variant="secondary" size="sm" withArrow={false} onClick={() => (walking ? stop() : (setWalking(true), msg === "open" && setMsg("none")))}>
               {walking ? "Stop walking" : "Start walking"}
             </Button>
             <Button type="button" variant="secondary" size="sm" withArrow={false} onClick={message} disabled={msg !== "none"}>

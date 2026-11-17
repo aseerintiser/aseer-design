@@ -2942,7 +2942,7 @@ const periBody: CaseStudyBlock[] = [
   },
   {
     "type": "paragraph",
-    "text": "Photos: café scene designed by Freepik, all other scenes from Unsplash. Shop names and logos in street photos are blurred."
+    "text": "Photos: café scene designed by Freepik, other scenes from Unsplash. Video in the trailer and simulator: Mixkit, under its free licence. Shop names and logos in street photos are blurred."
   },
   {
     "type": "link",
