@@ -24,6 +24,7 @@ const workContext: Record<string, { kind: WorkItem["kind"]; context: string }> =
   fitvibe: { kind: "product", context: "Client app at Kaz Software" },
   "travelmate-ai": { kind: "concept", context: "Self-directed concept" },
   "cultural-festival-platform": { kind: "concept", context: "ECIU Créathon, team of six" },
+  peri: { kind: "concept", context: "Self-directed concept" },
 };
 
 export default function WorkIndexPage() {

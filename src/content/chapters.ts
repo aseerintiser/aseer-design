@@ -29,6 +29,7 @@ export const chapters: Record<string, Chapter> = {
   "convay-design-system": convay,
   lumi: { name: "Lumi", tint: "#0a8f99", medium: "screen" },
   "cultural-festival-platform": { name: "aRENEWberg", tint: "#2f9e62", medium: "screen" },
+  peri: { name: "Peri", tint: "#0f7a5c", medium: "screen" },
   "travelmate-ai": { name: "TravelMate", tint: "#b53724", medium: "screen", companion: "tuki" },
   fitvibe: { name: "FitVibe", tint: "#7f93f0", medium: "screen" },
   robocarnival: { name: "RoboCarnival", tint: "#c0702a", medium: "photo" },

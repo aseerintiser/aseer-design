@@ -2700,6 +2700,251 @@ const gameDifficultyBody: CaseStudyBlock[] = [
   },
 ];
 
+// Peri (smart glasses HUD concept, November 2026).
+const periBody: CaseStudyBlock[] = [
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "The short version"
+  },
+  {
+    "type": "paragraph",
+    "text": "Display glasses are leaving the lab. Meta already sells a pair with a small screen in one lens, and Google's Android XR glasses are arriving too. They raise a question phones never had to answer: how do you show information to someone who is looking at the real world, and is often walking through it?"
+  },
+  {
+    "type": "paragraph",
+    "text": "Peri is my answer, as a self-directed concept. It is a heads-up interface built on one rule: **the real world comes first.** I designed eight moments inside the glasses, a phone companion and a small HUD system."
+  },
+  {
+    "type": "paragraph",
+    "text": "This is a concept. Nobody has tested it, and the screens are presentation designs over stock photos, not footage from real hardware. I say that up front, because the rest of this page is about decisions, not results."
+  },
+  {
+    "type": "metricGrid",
+    "items": [
+      {
+        "value": "8",
+        "label": "Moments inside the glasses"
+      },
+      {
+        "value": "2",
+        "label": "Phone companion screens"
+      },
+      {
+        "value": "4",
+        "label": "Design principles"
+      },
+      {
+        "value": "1",
+        "label": "Rule nobody can switch off"
+      }
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Four rules for a screen you wear"
+  },
+  {
+    "type": "list",
+    "items": [
+      "**The street comes first.** Content sits right of centre and never over your path.",
+      "**Less while moving.** Walking shrinks everything to one line, and messages wait.",
+      "**Point at the source.** A thin line ties each card to the person or place it is about.",
+      "**Never secret.** Mic and camera states are always visible, to you and to people around you."
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Live translation: the moment that set the style"
+  },
+  {
+    "type": "image",
+    "src": "/peri/translation.jpg",
+    "width": 3200,
+    "height": 1800,
+    "enlargeable": true,
+    "alt": "First-person view across a café counter. A barista hands over a takeaway order. A glass card next to her face shows her Finnish words in small text and the English translation in large text, with two reply buttons below.",
+    "caption": "The barista asks in Finnish. You read English. Pick a reply and the glasses say it back in Finnish."
+  },
+  {
+    "type": "paragraph",
+    "text": "A barista asks if you want the receipt, in Finnish. Peri shows her words small and faded, and the English meaning large, in a card linked to her face by a thin line. Below it are two replies. You read them in English, pinch to pick one, and the glasses speak it in Finnish."
+  },
+  {
+    "type": "paragraph",
+    "text": "The hardest part was not the card. It was the photo. The first barista was looking down at her work, so the moment did not feel like a conversation. The next showed two people posing with their hands in their pockets. A third swapped the scene for a stranger giving directions. **None of them felt real, and if the moment is not believable, the interface on top of it is not either.** The final photo shows what actually happens at a counter: she hands you the order and asks."
+  },
+  {
+    "type": "callout",
+    "text": "If the moment is not believable, the interface on top of it is not either."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Less while moving"
+  },
+  {
+    "type": "paragraph",
+    "text": "Walking is the default state for glasses, so it shaped every screen. Navigation is one arrow and one distance. When you are moving through a crowd, a new message does not appear at all. It waits as a small pill, and opens only when you stop, with the reason stated."
+  },
+  {
+    "type": "timeline",
+    "steps": [
+      {
+        "label": "Walking",
+        "detail": "Only the next turn"
+      },
+      {
+        "label": "Message arrives",
+        "detail": "Held, not shown"
+      },
+      {
+        "label": "Still walking",
+        "detail": "One small pill"
+      },
+      {
+        "label": "You stop",
+        "detail": "Message opens"
+      },
+      {
+        "label": "Reason shown",
+        "detail": "Because you stopped"
+      }
+    ]
+  },
+  {
+    "type": "imageRow",
+    "enlargeable": true,
+    "images": [
+      {
+        "src": "/peri/navigation.jpg",
+        "width": 3200,
+        "height": 1800,
+        "alt": "A narrow old street. A small card reads Right in 40 m, with a marker on the corner where to turn."
+      },
+      {
+        "src": "/peri/message-held.jpg",
+        "width": 3200,
+        "height": 1800,
+        "alt": "A busy pedestrian square. Only a small arrow with 120 m and a pill saying 1 message held are visible."
+      },
+      {
+        "src": "/peri/message-opened.jpg",
+        "width": 3200,
+        "height": 1800,
+        "alt": "Standing at a crosswalk. A message card shows the text and the line Shown now because you stopped walking, with reply options."
+      }
+    ]
+  },
+  {
+    "type": "paragraph",
+    "text": "Arriving and doing nothing are designed too. At the destination, Peri outlines the door, says you have arrived, and closes the route on its own. When nothing needs you, it shows the time and the weather, and that is all."
+  },
+  {
+    "type": "imageRow",
+    "enlargeable": true,
+    "images": [
+      {
+        "src": "/peri/arriving.jpg",
+        "width": 3200,
+        "height": 1800,
+        "alt": "A café front with its open door outlined by a dashed line and an Entrance tag, next to a card saying You have arrived."
+      },
+      {
+        "src": "/peri/idle.jpg",
+        "width": 3200,
+        "height": 1800,
+        "alt": "A snowy road at night. Only the time, the temperature and the words nothing needs you are shown."
+      }
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Ask Peri: say only what the camera sees"
+  },
+  {
+    "type": "image",
+    "src": "/peri/ask.jpg",
+    "width": 3200,
+    "height": 1800,
+    "enlargeable": true,
+    "alt": "A row of historic townhouses with one brick building outlined. A card shows the question What style is this building and a short answer about Brick Gothic and its stepped gable.",
+    "caption": "The answer describes what is visible. It does not guess a name or a history it cannot check."
+  },
+  {
+    "type": "paragraph",
+    "text": "You look at a building and ask what style it is. Peri outlines it and answers in two short lines, about what it can actually see: brick and a stepped gable. It does not invent a name or a date it cannot check. A confident wrong answer is worse than a modest right one, especially when it floats in front of your eyes."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Recording is never secret"
+  },
+  {
+    "type": "image",
+    "src": "/peri/privacy.jpg",
+    "width": 3200,
+    "height": 1800,
+    "enlargeable": true,
+    "alt": "Friends at a candlelit dinner. A card reads Recording with a timer and explains that the outward light is on so everyone at the table can see it.",
+    "caption": "Recording always turns on a light that people nearby can see."
+  },
+  {
+    "type": "paragraph",
+    "text": "Camera glasses make people around you uneasy, and they have good reason. So in Peri, recording always turns on a light that others can see, and the phone app says plainly that this rule cannot be switched off. Every other rule, like holding messages while walking, is the wearer's choice."
+  },
+  {
+    "type": "image",
+    "src": "/peri/phone.jpg",
+    "width": 3200,
+    "height": 1800,
+    "enlargeable": true,
+    "alt": "Two phone screens. One checks the fit of the glasses. The other lists focus rules with switches, and a note that the outward recording light cannot be switched off."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "The HUD system"
+  },
+  {
+    "type": "image",
+    "src": "/peri/hud-system.jpg",
+    "width": 3200,
+    "height": 1800,
+    "enlargeable": true,
+    "alt": "The Peri HUD system board: wordmark, type sizes, five colours and the four design principles."
+  },
+  {
+    "type": "paragraph",
+    "text": "Everything shares one small system: a glass card, one large line at most, a mono font for system labels, and one mint signal colour. Warm colours are kept for states that matter to other people: mic, camera and recording."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "What I would do next"
+  },
+  {
+    "type": "paragraph",
+    "text": "The biggest gap is the display itself. Real display glasses show content in a small area of one lens, and my cards are larger than that would allow. The next step is to redraw every screen inside a true display boundary, then build a motion prototype, because timing is most of the design here."
+  },
+  {
+    "type": "paragraph",
+    "text": "After that, I would want to test it where it matters: walking a real route while messages arrive, and ordering at a real counter in a language you do not speak."
+  },
+  {
+    "type": "paragraph",
+    "text": "Photos: café scene designed by Freepik, all other scenes from Unsplash. Shop names and logos in street photos are blurred."
+  },
+  {
+    "type": "link",
+    "text": "Café photo: Designed by Freepik",
+    "href": "https://www.freepik.com"
+  }
+];
+
 export const caseStudies: CaseStudy[] = [
   {
     slug: "convay-mobile-app-revamp",
@@ -3072,10 +3317,40 @@ export const caseStudies: CaseStudy[] = [
     // the same track, matching the dual-track "Design / Research"
     // framing already established on the homepage.
     nextCaseStudy: {
+      title: "Peri: Smart Glasses Interface",
+      href: "/work/peri",
+    },
+    body: arenewbergBody,
+  },
+  {
+    slug: "peri",
+    title: "Peri: Smart Glasses Interface",
+    track: "work",
+    scale: "product",
+    // Self-directed concept, November 2026. Screens are 2x exports from
+    // the Peri Figma file, in public/peri/. Photos: Unsplash, plus one
+    // Freepik photo that needs the visible credit kept in the body.
+    contentStatus: "complete",
+    thumbnail: { src: "/peri/card.jpg", width: 1440, height: 1080, alt: "A barista hands over an order while a glass card beside her face translates her Finnish into English." },
+    oneLineScope:
+      "A heads-up interface for display glasses, built on one rule: the real world comes first. A self-directed concept from 2026.",
+    meta: {
+      role: "Product Designer (solo)",
+      team: "None (self-directed, solo project)",
+      duration: "Nov 2026",
+      tools: "Figma, Claude (AI pair designer)",
+    },
+    liveMeta: {
+      category: ["Wearables", "AI UX", "Interaction Design"],
+      role: ["Product Designer (solo)"],
+      tools: ["Figma", "Claude (AI pair designer)"],
+      status: "Self-directed concept, not user-tested",
+    },
+    nextCaseStudy: {
       title: "Lumi: Conversational AI for Public Services",
       href: "/research/lumi",
     },
-    body: arenewbergBody,
+    body: periBody,
   },
   {
     slug: "robocarnival",
