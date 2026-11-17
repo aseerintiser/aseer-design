@@ -12,6 +12,7 @@ import { Timeline } from "./Timeline";
 import { LinkCard } from "./LinkCard";
 import { ControlledMedia } from "./ControlledMedia";
 import { TrustAsymmetryDemo } from "./TrustAsymmetryDemo";
+import { PeriSimulator } from "./PeriSimulator";
 import { BeforeAfterFlow } from "./BeforeAfterFlow";
 import { PainPointList } from "./PainPointList";
 import { ComparisonDiagram } from "./ComparisonDiagram";
@@ -33,6 +34,7 @@ import { cn, slugify } from "@/lib/utils";
  * rather than a generic data-driven block like revealGroup/timeline). */
 const interactiveComponents = {
   "lumi-trust-asymmetry": TrustAsymmetryDemo,
+  "peri-simulator": PeriSimulator,
 } as const;
 
 /** Registered research figures (Phase 4), drawn from each study's own

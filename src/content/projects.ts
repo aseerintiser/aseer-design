@@ -2754,6 +2754,7 @@ const periBody: CaseStudyBlock[] = [
       "**Never secret.** Mic and camera states are always visible, to you and to people around you."
     ]
   },
+  {"type": "interactive", "key": "peri-simulator"},
   {
     "type": "heading",
     "level": 3,
