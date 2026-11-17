@@ -2740,6 +2740,7 @@ const periBody: CaseStudyBlock[] = [
       }
     ]
   },
+  {"type": "image", "src": "/peri/glasses.jpg", "width": 3200, "height": 1800, "enlargeable": true, "alt": "A 3D render of a pair of black glasses, with a small mint display glowing inside the right lens.", "caption": "The hardware is not the design work here. This render, made in code, gives the interface a body: one small display in the right lens."},
   {
     "type": "heading",
     "level": 3,

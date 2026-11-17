@@ -82,13 +82,13 @@ export const trailers: Record<string, Trailer> = {
     "04, System: seventeen screens. One system, in Light and Dark.",
     "TravelMate. Turn a trip into something you collect.",
   ]),
-  peri: trailer("peri", "Trailer for Peri, made from the concept's real screens over free stock footage and photos.", [
-    "Peri. A screen you wear should let you see.",
-    "01, Walk: the world moves, the display stays. One arrow while you walk. A new message waits.",
-    "You stop. It opens.",
-    "02, Translate: read English, answer in Finnish. The waiter says: here's your coffee, anything else? Pick a reply and Peri says it for you.",
-    "03, Ask: only what the camera sees. No guessed names. No invented history.",
-    "04, Never secret: recording always lights up. People nearby can always see the camera is on.",
+  peri: trailer("peri", "Trailer for Peri: a 3D render of the glasses, then the concept's real screens seen through the right lens, over free stock footage.", [
+    "Peri. A screen you wear should let you see. The glasses turn, and the display in the right lens lights up.",
+    "The camera dives into the display, and the world appears through the lens.",
+    "01, Walk: the world moves, the display stays. You stop. It opens.",
+    "02, Translate: read English, answer in Finnish.",
+    "03, Ask: only what the camera sees.",
+    "04, Never secret: recording always lights up. What others see: the light is on. Always.",
     "Peri. The real world comes first.",
   ]),
   lumi: trailer("lumi", "Trailer for Lumi, made from the prototype's real screens and the study's main finding.", [
