@@ -3189,10 +3189,40 @@ export const caseStudies: CaseStudy[] = [
       status: "Self-directed concept, not yet user-tested",
     },
     nextCaseStudy: {
+      title: "Peri: Smart Glasses Interface",
+      href: "/work/peri",
+    },
+    body: travelMateBody,
+  },
+  {
+    slug: "peri",
+    title: "Peri: Smart Glasses Interface",
+    track: "work",
+    scale: "product",
+    // Self-directed concept, November 2026. Screens are 2x exports from
+    // the Peri Figma file, in public/peri/. Photos: Unsplash, plus one
+    // Freepik photo that needs the visible credit kept in the body.
+    contentStatus: "complete",
+    thumbnail: cardLoop("peri", "A short film of Peri: black glasses turn around and rise to your eyes, then the world appears through the right lens, a walking street with one arrow on screen."),
+    oneLineScope:
+      "A heads-up interface for display glasses, built on one rule: the real world comes first. A self-directed concept from 2026.",
+    meta: {
+      role: "Product Designer (solo)",
+      team: "None (self-directed, solo project)",
+      duration: "Nov 2026",
+      tools: "Figma, Claude (AI pair designer)",
+    },
+    liveMeta: {
+      category: ["Wearables", "AI UX", "Interaction Design"],
+      role: ["Product Designer (solo)"],
+      tools: ["Figma", "Claude (AI pair designer)"],
+      status: "Self-directed concept, not user-tested",
+    },
+    nextCaseStudy: {
       title: "FitVibe: A Comprehensive Fitness App",
       href: "/work/fitvibe",
     },
-    body: travelMateBody,
+    body: periBody,
   },
   // -----------------------------------------------------------------
   // Research track: no live-site equivalent (see file-level comment
@@ -3328,40 +3358,10 @@ export const caseStudies: CaseStudy[] = [
     // the same track, matching the dual-track "Design / Research"
     // framing already established on the homepage.
     nextCaseStudy: {
-      title: "Peri: Smart Glasses Interface",
-      href: "/work/peri",
-    },
-    body: arenewbergBody,
-  },
-  {
-    slug: "peri",
-    title: "Peri: Smart Glasses Interface",
-    track: "work",
-    scale: "product",
-    // Self-directed concept, November 2026. Screens are 2x exports from
-    // the Peri Figma file, in public/peri/. Photos: Unsplash, plus one
-    // Freepik photo that needs the visible credit kept in the body.
-    contentStatus: "complete",
-    thumbnail: cardLoop("peri", "A short film of Peri: black glasses turn around and rise to your eyes, then the world appears through the right lens, a walking street with one arrow on screen."),
-    oneLineScope:
-      "A heads-up interface for display glasses, built on one rule: the real world comes first. A self-directed concept from 2026.",
-    meta: {
-      role: "Product Designer (solo)",
-      team: "None (self-directed, solo project)",
-      duration: "Nov 2026",
-      tools: "Figma, Claude (AI pair designer)",
-    },
-    liveMeta: {
-      category: ["Wearables", "AI UX", "Interaction Design"],
-      role: ["Product Designer (solo)"],
-      tools: ["Figma", "Claude (AI pair designer)"],
-      status: "Self-directed concept, not user-tested",
-    },
-    nextCaseStudy: {
       title: "Lumi: Conversational AI for Public Services",
       href: "/research/lumi",
     },
-    body: periBody,
+    body: arenewbergBody,
   },
   {
     slug: "robocarnival",
