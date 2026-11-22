@@ -119,9 +119,9 @@ export const site = {
   // second CV aimed at someone else (decided with Aseer, October 17,
   // 2026; see content/cv.ts and content/research-profile.ts).
   resumeUrl:
-    "https://drive.google.com/file/d/1-GzNklvbYyCw_aB3ZEpRCYf41Y3pscNY/view?usp=drive_link",
+    "https://drive.google.com/file/d/1dsElwIqjpGFWSETjQDtMi9CgD9ffwSKw/view?usp=sharing",
   academicCvUrl:
-    "https://drive.google.com/file/d/1kHYn362GEDFPUh867hJDqNq4YREWCIsQ/view?usp=sharing",
+    "https://drive.google.com/file/d/1KgrSfqVNMJ8Y2uIhgrvSdM7byDf9d8QJ/view?usp=sharing",
   // Homepage Finalization milestone: rewritten from two terse,
   // resume-fragment-style sentences ("M.Sc. ... completing 2026. Open to
   // relocation.") into one sentence a person would actually say, same
