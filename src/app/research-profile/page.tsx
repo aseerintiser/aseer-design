@@ -40,7 +40,8 @@ function Part({ n, title, children }: { n: number; title: string; children: Reac
 }
 
 function TextLink({ href, children }: { href: string; children: ReactNode }) {
-  const external = /^https?:/.test(href);
+  // External sites and hosted PDFs open as plain links in a new tab.
+  const external = /^https?:/.test(href) || /\.pdf$/.test(href);
   const content = (
     <>
       <span className="link-ink">{children}</span>
@@ -161,6 +162,7 @@ export default function ResearchProfilePage() {
                   <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
                     <CopyText text={publication.citation.replace(/\*/g, "")} label="Copy citation" />
                     {publication.fullText && <TextLink href={publication.fullText.href}>{publication.fullText.label}</TextLink>}
+                    {publication.href && <TextLink href={publication.href}>{publication.hrefLabel ?? "Read more"}</TextLink>}
                   </div>
                 </li>
               ))}

@@ -70,7 +70,7 @@ export default function ResearchIndexPage() {
         ))}
       </Grid>
 
-      {/* Publications: papers under review and both theses. */}
+      {/* Publications: the peer-reviewed paper, manuscripts and both theses. */}
       <section aria-labelledby="publications" className="mt-24 border-t border-[var(--color-border)] pt-12">
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
@@ -78,7 +78,7 @@ export default function ResearchIndexPage() {
               Publications
             </h2>
             <p className="mt-3 max-w-sm text-sm text-[var(--color-text-muted)]">
-              Papers under review and both theses, with the full text where it is public.
+              A peer-reviewed paper, manuscripts in preparation and both theses, with the full text where it is public.
             </p>
             <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
               {researchProfiles.map((profile) => (

@@ -192,12 +192,12 @@ export const researchProfile = {
       line: "Set up mentoring for 23 junior students, with workshops on usability and wireframing. 10+ went on to internships or projects.",
     },
     {
-      title: "Peer support",
+      title: "Volunteer peer mentor",
       meta: "Tampere University · 2024–2025",
-      line: "Helped classmates with Figma prototyping and qualitative coding in Atlas.ti.",
+      line: "Coached 10+ HTI classmates in Figma prototyping and qualitative coding in Atlas.ti, in one-on-one sessions and small group walkthroughs, for their course projects and thesis analyses.",
     },
   ],
 
   practice:
-    "Before the master's, I worked for eleven months as a junior UX designer at Synesis IT on Convay, an enterprise video conferencing platform used by government and enterprise clients. I ran usability tests and heuristic evaluations, designed AI features such as multilingual meeting transcription, and laid the foundation for its design system. As an intern at Kaz Software, I designed the interface of a hygiene-monitoring prototype for UNICEF-supported sanitation work in Rohingya refugee camps, built for low-connectivity conditions. With a software engineering degree behind both, I can build the systems I study, as I did with Lumi, and test them in realistic conditions.",
+    "Before the master's, I worked for eleven months as a UX designer at Synesis IT on Convay, an enterprise video conferencing platform used by government and enterprise clients. I ran usability tests and heuristic evaluations, designed AI features such as multilingual meeting transcription, and laid the foundation for its design system. As an intern at Kaz Software, I designed the interface of a hygiene-monitoring prototype for UNICEF-supported sanitation work in Rohingya refugee camps, built for low-connectivity conditions. With a software engineering degree behind both, I can build the systems I study, as I did with Lumi, and test them in realistic conditions.",
 };

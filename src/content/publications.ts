@@ -9,7 +9,30 @@
  * Aseer's career archive.
  */
 
-export type PublicationStatus = "Published" | "Accepted" | "Under review" | "Thesis";
+export type PublicationStatus = "Published" | "Accepted" | "Under review" | "In preparation" | "Thesis";
+
+/**
+ * A publication that has its own page on this site (/publications/<slug>),
+ * with the citation_* meta tags Google Scholar reads, so Scholar can index
+ * the paper from here and link to the hosted PDF. Only for work whose
+ * licence allows hosting it here (the Mindtrek paper is CC BY 4.0).
+ */
+export interface PublicationPage {
+  slug: string;
+  title: string;
+  /** In citation order, "First Last". */
+  authors: string[];
+  venue: string;
+  publisher: string;
+  /** Scholar's format, YYYY/MM/DD. */
+  date: string;
+  abstract: string;
+  keywords: string[];
+  /** Path under public/. */
+  pdf: string;
+  doi?: string;
+  licence?: string;
+}
 
 export interface Publication {
   status: PublicationStatus;
@@ -23,25 +46,70 @@ export interface Publication {
   hrefLabel?: string;
   /** Where the full text can be read. */
   fullText?: { label: string; href: string };
+  /** Its own Scholar-ready page on this site, if it has one. */
+  page?: PublicationPage;
 }
 
 export const publications: Publication[] = [
-  // Both papers are listed as under review at Aseer's request (October
-  // 19, 2026). The Mindtrek paper has in fact been accepted, and Aseer
-  // will switch it to "Published", with its DOI, once it is out.
+  // Peer reviewed and accepted (Academic Mindtrek 2026, ACM ICPS, CC BY 4.0).
+  // Matches the academic CV of November 22, 2026: "To appear" with the DOI
+  // until the ACM Digital Library entry goes live.
   {
-    status: "Under review",
-    label: "Under review · Academic Mindtrek 2026",
+    status: "Accepted",
+    label: "Peer reviewed · Academic Mindtrek 2026 · ACM",
     citation:
-      "Intiser, M. A., Olsson, T., & Pakpour Haji Agha, A. (2026). *Recall-grounded scenarios: An approach for studying longitudinal user experiences in short sessions*. Manuscript under review, Academic Mindtrek 2026.",
+      "Intiser, M. A., Olsson, T., & Pakpour Haji Agha, A. (2026). *Recall-grounded scenarios: An approach for studying longitudinal user experiences in short sessions*. In Proceedings of the 29th International Academic Mindtrek. ACM. To appear. https://doi.org/10.1145/3843148.3859356",
     detail:
       "The method behind the M.Sc. thesis: participants recall an earlier period of their lives and use a prototype as that earlier self, so one short session can reach an experience that unfolded over months.",
+    href: "/publications/recall-grounded-scenarios",
+    hrefLabel: "Abstract and details",
+    fullText: { label: "Read the paper (PDF)", href: "/papers/intiser-2026-recall-grounded-scenarios.pdf" },
+    page: {
+      slug: "recall-grounded-scenarios",
+      title: "Recall-Grounded Scenarios: An Approach for Studying Longitudinal User Experiences in Short Sessions",
+      authors: ["Md Aseer Intiser", "Thomas Olsson", "Amir Pakpour Haji Agha"],
+      venue: "29th International Academic Mindtrek (Mindtrek 2026)",
+      publisher: "ACM",
+      date: "2026/10/27",
+      // Verbatim from the camera-ready paper.
+      abstract:
+        "Many experiences that matter for good design unfold over weeks or months, yet a typical HCI research session lasts tens of minutes. Studying such an experience within a single short session is therefore a methodological problem in its own right. It is not just a problem tied to one system or population. We report a recall-grounded scenario design developed to address this challenge, using international newcomers\u2019 months-long transition into Finnish public services as a case study. Participants were invited to re-enter their first months in Finland through a structured recall prompt. They then engaged four scenario-based interactions with a conversational assistant prototype, responding from that earlier self\u2019s perspective. The framing was renewed before each scenario. The design was refined across two pilot sessions that surfaced three problems, conversational dead-ends, overly open scenarios, and session fatigue, each addressed by a specific protocol change. Across fifteen main-study sessions of approximately 35 minutes each, fourteen of fifteen participants spontaneously compared the assistant to their own remembered lack of support on arrival. Their accounts also carried detail tied to specific remembered circumstances. We also report a disconfirming case, the evidence\u2019s limits, and the design\u2019s relevance to other single-session studies of transitions that matter for accessibility and inclusion.",
+      keywords: [
+        "qualitative methods",
+        "scenario-based research",
+        "retrospective recall",
+        "newcomer experience",
+        "single-session studies",
+        "accessibility and inclusion",
+        "human-computer interaction",
+      ],
+      pdf: "/papers/intiser-2026-recall-grounded-scenarios.pdf",
+      doi: "10.1145/3843148.3859356",
+      licence: "Creative Commons Attribution 4.0 International",
+    },
+  },
+  // Manuscripts, as on the academic CV (November 22, 2026), with the
+  // preprints Aseer shares from Google Drive.
+  {
+    status: "In preparation",
+    label: "Manuscript · in preparation for INTERACT 2027",
+    citation:
+      "Intiser, M. A., Olsson, T., & Pakpour Haji Agha, A. (2026). *Trusted enough to check: How international students sustain trust in a conversational assistant for public-service navigation*. Manuscript in preparation.",
+    detail: "Based on the M.Sc. thesis.",
+    fullText: {
+      label: "Preprint (PDF)",
+      href: "https://drive.google.com/file/d/14M9GOu5IqarTKTKWZe9hfTUSV430V1D5/view?usp=sharing",
+    },
   },
   {
-    status: "Under review",
-    label: "Under review · NSysS 2026",
+    status: "In preparation",
+    label: "Manuscript · in preparation for SOUPS 2027",
     citation:
-      "Intiser, M. A., & Poddar, S. (2026). *A human-centered security study of warnings for indirect prompt injection in AI assistants*. Manuscript under review, NSysS 2026.",
+      "Intiser, M. A., & Podder, S. (2026). *A human-centered security study of warnings for indirect prompt injection in AI assistants*. Manuscript in preparation.",
+    fullText: {
+      label: "Preprint (PDF)",
+      href: "https://drive.google.com/file/d/1K4EPOmjGld3HU8yI2xqcvAQfIBr-aGS8/view?usp=sharing",
+    },
   },
   {
     status: "Thesis",
@@ -74,10 +142,19 @@ export const researchProfiles = [
   { label: "Google Scholar", href: "https://scholar.google.com/citations?user=S6Ac7xUAAAAJ" },
 ];
 
-const statusOrder: PublicationStatus[] = ["Published", "Accepted", "Under review", "Thesis"];
+const statusOrder: PublicationStatus[] = ["Published", "Accepted", "Under review", "In preparation", "Thesis"];
 
 export function sortedPublications() {
   return [...publications].sort(
     (a, b) => statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status),
   );
+}
+
+/** Publications with their own Scholar-ready page. */
+export function publicationPages() {
+  return publications.flatMap((publication) => (publication.page ? [{ publication, page: publication.page }] : []));
+}
+
+export function getPublicationPage(slug: string) {
+  return publicationPages().find((entry) => entry.page.slug === slug);
 }
