@@ -101,7 +101,7 @@ export const careerSteps = [
     title: "UX Designer",
     place: "Convay at Synesis IT",
     // convayChapter.context, shortened.
-    detail: "Eleven months designing Convay, a video conferencing platform now used in more than 45 countries.",
+    detail: "Eleven months designing Convay, a video conferencing platform now used in 46+ countries.",
     link: { label: "See the Convay work", href: "#convay" },
   },
   {
@@ -148,11 +148,11 @@ export const bridgeToConvay = "Before Lumi, I spent eleven months designing Conv
 
 export const convayChapter = {
   label: "Convay · Synesis IT · Sep 2023 – Jul 2024",
-  // Career archive (verified): used in more than 45 countries (Synesis
+  // Career archive (verified): used in 46+ countries (Synesis
   // CSO, January 2026); the government communications system for the
   // Bangladesh Computer Council was delivered in 2024.
   context:
-    "A video conferencing platform now used in more than 45 countries, including Bangladesh's government communications system. I designed for it for eleven months, as a UX designer on the product team.",
+    "A video conferencing platform now used in 46+ countries, including Bangladesh's government communications system. I designed for it for eleven months, as a UX designer on the product team.",
   projects: [
     {
       slug: "convay-ai-for-physical-meetings",

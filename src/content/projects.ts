@@ -81,12 +81,12 @@ const convayAtAGlance: CaseStudyBlock[] = [
   { type: "heading", level: 3, text: "Convay at a Glance" },
   {
     type: "paragraph",
-    text: "Convay is a video conferencing and collaboration platform built for governments, enterprises, and institutions that need to keep control of their own data. Used in more than **45 countries**, it covers a meeting from start to finish, from scheduling and live video to AI transcription, file storage, and follow-up, all inside a system that can **run entirely on a client's own servers**.",
+    text: "Convay is a video conferencing and collaboration platform built for governments, enterprises, and institutions that need to keep control of their own data. Used in **46+ countries**, it covers a meeting from start to finish, from scheduling and live video to AI transcription, file storage, and follow-up, all inside a system that can **run entirely on a client's own servers**.",
   },
   {
     type: "metricGrid",
     items: [
-      { value: "45+", label: "Countries" },
+      { value: "46+", label: "Countries" },
       { value: "200,000", label: "Government platform capacity" },
       { value: "10,000", label: "Participants supported in a single meeting" },
     ],

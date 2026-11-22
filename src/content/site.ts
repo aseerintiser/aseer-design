@@ -60,7 +60,7 @@ export const site = {
   // already implied elsewhere; its one genuinely distinctive fact --
   // trust and human-AI interaction -- is folded into paragraph one instead
   // of sitting in its own weaker paragraph. Paragraph two's facts
-  // (Software Engineering background, HTI Master's, Convay, 45+ countries,
+  // (Software Engineering background, HTI Master's, Convay, 46+ countries,
   // governments/global teams) are unchanged, just tightened.
   //
   // Homepage Writing Finalization milestone (Homepage-Copy-Review.md
@@ -71,13 +71,12 @@ export const site = {
   // page. (2) Paragraph two's Convay description didn't match the
   // Convay case study's own language ("SaaS platform" vs. the case
   // study's "video conferencing platform... trusted by governments") --
-  // reworded to match. Country count confirmed by Aseer as 45+; the
-  // Convay case study body in content/projects.ts said "46+" in three
-  // places, flagged here as a known inconsistency and later corrected
-  // to 45+ to match.
+  // reworded to match. Country count: 46+, confirmed by Aseer on
+  // November 22, 2026 to match his academic CV (it read 45+ before),
+  // and used the same way in content/home.ts and content/projects.ts.
   bio: [
     "**I start by understanding how people think and behave**, then shape that into the interface itself. Lately, that's pulled me toward trust and human-AI interaction.",
-    "With a background in **Software Engineering** and a **Master's in Human-Technology Interaction**, I've designed for **Convay**, a video conferencing platform trusted by governments and global teams in **45+ countries**.",
+    "With a background in **Software Engineering** and a **Master's in Human-Technology Interaction**, I've designed for **Convay**, a video conferencing platform trusted by governments and global teams in **46+ countries**.",
   ],
   // Homepage Finalization milestone: "Human Psychology" (a field of study,
   // not really a practiced skill) swapped for "Behavioral Research" --
@@ -112,7 +111,7 @@ export const site = {
   // itself, but it was still a fourth, differently-worded version of
   // the same fact and needed to match the other three.
   heroProofPoint:
-    "Convay, a video conferencing platform trusted by governments and global teams in 45+ countries.",
+    "Convay, a video conferencing platform trusted by governments and global teams in 46+ countries.",
   // One CV on the public site (resumeUrl: navigation, footer, About, the
   // CV page and the command bar). The academic CV (academicCvUrl) is
   // linked only from the unlisted research profile, the page shared in
