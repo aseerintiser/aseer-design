@@ -146,11 +146,15 @@ function DontKnow() {
 /* Assistant answers: short, written from the site, every claim cited. */
 /* ------------------------------------------------------------------ */
 
-type Phase = "reading" | "writing" | "done" | "unknown" | "cut";
+type Phase = "reading" | "writing" | "done" | "unknown" | "unclear" | "cut";
 
 type Entry =
   | { id: number; kind: "assistant"; question: string; phase: Phase; sources: AssistantSource[]; text: string }
   | { id: number; kind: "quote"; question: string; result: AskResult; note?: string };
+
+/** Offered when a question points at a project it doesn't name. Each
+ * was checked against the assistant to make sure it answers well. */
+const CLARIFY = ["What did Aseer do at Convay?", "What was the Lumi study about?", "What is TravelMate?"];
 
 const FALLBACK_NOTES: Record<Exclude<AssistantFallback["reason"], "invalid">, string> = {
   busy: "The AI assistant is busy right now, so here is the closest passage from the site instead.",
@@ -162,6 +166,7 @@ const PHASE_LABEL: Record<Phase, string> = {
   writing: "Writing an answer",
   done: "AI answer · from this site",
   unknown: "No answer on this site",
+  unclear: "Not sure what you mean",
   cut: "AI answer · cut short",
 };
 
@@ -184,6 +189,8 @@ const CITE = /[\[【](\d{1,2}(?:\s*,\s*\d{1,2})*)[\]】]/g;
 function renderAnswer(text: string, sources: AssistantSource[]) {
   const visible = text.replace(/[\[【][\d,\s]*$/, "");
   const nodes: ReactNode[] = [];
+  // Sources are numbered in the order the answer cites them (1, 2, 3),
+  // not by their place in the list the model read.
   const cited: AssistantSource[] = [];
   let last = 0;
   // Models sometimes stack many citations on one sentence; two is enough
@@ -198,15 +205,16 @@ function renderAnswer(text: string, sources: AssistantSource[]) {
       if (!source || run >= 2) continue;
       run += 1;
       if (!cited.includes(source)) cited.push(source);
+      const shown = cited.indexOf(source) + 1;
       nodes.push(
         <a
           key={`${match.index}-${source.n}`}
           href={source.href}
-          aria-label={`Source ${source.n}: ${source.page}, ${source.section}`}
+          aria-label={`Source ${shown}: ${source.page}, ${source.section}`}
           title={`${source.page} · ${source.section}`}
           className="ml-1 inline-flex h-[1.15rem] min-w-[1.15rem] -translate-y-[0.35em] items-center justify-center rounded-[var(--radius-sm)] border border-[var(--color-border-strong)] bg-[var(--color-bg)] px-1 align-baseline font-[family-name:var(--font-mono)] text-[0.625rem] leading-none text-[var(--color-text)] no-underline transition-colors duration-[var(--duration-fast)] hover:border-[var(--color-text)] hover:bg-[rgb(255_216_74_/_0.45)]"
         >
-          {source.n}
+          {shown}
         </a>,
       );
     }
@@ -220,12 +228,18 @@ function plainAnswer(text: string) {
   return text.replace(CITE, "").replace(/\s+([.,;:])/g, "$1").trim();
 }
 
-function AssistantAnswer({ entry }: { entry: Extract<Entry, { kind: "assistant" }> }) {
+function AssistantAnswer({
+  entry,
+  onAsk,
+}: {
+  entry: Extract<Entry, { kind: "assistant" }>;
+  onAsk: (question: string) => void;
+}) {
   const { phase, sources, text } = entry;
   const { nodes, cited } = renderAnswer(text, sources);
   const listed = cited.length ? cited : sources.slice(0, 3);
   const finished = phase === "done" || phase === "cut";
-  const mark = phase === "cut" ? "done" : phase;
+  const mark = phase === "cut" ? "done" : phase === "unclear" ? "unknown" : phase;
 
   return (
     <>
@@ -252,7 +266,10 @@ function AssistantAnswer({ entry }: { entry: Extract<Entry, { kind: "assistant" 
       )}
 
       {text && (
-        <p className="mt-4 max-w-[var(--measure)] text-[1.1875rem] leading-relaxed text-[var(--color-text)] md:text-[1.3125rem]">
+        // One size for every answer, short or long, so the text doesn't
+        // jump while it streams in. A step below the quoted answers, since
+        // a written answer can run to a full list.
+        <p className="mt-4 max-w-[var(--measure)] text-[1.0625rem] leading-relaxed text-[var(--color-text)] md:text-[1.1875rem]">
           {nodes}
         </p>
       )}
@@ -260,6 +277,19 @@ function AssistantAnswer({ entry }: { entry: Extract<Entry, { kind: "assistant" 
       {phase === "unknown" && (
         <div className="mt-4">
           <DontKnow />
+        </div>
+      )}
+
+      {phase === "unclear" && (
+        <div className="mt-4">
+          <p className="max-w-[var(--measure)] text-[1.0625rem] leading-relaxed md:text-[1.1875rem]">
+            I&apos;m not sure which project you mean. Try asking about one by name.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {CLARIFY.map((question) => (
+              <SuggestionButton key={question} question={question} onAsk={onAsk} />
+            ))}
+          </div>
         </div>
       )}
 
@@ -271,11 +301,13 @@ function AssistantAnswer({ entry }: { entry: Extract<Entry, { kind: "assistant" 
         <div className="mt-8">
           <p className={label}>{cited.length ? "Sources" : "Pages it read"}</p>
           <ol className="mt-4 space-y-3 border-l border-[var(--color-border)] pl-5">
-            {listed.map((source) => (
+            {listed.map((source, i) => (
               <li key={source.n} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm">
-                <span className="font-[family-name:var(--font-mono)] text-[0.6875rem] text-[var(--color-text-muted)]">
-                  {source.n}
-                </span>
+                {listed.length > 1 && (
+                  <span className="font-[family-name:var(--font-mono)] text-[0.6875rem] text-[var(--color-text-muted)]">
+                    {i + 1}
+                  </span>
+                )}
                 <span className="text-[var(--color-text)]">
                   {source.page} <span className="text-[var(--color-text-muted)]">· {source.section}</span>
                 </span>
@@ -319,7 +351,9 @@ function Exchange({
       ? entry.phase === "done" || entry.phase === "cut"
       : entry.result.status === "answer";
   const showContact =
-    entry.kind === "assistant" ? entry.phase !== "reading" && entry.phase !== "writing" : entry.result.status !== "empty";
+    entry.kind === "assistant"
+      ? entry.phase !== "reading" && entry.phase !== "writing" && entry.phase !== "unclear"
+      : entry.result.status !== "empty";
 
   return (
     <article className={cn("border-t border-[var(--color-border-strong)] pt-6", !latest && "opacity-80")}>
@@ -328,7 +362,7 @@ function Exchange({
 
       <div className="mt-6">
         {entry.kind === "assistant" ? (
-          <AssistantAnswer entry={entry} />
+          <AssistantAnswer entry={entry} onAsk={onAsk} />
         ) : (
           <QuoteAnswer result={entry.result} note={entry.note} suggestions={suggestions} onAsk={onAsk} />
         )}
@@ -487,6 +521,10 @@ export function AskPortfolio({ suggestions, scope, email }: { suggestions: strin
           finished = true;
           patch(() => ({ phase: "unknown" }));
           setAnnouncement("This site doesn't answer that question.");
+        } else if (event.type === "unclear" && !finished) {
+          finished = true;
+          patch(() => ({ phase: "unclear" }));
+          setAnnouncement("Not sure which project you mean. Try asking about one by name.");
         } else if (event.type === "done" && !finished) {
           finished = true;
           patch(() => ({ phase: "done" }));

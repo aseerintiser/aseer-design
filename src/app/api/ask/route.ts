@@ -1,5 +1,7 @@
 import {
   NOT_FOUND,
+  SIGNALS,
+  UNCLEAR,
   assistantConfigured,
   buildMessages,
   completionText,
@@ -102,10 +104,13 @@ export async function POST(request: Request) {
   const key = cacheKey(question);
   const cached = !previousQuestion ? cache.get(key) : undefined;
   if (cached && Date.now() - cached.at < CACHE_MS) {
-    const events =
+    const middle: AssistantEvent =
       cached.text === NOT_FOUND
-        ? [line({ type: "sources", sources: cached.sources }), line({ type: "unknown" }), line({ type: "done" })]
-        : [line({ type: "sources", sources: cached.sources }), line({ type: "text", text: cached.text }), line({ type: "done" })];
+        ? { type: "unknown" }
+        : cached.text === UNCLEAR
+          ? { type: "unclear" }
+          : { type: "text", text: cached.text };
+    const events = [line({ type: "sources", sources: cached.sources }), line(middle), line({ type: "done" })];
     return new Response(events.join(""), { headers: STREAM_HEADERS });
   }
 
@@ -136,12 +141,14 @@ export async function POST(request: Request) {
     async start(controller) {
       const send = (event: AssistantEvent) => controller.enqueue(encoder.encode(line(event)));
       send({ type: "sources", sources });
-      // Hold back the first few characters, so a NOT_FOUND reply is never
-      // shown as text.
+      // Hold back the first few characters, so a signal reply (NOT_FOUND,
+      // UNCLEAR) is never shown as text.
       let held = "";
       let decided = false;
-      let unknown = false;
+      let signal: string | undefined;
       let full = "";
+      const couldBeSignal = (start: string) => SIGNALS.some((token) => token.startsWith(start) && start.length < token.length);
+      const signalIn = (start: string) => SIGNALS.find((token) => start.startsWith(token));
       try {
         for await (const delta of completionText(upstreamBody)) {
           if (decided) {
@@ -152,28 +159,27 @@ export async function POST(request: Request) {
           }
           held += delta;
           const start = held.trimStart();
-          if (start.length < NOT_FOUND.length && NOT_FOUND.startsWith(start)) continue;
+          if (couldBeSignal(start)) continue;
           decided = true;
-          if (start.startsWith(NOT_FOUND)) {
-            unknown = true;
-            break;
-          }
+          signal = signalIn(start);
+          if (signal) break;
           const text = tidy(start);
           full += text;
           send({ type: "text", text });
         }
         if (!decided) {
           const start = held.trim();
-          unknown = !start || start.startsWith(NOT_FOUND) || NOT_FOUND.startsWith(start);
-          if (!unknown) {
+          signal = !start ? NOT_FOUND : (signalIn(start) ?? SIGNALS.find((token) => token.startsWith(start)));
+          if (!signal) {
             const text = tidy(start);
             full += text;
             send({ type: "text", text });
           }
         }
-        if (unknown) send({ type: "unknown" });
+        if (signal === NOT_FOUND) send({ type: "unknown" });
+        if (signal === UNCLEAR) send({ type: "unclear" });
         send({ type: "done" });
-        if (!previousQuestion) cache.set(key, { at: Date.now(), sources, text: unknown ? NOT_FOUND : full.trim() });
+        if (!previousQuestion) cache.set(key, { at: Date.now(), sources, text: signal ?? full.trim() });
         if (cache.size > 300) cache.clear();
       } catch {
         send({ type: "error" });

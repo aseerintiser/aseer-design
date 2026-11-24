@@ -25,6 +25,9 @@ export type AssistantEvent =
   | { type: "sources"; sources: AssistantSource[] }
   | { type: "text"; text: string }
   | { type: "unknown" }
+  /** The question points at something it doesn't name ("there", "that
+   * project") and there is no earlier question to make it clear. */
+  | { type: "unclear" }
   | { type: "done" }
   | { type: "error" };
 
