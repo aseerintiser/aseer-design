@@ -40,7 +40,7 @@ export const designNotes = {
     },
     {
       name: "Ask the portfolio",
-      text: "Questions are answered only with passages from this site, quoted as written, or with “I don't know”.",
+      text: "An AI assistant answers questions only from passages on this site, with a numbered source for each claim, or says “I don't know”.",
     },
   ],
 

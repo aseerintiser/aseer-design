@@ -361,7 +361,7 @@ export default function HomePage() {
               <Link href="/ask" className="link-ink font-medium text-[var(--color-text)]">
                 ask the portfolio a question
               </Link>
-              . It answers in my own words, quoted from this site.
+              . An AI assistant answers from this site only, with a source for every claim.
             </p>
           </div>
         </div>

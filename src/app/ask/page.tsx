@@ -10,16 +10,16 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: "Ask the portfolio",
   description:
-    "Ask about Md Aseer Intiser's work, research or background. Every answer is a passage from the site, quoted as written, with a link to its source.",
+    "Ask about Md Aseer Intiser's work, research or background. An AI assistant answers from this site only, with a source for every claim.",
 };
 
 const label = "font-[family-name:var(--font-mono)] text-[0.6875rem] tracking-[0.14em] text-[var(--color-text-muted)] uppercase";
 
 /**
- * Ask the portfolio (Phase 5). A question box that answers only with
- * Aseer's own words from this site, built on the seven principles from
- * his Lumi study. It is a search that runs in the browser, not an AI
- * model, so there is no paid service and nothing to make up.
+ * Ask the portfolio. An AI assistant that answers only from passages on
+ * this site, citing each one, built on the seven principles from Aseer's
+ * Lumi study. It runs on a free model plan; when that is unavailable the
+ * page falls back to quoting the closest passage, found in the browser.
  */
 export default function AskPage() {
   return (
@@ -51,8 +51,9 @@ export default function AskPage() {
               <Link href="/research/lumi#ch-what-it-means" className="link-ink text-[var(--color-text)]">
                 seven principles
               </Link>{" "}
-              for conversational AI people can trust. This page follows them. It isn&apos;t an AI model: it is a
-              search over this site that runs in your browser.
+              for conversational AI people can trust. This assistant follows them. It is an AI model, but it
+              only reads passages from this site. If it is ever unavailable, the page quotes the closest passage
+              instead.
             </Text>
           </header>
           <dl className="grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:col-span-8">

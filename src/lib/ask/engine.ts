@@ -1,7 +1,11 @@
 import type { Passage, PassageKind } from "./types";
 
 /**
- * Ask the portfolio's answer engine. It runs in the visitor's browser
+ * Ask the portfolio's quote engine. The AI assistant (lib/ask/assistant.ts)
+ * uses its ranking through retrieve(), and the page falls back to ask()
+ * whenever the assistant is unavailable.
+ *
+ * ask() runs in the visitor's browser
  * over the static index (lib/ask/build-index.ts) and never writes text
  * of its own: an answer is a passage from the site, quoted as it is,
  * with the page it comes from. When no passage covers the question well
@@ -271,12 +275,16 @@ function coverage(index: AskIndex, doc: Doc, passage: Passage, groups: Group[]) 
   return { ratio: total ? covered / total : 0, matched };
 }
 
-export function ask(index: AskIndex, question: string): AskResult {
-  const trimmed = question.trim();
-  if (!trimmed) return { status: "empty", question: trimmed };
-  const normalized = normalize(trimmed);
-  const pointer = POINTERS.find((item) => item.pattern.test(normalized));
+interface Scored {
+  passage: Passage;
+  score: number;
+  cover: { ratio: number; matched: string[] };
+}
 
+/** Scores every passage against a question. Shared by ask() and
+ * retrieve(), so both read a question the same way. */
+function scoreAll(index: AskIndex, trimmed: string): { groups: Group[]; kinds: Set<PassageKind>; scored: Scored[] } {
+  const normalized = normalize(trimmed);
   const kinds = new Set(KIND_PATTERNS.filter(([, pattern]) => pattern.test(normalized)).map(([kind]) => kind));
   // Projects the question names; their passages come first.
   const named = [...new Set([...normalized.matchAll(PROJECT_WORDS)].map((match) => match[1]!.replace(/s$/, "")))];
@@ -307,10 +315,6 @@ export function ask(index: AskIndex, question: string): AskResult {
     });
   }
 
-  if (!groups.length && !kinds.size) {
-    return pointer ? { status: "unknown", question: trimmed, pointer } : { status: "empty", question: trimmed };
-  }
-
   const scored = index.docs.map((doc, i) => {
     const passage = index.passages[i]!;
     let score = 0;
@@ -337,6 +341,20 @@ export function ask(index: AskIndex, question: string): AskResult {
     const cover = groups.length ? coverage(index, doc, passage, groups) : { ratio: kindMatch ? 1 : 0, matched: [] };
     return { passage, score, cover };
   });
+  return { groups, kinds, scored };
+}
+
+export function ask(index: AskIndex, question: string): AskResult {
+  const trimmed = question.trim();
+  if (!trimmed) return { status: "empty", question: trimmed };
+  const pointer = POINTERS.find((item) => item.pattern.test(normalize(trimmed)));
+  const { groups, kinds, scored } = scoreAll(index, trimmed);
+
+  if (!groups.length && !kinds.size) {
+    return pointer ? { status: "unknown", question: trimmed, pointer } : { status: "empty", question: trimmed };
+  }
+
+
 
   const ranked = scored
     .filter((entry) => entry.score > 0 && entry.cover.ratio >= 0.6)
@@ -360,6 +378,38 @@ export function ask(index: AskIndex, question: string): AskResult {
     more,
     pointer,
   };
+}
+
+/**
+ * The passages most related to a question, for the AI assistant
+ * (app/api/ask). Looser than ask(): a passage that covers only part of
+ * the question can still help, because the model reads them all and
+ * decides what answers it. Duplicate texts are dropped.
+ */
+export function retrieve(index: AskIndex, question: string, limit = 6): Passage[] {
+  const trimmed = question.trim();
+  if (!trimmed) return [];
+  const { scored } = scoreAll(index, trimmed);
+  const seen = new Set<string>();
+  return scored
+    .filter((entry) => entry.score > 0)
+    .sort((a, b) => b.score * (0.4 + b.cover.ratio) - a.score * (0.4 + a.cover.ratio))
+    .filter((entry) => {
+      if (seen.has(entry.passage.text)) return false;
+      seen.add(entry.passage.text);
+      return true;
+    })
+    .slice(0, limit)
+    .map((entry) => entry.passage);
+}
+
+/** Passages that describe Aseer in general (who he is, what he is
+ * looking for, how to reach him), most representative first. */
+export function corePassages(index: AskIndex, limit = 3): Passage[] {
+  return index.passages
+    .filter((passage) => PERSONAL_PAGES.has(passage.page) && passage.kinds?.some((kind) => ["about", "status", "contact"].includes(kind)))
+    .sort((a, b) => (b.prior ?? 1) - (a.prior ?? 1))
+    .slice(0, limit);
 }
 
 /** Splits a passage into plain and matched runs, for highlighting the
